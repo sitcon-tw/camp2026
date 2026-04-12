@@ -39,3 +39,11 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist
           force_orphan: true
+
+      - name: Trigger workflow in other repo
+        run: |
+          gh workflow run updateSubmodules.yml \
+            --repo sitcon-tw/camp \
+            --ref gh-pages
+        env:
+          GH_TOKEN: ${{ secrets.GHA_WORKFLOW_TRIGGER }}
