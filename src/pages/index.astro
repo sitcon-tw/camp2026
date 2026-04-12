@@ -2,7 +2,6 @@
 import Layout from "../layouts/Layout.astro";
 import { Image } from "astro:assets";
 import SitconCampLogo from "../assets/sitcon-camp.svg";
-import introVideo from "../assets/intro.mp4";
 import heroPosterImage from "../assets/sitcon-2025.webp";
 import classActivitiesImage from "../assets/group/class-activities.jpg";
 import designImage from "../assets/group/design.jpg";
@@ -78,6 +77,8 @@ const deadlineOrder = (deadline: string) => {
 const sortedRecruitTeams = [...recruitTeams].sort(
   (a, b) => deadlineOrder(a.deadline) - deadlineOrder(b.deadline),
 );
+
+const heroVideoSrc = `${import.meta.env.BASE_URL}video/intro-hls/master.m3u8`;
 
 const faqItems = [
   {
@@ -276,7 +277,7 @@ const seoDescription =
         />
         <video
           data-hero-video
-          data-video-src={introVideo}
+          data-video-src={heroVideoSrc}
           class="hero-background-video absolute inset-0 h-full w-full object-cover object-[62%_center] md:object-center"
           autoplay
           muted
@@ -896,6 +897,7 @@ const seoDescription =
   </div>
 
   <script>
+    import Hls from "hls.js";
     import initLandingAnimations from "../scripts/landing-animations";
 
     initLandingAnimations();
@@ -905,6 +907,7 @@ const seoDescription =
 
     if (heroVideo) {
       let hasLoadedVideo = false;
+      let hls: Hls | undefined;
       const videoSource = heroVideo.dataset.videoSrc;
       const prefersReducedMotion = window.matchMedia(
         "(prefers-reduced-motion: reduce)",
@@ -915,6 +918,12 @@ const seoDescription =
 
       const showHeroVideo = () => {
         heroVideo.classList.add("is-ready");
+      };
+
+      const playHeroVideo = () => {
+        void heroVideo.play().catch(() => {
+          heroVideo.classList.remove("is-ready");
+        });
       };
 
       const loadHeroVideo = () => {
@@ -929,13 +938,27 @@ const seoDescription =
 
         hasLoadedVideo = true;
 
-        const source = document.createElement("source");
-        source.src = videoSource;
-        source.type = "video/mp4";
-        heroVideo.append(source);
-        heroVideo.load();
-        void heroVideo.play().catch(() => {
-          heroVideo.classList.remove("is-ready");
+        if (heroVideo.canPlayType("application/vnd.apple.mpegurl")) {
+          heroVideo.src = videoSource;
+          heroVideo.load();
+          playHeroVideo();
+          return;
+        }
+
+        if (!Hls.isSupported()) {
+          return;
+        }
+
+        hls = new Hls();
+        hls.loadSource(videoSource);
+        hls.attachMedia(heroVideo);
+        hls.on(Hls.Events.MANIFEST_PARSED, playHeroVideo);
+        hls.on(Hls.Events.ERROR, (_event, data) => {
+          if (data.fatal) {
+            heroVideo.classList.remove("is-ready");
+            hls?.destroy();
+            hls = undefined;
+          }
         });
       };
 
@@ -943,6 +966,9 @@ const seoDescription =
       heroVideo.addEventListener("playing", showHeroVideo, { once: true });
       heroVideo.addEventListener("error", () => {
         heroVideo.classList.remove("is-ready");
+      });
+      window.addEventListener("pagehide", () => hls?.destroy(), {
+        once: true,
       });
 
       const loadOnInteraction = () => {
