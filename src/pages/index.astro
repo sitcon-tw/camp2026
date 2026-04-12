@@ -3,6 +3,7 @@ import Layout from "../layouts/Layout.astro";
 import { Image } from "astro:assets";
 import SitconCampLogo from "../assets/sitcon-camp.svg";
 import introVideo from "../assets/intro.mp4";
+import heroPosterImage from "../assets/sitcon-2025.webp";
 import classActivitiesImage from "../assets/group/class-activities.jpg";
 import designImage from "../assets/group/design.jpg";
 import developImage from "../assets/group/develop.jpg";
@@ -256,19 +257,28 @@ const seoDescription =
     <main id="top" class="relative z-10">
       <section
         data-hero-section
-        class="relative overflow-hidden border-b border-line bg-sand/15 text-cream"
+        class="relative overflow-hidden border-b border-line bg-paper text-cream"
       >
+        <Image
+          src={heroPosterImage}
+          alt=""
+          class="absolute inset-0 h-full w-full object-cover object-[62%_center] md:object-center"
+          loading="eager"
+          fetchpriority="high"
+          widths={[640, 960, 1280, 1600]}
+          sizes="100vw"
+        />
         <video
           data-hero-video
-          class="absolute inset-0 h-full w-full object-cover object-[62%_center] md:object-center"
+          data-video-src={introVideo}
+          class="hero-background-video absolute inset-0 h-full w-full object-cover object-[62%_center] md:object-center"
           autoplay
           muted
           loop
           playsinline
+          preload="none"
           aria-hidden="true"
-        >
-          <source src={introVideo} type="video/mp4" />
-        </video>
+        ></video>
         <div class="absolute inset-0 bg-ink/56"></div>
         <div
           class="relative z-10 mx-auto flex min-h-screen max-w-6xl items-center px-6 py-20 md:py-28"
@@ -292,6 +302,36 @@ const seoDescription =
             >
               今夏，我們回來了。學生辦的、給學生玩的資訊科技夏令營，工作人員招募中。
             </p>
+            <div data-hero-item class="mt-6 flex flex-wrap gap-4">
+              <a
+                href="https://i.sitcon.org/camp-recruit"
+                target="_blank"
+                rel="noreferrer"
+                class="soft-button inline-flex items-center bg-rust px-5 py-3 text-cream hover:bg-rust-strong"
+              >
+                工人跳坑表單
+              </a>
+              <a
+                href="#about"
+                class="soft-button inline-flex items-center border border-cream/45 bg-paper/14 px-5 py-3 text-cream backdrop-blur-md hover:bg-paper/22"
+              >
+                了解更多
+              </a>
+            </div>
+            <div
+              data-hero-item
+              class="mt-5 flex flex-wrap items-center gap-3 text-sm text-cream/90"
+            >
+              <span class="font-medium">想報名嗎？</span>
+              <a
+                href="https://sitcon.org/ig"
+                target="_blank"
+                rel="noreferrer"
+                class="soft-button inline-flex items-center bg-rust px-4 py-2 text-cream hover:bg-rust-strong"
+              >
+                追蹤 IG 獲得最新消息
+              </a>
+            </div>
             <div
               data-hero-item
               class="mt-8 flex flex-wrap gap-3 text-sm text-cream/90"
@@ -311,22 +351,6 @@ const seoDescription =
               >
                 五天四夜
               </div>
-            </div>
-            <div data-hero-item class="mt-10 flex flex-wrap gap-4">
-              <a
-                href="https://i.sitcon.org/camp-recruit"
-                target="_blank"
-                rel="noreferrer"
-                class="soft-button inline-flex items-center bg-rust px-5 py-3 text-cream hover:bg-rust-strong"
-              >
-                工人跳坑表單
-              </a>
-              <a
-                href="#about"
-                class="soft-button inline-flex items-center border border-cream/45 bg-paper/14 px-5 py-3 text-cream backdrop-blur-md hover:bg-paper/22"
-              >
-                了解更多
-              </a>
             </div>
           </div>
         </div>
@@ -712,7 +736,7 @@ const seoDescription =
                   href="https://sitcon.org/ig"
                   target="_blank"
                   rel="noreferrer"
-                  class="soft-button border border-line px-5 py-3 hover:bg-cream"
+                  class="soft-button bg-rust px-5 py-3 text-cream hover:bg-rust-strong"
                 >
                   追蹤最新消息
                 </a>
@@ -881,155 +905,87 @@ const seoDescription =
           </p>
         </div>
       </footer>
-      <footer class="border-t border-line bg-cream/60">
-        <div class="mx-auto max-w-6xl px-6 py-12 text-sm leading-7 text-ink/90">
-          <div class="grid gap-10 md:grid-cols-4">
-            <div class="md:col-span-1">
-              <p class="text-base font-semibold">學生計算機年會</p>
-              <p class="mt-2">Students' Information Technology</p>
-              <p>Conference</p>
-            </div>
-
-            <div>
-              <p class="text-base font-semibold">聯繫我們</p>
-              <p class="mt-3">
-                合作聯繫：<a
-                  href="mailto:contact@sitcon.org"
-                  class="hover:text-rust">contact@sitcon.org</a
-                >
-              </p>
-              <p class="mt-2">
-                報名事宜：<a
-                  href="mailto:ask@sitcon.camp"
-                  class="hover:text-rust">ask@sitcon.camp</a
-                >
-              </p>
-            </div>
-
-            <div>
-              <p class="text-base font-semibold">社群媒體</p>
-              <div class="mt-3 flex flex-wrap gap-x-4 gap-y-1">
-                <a
-                  href="https://sitcon.org/fb"
-                  target="_blank"
-                  rel="noreferrer"
-                  class="hover:text-rust">Facebook</a
-                >
-                <a
-                  href="https://sitcon.org/ig"
-                  target="_blank"
-                  rel="noreferrer"
-                  class="hover:text-rust">Instagram</a
-                >
-                <a
-                  href="https://sitcon.org/flickr"
-                  target="_blank"
-                  rel="noreferrer"
-                  class="hover:text-rust">Flickr</a
-                >
-                <a
-                  href="https://sitcon.org/telegram"
-                  target="_blank"
-                  rel="noreferrer"
-                  class="hover:text-rust">Telegram</a
-                >
-                <a
-                  href="https://sitcon.org/twitter"
-                  target="_blank"
-                  rel="noreferrer"
-                  class="hover:text-rust">X</a
-                >
-                <a
-                  href="https://sitcon.org/youtube"
-                  target="_blank"
-                  rel="noreferrer"
-                  class="hover:text-rust">YouTube</a
-                >
-                <a
-                  href="https://sitcon.org/plurk"
-                  target="_blank"
-                  rel="noreferrer"
-                  class="hover:text-rust">Plurk</a
-                >
-              </div>
-            </div>
-
-            <div>
-              <p class="text-base font-semibold">歷年網站</p>
-              <div class="mt-3 flex flex-wrap gap-x-4 gap-y-1">
-                <a
-                  href="https://sitcon.camp/2025/"
-                  target="_blank"
-                  rel="noreferrer"
-                  class="hover:text-rust">2025</a
-                >
-                <a
-                  href="https://sitcon.camp/2024/"
-                  target="_blank"
-                  rel="noreferrer"
-                  class="hover:text-rust">2024</a
-                >
-                <a
-                  href="https://sitcon.camp/2023/"
-                  target="_blank"
-                  rel="noreferrer"
-                  class="hover:text-rust">2023</a
-                >
-                <a
-                  href="https://sitcon.camp/2021/"
-                  target="_blank"
-                  rel="noreferrer"
-                  class="hover:text-rust">2021</a
-                >
-                <a
-                  href="https://sitcon.camp/2019/"
-                  target="_blank"
-                  rel="noreferrer"
-                  class="hover:text-rust">2019</a
-                >
-                <a
-                  href="https://sitcon.camp/2017/"
-                  target="_blank"
-                  rel="noreferrer"
-                  class="hover:text-rust">2017</a
-                >
-                <a
-                  href="https://sitcon.camp/2016/"
-                  target="_blank"
-                  rel="noreferrer"
-                  class="hover:text-rust">2016</a
-                >
-                <a
-                  href="https://sitcon.camp/2015/"
-                  target="_blank"
-                  rel="noreferrer"
-                  class="hover:text-rust">2015</a
-                >
-                <a
-                  href="https://sitcon.camp/2014/"
-                  target="_blank"
-                  rel="noreferrer"
-                  class="hover:text-rust">2014</a
-                >
-              </div>
-            </div>
-          </div>
-
-          <p class="mt-10">
-            SITCON Camp 2026. 學生辦的、給學生玩的資訊科技夏令營。
-          </p>
-        </div>
-      </footer>
     </main>
 
     <script>
       import initLandingAnimations from "../scripts/landing-animations";
 
       initLandingAnimations();
+
+      const heroVideo =
+        document.querySelector<HTMLVideoElement>("[data-hero-video]");
+
+      if (heroVideo) {
+        let hasLoadedVideo = false;
+        const videoSource = heroVideo.dataset.videoSrc;
+        const prefersReducedMotion = window.matchMedia(
+          "(prefers-reduced-motion: reduce)",
+        ).matches;
+        const connection = navigator.connection as
+          | { saveData?: boolean }
+          | undefined;
+
+        const showHeroVideo = () => {
+          heroVideo.classList.add("is-ready");
+        };
+
+        const loadHeroVideo = () => {
+          if (
+            hasLoadedVideo ||
+            !videoSource ||
+            prefersReducedMotion ||
+            connection?.saveData
+          ) {
+            return;
+          }
+
+          hasLoadedVideo = true;
+
+          const source = document.createElement("source");
+          source.src = videoSource;
+          source.type = "video/mp4";
+          heroVideo.append(source);
+          heroVideo.load();
+          void heroVideo.play().catch(() => {
+            heroVideo.classList.remove("is-ready");
+          });
+        };
+
+        heroVideo.addEventListener("canplay", showHeroVideo, { once: true });
+        heroVideo.addEventListener("playing", showHeroVideo, { once: true });
+        heroVideo.addEventListener("error", () => {
+          heroVideo.classList.remove("is-ready");
+        });
+
+        const loadOnInteraction = () => {
+          loadHeroVideo();
+        };
+
+        window.addEventListener("pointerdown", loadOnInteraction, {
+          once: true,
+          passive: true,
+        });
+        window.addEventListener("keydown", loadOnInteraction, { once: true });
+
+        if ("requestIdleCallback" in window) {
+          window.requestIdleCallback(loadHeroVideo, { timeout: 2500 });
+        } else {
+          window.setTimeout(loadHeroVideo, 1600);
+        }
+      }
     </script>
   </div>
 
   <style>
+    .hero-background-video {
+      opacity: 0;
+      transition: opacity 300ms ease;
+    }
+
+    .hero-background-video.is-ready {
+      opacity: 1;
+    }
+
     .past-years-marquee {
       position: relative;
       padding: 1rem 0;
@@ -1098,6 +1054,10 @@ const seoDescription =
     }
 
     @media (prefers-reduced-motion: reduce) {
+      .hero-background-video {
+        transition: none;
+      }
+
       .past-years-marquee__track {
         animation: none;
       }
