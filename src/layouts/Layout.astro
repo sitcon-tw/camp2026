@@ -6,6 +6,10 @@ interface Props {
 }
 
 const { title = 'SITCON Camp 2026' } = Astro.props;
+const baseUrl = import.meta.env.BASE_URL.endsWith('/')
+	? import.meta.env.BASE_URL
+	: `${import.meta.env.BASE_URL}/`;
+const publicAsset = (path: string) => `${baseUrl}${path.replace(/^\/+/, '')}`;
 ---
 
 <!doctype html>
@@ -14,8 +18,8 @@ const { title = 'SITCON Camp 2026' } = Astro.props;
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
+		<link rel="icon" type="image/svg+xml" href={publicAsset('favicon.svg')} />
+		<link rel="icon" href={publicAsset('favicon.ico')} />
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
 	</head>

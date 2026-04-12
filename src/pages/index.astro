@@ -1,5 +1,23 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { Image } from 'astro:assets';
+import SitconCampLogo from '../assets/sitcon-camp.svg';
+import heroImage from '../assets/sitcon-2025.jpg';
+import classActivitiesImage from '../assets/group/class-activities.jpg';
+import designImage from '../assets/group/design.jpg';
+import developImage from '../assets/group/develop.jpg';
+import editingGroupImage from '../assets/group/editing-group.jpg';
+import fieldAffairsImage from '../assets/group/field-affairs.jpg';
+import teamAssistantImage from '../assets/group/team-assistant.jpg';
+import history2014Image from '../assets/history/2014.jpg';
+import history2015Image from '../assets/history/2015.jpg';
+import history2016Image from '../assets/history/2016.jpg';
+import history2017Image from '../assets/history/2017.jpg';
+import history2019Image from '../assets/history/2019.jpg';
+import history2021Image from '../assets/history/2021.jpg';
+import history2023Image from '../assets/history/2023.jpg';
+import history2024Image from '../assets/history/2024.jpg';
+import history2025Image from '../assets/history/2025.jpg';
 
 const recruitTeams = [
 	{
@@ -7,42 +25,42 @@ const recruitTeams = [
 		description: '陪伴學員、協助學習、帶動活動氣氛。',
 		deadline: '4/18 23:59',
 		link: 'https://forms.gle/YJsYyTB9XSLcWdBg8',
-		image: '/group/team-assistant.jpg',
+		image: teamAssistantImage,
 	},
 	{
 		name: '編輯組',
 		description: '經營社群、寫文案、剪輯影音、發想宣傳內容。',
 		deadline: '4/25 23:59',
 		link: 'https://forms.gle/7LCEaH2zD3V5vDZC6',
-		image: '/group/editing-group.jpg',
+		image: editingGroupImage,
 	},
 	{
 		name: '課程活動組',
 		description: '規劃主線課程、活動內容與營期流程。',
 		deadline: '4/14 23:59',
 		link: 'https://forms.gle/TFUEkkvjR1po38B2A',
-		image: '/group/class-activities.jpg',
+		image: classActivitiesImage,
 	},
 	{
 		name: '設計組',
 		description: '負責主視覺、網頁、社群出圖與整體視覺。',
 		deadline: '招募中',
 		link: 'https://forms.gle/ztny7QQ3vX6yvM4U8',
-		image: '/group/design.jpg',
+		image: designImage,
 	},
 	{
 		name: '開發組',
 		description: '開發 Camp 官網與營期間會用到的活動網站。',
 		deadline: '4/24 截止',
 		link: 'https://forms.gle/3AZ9MFu4nA1uCQheA',
-		image: '/group/develop.jpg',
+		image: developImage,
 	},
 	{
 		name: '庶務組',
 		description: '負責學員與工作人員的吃住與現場後勤。',
 		deadline: '4/18 截止',
 		link: 'https://t.me/agong1021',
-		image: '/group/field-affairs.jpg',
+		image: fieldAffairsImage,
 	},
 ];
 
@@ -81,39 +99,39 @@ const faqItems = [
 
 const groupPhotos = [
 	{
-		src: '/history/2014.jpg',
+		src: history2014Image,
 		alt: 'SITCON Camp 2014 歷屆大合照',
 	},
 	{
-		src: '/history/2015.jpg',
+		src: history2015Image,
 		alt: 'SITCON Camp 2015 歷屆大合照',
 	},
 	{
-		src: '/history/2016.jpg',
+		src: history2016Image,
 		alt: 'SITCON Camp 2016 歷屆大合照',
 	},
 	{
-		src: '/history/2017.jpg',
+		src: history2017Image,
 		alt: 'SITCON Camp 2017 歷屆大合照',
 	},
 	{
-		src: '/history/2019.jpg',
+		src: history2019Image,
 		alt: 'SITCON Camp 2019 歷屆大合照',
 	},
 	{
-		src: '/history/2021.jpg',
+		src: history2021Image,
 		alt: 'SITCON Camp 2021 歷屆大合照',
 	},
 	{
-		src: '/history/2023.jpg',
+		src: history2023Image,
 		alt: 'SITCON Camp 2023 歷屆大合照',
 	},
 	{
-		src: '/history/2024.jpg',
+		src: history2024Image,
 		alt: 'SITCON Camp 2024 歷屆大合照',
 	},
 	{
-		src: '/history/2025.jpg',
+		src: history2025Image,
 		alt: 'SITCON Camp 2025 歷屆大合照',
 	},
 ];
@@ -195,8 +213,8 @@ const publicCalendarUrl =
 	<div class="bg-paper text-ink">
 		<header data-header class="site-header fixed inset-x-0 top-0 z-30 border-b border-line bg-paper/80 backdrop-blur-sm">
 			<div class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-6 py-4">
-				<a href="#top" class="inline-flex" data-hero-item>
-					<img src="/sitcon-camp.svg" alt="SITCON Camp" class="h-7 w-auto invert md:h-8" />
+				<a href="#top" class="inline-flex" aria-label="SITCON Camp" data-hero-item>
+					<SitconCampLogo class="h-7 w-auto invert md:h-8" aria-hidden="true" />
 				</a>
 				<nav class="hidden gap-6 text-sm md:flex">
 					<a href="#about" class="hover:text-rust">關於</a>
@@ -218,7 +236,13 @@ const publicCalendarUrl =
 
 		<main id="top" class="relative z-10">
 			<section data-hero-section class="relative overflow-hidden border-b border-line bg-sand/15 text-cream">
-				<div class="absolute inset-0 bg-[url('/sitcon-2025.jpg')] bg-cover bg-[62%_center] bg-no-repeat md:bg-center"></div>
+				<Image
+					src={heroImage}
+					alt=""
+					class="absolute inset-0 h-full w-full object-cover object-[62%_center] md:object-center"
+					loading="eager"
+					fetchpriority="high"
+				/>
 				<div class="absolute inset-0 bg-ink/56"></div>
 				<div class="relative z-10 mx-auto flex min-h-screen max-w-6xl items-center px-6 py-20 md:py-28">
 					<div class="max-w-4xl">
@@ -321,7 +345,7 @@ const publicCalendarUrl =
 						{
 							sortedRecruitTeams.map((team) => (
 								<article data-stagger-item class="soft-card overflow-hidden border border-line bg-paper shadow-[0_20px_40px_color-mix(in_srgb,var(--color-ink)_8%,transparent)]">
-									<img
+									<Image
 										src={team.image}
 										alt={team.name}
 										class="h-44 w-full object-cover"
@@ -399,9 +423,11 @@ const publicCalendarUrl =
 								<article data-stagger-item class="soft-card border border-line bg-paper p-5 shadow-[0_16px_32px_color-mix(in_srgb,var(--color-ink)_8%,transparent)]">
 									<div class="flex items-center gap-4">
 										{member.avatar && (
-											<img
+											<Image
 												src={member.avatar}
 												alt={member.name}
+												width={200}
+												height={200}
 												class="soft-avatar h-16 w-16 shrink-0 border border-line object-cover"
 												loading="lazy"
 											/>
@@ -449,9 +475,11 @@ const publicCalendarUrl =
 							rel="noreferrer"
 							class="group relative block min-h-[320px] overflow-hidden border-t border-line md:min-h-[420px] md:border-t-0 md:border-l"
 						>
-							<img
+							<Image
 								src={vlog.thumbnail}
 								alt={vlog.title}
+								width={1280}
+								height={720}
 								class="h-full w-full object-cover transition duration-300 group-hover:scale-[1.02]"
 								data-parallax
 								loading="lazy"
@@ -495,7 +523,7 @@ const publicCalendarUrl =
 						<div class="past-years-marquee__track">
 							{[...groupPhotos, ...groupPhotos].map((photo, index) => (
 								<figure class="past-years-marquee__item">
-									<img
+									<Image
 										src={photo.src}
 										alt={photo.alt}
 										class="h-full w-full object-cover"
