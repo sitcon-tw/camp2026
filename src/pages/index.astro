@@ -3,6 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import { Image } from 'astro:assets';
 import SitconCampLogo from '../assets/sitcon-camp.svg';
 import introVideo from '../assets/intro.mp4';
+import heroPosterImage from '../assets/sitcon-2025.webp';
 import classActivitiesImage from '../assets/group/class-activities.jpg';
 import designImage from '../assets/group/design.jpg';
 import developImage from '../assets/group/develop.jpg';
@@ -237,18 +238,27 @@ const seoDescription =
 		</header>
 
 		<main id="top" class="relative z-10">
-			<section data-hero-section class="relative overflow-hidden border-b border-line bg-sand/15 text-cream">
+			<section data-hero-section class="relative overflow-hidden border-b border-line bg-paper text-cream">
+				<Image
+					src={heroPosterImage}
+					alt=""
+					class="absolute inset-0 h-full w-full object-cover object-[62%_center] md:object-center"
+					loading="eager"
+					fetchpriority="high"
+					widths={[640, 960, 1280, 1600]}
+					sizes="100vw"
+				/>
 				<video
 					data-hero-video
-					class="absolute inset-0 h-full w-full object-cover object-[62%_center] md:object-center"
+					data-video-src={introVideo}
+					class="hero-background-video absolute inset-0 h-full w-full object-cover object-[62%_center] md:object-center"
 					autoplay
 					muted
 					loop
 					playsinline
+					preload="none"
 					aria-hidden="true"
-				>
-					<source src={introVideo} type="video/mp4" />
-				</video>
+				></video>
 				<div class="absolute inset-0 bg-ink/56"></div>
 				<div class="relative z-10 mx-auto flex min-h-screen max-w-6xl items-center px-6 py-20 md:py-28">
 					<div class="max-w-4xl">
@@ -533,7 +543,7 @@ const seoDescription =
 										src={photo.src}
 										alt={photo.alt}
 										class="h-full w-full object-cover"
-										loading={index < groupPhotos.length ? 'eager' : 'lazy'}
+										loading="lazy"
 									/>
 								</figure>
 							))}
@@ -645,10 +655,68 @@ const seoDescription =
 		import initLandingAnimations from '../scripts/landing-animations';
 
 		initLandingAnimations();
+
+		const heroVideo = document.querySelector<HTMLVideoElement>('[data-hero-video]');
+
+		if (heroVideo) {
+			let hasLoadedVideo = false;
+			const videoSource = heroVideo.dataset.videoSrc;
+			const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+			const connection = navigator.connection as { saveData?: boolean } | undefined;
+
+			const showHeroVideo = () => {
+				heroVideo.classList.add('is-ready');
+			};
+
+			const loadHeroVideo = () => {
+				if (hasLoadedVideo || !videoSource || prefersReducedMotion || connection?.saveData) {
+					return;
+				}
+
+				hasLoadedVideo = true;
+
+				const source = document.createElement('source');
+				source.src = videoSource;
+				source.type = 'video/mp4';
+				heroVideo.append(source);
+				heroVideo.load();
+				void heroVideo.play().catch(() => {
+					heroVideo.classList.remove('is-ready');
+				});
+			};
+
+			heroVideo.addEventListener('canplay', showHeroVideo, { once: true });
+			heroVideo.addEventListener('playing', showHeroVideo, { once: true });
+			heroVideo.addEventListener('error', () => {
+				heroVideo.classList.remove('is-ready');
+			});
+
+			const loadOnInteraction = () => {
+				loadHeroVideo();
+			};
+
+			window.addEventListener('pointerdown', loadOnInteraction, { once: true, passive: true });
+			window.addEventListener('keydown', loadOnInteraction, { once: true });
+
+			if ('requestIdleCallback' in window) {
+				window.requestIdleCallback(loadHeroVideo, { timeout: 2500 });
+			} else {
+				window.setTimeout(loadHeroVideo, 1600);
+			}
+		}
 	</script>
 </Layout>
 
 <style>
+	.hero-background-video {
+		opacity: 0;
+		transition: opacity 300ms ease;
+	}
+
+	.hero-background-video.is-ready {
+		opacity: 1;
+	}
+
 	.past-years-marquee {
 		position: relative;
 		padding: 1rem 0;
@@ -709,6 +777,10 @@ const seoDescription =
 	}
 
 	@media (prefers-reduced-motion: reduce) {
+		.hero-background-video {
+			transition: none;
+		}
+
 		.past-years-marquee__track {
 			animation: none;
 		}
