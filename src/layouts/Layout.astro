@@ -3,167 +3,168 @@ import "../styles/global.css";
 import type { ImageMetadata } from "astro";
 
 interface Props {
-    title?: string;
-    description?: string;
-    image?: ImageMetadata | string;
-    canonicalPath?: string;
-    type?: "website" | "article";
-    noindex?: boolean;
+  title?: string;
+  description?: string;
+  image?: ImageMetadata | string;
+  canonicalPath?: string;
+  type?: "website" | "article";
+  noindex?: boolean;
 }
 
 const {
-    title = "SITCON Camp 2026",
-    description = "SITCON Camp 2026 是由學生辦、給學生玩的資訊科技夏令營，將於 2026 年 7 月 8 日至 7 月 12 日在國立陽明交通大學舉辦。",
-    image,
-    canonicalPath = "/",
-    type = "website",
-    noindex = false,
+  title = "SITCON Camp 2026",
+  description = "SITCON Camp 2026 是由學生辦、給學生玩的資訊科技夏令營，將於 2026 年 7 月 8 日至 7 月 12 日在國立陽明交通大學舉辦。",
+  image,
+  canonicalPath = "/",
+  type = "website",
+  noindex = false,
 } = Astro.props;
 const baseUrl = import.meta.env.BASE_URL.endsWith("/")
-    ? import.meta.env.BASE_URL
-    : `${import.meta.env.BASE_URL}/`;
+  ? import.meta.env.BASE_URL
+  : `${import.meta.env.BASE_URL}/`;
 const publicAsset = (path: string) => `${baseUrl}${path.replace(/^\/+/, "")}`;
 const siteUrl = Astro.site ?? new URL("https://sitcon.camp");
 const isAbsoluteUrl = (path: string) => /^https?:\/\//.test(path);
 const withBaseUrl = (path: string) => {
-    if (isAbsoluteUrl(path)) {
-        return path;
-    }
+  if (isAbsoluteUrl(path)) {
+    return path;
+  }
 
-    const cleanPath = path.replace(/^\/+/, "");
-    const cleanBase = baseUrl.replace(/^\/+/, "");
+  const cleanPath = path.replace(/^\/+/, "");
+  const cleanBase = baseUrl.replace(/^\/+/, "");
 
-    if (!cleanPath) {
-        return baseUrl;
-    }
+  if (!cleanPath) {
+    return baseUrl;
+  }
 
-    if (
-        cleanPath === cleanBase.replace(/\/$/, "") ||
-        cleanPath.startsWith(cleanBase)
-    ) {
-        return `/${cleanPath}`;
-    }
+  if (
+    cleanPath === cleanBase.replace(/\/$/, "") ||
+    cleanPath.startsWith(cleanBase)
+  ) {
+    return `/${cleanPath}`;
+  }
 
-    return `${baseUrl}${cleanPath}`;
+  return `${baseUrl}${cleanPath}`;
 };
 const absoluteUrl = (path: string) =>
-    new URL(withBaseUrl(path), siteUrl).toString();
+  new URL(withBaseUrl(path), siteUrl).toString();
 const canonicalUrl = absoluteUrl(canonicalPath);
 const imageUrl = image
-    ? absoluteUrl(typeof image === "string" ? image : image.src)
-    : undefined;
+  ? absoluteUrl(typeof image === "string" ? image : image.src)
+  : undefined;
 const robots = noindex ? "noindex, nofollow" : "index, follow";
 const structuredData = [
-    {
-        "@context": "https://schema.org",
-        "@type": "WebSite",
-        name: "SITCON Camp",
-        url: canonicalUrl,
-        inLanguage: "zh-Hant-TW",
-        publisher: {
-            "@type": "Organization",
-            name: "SITCON",
-            url: "https://sitcon.org/",
-        },
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: "SITCON Camp",
+    url: canonicalUrl,
+    inLanguage: "zh-Hant-TW",
+    publisher: {
+      "@type": "Organization",
+      name: "SITCON",
+      url: "https://sitcon.org/",
     },
-    {
-        "@context": "https://schema.org",
-        "@type": "Event",
-        name: "SITCON Camp 2026",
-        description,
-        startDate: "2026-07-08",
-        endDate: "2026-07-12",
-        eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
-        eventStatus: "https://schema.org/EventScheduled",
-        inLanguage: "zh-Hant-TW",
-        url: canonicalUrl,
-        image: imageUrl ? [imageUrl] : undefined,
-        location: {
-            "@type": "Place",
-            name: "國立陽明交通大學",
-            address: {
-                "@type": "PostalAddress",
-                addressCountry: "TW",
-                addressRegion: "新竹市",
-            },
-        },
-        organizer: {
-            "@type": "Organization",
-            name: "SITCON",
-            url: "https://sitcon.org/",
-        },
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "Event",
+    name: "SITCON Camp 2026",
+    description,
+    startDate: "2026-07-08",
+    endDate: "2026-07-12",
+    eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
+    eventStatus: "https://schema.org/EventScheduled",
+    inLanguage: "zh-Hant-TW",
+    url: canonicalUrl,
+    image: imageUrl ? [imageUrl] : undefined,
+    location: {
+      "@type": "Place",
+      name: "國立陽明交通大學",
+      address: {
+        "@type": "PostalAddress",
+        addressCountry: "TW",
+        addressRegion: "新竹市",
+      },
     },
+    organizer: {
+      "@type": "Organization",
+      name: "SITCON",
+      url: "https://sitcon.org/",
+    },
+  },
 ];
 ---
 
 <!doctype html>
 <html lang="zh-Hant">
-    <head>
-        <!-- Google Tag Manager -->
-        <script is:inline>
-            (function (w, d, s, l, i) {
-                w[l] = w[l] || [];
-                w[l].push({
-                    "gtm.start": new Date().getTime(),
-                    event: "gtm.js",
-                });
-                var f = d.getElementsByTagName(s)[0],
-                    j = d.createElement(s),
-                    dl = l != "dataLayer" ? "&l=" + l : "";
-                j.async = true;
-                j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
-                f.parentNode.insertBefore(j, f);
-            })(window, document, "script", "dataLayer", "GTM-NKHHNVV");
-        </script>
-        <!-- End Google Tag Manager -->
+  <head>
+    <!-- Google Tag Manager -->
+    <script is:inline>
+      (function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({
+          "gtm.start": new Date().getTime(),
+          event: "gtm.js",
+        });
+        var f = d.getElementsByTagName(s)[0],
+          j = d.createElement(s),
+          dl = l != "dataLayer" ? "&l=" + l : "";
+        j.async = true;
+        j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+        f.parentNode.insertBefore(j, f);
+      })(window, document, "script", "dataLayer", "GTM-NKHHNVV");
+    </script>
+    <!-- End Google Tag Manager -->
 
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width" />
-        <link
-            rel="icon"
-            type="image/svg+xml"
-            href={publicAsset("favicon.svg")}
-        />
-        <link rel="icon" href={publicAsset("favicon.ico")} />
-        <link rel="canonical" href={canonicalUrl} />
-        <meta name="generator" content={Astro.generator} />
-        <meta name="description" content={description} />
-        <meta name="robots" content={robots} />
-        <meta name="theme-color" content="#9f4d36" />
-        <meta property="og:title" content={title} />
-        <meta property="og:description" content={description} />
-        <meta property="og:type" content={type} />
-        <meta property="og:url" content={canonicalUrl} />
-        <meta property="og:site_name" content="SITCON Camp" />
-        <meta property="og:locale" content="zh_TW" />
-        {imageUrl && <meta property="og:image" content={imageUrl} />}
-        <meta
-            name="twitter:card"
-            content={imageUrl ? "summary_large_image" : "summary"}
-        />
-        <meta name="twitter:title" content={title} />
-        <meta name="twitter:description" content={description} />
-        {imageUrl && <meta name="twitter:image" content={imageUrl} />}
-        <script
-            type="application/ld+json"
-            set:html={JSON.stringify(structuredData)}
-        />
-        <title>{title}</title>
-    </head>
-    <body>
-        <!-- Google Tag Manager (noscript) -->
-        <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NKHHNVV"
-        height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-        <!-- End Google Tag Manager (noscript) -->
-        <slot />
-    </body>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href={publicAsset("favicon.svg")} />
+    <link rel="icon" href={publicAsset("favicon.ico")} />
+    <link rel="canonical" href={canonicalUrl} />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="description" content={description} />
+    <meta name="robots" content={robots} />
+    <meta name="theme-color" content="#9f4d36" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content={type} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:site_name" content="SITCON Camp" />
+    <meta property="og:locale" content="zh_TW" />
+    {imageUrl && <meta property="og:image" content={imageUrl} />}
+    <meta
+      name="twitter:card"
+      content={imageUrl ? "summary_large_image" : "summary"}
+    />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    {imageUrl && <meta name="twitter:image" content={imageUrl} />}
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify(structuredData)}
+    />
+    <title>{title}</title>
+  </head>
+  <body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript
+      ><iframe
+        src="https://www.googletagmanager.com/ns.html?id=GTM-NKHHNVV"
+        height="0"
+        width="0"
+        style="display:none;visibility:hidden"></iframe></noscript
+    >
+    <!-- End Google Tag Manager (noscript) -->
+    <slot />
+  </body>
 </html>
 
 <style>
-    html,
-    body {
-        margin: 0;
-        width: 100%;
-        height: 100%;
-    }
+  html,
+  body {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+  }
 </style>
