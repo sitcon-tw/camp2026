@@ -7,38 +7,58 @@ const recruitTeams = [
 		description: '陪伴學員、協助學習、帶動活動氣氛。',
 		deadline: '4/18 23:59',
 		link: 'https://forms.gle/YJsYyTB9XSLcWdBg8',
+		image: '/group/team-assistant.jpg',
 	},
 	{
 		name: '編輯組',
 		description: '經營社群、寫文案、剪輯影音、發想宣傳內容。',
 		deadline: '4/25 23:59',
 		link: 'https://forms.gle/7LCEaH2zD3V5vDZC6',
+		image: '/group/editing-group.jpg',
 	},
 	{
 		name: '課程活動組',
 		description: '規劃主線課程、活動內容與營期流程。',
 		deadline: '4/14 23:59',
 		link: 'https://forms.gle/TFUEkkvjR1po38B2A',
+		image: '/group/class-activities.jpg',
 	},
 	{
 		name: '設計組',
 		description: '負責主視覺、網頁、社群出圖與整體視覺。',
 		deadline: '招募中',
 		link: 'https://forms.gle/ztny7QQ3vX6yvM4U8',
+		image: '/group/design.jpg',
 	},
 	{
 		name: '開發組',
 		description: '開發 Camp 官網與營期間會用到的活動網站。',
 		deadline: '4/24 截止',
 		link: 'https://forms.gle/3AZ9MFu4nA1uCQheA',
+		image: '/group/develop.jpg',
 	},
 	{
 		name: '庶務組',
 		description: '負責學員與工作人員的吃住與現場後勤。',
 		deadline: '4/18 截止',
 		link: 'https://t.me/agong1021',
+		image: '/group/field-affairs.jpg',
 	},
 ];
+
+const deadlineOrder = (deadline: string) => {
+	const match = deadline.match(/(\d{1,2})\/(\d{1,2})/);
+	if (!match) {
+		return Number.POSITIVE_INFINITY;
+	}
+
+	const [, month, day] = match;
+	return Number(month) * 100 + Number(day);
+};
+
+const sortedRecruitTeams = [...recruitTeams].sort(
+	(a, b) => deadlineOrder(a.deadline) - deadlineOrder(b.deadline)
+);
 
 const faqItems = [
 	{
@@ -56,6 +76,45 @@ const faqItems = [
 	{
 		question: '學員報名開始了嗎？',
 		answer: '還沒。學員報名開始時間尚未公布，屆時會再公告相關資訊。',
+	},
+];
+
+const groupPhotos = [
+	{
+		src: '/history/2014.jpg',
+		alt: 'SITCON Camp 2014 歷屆大合照',
+	},
+	{
+		src: '/history/2015.jpg',
+		alt: 'SITCON Camp 2015 歷屆大合照',
+	},
+	{
+		src: '/history/2016.jpg',
+		alt: 'SITCON Camp 2016 歷屆大合照',
+	},
+	{
+		src: '/history/2017.jpg',
+		alt: 'SITCON Camp 2017 歷屆大合照',
+	},
+	{
+		src: '/history/2019.jpg',
+		alt: 'SITCON Camp 2019 歷屆大合照',
+	},
+	{
+		src: '/history/2021.jpg',
+		alt: 'SITCON Camp 2021 歷屆大合照',
+	},
+	{
+		src: '/history/2023.jpg',
+		alt: 'SITCON Camp 2023 歷屆大合照',
+	},
+	{
+		src: '/history/2024.jpg',
+		alt: 'SITCON Camp 2024 歷屆大合照',
+	},
+	{
+		src: '/history/2025.jpg',
+		alt: 'SITCON Camp 2025 歷屆大合照',
 	},
 ];
 
@@ -127,13 +186,16 @@ const vlog = {
 	url: 'https://www.youtube.com/watch?v=CansA62TYXY',
 	thumbnail: 'https://img.youtube.com/vi/CansA62TYXY/maxresdefault.jpg',
 };
+
+const publicCalendarUrl =
+	'https://calendar.google.com/calendar/embed?src=rf14d0k6cfstdnac3bigqv72ho%40group.calendar.google.com&ctz=Asia%2FTaipei';
 ---
 
 <Layout title="SITCON Camp 2026">
 	<div class="bg-paper text-ink">
-		<header class="border-b border-line bg-paper/95">
+		<header data-header class="site-header fixed inset-x-0 top-0 z-30 border-b border-line bg-paper/80 backdrop-blur-sm">
 			<div class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-6 py-4">
-				<a href="#top" class="inline-flex">
+				<a href="#top" class="inline-flex" data-hero-item>
 					<img src="/sitcon-camp.svg" alt="SITCON Camp" class="h-7 w-auto invert md:h-8" />
 				</a>
 				<nav class="hidden gap-6 text-sm md:flex">
@@ -147,44 +209,69 @@ const vlog = {
 					href="https://i.sitcon.org/camp-recruit"
 					target="_blank"
 					rel="noreferrer"
-					class="border border-line bg-rust px-4 py-2 text-sm font-medium text-cream hover:bg-rust-strong"
+					class="soft-button inline-flex items-center bg-rust px-4 py-2 text-sm font-medium text-cream hover:bg-rust-strong"
 				>
 					立即跳坑
 				</a>
 			</div>
 		</header>
 
-		<main id="top">
-			<section class="border-b border-line bg-sand/15">
-				<div class="mx-auto max-w-6xl px-6 py-20 md:py-28">
-					<p class="mb-4 text-sm tracking-[0.2em] text-rust">第十屆 / 十週年</p>
-					<h1 class="max-w-4xl text-5xl font-semibold leading-tight md:text-7xl">
-						SITCON Camp 2026
-					</h1>
-					<p class="mt-6 max-w-2xl text-lg leading-8 text-ink/90">
-						今夏，我們回來了。學生辦的、給學生玩的資訊科技夏令營，工作人員招募中。
-					</p>
-					<div class="mt-8 flex flex-wrap gap-3 text-sm">
-						<div class="border border-line bg-cream px-3 py-2">7/8 - 7/12</div>
-						<div class="border border-line bg-cream px-3 py-2">國立陽明交通大學</div>
-						<div class="border border-line bg-cream px-3 py-2">五天四夜</div>
-					</div>
-					<div class="mt-10 flex flex-wrap gap-4">
-						<a
-							href="https://i.sitcon.org/camp-recruit"
-							target="_blank"
-							rel="noreferrer"
-							class="bg-rust px-5 py-3 text-cream hover:bg-rust-strong"
-						>
-							工人跳坑表單
-						</a>
-						<a href="#about" class="border border-line px-5 py-3 hover:bg-cream">了解更多</a>
+		<main id="top" class="relative z-10">
+			<section data-hero-section class="relative overflow-hidden border-b border-line bg-sand/15 text-cream">
+				<div class="absolute inset-0 bg-[url('/sitcon-2025.jpg')] bg-cover bg-[62%_center] bg-no-repeat md:bg-center"></div>
+				<div class="absolute inset-0 bg-ink/56"></div>
+				<div class="relative z-10 mx-auto flex min-h-screen max-w-6xl items-center px-6 py-20 md:py-28">
+					<div class="max-w-4xl">
+						<p data-hero-item class="mb-4 text-sm tracking-[0.2em] text-cream/80">第 10 屆</p>
+						<h1 data-hero-item class="max-w-4xl text-5xl font-semibold leading-tight md:text-7xl lg:text-[5.5rem]">
+							SITCON Camp 2026
+						</h1>
+						<p data-hero-item class="mt-6 max-w-4xl text-lg leading-8 text-cream/90 md:text-xl lg:max-w-5xl">
+							今夏，我們回來了。學生辦的、給學生玩的資訊科技夏令營，工作人員招募中。
+						</p>
+						<div data-hero-item class="mt-8 flex flex-wrap gap-3 text-sm text-cream/90">
+							<div class="soft-chip border border-cream/35 bg-paper/18 px-3 py-2 shadow-sm backdrop-blur-md">7/8 - 7/12</div>
+							<div class="soft-chip border border-cream/35 bg-paper/18 px-3 py-2 shadow-sm backdrop-blur-md">國立陽明交通大學</div>
+							<div class="soft-chip border border-cream/35 bg-paper/18 px-3 py-2 shadow-sm backdrop-blur-md">五天四夜</div>
+						</div>
+						<div data-hero-item class="mt-10 flex flex-wrap gap-4">
+							<a
+								href="https://i.sitcon.org/camp-recruit"
+								target="_blank"
+								rel="noreferrer"
+								class="soft-button inline-flex items-center bg-rust px-5 py-3 text-cream hover:bg-rust-strong"
+							>
+								工人跳坑表單
+							</a>
+							<a href="#about" class="soft-button inline-flex items-center border border-cream/45 bg-paper/14 px-5 py-3 text-cream backdrop-blur-md hover:bg-paper/22">
+								了解更多
+							</a>
+						</div>
 					</div>
 				</div>
 			</section>
 
+			<section class="border-b border-line bg-cream/50">
+				<div class="mx-auto flex max-w-6xl flex-col gap-4 px-6 py-5 md:flex-row md:items-center md:justify-between">
+					<div>
+						<p class="text-sm tracking-[0.2em] text-rust">PUBLIC CALENDAR</p>
+						<p class="mt-1 text-sm leading-7 text-ink/90">
+							追蹤 SITCON Camp 的公開時程與重要節點。
+						</p>
+					</div>
+					<a
+						href={publicCalendarUrl}
+						target="_blank"
+						rel="noreferrer"
+						class="soft-button inline-flex items-center bg-rust px-5 py-3 text-cream hover:bg-rust-strong"
+					>
+						開啟 Google Calendar
+					</a>
+				</div>
+			</section>
+
 			<section id="about" class="border-b border-line">
-				<div class="mx-auto grid max-w-6xl gap-12 px-6 py-16 md:grid-cols-2">
+				<div data-reveal class="mx-auto grid max-w-6xl gap-12 px-6 py-16 md:grid-cols-2">
 					<div>
 						<p class="mb-3 text-sm tracking-[0.2em] text-rust">ABOUT</p>
 						<h2 class="text-3xl font-semibold">什麼是 SITCON Camp？</h2>
@@ -194,7 +281,7 @@ const vlog = {
 							SITCON Camp 是一個由學生辦、給學生玩的資訊科技夏令營。不是培訓班，也不是補習班，而是一群熱愛資訊的人聚在一起，一起學、一起做、一起搞事的地方。
 						</p>
 						<p>
-							2026 年是第十屆。這次落腳國立陽明交通大學，從 7 月 8 日到 7 月 12 日，五天四夜。
+							2026 年是第 10 屆。這次落腳國立陽明交通大學，從 7 月 8 日到 7 月 12 日，五天四夜。
 						</p>
 						<p>
 							課程主題仍在籌備中，工作人員招募已經開始。想一起把這屆 Camp 做出來的人，現在就可以加入。
@@ -205,7 +292,7 @@ const vlog = {
 
 			<section id="recruit" class="border-b border-line bg-cream/60">
 				<div class="mx-auto max-w-6xl px-6 py-16">
-					<div class="grid gap-8 md:grid-cols-[1fr_2fr] md:items-start">
+					<div data-reveal class="grid gap-8 md:grid-cols-[1fr_2fr] md:items-start">
 						<div>
 							<p class="mb-3 text-sm tracking-[0.2em] text-rust">RECRUIT</p>
 							<h2 class="text-3xl font-semibold">一起把這屆 Camp 做出來</h2>
@@ -222,39 +309,39 @@ const vlog = {
 									href="https://i.sitcon.org/camp-recruit"
 									target="_blank"
 									rel="noreferrer"
-									class="bg-rust px-5 py-3 text-cream hover:bg-rust-strong"
+									class="soft-button inline-flex items-center bg-rust px-5 py-3 text-cream hover:bg-rust-strong"
 								>
 									立即跳坑
-								</a>
-								<a
-									href="https://hackmd.io/@SITCON/2026-camp-recruit"
-									target="_blank"
-									rel="noreferrer"
-									class="border border-line px-5 py-3 hover:bg-paper"
-								>
-									招募說明文件
 								</a>
 							</div>
 						</div>
 					</div>
 
-					<div class="mt-12 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+					<div data-stagger class="mt-12 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
 						{
-							recruitTeams.map((team) => (
-								<article class="border border-line bg-paper p-5">
-									<div class="flex items-start justify-between gap-4">
-										<h3 class="text-xl font-semibold">{team.name}</h3>
-										<span class="text-sm text-rust">{team.deadline}</span>
+							sortedRecruitTeams.map((team) => (
+								<article data-stagger-item class="soft-card overflow-hidden border border-line bg-paper shadow-[0_20px_40px_color-mix(in_srgb,var(--color-ink)_8%,transparent)]">
+									<img
+										src={team.image}
+										alt={team.name}
+										class="h-44 w-full object-cover"
+										loading="lazy"
+									/>
+									<div class="p-5">
+										<div class="flex items-start justify-between gap-4">
+											<h3 class="text-xl font-semibold">{team.name}</h3>
+											<span class="text-sm text-rust">{team.deadline}</span>
+										</div>
+										<p class="mt-4 text-sm leading-7 text-ink/90">{team.description}</p>
+										<a
+											href={team.link}
+											target="_blank"
+											rel="noreferrer"
+											class="soft-button mt-6 inline-block border border-line px-4 py-2 text-sm hover:bg-cream"
+										>
+											立即跳坑
+										</a>
 									</div>
-									<p class="mt-4 text-sm leading-7 text-ink/90">{team.description}</p>
-									<a
-										href={team.link}
-										target="_blank"
-										rel="noreferrer"
-										class="mt-6 inline-block border border-line px-4 py-2 text-sm hover:bg-cream"
-									>
-										查看入口
-									</a>
 								</article>
 							))
 						}
@@ -263,35 +350,35 @@ const vlog = {
 			</section>
 
 			<section id="timeline" class="border-b border-line">
-				<div class="mx-auto max-w-6xl px-6 py-16">
+				<div data-reveal class="mx-auto max-w-6xl px-6 py-16">
 					<p class="mb-3 text-sm tracking-[0.2em] text-rust">TIMELINE</p>
 					<h2 class="text-3xl font-semibold">重要時程</h2>
-					<div class="mt-10 grid gap-px border border-line bg-line md:grid-cols-2">
-						<div class="bg-cream p-5">
+					<div class="soft-frame mt-10 grid gap-px overflow-hidden border border-line bg-line md:grid-cols-2">
+						<div class="soft-card bg-cream p-5 shadow-sm">
 							<p class="text-sm">2026 / 04 / 01</p>
 							<p class="mt-2 text-lg font-medium">一切從這裡開始</p>
 						</div>
-						<div class="bg-cream p-5">
+						<div class="soft-card bg-cream p-5 shadow-sm">
 							<p class="text-sm">2026 / 04 / 01</p>
 							<p class="mt-2 text-lg font-medium">工人跳坑開始</p>
 						</div>
-						<div class="bg-cream p-5">
+						<div class="soft-card bg-cream p-5 shadow-sm">
 							<p class="text-sm">TBD</p>
 							<p class="mt-2 text-lg font-medium">工人跳坑截止</p>
 						</div>
-						<div class="bg-cream p-5">
+						<div class="soft-card bg-cream p-5 shadow-sm">
 							<p class="text-sm">TBD</p>
 							<p class="mt-2 text-lg font-medium">線上籌備開跑</p>
 						</div>
-						<div class="bg-cream p-5">
+						<div class="soft-card bg-cream p-5 shadow-sm">
 							<p class="text-sm">TBD</p>
 							<p class="mt-2 text-lg font-medium">工人相見歡</p>
 						</div>
-						<div class="bg-cream p-5">
+						<div class="soft-card bg-cream p-5 shadow-sm">
 							<p class="text-sm">TBD</p>
 							<p class="mt-2 text-lg font-medium">學員報名開始</p>
 						</div>
-						<div class="bg-cream p-5 md:col-span-2">
+						<div class="soft-card bg-cream p-5 shadow-sm md:col-span-2">
 							<p class="text-sm">2026 / 07 / 08 - 07 / 12</p>
 							<p class="mt-2 text-lg font-medium">出發</p>
 						</div>
@@ -306,20 +393,24 @@ const vlog = {
 					<p class="mt-4 max-w-2xl text-base leading-8 text-ink/90">
 						因為有這群人在背後搞事，才有今年的五天四夜。
 					</p>
-					<div class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+					<div data-stagger class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
 						{
 							staffMembers.map((member) => (
-								<article class="border border-line bg-paper p-5">
-									{member.avatar && (
-										<img
-											src={member.avatar}
-											alt={member.name}
-											class="mb-4 h-16 w-16 border border-line object-cover"
-											loading="lazy"
-										/>
-									)}
-									<p class="text-xl font-semibold">{member.name}</p>
-									<p class="mt-2 text-sm leading-7 text-ink/80">{member.role}</p>
+								<article data-stagger-item class="soft-card border border-line bg-paper p-5 shadow-[0_16px_32px_color-mix(in_srgb,var(--color-ink)_8%,transparent)]">
+									<div class="flex items-center gap-4">
+										{member.avatar && (
+											<img
+												src={member.avatar}
+												alt={member.name}
+												class="soft-avatar h-16 w-16 shrink-0 border border-line object-cover"
+												loading="lazy"
+											/>
+										)}
+										<div class="min-w-0">
+											<p class="text-xl font-semibold">{member.name}</p>
+											<p class="mt-1 text-sm leading-7 text-ink/80">{member.role}</p>
+										</div>
+									</div>
 								</article>
 							))
 						}
@@ -329,7 +420,7 @@ const vlog = {
 
 			<section class="border-b border-line">
 				<div class="mx-auto max-w-6xl px-6 py-16">
-					<div class="grid gap-8 border border-line bg-cream md:grid-cols-[1fr_1.4fr]">
+					<div data-reveal class="soft-frame grid gap-8 overflow-hidden border border-line bg-cream shadow-[0_28px_60px_color-mix(in_srgb,var(--color-ink)_10%,transparent)] md:grid-cols-[1fr_1.4fr]">
 						<div class="flex flex-col justify-between p-8 md:p-10">
 							<div>
 								<p class="mb-3 text-sm tracking-[0.2em] text-rust">VLOG</p>
@@ -346,7 +437,7 @@ const vlog = {
 									href={vlog.url}
 									target="_blank"
 									rel="noreferrer"
-									class="bg-rust px-5 py-3 text-cream hover:bg-rust-strong"
+									class="soft-button bg-rust px-5 py-3 text-cream hover:bg-rust-strong"
 								>
 									觀看 2025 Vlog
 								</a>
@@ -362,6 +453,7 @@ const vlog = {
 								src={vlog.thumbnail}
 								alt={vlog.title}
 								class="h-full w-full object-cover transition duration-300 group-hover:scale-[1.02]"
+								data-parallax
 								loading="lazy"
 							/>
 							<div class="absolute inset-0 bg-gradient-to-t from-ink/70 via-ink/15 to-transparent"></div>
@@ -370,7 +462,7 @@ const vlog = {
 									<p class="text-sm tracking-[0.2em] text-sand">YOUTUBE</p>
 									<p class="mt-2 text-2xl font-semibold">{vlog.title}</p>
 								</div>
-								<div class="flex h-14 w-14 items-center justify-center rounded-full border border-cream bg-ink/40 text-lg backdrop-blur-sm">
+								<div class="soft-button flex h-14 w-14 items-center justify-center border border-cream bg-ink/40 text-lg backdrop-blur-sm">
 									▶
 								</div>
 							</div>
@@ -379,8 +471,51 @@ const vlog = {
 				</div>
 			</section>
 
+			<section class="border-b border-line bg-cream/60">
+				<div class="mx-auto max-w-6xl px-6 py-16">
+					<p class="mb-3 text-sm tracking-[0.2em] text-rust">PAST YEARS</p>
+					<h2 class="text-3xl font-semibold">歷屆成果</h2>
+					<div data-stagger class="mt-10 grid gap-4 md:grid-cols-3">
+						<div data-stagger-item class="soft-card border border-line bg-paper p-5 shadow-[0_16px_32px_color-mix(in_srgb,var(--color-ink)_8%,transparent)]">
+							<p class="text-4xl font-semibold">10</p>
+							<p class="mt-2 text-sm leading-7 text-ink/90">2026 是第 10 屆。</p>
+						</div>
+						<div data-stagger-item class="soft-card border border-line bg-paper p-5 shadow-[0_16px_32px_color-mix(in_srgb,var(--color-ink)_8%,transparent)]">
+							<p class="text-4xl font-semibold">五天四夜</p>
+							<p class="mt-2 text-sm leading-7 text-ink/90">五天四夜，課程、實作、黑客松與社群交流一起發生。</p>
+						</div>
+						<div data-stagger-item class="soft-card border border-line bg-paper p-5 shadow-[0_16px_32px_color-mix(in_srgb,var(--color-ink)_8%,transparent)]">
+							<p class="text-4xl font-semibold">2014-</p>
+							<p class="mt-2 text-sm leading-7 text-ink/90">這不是第一次，我們已經辦了很多年。</p>
+						</div>
+					</div>
+					<div class="past-years-marquee mt-8 overflow-hidden">
+						<div class="past-years-marquee__fade hidden md:block"></div>
+						<div class="past-years-marquee__fade past-years-marquee__fade--right hidden md:block"></div>
+						<div class="past-years-marquee__track">
+							{[...groupPhotos, ...groupPhotos].map((photo, index) => (
+								<figure class="past-years-marquee__item">
+									<img
+										src={photo.src}
+										alt={photo.alt}
+										class="h-full w-full object-cover"
+										loading={index < groupPhotos.length ? 'eager' : 'lazy'}
+									/>
+								</figure>
+							))}
+						</div>
+					</div>
+					<div class="mt-8 flex flex-wrap gap-4">
+						<a href="https://sitcon.camp/2025/" target="_blank" rel="noreferrer" class="soft-button border border-line px-4 py-2 text-sm hover:bg-paper">2025 官網</a>
+						<a href="https://sitcon.camp/2024/" target="_blank" rel="noreferrer" class="soft-button border border-line px-4 py-2 text-sm hover:bg-paper">2024 官網</a>
+						<a href="https://youtu.be/CansA62TYXY?si=kxK2kscZecsTSdRv" target="_blank" rel="noreferrer" class="soft-button border border-line px-4 py-2 text-sm hover:bg-paper">2025 Vlog</a>
+						<a href="https://www.youtube.com/watch?v=b7r7DiEWsvA" target="_blank" rel="noreferrer" class="soft-button border border-line px-4 py-2 text-sm hover:bg-paper">2024 Vlog</a>
+					</div>
+				</div>
+			</section>
+
 			<section class="border-b border-line">
-				<div class="mx-auto grid max-w-6xl gap-12 px-6 py-16 md:grid-cols-2">
+				<div data-reveal class="mx-auto grid max-w-6xl gap-12 px-6 py-16 md:grid-cols-2">
 					<div>
 						<p class="mb-3 text-sm tracking-[0.2em] text-rust">FOR STUDENTS</p>
 						<h2 class="text-3xl font-semibold">想當學員的人</h2>
@@ -393,10 +528,10 @@ const vlog = {
 							如果你想先了解 SITCON Camp，可以先看看去年的網站和回顧影片，或追蹤 SITCON 社群。
 						</p>
 						<div class="flex flex-wrap gap-4 pt-2">
-							<a href="https://sitcon.camp/2025/" target="_blank" rel="noreferrer" class="border border-line px-5 py-3 hover:bg-cream">
+							<a href="https://sitcon.camp/2025/" target="_blank" rel="noreferrer" class="soft-button border border-line px-5 py-3 hover:bg-cream">
 								看 2025 官網
 							</a>
-							<a href="https://sitcon.org/ig" target="_blank" rel="noreferrer" class="border border-line px-5 py-3 hover:bg-cream">
+							<a href="https://sitcon.org/ig" target="_blank" rel="noreferrer" class="soft-button border border-line px-5 py-3 hover:bg-cream">
 								追蹤最新消息
 							</a>
 						</div>
@@ -404,41 +539,14 @@ const vlog = {
 				</div>
 			</section>
 
-			<section class="border-b border-line bg-cream/60">
-				<div class="mx-auto max-w-6xl px-6 py-16">
-					<p class="mb-3 text-sm tracking-[0.2em] text-rust">PAST YEARS</p>
-					<h2 class="text-3xl font-semibold">歷屆成果</h2>
-					<div class="mt-10 grid gap-4 md:grid-cols-3">
-						<div class="border border-line bg-paper p-5">
-							<p class="text-4xl font-semibold">10</p>
-							<p class="mt-2 text-sm leading-7 text-ink/90">2026 是第十屆，也是十週年。</p>
-						</div>
-						<div class="border border-line bg-paper p-5">
-							<p class="text-4xl font-semibold">5D4N</p>
-							<p class="mt-2 text-sm leading-7 text-ink/90">五天四夜，課程、實作、黑客松與社群交流一起發生。</p>
-						</div>
-						<div class="border border-line bg-paper p-5">
-							<p class="text-4xl font-semibold">2014-</p>
-							<p class="mt-2 text-sm leading-7 text-ink/90">這不是第一次，我們已經辦了很多年。</p>
-						</div>
-					</div>
-					<div class="mt-8 flex flex-wrap gap-4">
-						<a href="https://sitcon.camp/2025/" target="_blank" rel="noreferrer" class="border border-line px-4 py-2 text-sm hover:bg-paper">2025 官網</a>
-						<a href="https://sitcon.camp/2024/" target="_blank" rel="noreferrer" class="border border-line px-4 py-2 text-sm hover:bg-paper">2024 官網</a>
-						<a href="https://youtu.be/CansA62TYXY?si=kxK2kscZecsTSdRv" target="_blank" rel="noreferrer" class="border border-line px-4 py-2 text-sm hover:bg-paper">2025 Vlog</a>
-						<a href="https://www.youtube.com/watch?v=b7r7DiEWsvA" target="_blank" rel="noreferrer" class="border border-line px-4 py-2 text-sm hover:bg-paper">2024 Vlog</a>
-					</div>
-				</div>
-			</section>
-
 			<section id="faq" class="border-b border-line">
-				<div class="mx-auto max-w-6xl px-6 py-16">
+				<div data-reveal class="mx-auto max-w-6xl px-6 py-16">
 					<p class="mb-3 text-sm tracking-[0.2em] text-rust">FAQ</p>
 					<h2 class="text-3xl font-semibold">常見問題</h2>
 					<div class="mt-10 space-y-4">
 						{
 							faqItems.map((item) => (
-								<details class="border border-line bg-paper p-5">
+								<details class="soft-card border border-line bg-paper p-5 shadow-[0_14px_28px_color-mix(in_srgb,var(--color-ink)_7%,transparent)]">
 									<summary class="cursor-pointer text-lg font-medium">{item.question}</summary>
 									<p class="mt-4 max-w-3xl text-sm leading-7 text-ink/90">{item.answer}</p>
 								</details>
@@ -450,15 +558,125 @@ const vlog = {
 
 		</main>
 
-		<footer class="mx-auto max-w-6xl px-6 py-10 text-sm leading-7 text-ink/90">
-			<div class="flex flex-wrap gap-x-6 gap-y-2">
-				<a href="https://i.sitcon.org/camp-recruit" target="_blank" rel="noreferrer" class="hover:text-rust">工人招募表單</a>
-				<a href="https://hackmd.io/@SITCON/2026-camp-recruit" target="_blank" rel="noreferrer" class="hover:text-rust">招募說明文件</a>
-				<a href="https://sitcon.org" target="_blank" rel="noreferrer" class="hover:text-rust">SITCON 官網</a>
-				<a href="https://sitcon.org/fb" target="_blank" rel="noreferrer" class="hover:text-rust">Facebook</a>
-				<a href="https://sitcon.org/ig" target="_blank" rel="noreferrer" class="hover:text-rust">Instagram</a>
+		<footer class="border-t border-line bg-cream/60">
+			<div class="mx-auto max-w-6xl px-6 py-12 text-sm leading-7 text-ink/90">
+				<div class="grid gap-10 md:grid-cols-4">
+					<div class="md:col-span-1">
+						<p class="text-base font-semibold">學生計算機年會</p>
+						<p class="mt-2">Students' Information Technology</p>
+						<p>Conference</p>
+					</div>
+
+					<div>
+						<p class="text-base font-semibold">聯繫我們</p>
+						<p class="mt-3">合作聯繫：<a href="mailto:contact@sitcon.org" class="hover:text-rust">contact@sitcon.org</a></p>
+						<p class="mt-2">報名事宜：<a href="mailto:ask@sitcon.camp" class="hover:text-rust">ask@sitcon.camp</a></p>
+					</div>
+
+					<div>
+						<p class="text-base font-semibold">社群媒體</p>
+						<div class="mt-3 flex flex-wrap gap-x-4 gap-y-1">
+							<a href="https://sitcon.org/fb" target="_blank" rel="noreferrer" class="hover:text-rust">Facebook</a>
+							<a href="https://sitcon.org/ig" target="_blank" rel="noreferrer" class="hover:text-rust">Instagram</a>
+							<a href="https://sitcon.org/flickr" target="_blank" rel="noreferrer" class="hover:text-rust">Flickr</a>
+							<a href="https://sitcon.org/telegram" target="_blank" rel="noreferrer" class="hover:text-rust">Telegram</a>
+							<a href="https://sitcon.org/twitter" target="_blank" rel="noreferrer" class="hover:text-rust">X</a>
+							<a href="https://sitcon.org/youtube" target="_blank" rel="noreferrer" class="hover:text-rust">YouTube</a>
+							<a href="https://sitcon.org/plurk" target="_blank" rel="noreferrer" class="hover:text-rust">Plurk</a>
+						</div>
+					</div>
+
+					<div>
+						<p class="text-base font-semibold">歷年網站</p>
+						<div class="mt-3 flex flex-wrap gap-x-4 gap-y-1">
+							<a href="https://sitcon.camp/2025/" target="_blank" rel="noreferrer" class="hover:text-rust">2025</a>
+							<a href="https://sitcon.camp/2024/" target="_blank" rel="noreferrer" class="hover:text-rust">2024</a>
+							<a href="https://sitcon.camp/2023/" target="_blank" rel="noreferrer" class="hover:text-rust">2023</a>
+							<a href="https://sitcon.camp/2021/" target="_blank" rel="noreferrer" class="hover:text-rust">2021</a>
+							<a href="https://sitcon.camp/2019/" target="_blank" rel="noreferrer" class="hover:text-rust">2019</a>
+							<a href="https://sitcon.camp/2017/" target="_blank" rel="noreferrer" class="hover:text-rust">2017</a>
+							<a href="https://sitcon.camp/2016/" target="_blank" rel="noreferrer" class="hover:text-rust">2016</a>
+							<a href="https://sitcon.camp/2015/" target="_blank" rel="noreferrer" class="hover:text-rust">2015</a>
+							<a href="https://sitcon.camp/2014/" target="_blank" rel="noreferrer" class="hover:text-rust">2014</a>
+						</div>
+					</div>
+				</div>
+
+				<p class="mt-10">SITCON Camp 2026. 學生辦的、給學生玩的資訊科技夏令營。</p>
 			</div>
-			<p class="mt-6">SITCON Camp 2026. 學生辦的、給學生玩的資訊科技夏令營。</p>
 		</footer>
 	</div>
+
+	<script>
+		import initLandingAnimations from '../scripts/landing-animations';
+
+		initLandingAnimations();
+	</script>
 </Layout>
+
+<style>
+	.past-years-marquee {
+		position: relative;
+		padding: 1rem 0;
+	}
+
+	.past-years-marquee__track {
+		display: flex;
+		gap: 1rem;
+		width: max-content;
+		animation: past-years-marquee-right 38s linear infinite;
+		will-change: transform;
+	}
+
+	.past-years-marquee__item {
+		flex: 0 0 clamp(16rem, 32vw, 24rem);
+		height: clamp(12rem, 24vw, 18rem);
+		overflow: hidden;
+		border: 1px solid var(--color-line);
+		border-radius: 22px;
+		background: var(--color-cream);
+	}
+
+	.past-years-marquee__fade {
+		position: absolute;
+		inset: 0 auto 0 0;
+		width: 5rem;
+		background: linear-gradient(90deg, color-mix(in srgb, var(--color-paper) 96%, transparent), transparent);
+		pointer-events: none;
+		z-index: 1;
+	}
+
+	.past-years-marquee__fade--right {
+		inset: 0 0 0 auto;
+		background: linear-gradient(270deg, color-mix(in srgb, var(--color-paper) 96%, transparent), transparent);
+	}
+
+	@keyframes past-years-marquee-right {
+		from {
+			transform: translateX(calc(-50% - 0.5rem));
+		}
+
+		to {
+			transform: translateX(0);
+		}
+	}
+
+	@media (max-width: 767px) {
+		.past-years-marquee__track {
+			gap: 0.75rem;
+			animation-duration: 24s;
+		}
+
+		.past-years-marquee__item {
+			flex-basis: 14rem;
+			height: 10rem;
+			border-radius: 18px;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.past-years-marquee__track {
+			animation: none;
+		}
+	}
+</style>
