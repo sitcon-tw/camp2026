@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@astrojs/partytown':
+        specifier: ^2.1.6
+        version: 2.1.6
       '@tailwindcss/vite':
         specifier: ^4.2.2
         version: 4.2.2(vite@7.3.2(jiti@2.6.1)(lightningcss@1.32.0))
@@ -29,8 +32,18 @@ importers:
       tailwindcss:
         specifier: ^4.2.2
         version: 4.2.2
+    devDependencies:
+      prettier:
+        specifier: 3.8.2
+        version: 3.8.2
+      prettier-plugin-astro:
+        specifier: 0.14.1
+        version: 0.14.1
 
 packages:
+
+  '@astrojs/compiler@2.13.1':
+    resolution: {integrity: sha512-f3FN83d2G/v32ipNClRKgYv30onQlMZX1vCeZMjPsMMPl1mDpmbl0+N5BYo4S/ofzqJyS5hvwacEo0CCVDn/Qg==}
 
   '@astrojs/compiler@3.0.1':
     resolution: {integrity: sha512-z97oYbdebO5aoWzuJ/8q5hLK232+17KcLZ7cJ8BCWk6+qNzVxn/gftC0KzMBUTD8WAaBkPpNSQK6PXLnNrZ0CA==}
@@ -40,6 +53,9 @@ packages:
 
   '@astrojs/markdown-remark@7.1.0':
     resolution: {integrity: sha512-P+HnCsu2js3BoTc8kFmu+E9gOcFeMdPris75g+Zl4sY8+bBRbSQV6xzcBDbZ27eE7yBGEGQoqjpChx+KJYIPYQ==}
+
+  '@astrojs/partytown@2.1.6':
+    resolution: {integrity: sha512-pS95OSnPkSmuOHzwLXCea8p4P8bqmA2fm3BUBW6/egzSTaWYte/Gp1jiAoPmCZ6FV7jGx4GHduO2CUltUXc3Og==}
 
   '@astrojs/prism@4.0.1':
     resolution: {integrity: sha512-nksZQVjlferuWzhPsBpQ1JE5XuKAf1id1/9Hj4a9KG4+ofrlzxUUwX4YGQF/SuDiuiGKEnzopGOt38F3AnVWsQ==}
@@ -524,6 +540,11 @@ packages:
   '@oslojs/encoding@1.1.0':
     resolution: {integrity: sha512-70wQhgYmndg4GCPxPPxPGevRKqTIJ2Nh4OkiMWmDAVYsTQ+Ta7Sq+rPevXyXGdzr30/qZBnyOalCszoMxlyldQ==}
 
+  '@qwik.dev/partytown@0.11.2':
+    resolution: {integrity: sha512-795y49CqBiKiwKAD+QBZlzlqEK275hVcazZ7wBPSfgC23L+vWuA7PJmMpgxojOucZHzYi5rAAQ+IP1I3BKVZxw==}
+    engines: {node: '>=18.0.0'}
+    hasBin: true
+
   '@rollup/pluginutils@5.3.0':
     resolution: {integrity: sha512-5EdhGZtnu3V88ces7s53hhfK5KSASnJZv8Lulpc04cWO3REESroJXg73DFsOmgbU2BhwV0E20bu2IDZb3VKW4Q==}
     engines: {node: '>=14.0.0'}
@@ -983,6 +1004,10 @@ packages:
 
   domutils@3.2.2:
     resolution: {integrity: sha512-6kZKyUajlDuqlHKVX1w7gyslj9MPIXzIFiz/rGu35uC1wMi+kMhQwGhl4lt9unC9Vb9INnY9Z3/ZA3+FhASLaw==}
+
+  dotenv@16.6.1:
+    resolution: {integrity: sha512-uBq4egWHTcTt33a72vpSG0z3HnPuIl6NqYcTrKEg2azoEyl2hpW0zqlxysq2pK9HlDIHyHyakeYaYnSAwd8bow==}
+    engines: {node: '>=12'}
 
   dset@3.1.4:
     resolution: {integrity: sha512-2QF/g9/zTaPDc3BjNcVTGoBbXBgYfMTTceLaYcFJ/W9kggFUkhxD/hMEeuLKbugyef9SqAx8cpgwlIP/jinUTA==}
@@ -1464,6 +1489,15 @@ packages:
     resolution: {integrity: sha512-7a70Nsot+EMX9fFU3064K/kdHWZqGVY+BADLyXc8Dfv+mTLLVl6JzJpPaCZ2kQL9gIJvKXSLMHhqdRRjwQeFtw==}
     engines: {node: ^10 || ^12 || >=14}
 
+  prettier-plugin-astro@0.14.1:
+    resolution: {integrity: sha512-RiBETaaP9veVstE4vUwSIcdATj6dKmXljouXc/DDNwBSPTp8FRkLGDSGFClKsAFeeg+13SB0Z1JZvbD76bigJw==}
+    engines: {node: ^14.15.0 || >=16.0.0}
+
+  prettier@3.8.2:
+    resolution: {integrity: sha512-8c3mgTe0ASwWAJK+78dpviD+A8EqhndQPUBpNUIPt6+xWlIigCwfN01lWr9MAede4uqXGTEKeQWTvzb3vjia0Q==}
+    engines: {node: '>=14'}
+    hasBin: true
+
   prismjs@1.30.0:
     resolution: {integrity: sha512-DEvV2ZF2r2/63V+tK8hQvrR2ZGn10srHbXviTlcv7Kpzw8jWiNTqbVgjO3IY8RxrrOUF8VPMQQFysYYYv0YZxw==}
     engines: {node: '>=6'}
@@ -1532,6 +1566,12 @@ packages:
     engines: {node: '>=18.0.0', npm: '>=8.0.0'}
     hasBin: true
 
+  s.color@0.0.15:
+    resolution: {integrity: sha512-AUNrbEUHeKY8XsYr/DYpl+qk5+aM+DChopnWOPEzn8YKzOhv4l2zH6LzZms3tOZP3wwdOyc0RmTciyi46HLIuA==}
+
+  sass-formatter@0.7.9:
+    resolution: {integrity: sha512-CWZ8XiSim+fJVG0cFLStwDvft1VI7uvXdCNJYXhDvowiv+DsbD1nXLiQ4zrE5UBvj5DWZJ93cwN0NX5PMsr1Pw==}
+
   sax@1.6.0:
     resolution: {integrity: sha512-6R3J5M4AcbtLUdZmRv2SygeVaM7IhrLXu9BmnOGmmACak8fiUtOsYNWUS4uK7upbmHIBbLBeFeI//477BKLBzA==}
     engines: {node: '>=11.0.0'}
@@ -1572,6 +1612,9 @@ packages:
 
   stringify-entities@4.0.4:
     resolution: {integrity: sha512-IwfBptatlO+QCJUo19AqvrPNqlVMpW9YEL2LIVY+Rpv2qsjCGxaDLNRgeGsQWJhfItebuJhsGSLjaBbNSQ+ieg==}
+
+  suf-log@2.5.3:
+    resolution: {integrity: sha512-KvC8OPjzdNOe+xQ4XWJV2whQA0aM1kGVczMQ8+dStAO6KfEB140JEVQ9dE76ONZ0/Ylf67ni4tILPJB41U0eow==}
 
   svgo@4.0.1:
     resolution: {integrity: sha512-XDpWUOPC6FEibaLzjfe0ucaV0YrOjYotGJO1WpF0Zd+n6ZGEQUsSugaoLq9QkEZtAfQIxT42UChcssDVPP3+/w==}
@@ -1814,6 +1857,8 @@ packages:
 
 snapshots:
 
+  '@astrojs/compiler@2.13.1': {}
+
   '@astrojs/compiler@3.0.1': {}
 
   '@astrojs/internal-helpers@0.8.0':
@@ -1845,6 +1890,11 @@ snapshots:
       vfile: 6.0.3
     transitivePeerDependencies:
       - supports-color
+
+  '@astrojs/partytown@2.1.6':
+    dependencies:
+      '@qwik.dev/partytown': 0.11.2
+      mrmime: 2.0.1
 
   '@astrojs/prism@4.0.1':
     dependencies:
@@ -2165,6 +2215,10 @@ snapshots:
       '@jridgewell/sourcemap-codec': 1.5.5
 
   '@oslojs/encoding@1.1.0': {}
+
+  '@qwik.dev/partytown@0.11.2':
+    dependencies:
+      dotenv: 16.6.1
 
   '@rollup/pluginutils@5.3.0(rollup@4.60.1)':
     dependencies:
@@ -2610,6 +2664,8 @@ snapshots:
       dom-serializer: 2.0.0
       domelementtype: 2.3.0
       domhandler: 5.0.3
+
+  dotenv@16.6.1: {}
 
   dset@3.1.4: {}
 
@@ -3291,6 +3347,14 @@ snapshots:
       picocolors: 1.1.1
       source-map-js: 1.2.1
 
+  prettier-plugin-astro@0.14.1:
+    dependencies:
+      '@astrojs/compiler': 2.13.1
+      prettier: 3.8.2
+      sass-formatter: 0.7.9
+
+  prettier@3.8.2: {}
+
   prismjs@1.30.0: {}
 
   property-information@7.1.0: {}
@@ -3431,6 +3495,12 @@ snapshots:
       '@rollup/rollup-win32-x64-msvc': 4.60.1
       fsevents: 2.3.3
 
+  s.color@0.0.15: {}
+
+  sass-formatter@0.7.9:
+    dependencies:
+      suf-log: 2.5.3
+
   sax@1.6.0: {}
 
   semver@7.7.4: {}
@@ -3519,6 +3589,10 @@ snapshots:
     dependencies:
       character-entities-html4: 2.1.0
       character-entities-legacy: 3.0.0
+
+  suf-log@2.5.3:
+    dependencies:
+      s.color: 0.0.15
 
   svgo@4.0.1:
     dependencies:

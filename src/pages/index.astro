@@ -2,7 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import { Image } from 'astro:assets';
 import SitconCampLogo from '../assets/sitcon-camp.svg';
-import heroImage from '../assets/sitcon-2025.jpg';
+import introVideo from '../assets/intro.mp4';
 import classActivitiesImage from '../assets/group/class-activities.jpg';
 import designImage from '../assets/group/design.jpg';
 import developImage from '../assets/group/develop.jpg';
@@ -207,9 +207,11 @@ const vlog = {
 
 const publicCalendarUrl =
 	'https://calendar.google.com/calendar/embed?src=rf14d0k6cfstdnac3bigqv72ho%40group.calendar.google.com&ctz=Asia%2FTaipei';
+const seoDescription =
+	'SITCON Camp 2026 是由學生辦、給學生玩的資訊科技夏令營，將於 2026 年 7 月 8 日至 7 月 12 日在國立陽明交通大學舉辦。';
 ---
 
-<Layout title="SITCON Camp 2026">
+<Layout title="SITCON Camp 2026" description={seoDescription} image="/og-image.jpg">
 	<div class="bg-paper text-ink">
 		<header data-header class="site-header fixed inset-x-0 top-0 z-30 border-b border-line bg-paper/80 backdrop-blur-sm">
 			<div class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-6 py-4">
@@ -236,13 +238,17 @@ const publicCalendarUrl =
 
 		<main id="top" class="relative z-10">
 			<section data-hero-section class="relative overflow-hidden border-b border-line bg-sand/15 text-cream">
-				<Image
-					src={heroImage}
-					alt=""
+				<video
+					data-hero-video
 					class="absolute inset-0 h-full w-full object-cover object-[62%_center] md:object-center"
-					loading="eager"
-					fetchpriority="high"
-				/>
+					autoplay
+					muted
+					loop
+					playsinline
+					aria-hidden="true"
+				>
+					<source src={introVideo} type="video/mp4" />
+				</video>
 				<div class="absolute inset-0 bg-ink/56"></div>
 				<div class="relative z-10 mx-auto flex min-h-screen max-w-6xl items-center px-6 py-20 md:py-28">
 					<div class="max-w-4xl">

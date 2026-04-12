@@ -12,6 +12,7 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@astrojs/partytown": "^2.1.6",
     "@tailwindcss/vite": "^4.2.2",
     "astro": "^6.1.5",
     "astro-favicons": "^3.1.6",
@@ -19,5 +20,9 @@
     "lenis": "^1.3.21",
     "sharp": "^0.34.5",
     "tailwindcss": "^4.2.2"
+  },
+  "devDependencies": {
+    "prettier": "3.8.2",
+    "prettier-plugin-astro": "0.14.1"
   }
 }
