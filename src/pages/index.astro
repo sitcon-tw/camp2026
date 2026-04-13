@@ -24,6 +24,7 @@ const recruitTeams = [
     name: "隊輔組",
     description: "陪伴學員、協助學習、帶動活動氣氛。",
     deadline: "4/18 23:59",
+    deadlineAt: "2026-04-18T23:59:59+08:00",
     link: "https://forms.gle/YJsYyTB9XSLcWdBg8",
     image: teamAssistantImage,
   },
@@ -31,6 +32,7 @@ const recruitTeams = [
     name: "編輯組",
     description: "經營社群、寫文案、剪輯影音、發想宣傳內容。",
     deadline: "4/25 23:59",
+    deadlineAt: "2026-04-25T23:59:59+08:00",
     link: "https://forms.gle/7LCEaH2zD3V5vDZC6",
     image: editingGroupImage,
   },
@@ -38,6 +40,7 @@ const recruitTeams = [
     name: "課程活動組",
     description: "規劃主線課程、活動內容與營期流程。",
     deadline: "4/14 23:59",
+    deadlineAt: "2026-04-14T23:59:59+08:00",
     link: "https://forms.gle/TFUEkkvjR1po38B2A",
     image: classActivitiesImage,
   },
@@ -45,6 +48,7 @@ const recruitTeams = [
     name: "設計組",
     description: "負責主視覺、網頁、社群出圖與整體視覺。",
     deadline: "招募中",
+    deadlineAt: null,
     link: "https://forms.gle/ztny7QQ3vX6yvM4U8",
     image: designImage,
   },
@@ -52,6 +56,7 @@ const recruitTeams = [
     name: "開發組",
     description: "開發 Camp 官網與營期間會用到的活動網站。",
     deadline: "4/24 截止",
+    deadlineAt: "2026-04-24T23:59:59+08:00",
     link: "https://forms.gle/3AZ9MFu4nA1uCQheA",
     image: developImage,
   },
@@ -59,24 +64,26 @@ const recruitTeams = [
     name: "庶務組",
     description: "負責學員與工作人員的吃住與現場後勤。",
     deadline: "4/18 截止",
+    deadlineAt: "2026-04-18T23:59:59+08:00",
     link: "https://t.me/agong1021",
     image: fieldAffairsImage,
   },
 ];
 
-const deadlineOrder = (deadline: string) => {
-  const match = deadline.match(/(\d{1,2})\/(\d{1,2})/);
-  if (!match) {
+const deadlineOrder = (deadlineAt: string | null) => {
+  if (!deadlineAt) {
     return Number.POSITIVE_INFINITY;
   }
 
-  const [, month, day] = match;
-  return Number(month) * 100 + Number(day);
+  return new Date(deadlineAt).getTime();
 };
 
-const sortedRecruitTeams = [...recruitTeams].sort(
-  (a, b) => deadlineOrder(a.deadline) - deadlineOrder(b.deadline),
-);
+const now = Date.now();
+const sortedRecruitTeams = recruitTeams
+  .filter(
+    (team) => !team.deadlineAt || new Date(team.deadlineAt).getTime() >= now,
+  )
+  .sort((a, b) => deadlineOrder(a.deadlineAt) - deadlineOrder(b.deadlineAt));
 
 const baseUrl = import.meta.env.BASE_URL.endsWith("/")
   ? import.meta.env.BASE_URL
@@ -431,6 +438,7 @@ const seoDescription =
               sortedRecruitTeams.map((team) => (
                 <article
                   data-stagger-item
+                  data-deadline-at={team.deadlineAt}
                   class="soft-card border-line bg-paper overflow-hidden border shadow-[0_20px_40px_color-mix(in_srgb,var(--color-ink)_8%,transparent)]"
                 >
                   <Image
@@ -460,6 +468,20 @@ const seoDescription =
               ))
             }
           </div>
+          <script>
+            document
+              .querySelectorAll<HTMLElement>("[data-deadline-at]")
+              .forEach((card) => {
+                const deadlineAt = card.dataset.deadlineAt;
+
+                if (
+                  deadlineAt &&
+                  new Date(deadlineAt).getTime() < Date.now()
+                ) {
+                  card.remove();
+                }
+              });
+          </script>
         </div>
       </section>
 
@@ -610,18 +632,34 @@ const seoDescription =
             >
             </div>
             <div class="past-years-marquee__track">
-              {
-                [...groupPhotos, ...groupPhotos].map((photo, index) => (
-                  <figure class="past-years-marquee__item">
-                    <Image
-                      src={photo.src}
-                      alt={photo.alt}
-                      class="h-full w-full object-cover"
-                      loading="lazy"
-                    />
-                  </figure>
-                ))
-              }
+              <div class="past-years-marquee__group">
+                {
+                  groupPhotos.map((photo) => (
+                    <figure class="past-years-marquee__item">
+                      <Image
+                        src={photo.src}
+                        alt={photo.alt}
+                        class="h-full w-full object-cover"
+                        loading="lazy"
+                      />
+                    </figure>
+                  ))
+                }
+              </div>
+              <div class="past-years-marquee__group" aria-hidden="true">
+                {
+                  groupPhotos.map((photo) => (
+                    <figure class="past-years-marquee__item">
+                      <Image
+                        src={photo.src}
+                        alt=""
+                        class="h-full w-full object-cover"
+                        loading="lazy"
+                      />
+                    </figure>
+                  ))
+                }
+              </div>
             </div>
           </div>
           <div class="mt-8 flex flex-wrap gap-4">
@@ -964,16 +1002,24 @@ const seoDescription =
   }
 
   .past-years-marquee {
+    --past-years-gap: 1rem;
     position: relative;
     padding: 1rem 0;
   }
 
   .past-years-marquee__track {
     display: flex;
-    gap: 1rem;
     width: max-content;
     animation: past-years-marquee-right 38s linear infinite;
+    transform: translate3d(0, 0, 0);
     will-change: transform;
+  }
+
+  .past-years-marquee__group {
+    display: flex;
+    flex: 0 0 auto;
+    gap: var(--past-years-gap);
+    padding-right: var(--past-years-gap);
   }
 
   .past-years-marquee__item {
@@ -1009,17 +1055,20 @@ const seoDescription =
 
   @keyframes past-years-marquee-right {
     from {
-      transform: translateX(calc(-50% - 0.5rem));
+      transform: translate3d(0, 0, 0);
     }
 
     to {
-      transform: translateX(0);
+      transform: translate3d(-50%, 0, 0);
     }
   }
 
   @media (max-width: 767px) {
+    .past-years-marquee {
+      --past-years-gap: 0.75rem;
+    }
+
     .past-years-marquee__track {
-      gap: 0.75rem;
       animation-duration: 24s;
     }
 
