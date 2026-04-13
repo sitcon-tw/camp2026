@@ -474,10 +474,7 @@ const seoDescription =
               .forEach((card) => {
                 const deadlineAt = card.dataset.deadlineAt;
 
-                if (
-                  deadlineAt &&
-                  new Date(deadlineAt).getTime() < Date.now()
-                ) {
+                if (deadlineAt && new Date(deadlineAt).getTime() < Date.now()) {
                   card.remove();
                 }
               });
@@ -913,9 +910,11 @@ const seoDescription =
       const prefersReducedMotion = window.matchMedia(
         "(prefers-reduced-motion: reduce)",
       ).matches;
-      const connection = (navigator as Navigator & {
-        connection?: { saveData?: boolean };
-      }).connection;
+      const connection = (
+        navigator as Navigator & {
+          connection?: { saveData?: boolean };
+        }
+      ).connection;
 
       const showHeroVideo = () => {
         heroVideo.classList.add("is-ready");
@@ -989,7 +988,7 @@ const seoDescription =
       if ("requestIdleCallback" in window) {
         window.requestIdleCallback(loadHeroVideo, { timeout: 2500 });
       } else {
-        window.setTimeout(loadHeroVideo, 1600);
+        globalThis.setTimeout(loadHeroVideo, 1600);
       }
     }
   </script>
