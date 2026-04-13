@@ -278,7 +278,7 @@ const seoDescription =
         <Image
           src={heroPosterImage}
           alt=""
-          class="absolute inset-0 h-full w-full object-cover object-[62%_center] md:object-center"
+          class="absolute inset-0 h-full w-full object-cover object-center"
           loading="eager"
           fetchpriority="high"
           widths={[640, 960, 1280, 1600]}
@@ -287,7 +287,7 @@ const seoDescription =
         <video
           data-hero-video
           data-video-src={heroVideoSrc}
-          class="hero-background-video absolute inset-0 h-full w-full object-cover object-[62%_center] md:object-center"
+          class="hero-background-video absolute inset-0 h-full w-full object-cover object-center"
           autoplay
           muted
           loop
@@ -967,6 +967,10 @@ const seoDescription =
       heroVideo.addEventListener("playing", showHeroVideo, { once: true });
       heroVideo.addEventListener("error", () => {
         heroVideo.classList.remove("is-ready");
+      });
+      heroVideo.addEventListener("ended", () => {
+        heroVideo.currentTime = 0;
+        playHeroVideo();
       });
       window.addEventListener("pagehide", () => hls?.destroy(), {
         once: true,
