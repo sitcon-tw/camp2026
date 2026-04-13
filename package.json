@@ -8,7 +8,6 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
-    "test": "astro check",
     "lint": "astro check",
     "prettier:write": "prettier --write .",
     "preview": "astro preview",
