@@ -3,6 +3,7 @@ import Layout from "../layouts/Layout.astro";
 import { Image } from "astro:assets";
 import { Calendar, MapPin } from "@lucide/astro";
 import SitconCampLogo from "../assets/sitcon-camp.svg";
+import aboutImage from "../assets/about.jpg";
 import heroPosterImage from "../assets/sitcon-2025.webp";
 import classActivitiesImage from "../assets/group/class-activities.jpg";
 import designImage from "../assets/group/design.jpg";
@@ -383,24 +384,64 @@ const seoDescription =
             <p class="text-rust mb-3 text-sm tracking-[0.2em]">ABOUT</p>
             <h2 class="text-3xl font-semibold">什麼是 SITCON Camp？</h2>
           </div>
-          <div class="text-ink/90 mt-8 max-w-4xl space-y-5 text-base leading-8">
-            <p>
-              隨著資訊科學成為現代必備素養，各種入門語法與工具的學習資源已在網路上百花齊放。自
-              2014 年起，SITCON
-              夏令營陪伴無數對科技懷抱熱忱的學生走過多個年頭。為了因應學習資源的普及與時代的改變，SITCON
-              Camp
-              決定跳脫傳統入門導向的框架，將營隊重新定位為一場「探索型」與「導覽型」的資訊旅程。除了延續社群闖關、視界咖啡館與黑客松等經典互動，我們更期望將開源精神轉化為引路的星光，陪伴學員在浩瀚的資訊領域中，發掘真正屬於自己的專長與熱情。
-            </p>
-            <p>
-              SITCON Camp
-              今年聚焦於一個許多學子共同的迷惘：現今有很大一群人已經踏入資訊領域的門口，可能剛在課堂上學完
-              Python、寫過幾行小程式，卻在面對資安、競程、AI、系統或是開源等龐大分支時，不知道下一步該往哪裡前進。因此，今年我們不只帶你印出「Hello
-              World」，更要陪你尋找「What's
-              Next?」。我們致力於服務這些已經具備基礎、卻渴望釐清各子領域實際面貌的學生，為你在迷惘的青春中提供一個最具啟發性的指路牌。
-            </p>
-            <p>
-              為了達成這個理想，今年的課程迎來了一次瘋狂且大膽的嘗試——我們將以近似「Masterclass（大師課）」的形式重塑營隊體驗。在營期專屬的「主題日」中，將由該領域的專家親自帶路，從相對容易理解的切入點，直搗該領域最迷人、最具代表性的核心。無論是跳脫艱澀數學，親手完成資料前處理並微調（Fine-tune）出專屬的語言模型；還是在安全靶機環境中實作攻擊與防禦，體驗駭客尋找破綻的思維邏輯。透過短時間、高密度的實戰引導，學員將能快速抓到各領域的問題脈絡，在一天內確實觸碰資訊科學最迷人的那一面，並找到讓自己想持續鑽研的未來方向！
-            </p>
+          <div
+            class="mt-8 grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-start"
+          >
+            <div class="text-ink/90 space-y-5 text-base leading-8">
+              <p>
+                隨著資訊科學成為現代必備素養，各種入門語法與工具的學習資源已在網路上百花齊放。自
+                2014 年起，SITCON
+                夏令營陪伴無數對科技懷抱熱忱的學生走過多個年頭。為了因應學習資源的普及與時代的改變，SITCON
+                Camp
+                決定跳脫傳統入門導向的框架，將營隊重新定位為一場「探索型」與「導覽型」的資訊旅程。除了延續社群闖關、視界咖啡館與黑客松等經典互動，我們更期望將開源精神轉化為引路的星光，陪伴學員在浩瀚的資訊領域中，發掘真正屬於自己的專長與熱情。
+              </p>
+              <p>
+                SITCON Camp
+                今年聚焦於一個許多學子共同的迷惘：現今有很大一群人已經踏入資訊領域的門口，可能剛在課堂上學完
+                Python、寫過幾行小程式，卻在面對資安、競程、AI、系統或是開源等龐大分支時，不知道下一步該往哪裡前進。因此，今年我們不只帶你印出「Hello
+                World」，更要陪你尋找「What's
+                Next?」。我們致力於服務這些已經具備基礎、卻渴望釐清各子領域實際面貌的學生，為你在迷惘的青春中提供一個最具啟發性的指路牌。
+              </p>
+              <p>
+                在 Camp
+                的現場，學員不是坐在台下等待答案，而是和隊輔、講者、夥伴一起討論、實作、卡關再突破。每一堂課、每一個任務與每一次交流，都希望讓你更接近真實社群裡解問題的方式。
+              </p>
+              <p>
+                為了達成這個理想，今年的課程迎來了一次瘋狂且大膽的嘗試——我們將以近似「Masterclass（大師課）」的形式重塑營隊體驗。在營期專屬的「主題日」中，將由該領域的專家親自帶路，從相對容易理解的切入點，直搗該領域最迷人、最具代表性的核心。無論是跳脫艱澀數學，親手完成資料前處理並微調（Fine-tune）出專屬的語言模型；還是在安全靶機環境中實作攻擊與防禦，體驗駭客尋找破綻的思維邏輯。透過短時間、高密度的實戰引導，學員將能快速抓到各領域的問題脈絡，在一天內確實觸碰資訊科學最迷人的那一面，並找到讓自己想持續鑽研的未來方向！
+              </p>
+            </div>
+            <div class="space-y-6">
+              <figure
+                class="soft-frame border-line bg-paper overflow-hidden border shadow-[0_24px_52px_color-mix(in_srgb,var(--color-ink)_10%,transparent)]"
+              >
+                <Image
+                  src={aboutImage}
+                  alt="SITCON Camp 學員與隊輔在教室中討論課程任務"
+                  class="aspect-video w-full object-cover"
+                  loading="lazy"
+                />
+              </figure>
+              <div class="grid gap-4 sm:grid-cols-3 lg:grid-cols-1">
+                <div class="border-line border-t pt-5">
+                  <p class="text-lg font-semibold">主題日導覽</p>
+                  <p class="text-ink/85 mt-3 text-sm leading-7">
+                    用一天深入一個資訊領域，從背景脈絡、核心問題到實作體驗，快速理解它值得投入的地方。
+                  </p>
+                </div>
+                <div class="border-line border-t pt-5">
+                  <p class="text-lg font-semibold">實作與協作</p>
+                  <p class="text-ink/85 mt-3 text-sm leading-7">
+                    透過任務、黑客松與小隊討論，把聽到的概念變成可以運作、可以分享、可以繼續改進的作品。
+                  </p>
+                </div>
+                <div class="border-line border-t pt-5">
+                  <p class="text-lg font-semibold">社群交流</p>
+                  <p class="text-ink/85 mt-3 text-sm leading-7">
+                    和來自不同學校的夥伴、工作人員與講者一起生活，認識資訊社群如何互相支持與共同成長。
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
