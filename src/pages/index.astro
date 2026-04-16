@@ -1,6 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import { Image } from "astro:assets";
+import { Calendar, MapPin } from "@lucide/astro";
 import SitconCampLogo from "../assets/sitcon-camp.svg";
 import heroPosterImage from "../assets/sitcon-2025.webp";
 import classActivitiesImage from "../assets/group/class-activities.jpg";
@@ -315,9 +316,26 @@ const seoDescription =
               data-hero-item
               class="text-cream/90 mt-6 max-w-4xl text-lg leading-8 md:text-xl lg:max-w-5xl"
             >
-              五天四夜，把程式、開源、社群和一群新朋友放在同一個夏天。2026
+              7/8-7/12，五天四夜，把程式、開源、社群和一群新朋友放在同一個夏天。2026
               工作人員招募中，學員報名資訊將陸續公開。
             </p>
+            <div
+              data-hero-item
+              class="text-cream mt-6 flex flex-wrap gap-3 text-sm font-medium md:text-base"
+            >
+              <span
+                class="soft-chip border-cream/40 bg-paper/14 inline-flex items-center gap-2 border px-4 py-2 backdrop-blur-md md:px-5 md:py-2.5"
+              >
+                <Calendar class="h-4 w-4 shrink-0 md:h-5 md:w-5" />
+                營期 2026/7/8-7/12
+              </span>
+              <span
+                class="soft-chip border-cream/40 bg-paper/14 inline-flex items-center gap-2 border px-4 py-2 backdrop-blur-md md:px-5 md:py-2.5"
+              >
+                <MapPin class="h-4 w-4 shrink-0 md:h-5 md:w-5" />
+                國立陽明交通大學
+              </span>
+            </div>
             <div data-hero-item class="mt-6 flex flex-wrap gap-4">
               <a
                 href="https://i.sitcon.org/camp-recruit"
@@ -332,20 +350,6 @@ const seoDescription =
                 class="soft-button border-cream/45 bg-paper/14 text-cream hover:bg-paper/22 inline-flex items-center border px-5 py-3 backdrop-blur-md"
               >
                 給想報名的你
-              </a>
-            </div>
-            <div
-              data-hero-item
-              class="text-cream/90 mt-5 flex flex-wrap items-center gap-3 text-sm"
-            >
-              <span class="font-medium">想當學員？</span>
-              <a
-                href="https://sitcon.org/ig"
-                target="_blank"
-                rel="noreferrer"
-                class="soft-button bg-rust text-cream hover:bg-rust-strong inline-flex items-center px-4 py-2"
-              >
-                追蹤最新報名消息
               </a>
             </div>
           </div>
