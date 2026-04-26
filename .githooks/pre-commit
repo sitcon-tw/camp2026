@@ -10,7 +10,12 @@ run() {
 run pnpm build
 run pnpm lint
 
+<<<<<<< HEAD
 if ! run pnpm prettier:check; then
   echo "Prettier check failed. Run \`pnpm prettier:write\`, review the changes, stage them, and commit again."
+=======
+if ! git diff --quiet; then
+  echo "Prettier formatted files. Please review and stage the changes, then \`git add .\` and commit again"
+>>>>>>> 850e054 (feat: add hint to the prettier)
   exit 1
 fi
