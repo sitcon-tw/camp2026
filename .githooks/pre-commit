@@ -12,6 +12,6 @@ run pnpm lint
 run pnpm prettier:write
 
 if ! git diff --quiet; then
-  echo "Prettier formatted files. Please review and stage the changes, then commit again."
+  echo "Prettier formatted files. Please review and stage the changes, then \`git add .\` and commit again"
   exit 1
 fi
