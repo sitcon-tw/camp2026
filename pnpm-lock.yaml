@@ -17,9 +17,6 @@ importers:
       gsap:
         specifier: ^3.14.2
         version: 3.14.2
-      prettier-plugin-tailwindcss:
-        specifier: ^0.7.2
-        version: 0.7.2(prettier-plugin-astro@0.14.1)(prettier@3.8.2)
       sharp:
         specifier: ^0.34.5
         version: 0.34.5
@@ -36,6 +33,9 @@ importers:
       prettier-plugin-astro:
         specifier: 0.14.1
         version: 0.14.1
+      prettier-plugin-tailwindcss:
+        specifier: ^0.7.2
+        version: 0.7.2(prettier-plugin-astro@0.14.1)(prettier@3.8.2)
       typescript:
         specifier: ^5.9.3
         version: 5.9.3
