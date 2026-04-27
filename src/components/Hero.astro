@@ -104,6 +104,7 @@ const heroTitle = "SITCON Camp 2026";
   const topics = intro
     ? Array.from(intro.querySelectorAll<HTMLElement>("[data-hero-intro-topic]"))
     : [];
+  const shouldSkipIntro = window.scrollY > 0;
 
   const wait = (duration: number) =>
     new Promise((resolve) => window.setTimeout(resolve, duration));
@@ -124,6 +125,21 @@ const heroTitle = "SITCON Camp 2026";
     if (intro) {
       intro.hidden = true;
     }
+
+    window.dispatchEvent(new CustomEvent("hero-intro:finished"));
+  };
+
+  const skipIntro = () => {
+    if (intro) {
+      intro.hidden = true;
+    }
+
+    if (heroSubtitle) {
+      heroSubtitle.classList.add("is-visible");
+      heroSubtitle.style.transform = "none";
+    }
+
+    window.dispatchEvent(new CustomEvent("hero-intro:finished"));
   };
 
   const revealHeroSubtitle = async (prefersReducedMotion: boolean) => {
@@ -176,12 +192,12 @@ const heroTitle = "SITCON Camp 2026";
       keyframes: [
         {
           translateY: `${targetY - rowHeight * 0.1}px`,
-          duration: 380,
+          duration: 280,
           ease: "outQuint",
         },
         {
           translateY: `${targetY}px`,
-          duration: 200,
+          duration: 150,
           ease: "outBack(1.9)",
         },
       ],
@@ -204,8 +220,8 @@ const heroTitle = "SITCON Camp 2026";
 
     await animate(final, {
       scale: [
-        { to: 0.96, duration: 380, ease: "outQuint" },
-        { to: 1, duration: 180, ease: "outBack(1.7)" },
+        { to: 0.96, duration: 280, ease: "outQuint" },
+        { to: 1, duration: 140, ease: "outBack(1.7)" },
       ],
     }).then();
 
@@ -266,6 +282,9 @@ const heroTitle = "SITCON Camp 2026";
     topicTrack &&
     topics.length > 0
   ) {
+    if (shouldSkipIntro) {
+      skipIntro();
+    } else {
     const prefersReducedMotion = window.matchMedia(
       "(prefers-reduced-motion: reduce)",
     ).matches;
@@ -278,7 +297,7 @@ const heroTitle = "SITCON Camp 2026";
     }
 
     for (let index = 1; index < topics.length; index += 1) {
-      await wait(index === 1 && !prefersReducedMotion ? 220 : 420);
+      await wait(index === 1 && !prefersReducedMotion ? 150 : 260);
 
       if (prefersReducedMotion) {
         const rowHeight = topicViewport.getBoundingClientRect().height;
@@ -290,12 +309,13 @@ const heroTitle = "SITCON Camp 2026";
       setActiveTopic(index);
     }
 
-    await wait(500);
+    await wait(300);
     await showFinal(prefersReducedMotion);
-    await wait(240);
+    await wait(150);
     await openIntroToHero(prefersReducedMotion);
     finishIntro();
     await revealHeroSubtitle(prefersReducedMotion);
+    }
   }
 </script>
 
