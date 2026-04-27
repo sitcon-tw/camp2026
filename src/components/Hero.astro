@@ -1,7 +1,16 @@
 ---
 const topics = ["資訊安全", "人工智慧", "軟體工程"];
 const finalLine = "那就來 SITCON Camp 2026！";
+const heroSubtitle = "陽明交通大學 7/8 - 7/12";
+const heroTitle = "SITCON Camp 2026";
 ---
+
+<section class="hero-page" aria-labelledby="hero-page-title">
+  <div class="hero-page__content">
+    <p class="hero-page__subtitle">{heroSubtitle}</p>
+    <h1 id="hero-page-title" class="hero-page__title">{heroTitle}</h1>
+  </div>
+</section>
 
 <section data-hero-intro aria-label="SITCON Camp 2026 介紹">
   <div class="hero-intro__stage">
@@ -87,8 +96,8 @@ const finalLine = "那就來 SITCON Camp 2026！";
 
     await animate(question, {
       scale: [
-        { to: 1.025, duration: 180, ease: "outQuad" },
-        { to: 1, duration: 360, ease: "outBounce" },
+        { to: 1.025, duration: 140, ease: "outQuad" },
+        { to: 1, duration: 260, ease: "outBounce" },
       ],
     }).then();
   };
@@ -105,12 +114,12 @@ const finalLine = "那就來 SITCON Camp 2026！";
       keyframes: [
         {
           translateY: `${targetY - rowHeight * 0.1}px`,
-          duration: 540,
+          duration: 380,
           ease: "outQuint",
         },
         {
           translateY: `${targetY}px`,
-          duration: 280,
+          duration: 200,
           ease: "outBack(1.9)",
         },
       ],
@@ -133,8 +142,8 @@ const finalLine = "那就來 SITCON Camp 2026！";
 
     await animate(final, {
       scale: [
-        { to: 0.96, duration: 520, ease: "outQuint" },
-        { to: 1, duration: 260, ease: "outBack(1.7)" },
+        { to: 0.96, duration: 380, ease: "outQuint" },
+        { to: 1, duration: 180, ease: "outBack(1.7)" },
       ],
     }).then();
   };
@@ -154,12 +163,12 @@ const finalLine = "那就來 SITCON Camp 2026！";
     document.documentElement.classList.add("hero-intro-lock");
 
     if (!prefersReducedMotion) {
-      await wait(260);
+      await wait(180);
       await bounceQuestion();
     }
 
     for (let index = 1; index < topics.length; index += 1) {
-      await wait(index === 1 && !prefersReducedMotion ? 360 : 760);
+      await wait(index === 1 && !prefersReducedMotion ? 220 : 420);
 
       if (prefersReducedMotion) {
         const rowHeight = topicViewport.getBoundingClientRect().height;
@@ -171,14 +180,47 @@ const finalLine = "那就來 SITCON Camp 2026！";
       setActiveTopic(index);
     }
 
-    await wait(900);
+    await wait(500);
     await showFinal(prefersReducedMotion);
-    await wait(1100);
+    await wait(700);
     finishIntro();
   }
 </script>
 
 <style>
+  .hero-page {
+    position: relative;
+    min-height: 100svh;
+    overflow: hidden;
+    background: var(--color-background);
+    color: var(--color-foreground);
+  }
+
+  .hero-page__content {
+    position: absolute;
+    inset-inline-start: clamp(1rem, 5vw, 5rem);
+    inset-block-end: clamp(1.5rem, 7vw, 6rem);
+    display: grid;
+    gap: clamp(0.35rem, 1.2vw, 0.9rem);
+  }
+
+  .hero-page__subtitle {
+    margin: 0;
+    font-size: clamp(1.125rem, 2.8vw, 2.25rem);
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: 0;
+  }
+
+  .hero-page__title {
+    margin: 0;
+    white-space: nowrap;
+    font-size: clamp(1.75rem, 7.5vw, 6rem);
+    font-weight: 800;
+    line-height: 0.9;
+    letter-spacing: 0;
+  }
+
   :global(html.hero-intro-lock),
   :global(html.hero-intro-lock body) {
     overflow: hidden;
@@ -252,6 +294,11 @@ const finalLine = "那就來 SITCON Camp 2026！";
   }
 
   @media (max-width: 520px) {
+    .hero-page__content {
+      inset-inline-start: 1rem;
+      inset-block-end: 2rem;
+    }
+
     .hero-intro__stage {
       width: calc(100vw - 1rem);
     }
