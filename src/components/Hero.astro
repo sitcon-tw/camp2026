@@ -6,10 +6,9 @@ const finalPrefix = "那就來";
 const heroSubtitle = "陽明交通大學 7/8 - 7/12";
 const heroTitle = "SITCON Camp 2026";
 const heroWallImages = Object.entries(
-  import.meta.glob<{ default: ImageMetadata }>(
-    "../assets/hero/wall/*.jpg",
-    { eager: true },
-  ),
+  import.meta.glob<{ default: ImageMetadata }>("../assets/hero/wall/*.jpg", {
+    eager: true,
+  }),
 )
   .sort(([firstPath], [secondPath]) => firstPath.localeCompare(secondPath))
   .map(([, image]) => image.default);
@@ -86,12 +85,11 @@ const heroPhotoWallColumns = [
             {[0, 1].map(() => (
               <div class="hero-photo-wall__column-set">
                 {column.items.map(({ imageIndex, classes }) => {
-                  const image = heroWallImages[imageIndex % heroWallImages.length];
+                  const image =
+                    heroWallImages[imageIndex % heroWallImages.length];
 
                   return (
-                    <figure
-                      class:list={["hero-photo-wall__tile", ...classes]}
-                    >
+                    <figure class:list={["hero-photo-wall__tile", ...classes]}>
                       <img
                         class="hero-photo-wall__image"
                         src={image.src}
@@ -236,10 +234,7 @@ const heroPhotoWallColumns = [
       const duration = Number(track.dataset.wallDuration) || 42000;
       const offset = Number(track.dataset.wallOffset) || 0;
       const animation = waapi.animate(track, {
-        transform: [
-          "translate3d(0, 0, 0)",
-          "translate3d(0, -50%, 0)",
-        ],
+        transform: ["translate3d(0, 0, 0)", "translate3d(0, -50%, 0)"],
         duration,
         ease: "linear",
         loop: true,
