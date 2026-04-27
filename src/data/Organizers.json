@@ -1,0 +1,50 @@
+{
+  "主辦": [
+    {
+      "name": "六角學院",
+      "role": "主辦單位",
+      "description": "專注於網頁開發教育的線上學校，提供從入門到進階的實戰課程，學員超過萬人。",
+      "iconPath": "https://api.dicebear.com/9.x/icons/svg?seed=hexschool&icon=code",
+      "url": "https://hexschool.tw"
+    },
+    {
+      "name": "ALPHA Camp",
+      "role": "共同主辦",
+      "description": "以實作為核心的程式學校，透過專案導向學習培養業界即戰力。",
+      "iconPath": "https://api.dicebear.com/9.x/icons/svg?seed=alphacamp&icon=rocket",
+      "url": "https://alphacamp.tw"
+    }
+  ],
+  "協辦": [
+    {
+      "name": "Vue.js Taiwan",
+      "role": "社群協辦",
+      "description": "台灣最大的 Vue.js 開發者社群，定期舉辦 Meetup 與年度研討會。",
+      "iconPath": "https://api.dicebear.com/9.x/icons/svg?seed=vue-tw&icon=globe",
+      "url": "https://vuejs.tw"
+    },
+    {
+      "name": "Svelte Taiwan",
+      "role": "社群協辦",
+      "description": "推廣 Svelte 在台灣的應用，舉辦線上/線下技術分享活動。",
+      "iconPath": "https://api.dicebear.com/9.x/icons/svg?seed=svelte-tw&icon=lightning",
+      "url": "https://svelte.tw"
+    }
+  ],
+  "贊助": [
+    {
+      "name": "GitHub Education",
+      "role": "黃金贊助",
+      "description": "支援學生開發者，提供 GitHub Copilot、GitHub Classroom 等免費教育方案。",
+      "iconPath": "https://api.dicebear.com/9.x/icons/svg?seed=github-edu&icon=star",
+      "url": "https://education.github.com"
+    },
+    {
+      "name": "Vercel",
+      "role": "平台贊助",
+      "description": "提供高效能前端託管服務，支援 Astro、Next.js 等框架一鍵部署。",
+      "iconPath": "https://api.dicebear.com/9.x/icons/svg?seed=vercel&icon=triangle",
+      "url": "https://vercel.com"
+    }
+  ]
+}

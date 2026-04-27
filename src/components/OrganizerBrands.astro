@@ -1,1 +1,137 @@
-<div>Organizer Brands</div>
+---
+import organizers from "../data/Organizers.json";
+import { X } from "@lucide/astro";
+
+type Org = {
+  name: string;
+  role: string;
+  description: string;
+  iconPath: string;
+  url?: string;
+};
+const entries = Object.entries(organizers as Record<string, Org[]>).filter(
+  ([, list]) => list.length,
+);
+---
+
+{
+  entries.map(([tag, items]) => (
+    <section class="m-12">
+      <div class="mb-6 flex items-center gap-4">
+        <span class={`shrink-0 rounded-full px-3 py-1.5 text-sm font-semibold`}>
+          {tag}
+        </span>
+        <div class="from-foreground/15 h-px flex-1 bg-linear-to-r to-transparent" />
+      </div>
+      <div class="grid grid-cols-3 gap-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8">
+        {items.map((org, i) => (
+          <button
+            popovertarget={`org-${tag}-${i}`}
+            class="group bg-background/80 border-foreground/8 hover:bg-background hover:border-orange/30 focus-visible:ring-primary-blue/50 flex cursor-pointer flex-col items-center gap-2 rounded-2xl border p-3 transition-all duration-200 hover:-translate-y-1 hover:shadow-[0_4px_20px_rgba(246,153,119,0.18)] focus-visible:ring-2 focus-visible:ring-offset-1 focus-visible:outline-none"
+          >
+            <div class="flex size-14 items-center justify-center rounded-xl bg-white/60 p-1 transition-all duration-200 group-hover:bg-white group-hover:shadow-sm">
+              <img
+                src={org.iconPath}
+                alt={org.name}
+                class="size-full object-contain"
+              />
+            </div>
+            <span class="text-foreground/55 group-hover:text-foreground/85 text-center text-xs leading-tight font-medium transition-colors duration-200">
+              {org.name}
+            </span>
+          </button>
+        ))}
+      </div>
+    </section>
+  ))
+}
+
+{
+  entries.flatMap(([tag, items]) =>
+    items.map((org, i) => (
+      <div
+        popover
+        id={`org-${tag}-${i}`}
+        class="m-auto w-full max-w-sm rounded-2xl border-0 p-0 shadow-2xl"
+      >
+        <div class="relative flex flex-col items-center gap-4 px-6 pt-8 pb-6">
+          <div class={`absolute top-0 right-0 left-0 h-1.5 rounded-t-2xl`} />
+
+          <button
+            popovertarget={`org-${tag}-${i}`}
+            popovertargetaction="hide"
+            class="text-foreground/35 hover:bg-orange/8 hover:text-foreground/70 absolute top-3 right-3 flex size-8 cursor-pointer items-center justify-center rounded-full border-none bg-transparent transition-all duration-150"
+            aria-label="關閉"
+          >
+            <X size={48} stroke-width={1} />
+          </button>
+
+          <span class={`rounded-full px-3 py-1 text-xs font-semibold`}>
+            {tag}
+          </span>
+
+          <div class="flex flex-col items-center gap-3">
+            <div class="flex size-20 items-center justify-center rounded-2xl bg-white/70 p-2 shadow-sm">
+              <img
+                src={org.iconPath}
+                alt={org.name}
+                class="size-full object-contain"
+              />
+            </div>
+            <div class="text-center">
+              <h3 class="text-foreground text-xl font-bold">{org.name}</h3>
+              {org.role && (
+                <p class="text-foreground/50 mt-0.5 text-sm">{org.role}</p>
+              )}
+            </div>
+          </div>
+
+          {org.description && (
+            <p class="text-foreground/65 w-full rounded-xl px-4 py-3 text-center text-sm leading-relaxed">
+              {org.description}
+            </p>
+          )}
+
+          {org.url && (
+            <a
+              href={org.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="bg-blue w-full rounded-xl py-2.5 text-center text-sm font-semibold text-white no-underline transition-colors duration-150"
+            >
+              前往官網
+            </a>
+          )}
+        </div>
+      </div>
+    )),
+  )
+}
+
+<style>
+  [popover] {
+    padding: 0;
+    border: none;
+    background: var(--color-background);
+    margin: auto;
+    max-width: 40vw;
+    min-width: 320px;
+    min-height: 400px;
+    height: 50vh;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+
+  [popover]::backdrop {
+    background-color: rgba(0, 0, 0, 0.35);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    [popover]::backdrop {
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+    }
+  }
+</style>
