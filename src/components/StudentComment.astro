@@ -1,1 +1,123 @@
-<div>Student Comment</div>
+---
+import { Image } from "astro:assets";
+import { Video } from "@lucide/astro";
+
+interface Comment {
+  name: string;
+  tag?: string;
+  comment: string;
+}
+
+const comments: Comment[] = [
+  {
+    name: "Student 1",
+    tag: "SITCON CAMP 2025 學員",
+    comment:
+      "我個人認為義大利麵就應該拌 42 號混泥土因為這個螺絲釘的長度很容易直接影響到挖掘機的扭矩",
+  },
+  {
+    name: "Student 2",
+    tag: "SITCON CAMP 2025 學員",
+    comment:
+      "你往裡砸的時候一瞬間他就會產生大量的高能蛋白俗稱 UFO，會嚴重影響經濟的發展以至於對整個太平洋和充電器的核污染",
+  },
+  {
+    name: "Student 3",
+    tag: "SITCON CAMP 2025 學員",
+    comment:
+      "再或者說透過這勾股定理很容易推斷出人工飼養的東條英機他是可以捕獲野生的三角函數",
+  },
+  {
+    name: "Student 4",
+    tag: "SITCON CAMP 2025 學員",
+    comment:
+      "所以說不管這秦始皇的切面是否具有放射性川普的 N 次方是否有沈澱物都不會影響到沃爾瑪跟維爾康在南極匯合",
+  },
+  {
+    name: "Student 5",
+    tag: "SITCON CAMP 2025 學員",
+    comment:
+      "你往裡砸的時候一瞬間他就會產生大量的高能蛋白俗稱 UFO，會嚴重影響經濟的發展以至於對整個太平洋和充電器的核污染",
+  },
+  {
+    name: "Student 6",
+    tag: "SITCON CAMP 2025 學員",
+    comment:
+      "再或者說透過這勾股定理很容易推斷出人工飼養的東條英機他是可以捕獲野生的三角函數",
+  },
+];
+---
+
+<div class="bg-background py-5">
+  <h2 class="mb-2 text-center text-2xl font-black">學員回饋</h2>
+  <button
+    id="comment-btn"
+    class="border-sky-blue hover:bg-sky-blue hover:text-background mx-auto mb-4 flex w-fit cursor-pointer items-center gap-2 rounded-lg border-2 px-4 py-2 text-sm duration-200"
+    ><Video size={20} stroke-width={1} />觀看訪談影片</button
+  >
+
+  <div
+    class="mx-5 grid max-h-100 max-w-5xl snap-y snap-mandatory grid-cols-1 gap-2 overflow-scroll sm:max-h-none sm:grid-cols-2 lg:mx-auto lg:grid-cols-3"
+  >
+    {
+      comments.map((c) => (
+        <div class="group w-full snap-start snap-always rounded-lg bg-white px-5 py-2 shadow-md sm:w-fit">
+          <div class="mb-2 flex items-center">
+            <Image
+              src="https://placehold.co/70x70"
+              alt="Student's pfp"
+              height="70"
+              width="70"
+              class="mr-5 rounded-full"
+            />
+            <div>
+              <p class="text-2xl">{c.name}</p>
+              <p class="text-foreground/50 text-sm">{c?.tag}</p>
+            </div>
+          </div>
+          <p class="text-sm">{c.comment}</p>
+        </div>
+      ))
+    }
+  </div>
+
+  <!-- 學員訪談 YouTube 影片 popup -->
+  <dialog
+    id="comment-dialog"
+    class="m-auto w-full max-w-3xl rounded-xl p-0 shadow-xl"
+  >
+    <div class="aspect-video w-full">
+      <iframe
+        id="comment-iframe"
+        class="h-full w-full rounded-xl"
+        title="YouTube video player"
+        allow="autoplay; encrypted-media;"
+        src=""
+        referrerpolicy="strict-origin-when-cross-origin"></iframe>
+    </div>
+  </dialog>
+</div>
+
+<script>
+  const commentVideoUrl =
+    "https://www.youtube-nocookie.com/embed/jbofh3u8XrI?si=S4Fo-GhGaEYvLaBW";
+
+  const btn = document.getElementById("comment-btn")!;
+  const dialog = document.getElementById("comment-dialog") as HTMLDialogElement;
+  const iframe = document.getElementById("comment-iframe") as HTMLIFrameElement;
+
+  // when button click --> load video
+  btn.addEventListener("click", () => {
+    iframe.src = commentVideoUrl;
+    dialog.showModal();
+  });
+
+  dialog.addEventListener("click", (e) => {
+    if (e.target === dialog) closeModal();
+  });
+
+  function closeModal() {
+    dialog.close();
+    iframe.src = "";
+  }
+</script>
