@@ -9,9 +9,8 @@ run() {
 
 run pnpm build
 run pnpm lint
-run pnpm prettier:write
 
-if ! git diff --quiet; then
-  echo "Prettier formatted files. Please review and stage the changes, then \`git add .\` and commit again"
+if ! run pnpm prettier:check; then
+  echo "Prettier check failed. Run \`pnpm prettier:write\`, review the changes, stage them, and commit again."
   exit 1
 fi
