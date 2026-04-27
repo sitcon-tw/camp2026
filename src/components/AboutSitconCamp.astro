@@ -1,177 +1,85 @@
 ---
 import { Image } from "astro:assets";
 import camp from "../assets/pics/camp.webp";
-import groups from "../assets/pics/groups.webp";
 import hackathon from "../assets/pics/hackathon.webp";
-import edu from "../assets/pics/edu.webp";
-import ettodayNews from "../assets/pics/ettodayNews.webp";
-import moneyUdnNews from "../assets/pics/moneyUdnNews.webp";
-import youratorNews from "../assets/pics/youratorNews.webp";
-import yahooNews from "../assets/pics/yahooNews.webp";
 ---
 
 <style>
   @reference "../styles/global.css";
 
-  .stat-card {
-    @apply bg-green text-dark-green flex cursor-pointer flex-col items-center justify-center gap-1 rounded-2xl shadow-sm transition-shadow duration-300 hover:shadow-md;
+  .section {
+    @apply px-4 py-16;
   }
-  .hover-overlay {
-    @apply absolute inset-0 flex items-end justify-start bg-black/30 p-3 opacity-0 transition-opacity duration-300;
+  .section-inner {
+    @apply mx-auto max-w-6xl;
   }
-  .group:hover .hover-overlay {
-    @apply opacity-100;
+  .grid-2col {
+    @apply grid items-center justify-center gap-8 md:grid-cols-2;
   }
-  .card-img {
-    @apply relative flex aspect-[5/2] cursor-pointer items-end overflow-hidden rounded-2xl p-6 text-white shadow-sm transition-shadow duration-300 hover:shadow-md;
+  .text-card {
+    @apply flex flex-col items-start justify-center gap-4 rounded-2xl bg-white p-8 shadow-sm;
   }
-  .media-card {
-    @apply relative flex aspect-[3/2] cursor-pointer items-center justify-center overflow-hidden rounded-2xl p-6 text-white shadow-sm transition-shadow duration-300 hover:shadow-md;
+  .img-wrapper {
+    @apply relative aspect-5/2 overflow-hidden rounded-2xl shadow-sm;
+  }
+  .img-overlay {
+    @apply absolute inset-0 flex items-end bg-linear-to-t from-black/60 to-transparent p-6;
+  }
+  .img-overlay-title {
+    @apply text-2xl font-bold text-white;
   }
 </style>
 
 <main class="bg-background text-foreground">
-  <section class="mx-auto max-w-6xl px-4 py-6 md:px-6 md:py-10 lg:px-8">
-    <img class="w-full rounded-2xl object-cover" alt="" />
-    <div class="mt-6 md:mt-8">
-      <h2 class="text-3xl font-bold tracking-tight md:text-4xl">關於 SITCON</h2>
-      <p class="text-foreground/70 mt-3 max-w-4xl text-sm/6 md:text-base/7">
-        ...
-      </p>
+  <section class="section">
+    <div class="section-inner">
+      <div class="grid-2col">
+        <div class="img-wrapper group">
+          <Image
+            src={camp}
+            alt="營隊活動 - SITCON 夏日學院學生實作工作坊"
+            class="h-full w-full object-cover"
+          />
+        </div>
+
+        <div class="text-card">
+          <h2 class="text-primary-blue text-3xl font-bold">SITCON 夏日學院</h2>
+          <p class="text-foreground">
+            自 2014 年創立，SITCON Camp
+            今年邁入第十屆。五天四夜的資訊旅程，以「探索型」與「導覽型」為核心，跳脫傳統入門框架——聚焦於已具備基礎、卻不知道下一步該往哪走的你。資安、AI、競程、系統、開源，每條路都值得被認真看見。
+          </p>
+          <p class="text-foreground">
+            透過主題日
+            Masterclass、社群闖關、視界咖啡館，由各領域實務專家親自帶路，在一天內真正觸碰資訊科學最迷人的那一面。這裡的學習不是單向灌輸，而是和隊輔、講者、夥伴一起討論、實作、卡關再突破——找到讓自己想持續鑽研的
+            What's Next。
+          </p>
+        </div>
+      </div>
     </div>
   </section>
 
-  <section class="mx-auto max-w-6xl px-4 py-10 md:px-6 md:py-14 lg:px-8">
-    <h3 class="text-center text-2xl font-bold tracking-tight md:text-4xl">
-      13 年來...
-    </h3>
-    <div class="mt-8 grid auto-rows-[140px] grid-cols-1 gap-5 md:grid-cols-6">
-      <article class="stat-card group md:col-span-2">
-        <span class="text-3xl font-extrabold md:text-4xl">500+</span>
-        <span class="text-sm/4 font-medium opacity-75">參與者</span>
-      </article>
-      <article class="stat-card group md:col-span-2">
-        <span class="text-3xl font-extrabold md:text-4xl">500+</span>
-        <span class="text-sm/4 font-medium opacity-75">議程</span>
-      </article>
-      <article class="stat-card group md:col-span-2">
-        <span class="text-3xl font-extrabold md:text-4xl">10+</span>
-        <span class="text-sm/4 font-medium opacity-75">工作坊</span>
-      </article>
-      <article class="stat-card md:col-span-3">
-        <span class="text-3xl font-extrabold md:text-4xl">14,000+</span>
-        <span class="text-sm/4 font-medium opacity-75">累積參與人次</span>
-      </article>
-      <article class="stat-card md:col-span-3">
-        <span class="text-3xl font-extrabold md:text-4xl">1,400+</span>
-        <span class="text-sm/4 font-medium opacity-75">志工貢獻</span>
-      </article>
-    </div>
-  </section>
+  <section class="section">
+    <div class="section-inner">
+      <div class="grid-2col">
+        <div class="text-card">
+          <h2 class="text-primary-blue text-3xl font-bold">黑客松</h2>
+          <p class="text-foreground">
+            黑客松是 SITCON Camp
+            的核心活動，也是整個營期的高潮。學員以小隊為單位，在有限時間內將五天所學轉化為真實可運行的作品，親身體驗「想法化為程式」的過程。不是為了比賽，而是為了真的做出一件事。
+          </p>
+          <p class="text-foreground">
+            不論你擅長寫程式、做設計、規劃產品或負責溝通協作，每個人都能在隊伍中找到自己的位置。最終成果展示不只是終點，更是探索資訊領域下一步的起點——你會帶著一個真實作品離開這裡。
+          </p>
+        </div>
 
-  <section class="mx-auto max-w-6xl px-4 py-10 md:px-6 md:py-14 lg:px-8">
-    <h3 class="text-center text-2xl font-bold tracking-tight md:text-4xl">
-      我們做過的事
-    </h3>
-    <div class="mt-8 grid grid-cols-1 gap-5 md:grid-cols-2">
-      <article class="card-img group">
-        <Image
-          src={groups}
-          alt="年會"
-          class="absolute inset-0 h-full w-full object-cover"
-        />
-        <div class="hover-overlay">
-          <h1 class="text-lg font-bold">年會</h1>
+        <div class="img-wrapper group">
+          <Image
+            src={hackathon}
+            alt="黑客松大賽 - 團隊協作coding實況"
+            class="h-full w-full object-cover"
+          />
         </div>
-      </article>
-      <article class="card-img group">
-        <Image
-          src={groups}
-          alt="跨校交流"
-          class="absolute inset-0 h-full w-full object-cover"
-        />
-        <div class="hover-overlay">
-          <h1 class="text-lg font-bold">跨校交流</h1>
-        </div>
-      </article>
-      <article class="card-img group">
-        <Image
-          src={edu}
-          alt="edu"
-          class="absolute inset-0 h-full w-full object-cover"
-        />
-        <div class="hover-overlay">
-          <h1 class="text-lg font-bold">edu</h1>
-        </div>
-      </article>
-      <article class="card-img group">
-        <Image
-          src={hackathon}
-          alt="黑客松"
-          class="absolute inset-0 h-full w-full object-cover"
-        />
-        <div class="hover-overlay">
-          <h1 class="text-lg font-bold">黑客松</h1>
-        </div>
-      </article>
-      <article class="card-img group md:col-span-2" style="aspect-ratio: 16/5;">
-        <Image
-          src={camp}
-          alt="黑客松"
-          class="absolute inset-0 h-full w-full object-cover"
-        />
-        <div class="hover-overlay">
-          <h1 class="text-lg font-bold">更多活動...</h1>
-        </div>
-      </article>
-    </div>
-  </section>
-
-  <section class="mx-auto max-w-6xl px-4 py-10 md:px-6 md:py-14 lg:px-8">
-    <h3 class="text-center text-2xl font-bold tracking-tight md:text-4xl">
-      媒體報導
-    </h3>
-    <div class="mt-8 grid grid-cols-2 gap-4 md:grid-cols-4">
-      <article class="media-card group">
-        <Image
-          src={yahooNews}
-          alt="Yahoo 新聞"
-          class="absolute inset-0 h-full w-full object-cover"
-        />
-        <div class="hover-overlay">
-          <h1 class="text-lg font-bold">Yahoo 新聞</h1>
-        </div>
-      </article>
-      <article class="media-card group">
-        <Image
-          src={ettodayNews}
-          alt="ETtoday 新聞"
-          class="absolute inset-0 h-full w-full object-cover"
-        />
-        <div class="hover-overlay">
-          <h1 class="text-lg font-bold">ETtoday 新聞</h1>
-        </div>
-      </article>
-      <article class="media-card group">
-        <Image
-          src={moneyUdnNews}
-          alt="Money UDN 新聞"
-          class="absolute inset-0 h-full w-full object-cover"
-        />
-        <div class="hover-overlay">
-          <h1 class="text-lg font-bold">Money UDN 新聞</h1>
-        </div>
-      </article>
-      <article class="media-card group">
-        <Image
-          src={youratorNews}
-          alt="Yourator 新聞"
-          class="absolute inset-0 h-full w-full object-cover"
-        />
-        <div class="hover-overlay">
-          <h1 class="text-lg font-bold">Yourator 新聞</h1>
-        </div>
-      </article>
+      </div>
     </div>
   </section>
 </main>
