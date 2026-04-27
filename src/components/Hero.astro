@@ -1,1 +1,237 @@
-<div>Hero</div>
+---
+const topics = ["資訊安全", "人工智慧", "軟體工程"];
+const finalLine = "那就來 SITCON Camp 2026！";
+---
+
+<section data-hero-intro aria-label="SITCON Camp 2026 介紹">
+  <div class="hero-intro__stage">
+    <p class="hero-intro__question" data-hero-intro-question aria-live="polite">
+      <span>想要學</span>
+      <span class="hero-intro__topic-viewport">
+        <span class="hero-intro__topic-track" data-hero-intro-topic-track>
+          {
+            topics.map((topic, index) => (
+              <span
+                class:list={[
+                  "hero-intro__topic",
+                  index === 0 && "hero-intro__topic--current",
+                ]}
+                data-hero-intro-topic
+                aria-hidden={index === 0 ? "false" : "true"}
+              >
+                {topic}
+              </span>
+            ))
+          }
+        </span>
+      </span>
+      <span>？</span>
+    </p>
+    <p class="hero-intro__final" data-hero-intro-final hidden>
+      {finalLine}
+    </p>
+  </div>
+</section>
+
+<noscript>
+  <style>
+    [data-hero-intro] {
+      display: none !important;
+    }
+  </style>
+</noscript>
+
+<script>
+  import { animate } from "animejs";
+
+  const intro = document.querySelector<HTMLElement>("[data-hero-intro]");
+  const question = intro?.querySelector<HTMLElement>(
+    "[data-hero-intro-question]",
+  );
+  const final = intro?.querySelector<HTMLElement>("[data-hero-intro-final]");
+  const topicViewport = intro?.querySelector<HTMLElement>(
+    ".hero-intro__topic-viewport",
+  );
+  const topicTrack = intro?.querySelector<HTMLElement>(
+    "[data-hero-intro-topic-track]",
+  );
+  const topics = intro
+    ? Array.from(intro.querySelectorAll<HTMLElement>("[data-hero-intro-topic]"))
+    : [];
+
+  const wait = (duration: number) =>
+    new Promise((resolve) => window.setTimeout(resolve, duration));
+
+  const setActiveTopic = (activeIndex: number) => {
+    topics.forEach((topic, index) => {
+      topic.classList.toggle(
+        "hero-intro__topic--current",
+        index === activeIndex,
+      );
+      topic.setAttribute("aria-hidden", String(index !== activeIndex));
+    });
+  };
+
+  const finishIntro = () => {
+    document.documentElement.classList.remove("hero-intro-lock");
+
+    if (intro) {
+      intro.hidden = true;
+    }
+  };
+
+  const bounceQuestion = async () => {
+    if (!question) {
+      return;
+    }
+
+    await animate(question, {
+      scale: [
+        { to: 1.025, duration: 180, ease: "outQuad" },
+        { to: 1, duration: 360, ease: "outBounce" },
+      ],
+    }).then();
+  };
+
+  const slideToTopic = async (index: number) => {
+    if (!topicTrack || !topicViewport) {
+      return;
+    }
+
+    const rowHeight = topicViewport.getBoundingClientRect().height;
+    const targetY = -index * rowHeight;
+
+    await animate(topicTrack, {
+      keyframes: [
+        {
+          translateY: `${targetY - rowHeight * 0.1}px`,
+          duration: 540,
+          ease: "outQuint",
+        },
+        {
+          translateY: `${targetY}px`,
+          duration: 280,
+          ease: "outBack(1.9)",
+        },
+      ],
+    }).then();
+  };
+
+  if (
+    intro &&
+    question &&
+    final &&
+    topicViewport &&
+    topicTrack &&
+    topics.length > 0
+  ) {
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+
+    document.documentElement.classList.add("hero-intro-lock");
+
+    if (!prefersReducedMotion) {
+      await wait(260);
+      await bounceQuestion();
+    }
+
+    for (let index = 1; index < topics.length; index += 1) {
+      await wait(index === 1 && !prefersReducedMotion ? 360 : 760);
+
+      if (prefersReducedMotion) {
+        const rowHeight = topicViewport.getBoundingClientRect().height;
+        topicTrack.style.transform = `translateY(${-index * rowHeight}px)`;
+      } else {
+        await slideToTopic(index);
+      }
+
+      setActiveTopic(index);
+    }
+
+    await wait(900);
+    question.hidden = true;
+    final.hidden = false;
+    await wait(1100);
+    finishIntro();
+  }
+</script>
+
+<style>
+  :global(html.hero-intro-lock),
+  :global(html.hero-intro-lock body) {
+    overflow: hidden;
+  }
+
+  [data-hero-intro] {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+    overscroll-behavior: contain;
+    touch-action: none;
+    background: var(--color-background);
+    color: var(--color-foreground);
+  }
+
+  [data-hero-intro][hidden],
+  .hero-intro__question[hidden],
+  .hero-intro__final[hidden] {
+    display: none;
+  }
+
+  .hero-intro__stage {
+    width: min(calc(100vw - 2rem), 1100px);
+    text-align: center;
+  }
+
+  .hero-intro__question,
+  .hero-intro__final {
+    display: grid;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    white-space: nowrap;
+    font-size: clamp(1rem, 5.6vw, 5rem);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: 0;
+  }
+
+  .hero-intro__question {
+    grid-template-columns: auto 4.2em auto;
+    column-gap: 0.18em;
+  }
+
+  .hero-intro__topic-viewport {
+    display: block;
+    height: 1.1em;
+    overflow: hidden;
+    color: var(--color-primary-blue);
+  }
+
+  .hero-intro__topic-track {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    transform: translateY(0px);
+    will-change: transform;
+  }
+
+  .hero-intro__topic {
+    display: grid;
+    flex: 0 0 100%;
+    place-items: center;
+    height: 100%;
+    line-height: 1.1;
+    white-space: nowrap;
+  }
+
+  @media (max-width: 520px) {
+    .hero-intro__stage {
+      width: calc(100vw - 1rem);
+    }
+  }
+</style>
