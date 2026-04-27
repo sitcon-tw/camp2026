@@ -117,6 +117,28 @@ const finalLine = "那就來 SITCON Camp 2026！";
     }).then();
   };
 
+  const showFinal = async (prefersReducedMotion: boolean) => {
+    if (!question || !final) {
+      return;
+    }
+
+    question.hidden = true;
+    final.hidden = false;
+
+    if (prefersReducedMotion) {
+      return;
+    }
+
+    final.style.transform = "scale(1.85)";
+
+    await animate(final, {
+      scale: [
+        { to: 0.96, duration: 520, ease: "outQuint" },
+        { to: 1, duration: 260, ease: "outBack(1.7)" },
+      ],
+    }).then();
+  };
+
   if (
     intro &&
     question &&
@@ -150,8 +172,7 @@ const finalLine = "那就來 SITCON Camp 2026！";
     }
 
     await wait(900);
-    question.hidden = true;
-    final.hidden = false;
+    await showFinal(prefersReducedMotion);
     await wait(1100);
     finishIntro();
   }
@@ -198,6 +219,7 @@ const finalLine = "那就來 SITCON Camp 2026！";
     font-weight: 800;
     line-height: 1.1;
     letter-spacing: 0;
+    transform-origin: center;
   }
 
   .hero-intro__question {
