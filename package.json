@@ -9,12 +9,15 @@
     "dev": "astro dev",
     "build": "astro build",
     "lint": "astro check",
+    "prettier:check": "prettier --check .",
     "prettier:write": "prettier --write .",
     "preview": "astro preview",
     "astro": "astro"
   },
   "dependencies": {
+    "@lucide/astro": "^1.11.0",
     "@tailwindcss/vite": "^4.2.2",
+    "animejs": "^4.3.6",
     "astro": "^6.1.5",
     "gsap": "^3.14.2",
     "prettier-plugin-tailwindcss": "^0.7.2",
