@@ -285,36 +285,36 @@ const heroTitle = "SITCON Camp 2026";
     if (shouldSkipIntro) {
       skipIntro();
     } else {
-    const prefersReducedMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)",
-    ).matches;
+      const prefersReducedMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)",
+      ).matches;
 
-    document.documentElement.classList.add("hero-intro-lock");
+      document.documentElement.classList.add("hero-intro-lock");
 
-    if (!prefersReducedMotion) {
-      await wait(180);
-      await bounceQuestion();
-    }
-
-    for (let index = 1; index < topics.length; index += 1) {
-      await wait(index === 1 && !prefersReducedMotion ? 150 : 260);
-
-      if (prefersReducedMotion) {
-        const rowHeight = topicViewport.getBoundingClientRect().height;
-        topicTrack.style.transform = `translateY(${-index * rowHeight}px)`;
-      } else {
-        await slideToTopic(index);
+      if (!prefersReducedMotion) {
+        await wait(180);
+        await bounceQuestion();
       }
 
-      setActiveTopic(index);
-    }
+      for (let index = 1; index < topics.length; index += 1) {
+        await wait(index === 1 && !prefersReducedMotion ? 150 : 260);
 
-    await wait(300);
-    await showFinal(prefersReducedMotion);
-    await wait(150);
-    await openIntroToHero(prefersReducedMotion);
-    finishIntro();
-    await revealHeroSubtitle(prefersReducedMotion);
+        if (prefersReducedMotion) {
+          const rowHeight = topicViewport.getBoundingClientRect().height;
+          topicTrack.style.transform = `translateY(${-index * rowHeight}px)`;
+        } else {
+          await slideToTopic(index);
+        }
+
+        setActiveTopic(index);
+      }
+
+      await wait(300);
+      await showFinal(prefersReducedMotion);
+      await wait(150);
+      await openIntroToHero(prefersReducedMotion);
+      finishIntro();
+      await revealHeroSubtitle(prefersReducedMotion);
     }
   }
 </script>
