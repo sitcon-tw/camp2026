@@ -1,11 +1,87 @@
 ---
+import {
+  heroAchievementLinks,
+  heroAchievements,
+} from "@/data/heroAchievements";
+
 const topics = ["資訊安全", "人工智慧", "軟體工程"];
 const finalPrefix = "那就來";
 const heroSubtitle = "陽明交通大學 7/8 - 7/12";
 const heroTitle = "SITCON Camp 2026";
+const heroAchievementsById = new Map(
+  heroAchievements.map((achievement) => [achievement.id, achievement]),
+);
+const heroBoardLinks = heroAchievementLinks
+  .map((link) => {
+    const from = heroAchievementsById.get(link.from);
+    const to = heroAchievementsById.get(link.to);
+
+    if (!from || !to) {
+      return null;
+    }
+
+    return {
+      ...link,
+      x1: from.x + from.width / 2,
+      y1: from.y + 2,
+      x2: to.x + to.width / 2,
+      y2: to.y + 2,
+      mobile: Boolean(from.mobile && to.mobile),
+    };
+  })
+  .filter((link) => link !== null);
 ---
 
 <section class="hero-page" aria-labelledby="hero-page-title">
+  <div class="hero-board" aria-hidden="true">
+    <svg
+      class="hero-board__lines"
+      viewBox="0 0 100 100"
+      preserveAspectRatio="none"
+    >
+      {
+        heroBoardLinks.map((link) => (
+          <line
+            class:list={[
+              "hero-board__line",
+              `hero-board__line--${link.color}`,
+              !link.mobile && "hero-board__line--desktop",
+            ]}
+            x1={link.x1}
+            y1={link.y1}
+            x2={link.x2}
+            y2={link.y2}
+          />
+        ))
+      }
+    </svg>
+    {
+      heroAchievements.map((achievement) => (
+        <article
+          class:list={[
+            "hero-board__card",
+            `hero-board__card--${achievement.pinColor}`,
+            !achievement.mobile && "hero-board__card--desktop",
+          ]}
+          style={`--card-x: ${achievement.x}%; --card-y: ${achievement.y}%; --card-width: ${achievement.width}%; --card-rotation: ${achievement.rotation}deg;`}
+        >
+          <span class="hero-board__pin" />
+          <img
+            class="hero-board__image"
+            src={achievement.image.src}
+            width={achievement.image.width}
+            height={achievement.image.height}
+            alt=""
+            loading="eager"
+          />
+          <div class="hero-board__caption">
+            <h2 class="hero-board__title">{achievement.title}</h2>
+            <p class="hero-board__description">{achievement.description}</p>
+          </div>
+        </article>
+      ))
+    }
+  </div>
   <div class="hero-page__content">
     <p class="hero-page__subtitle" data-hero-page-subtitle>{heroSubtitle}</p>
     <h1 id="hero-page-title" class="hero-page__title" data-hero-page-title>
@@ -308,10 +384,114 @@ const heroTitle = "SITCON Camp 2026";
     color: var(--color-foreground);
   }
 
+  .hero-board {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    overflow: hidden;
+  }
+
+  .hero-board__lines {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+  }
+
+  .hero-board__line {
+    stroke: var(--thread-color);
+    stroke-width: 0.24;
+    stroke-linecap: round;
+    vector-effect: non-scaling-stroke;
+  }
+
+  .hero-board__line--green,
+  .hero-board__card--green {
+    --pin-color: var(--color-green);
+    --thread-color: var(--color-green);
+  }
+
+  .hero-board__line--blue,
+  .hero-board__card--blue {
+    --pin-color: var(--color-primary-blue);
+    --thread-color: var(--color-primary-blue);
+  }
+
+  .hero-board__line--orange,
+  .hero-board__card--orange {
+    --pin-color: var(--color-orange);
+    --thread-color: var(--color-orange);
+  }
+
+  .hero-board__line--soft-blue,
+  .hero-board__card--soft-blue {
+    --pin-color: var(--color-soft-blue);
+    --thread-color: var(--color-soft-blue);
+  }
+
+  .hero-board__card {
+    position: absolute;
+    inset-inline-start: var(--card-x);
+    inset-block-start: var(--card-y);
+    width: var(--card-width);
+    min-width: 10rem;
+    transform: rotate(var(--card-rotation));
+    transform-origin: 50% 0.8rem;
+    display: grid;
+    gap: 0.55rem;
+    padding: 0.6rem;
+    background: var(--color-background);
+    border: 0.12rem solid var(--color-foreground);
+  }
+
+  .hero-board__pin {
+    position: absolute;
+    inset-block-start: -0.55rem;
+    inset-inline-start: 50%;
+    width: 1.1rem;
+    aspect-ratio: 1;
+    transform: translateX(-50%);
+    border-radius: 999rem;
+    background: var(--pin-color);
+    border: 0.12rem solid var(--color-foreground);
+  }
+
+  .hero-board__image {
+    aspect-ratio: 4 / 3;
+    width: 100%;
+    object-fit: cover;
+    border: 0.08rem solid var(--color-foreground);
+  }
+
+  .hero-board__caption {
+    display: grid;
+    gap: 0.2rem;
+  }
+
+  .hero-board__title,
+  .hero-board__description {
+    margin: 0;
+    letter-spacing: 0;
+  }
+
+  .hero-board__title {
+    font-size: clamp(0.95rem, 1.2vw, 1.2rem);
+    font-weight: 800;
+    line-height: 1.15;
+  }
+
+  .hero-board__description {
+    font-size: clamp(0.75rem, 0.9vw, 0.92rem);
+    font-weight: 400;
+    line-height: 1.35;
+  }
+
   .hero-page__content {
     position: absolute;
     inset-inline-start: clamp(1rem, 5vw, 5rem);
     inset-block-end: clamp(1.5rem, 7vw, 6rem);
+    z-index: 2;
     display: grid;
     gap: clamp(0.35rem, 1.2vw, 0.9rem);
   }
@@ -448,6 +628,20 @@ const heroTitle = "SITCON Camp 2026";
   }
 
   @media (max-width: 520px) {
+    .hero-board__card--desktop,
+    .hero-board__line--desktop {
+      display: none;
+    }
+
+    .hero-board__card {
+      width: clamp(7.5rem, 34vw, 10rem);
+      min-width: 0;
+    }
+
+    .hero-board__description {
+      display: none;
+    }
+
     .hero-page__content {
       inset-inline-start: 1rem;
       inset-block-end: 2rem;
