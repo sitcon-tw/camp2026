@@ -1,11 +1,116 @@
 ---
+import type { ImageMetadata } from "astro";
+
 const topics = ["資訊安全", "人工智慧", "軟體工程"];
 const finalPrefix = "那就來";
 const heroSubtitle = "陽明交通大學 7/8 - 7/12";
 const heroTitle = "SITCON Camp 2026";
+const heroWallImages = Object.entries(
+  import.meta.glob<{ default: ImageMetadata }>(
+    "../assets/hero/wall/*.jpg",
+    { eager: true },
+  ),
+)
+  .sort(([firstPath], [secondPath]) => firstPath.localeCompare(secondPath))
+  .map(([, image]) => image.default);
+const heroPhotoWallColumns = [
+  {
+    className: "hero-photo-wall__column--one",
+    duration: 38000,
+    offset: 10000,
+    items: [
+      { imageIndex: 0, classes: ["hero-photo-wall__tile--large"] },
+      { imageIndex: 5, classes: [] },
+      { imageIndex: 10, classes: ["hero-photo-wall__tile--tall"] },
+      { imageIndex: 3, classes: [] },
+    ],
+  },
+  {
+    className: "hero-photo-wall__column--two",
+    duration: 47000,
+    offset: 22000,
+    items: [
+      { imageIndex: 1, classes: [] },
+      { imageIndex: 6, classes: ["hero-photo-wall__tile--tall"] },
+      { imageIndex: 11, classes: [] },
+      { imageIndex: 4, classes: ["hero-photo-wall__tile--large"] },
+    ],
+  },
+  {
+    className: "hero-photo-wall__column--three",
+    duration: 41000,
+    offset: 16000,
+    items: [
+      { imageIndex: 2, classes: ["hero-photo-wall__tile--tall"] },
+      { imageIndex: 7, classes: [] },
+      { imageIndex: 0, classes: ["hero-photo-wall__tile--large"] },
+      { imageIndex: 9, classes: [] },
+    ],
+  },
+  {
+    className: "hero-photo-wall__column--four",
+    duration: 53000,
+    offset: 28000,
+    items: [
+      { imageIndex: 3, classes: [] },
+      { imageIndex: 8, classes: ["hero-photo-wall__tile--large"] },
+      { imageIndex: 1, classes: [] },
+      { imageIndex: 10, classes: ["hero-photo-wall__tile--tall"] },
+    ],
+  },
+  {
+    className: "hero-photo-wall__column--five",
+    duration: 44000,
+    offset: 7000,
+    items: [
+      { imageIndex: 4, classes: ["hero-photo-wall__tile--large"] },
+      { imageIndex: 9, classes: [] },
+      { imageIndex: 2, classes: ["hero-photo-wall__tile--tall"] },
+      { imageIndex: 11, classes: [] },
+    ],
+  },
+];
 ---
 
 <section class="hero-page" aria-labelledby="hero-page-title">
+  <div class="hero-photo-wall" aria-hidden="true">
+    {
+      heroPhotoWallColumns.map((column) => (
+        <div class:list={["hero-photo-wall__column", column.className]}>
+          <div
+            class="hero-photo-wall__column-track"
+            data-wall-track
+            data-wall-duration={column.duration}
+            data-wall-offset={column.offset}
+          >
+            {[0, 1].map(() => (
+              <div class="hero-photo-wall__column-set">
+                {column.items.map(({ imageIndex, classes }) => {
+                  const image = heroWallImages[imageIndex % heroWallImages.length];
+
+                  return (
+                    <figure
+                      class:list={["hero-photo-wall__tile", ...classes]}
+                    >
+                      <img
+                        class="hero-photo-wall__image"
+                        src={image.src}
+                        width={image.width}
+                        height={image.height}
+                        alt=""
+                        loading="eager"
+                        decoding="async"
+                      />
+                    </figure>
+                  );
+                })}
+              </div>
+            ))}
+          </div>
+        </div>
+      ))
+    }
+  </div>
   <div class="hero-page__content">
     <p class="hero-page__subtitle" data-hero-page-subtitle>{heroSubtitle}</p>
     <h1 id="hero-page-title" class="hero-page__title" data-hero-page-title>
@@ -67,9 +172,12 @@ const heroTitle = "SITCON Camp 2026";
 </noscript>
 
 <script>
-  import { animate, createLayout, splitText, stagger } from "animejs";
+  import { animate, splitText, stagger, waapi } from "animejs";
 
   const intro = document.querySelector<HTMLElement>("[data-hero-intro]");
+  const photoWallTracks = Array.from(
+    document.querySelectorAll<HTMLElement>("[data-wall-track]"),
+  );
   const heroSubtitle = document.querySelector<HTMLElement>(
     "[data-hero-page-subtitle]",
   );
@@ -105,9 +213,45 @@ const heroTitle = "SITCON Camp 2026";
     ? Array.from(intro.querySelectorAll<HTMLElement>("[data-hero-intro-topic]"))
     : [];
   const shouldSkipIntro = window.scrollY > 0;
+  const prefersReducedMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)",
+  ).matches;
+  let photoWallStarted = false;
 
   const wait = (duration: number) =>
     new Promise((resolve) => window.setTimeout(resolve, duration));
+
+  const startPhotoWallAnimations = () => {
+    if (
+      prefersReducedMotion ||
+      photoWallTracks.length === 0 ||
+      photoWallStarted
+    ) {
+      return;
+    }
+
+    photoWallStarted = true;
+
+    photoWallTracks.forEach((track) => {
+      const duration = Number(track.dataset.wallDuration) || 42000;
+      const offset = Number(track.dataset.wallOffset) || 0;
+      const animation = waapi.animate(track, {
+        transform: [
+          "translate3d(0, 0, 0)",
+          "translate3d(0, -50%, 0)",
+        ],
+        duration,
+        ease: "linear",
+        loop: true,
+        autoplay: false,
+      });
+
+      animation.currentTime = offset % duration;
+      animation.play();
+    });
+  };
+
+  startPhotoWallAnimations();
 
   const setActiveTopic = (activeIndex: number) => {
     topics.forEach((topic, index) => {
@@ -121,6 +265,7 @@ const heroTitle = "SITCON Camp 2026";
 
   const finishIntro = () => {
     document.documentElement.classList.remove("hero-intro-lock");
+    document.documentElement.classList.remove("hero-title-over-curtain");
 
     if (intro) {
       intro.hidden = true;
@@ -239,28 +384,59 @@ const heroTitle = "SITCON Camp 2026";
 
     await document.fonts.ready;
 
-    const layout = createLayout(document.body, {
-      children: "[data-hero-intro-final-title]",
-      duration: 720,
-      ease: "inOutCubic",
-      swapAt: { opacity: 1 },
+    document.documentElement.classList.add("hero-title-over-curtain");
+
+    const fromRect = finalTitle.getBoundingClientRect();
+    const toRect = heroTitleLabel?.getBoundingClientRect();
+
+    if (!toRect || fromRect.width <= 0 || fromRect.height <= 0) {
+      if (finalPrefix) {
+        finalPrefix.hidden = true;
+      }
+
+      if (heroTitleLabel) {
+        heroTitleLabel.hidden = true;
+      }
+
+      heroTitle.append(finalTitle);
+      return;
+    }
+
+    const computedFinalTitle = getComputedStyle(finalTitle);
+
+    finalTitle.classList.add("hero-intro__final-title--moving");
+    Object.assign(finalTitle.style, {
+      position: "fixed",
+      inset: "auto",
+      left: `${fromRect.left}px`,
+      top: `${fromRect.top}px`,
+      width: `${fromRect.width}px`,
+      height: `${fromRect.height}px`,
+      fontSize: computedFinalTitle.fontSize,
+      lineHeight: computedFinalTitle.lineHeight,
+      fontWeight: computedFinalTitle.fontWeight,
+      transformOrigin: "top left",
     });
+    document.body.append(finalTitle);
+
+    if (finalPrefix) {
+      finalPrefix.hidden = true;
+    }
+
+    if (heroTitleLabel) {
+      heroTitleLabel.hidden = true;
+    }
+
+    const targetScale = toRect.width / fromRect.width;
 
     await Promise.all([
-      layout
-        .update(() => {
-          if (finalPrefix) {
-            finalPrefix.hidden = true;
-          }
-
-          if (heroTitleLabel) {
-            heroTitleLabel.hidden = true;
-          }
-
-          finalTitle.classList.add("hero-page__title-label");
-          heroTitle.append(finalTitle);
-        })
-        .then(),
+      animate(finalTitle, {
+        translateX: `${toRect.left - fromRect.left}px`,
+        translateY: `${toRect.top - fromRect.top}px`,
+        scale: targetScale,
+        duration: 720,
+        ease: "inOutCubic",
+      }).then(),
       animate(topCurtain, {
         translateY: "-100%",
         duration: 720,
@@ -272,6 +448,11 @@ const heroTitle = "SITCON Camp 2026";
         ease: "inOutCubic",
       }).then(),
     ]);
+
+    finalTitle.classList.remove("hero-intro__final-title--moving");
+    finalTitle.classList.add("hero-page__title-label");
+    finalTitle.removeAttribute("style");
+    heroTitle.append(finalTitle);
   };
 
   if (
@@ -285,10 +466,6 @@ const heroTitle = "SITCON Camp 2026";
     if (shouldSkipIntro) {
       skipIntro();
     } else {
-      const prefersReducedMotion = window.matchMedia(
-        "(prefers-reduced-motion: reduce)",
-      ).matches;
-
       document.documentElement.classList.add("hero-intro-lock");
 
       if (!prefersReducedMotion) {
@@ -322,19 +499,91 @@ const heroTitle = "SITCON Camp 2026";
 <style>
   .hero-page {
     position: relative;
+    isolation: isolate;
     min-height: 100svh;
     overflow: hidden;
     background: var(--color-background);
     color: var(--color-foreground);
   }
 
+  .hero-photo-wall {
+    --wall-gap: clamp(1rem, 2svh, 2.15rem);
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    box-sizing: border-box;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  .hero-photo-wall__column {
+    min-width: 0;
+    padding-inline: calc(var(--wall-gap) / 2);
+    overflow: hidden;
+  }
+
+  .hero-photo-wall__column-track {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    transform: translate3d(0, 0, 0);
+    will-change: transform;
+  }
+
+  .hero-photo-wall__column-set {
+    display: grid;
+    gap: var(--wall-gap);
+    padding-block-end: var(--wall-gap);
+  }
+
+  .hero-photo-wall__tile {
+    block-size: clamp(8.5rem, 24svh, 17rem);
+    min-width: 0;
+    margin: 0;
+    overflow: hidden;
+    background: var(--color-background);
+  }
+
+  .hero-photo-wall__tile--tall {
+    block-size: clamp(12rem, 34svh, 25rem);
+  }
+
+  .hero-photo-wall__tile--large {
+    block-size: clamp(10.5rem, 29svh, 21rem);
+  }
+
+  .hero-photo-wall__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .hero-photo-wall__tile:nth-child(3n) .hero-photo-wall__image {
+    object-position: 35% 50%;
+    transform: scale(1.05);
+  }
+
+  .hero-photo-wall__tile:nth-child(4n) .hero-photo-wall__image {
+    object-position: 65% 50%;
+    transform: scale(1.08);
+  }
+
+  .hero-photo-wall__tile:nth-child(5n) .hero-photo-wall__image {
+    object-position: 50% 35%;
+  }
+
   .hero-page__content {
     position: absolute;
     inset-inline-start: clamp(1rem, 5vw, 5rem);
     inset-block-end: clamp(1.5rem, 7vw, 6rem);
-    z-index: 2;
+    z-index: 3;
     display: grid;
     gap: clamp(0.35rem, 1.2vw, 0.9rem);
+    width: max-content;
+    max-width: calc(100vw - 2rem);
   }
 
   .hero-page__subtitle {
@@ -368,6 +617,11 @@ const heroTitle = "SITCON Camp 2026";
 
   :global(html.hero-intro-lock) [data-hero-page-title-label] {
     visibility: hidden;
+  }
+
+  :global(html.hero-title-over-curtain) .hero-page__title {
+    position: relative;
+    z-index: 10001;
   }
 
   [data-hero-intro] {
@@ -444,6 +698,12 @@ const heroTitle = "SITCON Camp 2026";
     will-change: transform;
   }
 
+  .hero-intro__final-title--moving {
+    z-index: 10002;
+    margin: 0;
+    pointer-events: none;
+  }
+
   .hero-intro__topic-viewport {
     display: block;
     height: 1.1em;
@@ -469,6 +729,17 @@ const heroTitle = "SITCON Camp 2026";
   }
 
   @media (max-width: 520px) {
+    .hero-photo-wall {
+      --wall-gap: clamp(0.7rem, 2svh, 1rem);
+
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .hero-photo-wall__column--four,
+    .hero-photo-wall__column--five {
+      display: none;
+    }
+
     .hero-page__content {
       inset-inline-start: 1rem;
       inset-block-end: 2rem;
@@ -476,6 +747,12 @@ const heroTitle = "SITCON Camp 2026";
 
     .hero-intro__stage {
       width: calc(100vw - 1rem);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-photo-wall__column-track {
+      transform: none;
     }
   }
 </style>
