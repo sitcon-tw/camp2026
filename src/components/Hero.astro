@@ -1,18 +1,28 @@
 ---
 const topics = ["資訊安全", "人工智慧", "軟體工程"];
-const finalLine = "那就來 SITCON Camp 2026！";
+const finalPrefix = "那就來";
 const heroSubtitle = "陽明交通大學 7/8 - 7/12";
 const heroTitle = "SITCON Camp 2026";
 ---
 
 <section class="hero-page" aria-labelledby="hero-page-title">
   <div class="hero-page__content">
-    <p class="hero-page__subtitle">{heroSubtitle}</p>
-    <h1 id="hero-page-title" class="hero-page__title">{heroTitle}</h1>
+    <p class="hero-page__subtitle" data-hero-page-subtitle>{heroSubtitle}</p>
+    <h1 id="hero-page-title" class="hero-page__title" data-hero-page-title>
+      <span data-hero-page-title-label>{heroTitle}</span>
+    </h1>
   </div>
 </section>
 
 <section data-hero-intro aria-label="SITCON Camp 2026 介紹">
+  <span
+    class="hero-intro__curtain hero-intro__curtain--top"
+    data-hero-intro-curtain-top
+  ></span>
+  <span
+    class="hero-intro__curtain hero-intro__curtain--bottom"
+    data-hero-intro-curtain-bottom
+  ></span>
   <div class="hero-intro__stage">
     <p class="hero-intro__question" data-hero-intro-question aria-live="polite">
       <span>想要學</span>
@@ -37,7 +47,10 @@ const heroTitle = "SITCON Camp 2026";
       <span>？</span>
     </p>
     <p class="hero-intro__final" data-hero-intro-final hidden>
-      {finalLine}
+      <span data-hero-intro-final-prefix>{finalPrefix}</span>
+      <span class="hero-intro__final-title" data-hero-intro-final-title>
+        {heroTitle}
+      </span>
     </p>
   </div>
 </section>
@@ -47,17 +60,41 @@ const heroTitle = "SITCON Camp 2026";
     [data-hero-intro] {
       display: none !important;
     }
+
+    [data-hero-page-subtitle] {
+      visibility: visible !important;
+      transform: none !important;
+    }
   </style>
 </noscript>
 
 <script>
-  import { animate } from "animejs";
+  import { animate, createLayout, splitText, stagger } from "animejs";
 
   const intro = document.querySelector<HTMLElement>("[data-hero-intro]");
+  const heroSubtitle = document.querySelector<HTMLElement>(
+    "[data-hero-page-subtitle]",
+  );
+  const heroTitle = document.querySelector<HTMLElement>("[data-hero-page-title]");
+  const heroTitleLabel = document.querySelector<HTMLElement>(
+    "[data-hero-page-title-label]",
+  );
   const question = intro?.querySelector<HTMLElement>(
     "[data-hero-intro-question]",
   );
   const final = intro?.querySelector<HTMLElement>("[data-hero-intro-final]");
+  const finalPrefix = intro?.querySelector<HTMLElement>(
+    "[data-hero-intro-final-prefix]",
+  );
+  const finalTitle = intro?.querySelector<HTMLElement>(
+    "[data-hero-intro-final-title]",
+  );
+  const topCurtain = intro?.querySelector<HTMLElement>(
+    "[data-hero-intro-curtain-top]",
+  );
+  const bottomCurtain = intro?.querySelector<HTMLElement>(
+    "[data-hero-intro-curtain-bottom]",
+  );
   const topicViewport = intro?.querySelector<HTMLElement>(
     ".hero-intro__topic-viewport",
   );
@@ -87,6 +124,31 @@ const heroTitle = "SITCON Camp 2026";
     if (intro) {
       intro.hidden = true;
     }
+  };
+
+  const revealHeroSubtitle = async (prefersReducedMotion: boolean) => {
+    if (!heroSubtitle) {
+      return;
+    }
+
+    heroSubtitle.classList.add("is-visible");
+
+    if (prefersReducedMotion) {
+      heroSubtitle.style.transform = "none";
+      return;
+    }
+
+    const { chars } = splitText(heroSubtitle, {
+      chars: { class: "hero-page__subtitle-char", wrap: "clip" },
+      accessible: true,
+    });
+
+    await animate(chars, {
+      y: ["85%", "-8%", "0%"],
+      duration: 620,
+      ease: "out(3)",
+      delay: stagger(28),
+    }).then();
   };
 
   const bounceQuestion = async () => {
@@ -146,6 +208,54 @@ const heroTitle = "SITCON Camp 2026";
         { to: 1, duration: 180, ease: "outBack(1.7)" },
       ],
     }).then();
+
+    final.style.transform = "";
+  };
+
+  const openIntroToHero = async (prefersReducedMotion: boolean) => {
+    if (!intro || !heroTitle || !finalTitle || !topCurtain || !bottomCurtain) {
+      return;
+    }
+
+    if (prefersReducedMotion) {
+      return;
+    }
+
+    await document.fonts.ready;
+
+    const layout = createLayout(document.body, {
+      children: "[data-hero-intro-final-title]",
+      duration: 720,
+      ease: "inOutCubic",
+      swapAt: { opacity: 1 },
+    });
+
+    await Promise.all([
+      layout
+        .update(() => {
+          if (finalPrefix) {
+            finalPrefix.hidden = true;
+          }
+
+          if (heroTitleLabel) {
+            heroTitleLabel.hidden = true;
+          }
+
+          finalTitle.classList.add("hero-page__title-label");
+          heroTitle.append(finalTitle);
+        })
+        .then(),
+      animate(topCurtain, {
+        translateY: "-100%",
+        duration: 720,
+        ease: "inOutCubic",
+      }).then(),
+      animate(bottomCurtain, {
+        translateY: "100%",
+        duration: 720,
+        ease: "inOutCubic",
+      }).then(),
+    ]);
   };
 
   if (
@@ -182,8 +292,10 @@ const heroTitle = "SITCON Camp 2026";
 
     await wait(500);
     await showFinal(prefersReducedMotion);
-    await wait(700);
+    await wait(240);
+    await openIntroToHero(prefersReducedMotion);
     finishIntro();
+    await revealHeroSubtitle(prefersReducedMotion);
   }
 </script>
 
@@ -210,10 +322,17 @@ const heroTitle = "SITCON Camp 2026";
     font-weight: 700;
     line-height: 1.2;
     letter-spacing: 0;
+    visibility: hidden;
+    transform-origin: left center;
+  }
+
+  .hero-page__subtitle.is-visible {
+    visibility: visible;
   }
 
   .hero-page__title {
     margin: 0;
+    color: var(--color-green);
     white-space: nowrap;
     font-size: clamp(1.75rem, 7.5vw, 6rem);
     font-weight: 800;
@@ -226,6 +345,10 @@ const heroTitle = "SITCON Camp 2026";
     overflow: hidden;
   }
 
+  :global(html.hero-intro-lock) [data-hero-page-title-label] {
+    visibility: hidden;
+  }
+
   [data-hero-intro] {
     position: fixed;
     inset: 0;
@@ -235,8 +358,24 @@ const heroTitle = "SITCON Camp 2026";
     overflow: hidden;
     overscroll-behavior: contain;
     touch-action: none;
-    background: var(--color-background);
     color: var(--color-foreground);
+  }
+
+  .hero-intro__curtain {
+    position: absolute;
+    inset-inline: 0;
+    z-index: 0;
+    height: 50%;
+    background: var(--color-background);
+    will-change: transform;
+  }
+
+  .hero-intro__curtain--top {
+    inset-block-start: 0;
+  }
+
+  .hero-intro__curtain--bottom {
+    inset-block-end: 0;
   }
 
   [data-hero-intro][hidden],
@@ -246,6 +385,8 @@ const heroTitle = "SITCON Camp 2026";
   }
 
   .hero-intro__stage {
+    position: relative;
+    z-index: 1;
     width: min(calc(100vw - 2rem), 1100px);
     text-align: center;
   }
@@ -267,6 +408,19 @@ const heroTitle = "SITCON Camp 2026";
   .hero-intro__question {
     grid-template-columns: auto 4.2em auto;
     column-gap: 0.18em;
+  }
+
+  .hero-intro__final {
+    grid-auto-flow: column;
+    column-gap: 0.18em;
+  }
+
+  .hero-intro__final-title {
+    display: inline-grid;
+    place-items: center;
+    color: var(--color-green);
+    transform-origin: center;
+    will-change: transform;
   }
 
   .hero-intro__topic-viewport {
