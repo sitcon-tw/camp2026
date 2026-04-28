@@ -32,14 +32,14 @@
 
 ```json
 {
-  "主辦": [
-    {
-      "name": "六角學院",
-      "role": "主辦單位",
-      "description": "專注於網頁開發教育的線上學校，提供從入門到進階的實戰課程，學員超過萬人。",
-      "iconPath": "https://api.dicebear.com/9.x/icons/svg?seed=hexschool&icon=code",
-      "url": "https://hexschool.tw"
-    }
-  ]
+	"主辦": [
+		{
+			"name": "六角學院",
+			"role": "主辦單位",
+			"description": "專注於網頁開發教育的線上學校，提供從入門到進階的實戰課程，學員超過萬人。",
+			"iconPath": "https://api.dicebear.com/9.x/icons/svg?seed=hexschool&icon=code",
+			"url": "https://hexschool.tw"
+		}
+	]
 }
 ```

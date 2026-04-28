@@ -3,171 +3,147 @@ import organizers from "../data/Organizers.json";
 import { X } from "@lucide/astro";
 
 type Org = {
-  name: string;
-  role?: string;
-  description?: string;
-  iconPath: string;
-  url?: string;
+	name: string;
+	role?: string;
+	description?: string;
+	iconPath: string;
+	url?: string;
 };
 
-const sections = Object.entries(organizers as Record<string, Org[]>).filter(
-  ([, list]) => list.length,
-);
+const sections = Object.entries(organizers as Record<string, Org[]>).filter(([, list]) => list.length);
 ---
 
 {
-  sections.map(([tag, items]) => (
-    <section class="m-12">
-      <div class="mb-6 flex items-center gap-4">
-        <span class="bg-foreground/8 text-foreground/70 shrink-0 rounded-full px-3 py-1.5 text-sm font-semibold">
-          {tag}
-        </span>
-        <div class="from-foreground/15 h-px flex-1 bg-linear-to-r to-transparent" />
-      </div>
-      <div class="grid grid-cols-3 gap-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8">
-        {items.map((org) => (
-          <button
-            type="button"
-            data-icon={org.iconPath}
-            data-name={org.name}
-            data-role={org.role ?? ""}
-            data-desc={org.description ?? ""}
-            data-url={org.url ?? ""}
-            aria-haspopup="dialog"
-            aria-controls="org-popover"
-            class="org-card group bg-background/80 border-foreground/8 hover:bg-background hover:border-orange/30 focus-visible:ring-primary-blue/50 flex cursor-pointer flex-col items-center gap-2 rounded-2xl border p-3 transition-all duration-200 hover:-translate-y-1 hover:shadow-[0_4px_20px_rgba(246,153,119,0.18)] focus-visible:ring-2 focus-visible:ring-offset-1 focus-visible:outline-none"
-          >
-            <div class="flex size-14 items-center justify-center rounded-xl bg-white/60 p-1 transition-all duration-200 group-hover:bg-white group-hover:shadow-sm">
-              <img
-                src={org.iconPath}
-                alt={org.name}
-                class="size-full object-contain"
-              />
-            </div>
-            <span class="text-foreground/55 group-hover:text-foreground/85 text-center text-xs leading-tight font-medium transition-colors duration-200">
-              {org.name}
-            </span>
-          </button>
-        ))}
-      </div>
-    </section>
-  ))
+	sections.map(([tag, items]) => (
+		<section class="m-12">
+			<div class="mb-6 flex items-center gap-4">
+				<span class="bg-foreground/8 text-foreground/70 shrink-0 rounded-full px-3 py-1.5 text-sm font-semibold">{tag}</span>
+				<div class="from-foreground/15 h-px flex-1 bg-linear-to-r to-transparent" />
+			</div>
+			<div class="grid grid-cols-3 gap-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8">
+				{items.map(org => (
+					<button
+						type="button"
+						data-icon={org.iconPath}
+						data-name={org.name}
+						data-role={org.role ?? ""}
+						data-desc={org.description ?? ""}
+						data-url={org.url ?? ""}
+						aria-haspopup="dialog"
+						aria-controls="org-popover"
+						class="org-card group bg-background/80 border-foreground/8 hover:bg-background hover:border-orange/30 focus-visible:ring-primary-blue/50 flex cursor-pointer flex-col items-center gap-2 rounded-2xl border p-3 transition-all duration-200 hover:-translate-y-1 hover:shadow-[0_4px_20px_rgba(246,153,119,0.18)] focus-visible:ring-2 focus-visible:ring-offset-1 focus-visible:outline-none"
+					>
+						<div class="flex size-14 items-center justify-center rounded-xl bg-white/60 p-1 transition-all duration-200 group-hover:bg-white group-hover:shadow-sm">
+							<img src={org.iconPath} alt={org.name} class="size-full object-contain" />
+						</div>
+						<span class="text-foreground/55 group-hover:text-foreground/85 text-center text-xs leading-tight font-medium transition-colors duration-200">{org.name}</span>
+					</button>
+				))}
+			</div>
+		</section>
+	))
 }
 
-<div
-  id="org-popover"
-  popover
-  role="dialog"
-  aria-labelledby="org-popover-title"
-  class="org-popover m-auto w-full max-w-sm rounded-2xl border-0 p-0 shadow-2xl"
->
-  <div class="relative flex flex-col items-center gap-4 px-6 pt-8 pb-6">
-    <button
-      type="button"
-      popovertarget="org-popover"
-      popovertargetaction="hide"
-      class="text-foreground/35 hover:bg-orange/8 hover:text-foreground/70 absolute top-3 right-3 flex size-8 cursor-pointer items-center justify-center rounded-full border-none bg-transparent transition-all duration-150"
-      aria-label="關閉"
-    >
-      <X size={18} stroke-width={1.5} />
-    </button>
+<div id="org-popover" popover role="dialog" aria-labelledby="org-popover-title" class="org-popover m-auto w-full max-w-sm rounded-2xl border-0 p-0 shadow-2xl">
+	<div class="relative flex flex-col items-center gap-4 px-6 pt-8 pb-6">
+		<button
+			type="button"
+			popovertarget="org-popover"
+			popovertargetaction="hide"
+			class="text-foreground/35 hover:bg-orange/8 hover:text-foreground/70 absolute top-3 right-3 flex size-8 cursor-pointer items-center justify-center rounded-full border-none bg-transparent transition-all duration-150"
+			aria-label="關閉"
+		>
+			<X size={18} stroke-width={1.5} />
+		</button>
 
-    <div class="flex flex-col items-center gap-3">
-      <div
-        class="flex size-20 items-center justify-center rounded-2xl bg-white/70 p-2 shadow-sm"
-      >
-        <img
-          id="org-popover-icon"
-          src=""
-          alt=""
-          class="size-full object-contain"
-        />
-      </div>
-      <div class="text-center">
-        <h3 id="org-popover-title" class="text-foreground text-xl font-bold">
-        </h3>
-        <p id="org-popover-role" class="text-foreground/50 mt-0.5 text-sm"></p>
-      </div>
-    </div>
+		<div class="flex flex-col items-center gap-3">
+			<div class="flex size-20 items-center justify-center rounded-2xl bg-white/70 p-2 shadow-sm">
+				<img id="org-popover-icon" src="" alt="" class="size-full object-contain" />
+			</div>
+			<div class="text-center">
+				<h3 id="org-popover-title" class="text-foreground text-xl font-bold"></h3>
+				<p id="org-popover-role" class="text-foreground/50 mt-0.5 text-sm"></p>
+			</div>
+		</div>
 
-    <p
-      id="org-popover-desc"
-      class="text-foreground/65 w-full rounded-xl px-4 py-3 text-center text-sm leading-relaxed"
-    >
-    </p>
+		<p id="org-popover-desc" class="text-foreground/65 w-full rounded-xl px-4 py-3 text-center text-sm leading-relaxed"></p>
 
-    <a
-      id="org-popover-url"
-      href="#"
-      target="_blank"
-      rel="noopener noreferrer"
-      class="bg-blue w-full rounded-xl py-2.5 text-center text-sm font-semibold text-white no-underline transition-colors duration-150"
-    >
-      前往官網
-    </a>
-  </div>
+		<a
+			id="org-popover-url"
+			href="#"
+			target="_blank"
+			rel="noopener noreferrer"
+			class="bg-blue w-full rounded-xl py-2.5 text-center text-sm font-semibold text-white no-underline transition-colors duration-150"
+		>
+			前往官網
+		</a>
+	</div>
 </div>
 
 <script>
-  const popoverEl = document.getElementById("org-popover")!;
-  const icon = document.getElementById("org-popover-icon") as HTMLImageElement;
-  const title = document.getElementById("org-popover-title")!;
-  const roleEl = document.getElementById("org-popover-role")!;
-  const descEl = document.getElementById("org-popover-desc")!;
-  const urlEl = document.getElementById("org-popover-url") as HTMLAnchorElement;
+	const popoverEl = document.getElementById("org-popover")!;
+	const icon = document.getElementById("org-popover-icon") as HTMLImageElement;
+	const title = document.getElementById("org-popover-title")!;
+	const roleEl = document.getElementById("org-popover-role")!;
+	const descEl = document.getElementById("org-popover-desc")!;
+	const urlEl = document.getElementById("org-popover-url") as HTMLAnchorElement;
 
-  document.addEventListener("click", (e) => {
-    const btn = (e.target as Element).closest<HTMLElement>(".org-card");
-    if (!btn) return;
+	function setIcon(src: string, alt: string) {
+		icon.style.opacity = "0";
+		icon.alt = alt;
+		const reveal = () => {
+			icon.style.opacity = "1";
+		};
+		icon.onload = reveal;
+		icon.onerror = reveal;
+		icon.src = src;
+		if (icon.complete) reveal();
+	}
 
-    const { icon: iconSrc, name, role, desc, url } = btn.dataset;
+	document.addEventListener("click", e => {
+		const btn = (e.target as Element).closest<HTMLElement>(".org-card");
+		if (!btn) return;
 
-    title.textContent = name ?? "";
-    roleEl.textContent = role ?? "";
-    roleEl.hidden = !role;
-    descEl.textContent = desc ?? "";
-    descEl.hidden = !desc;
-    urlEl.href = url ?? "#";
-    urlEl.hidden = !url;
+		const { icon: src, name = "", role, desc, url } = btn.dataset;
 
-    icon.style.opacity = "0";
-    icon.alt = name ?? "";
-    icon.src = iconSrc ?? "";
-    if (icon.complete) {
-      icon.style.opacity = "1";
-    } else {
-      icon.onload = () => (icon.style.opacity = "1");
-    }
+		title.textContent = name;
+		roleEl.textContent = role ?? "";
+		roleEl.hidden = !role;
+		descEl.textContent = desc ?? "";
+		descEl.hidden = !desc;
+		urlEl.href = url ?? "#";
+		urlEl.hidden = !url;
+		setIcon(src ?? "", name);
 
-    popoverEl.showPopover();
-  });
+		popoverEl.showPopover();
+	});
 </script>
 
 <style>
-  #org-popover-icon {
-    transition: opacity 0.15s ease;
-  }
+	#org-popover-icon {
+		transition: opacity 0.15s ease;
+	}
 
-  .org-popover {
-    padding: 0;
-    border: none;
-    background: var(--color-background);
-    margin: auto;
-    min-width: 320px;
-    max-height: 90vh;
-    overflow-y: auto;
-  }
+	.org-popover {
+		padding: 0;
+		border: none;
+		background: var(--color-background);
+		margin: auto;
+		min-width: 320px;
+		max-height: 90vh;
+		overflow-y: auto;
+	}
 
-  .org-popover::backdrop {
-    background-color: rgba(0, 0, 0, 0.35);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-  }
+	.org-popover::backdrop {
+		background-color: rgba(0, 0, 0, 0.35);
+		backdrop-filter: blur(8px);
+		-webkit-backdrop-filter: blur(8px);
+	}
 
-  @media (prefers-reduced-motion: reduce) {
-    .org-popover::backdrop {
-      backdrop-filter: none;
-      -webkit-backdrop-filter: none;
-    }
-  }
+	@media (prefers-reduced-motion: reduce) {
+		.org-popover::backdrop {
+			backdrop-filter: none;
+			-webkit-backdrop-filter: none;
+		}
+	}
 </style>
