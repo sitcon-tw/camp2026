@@ -1,13 +1,16 @@
 ---
+import type { ImageMetadata } from "astro";
 import { Image } from "astro:assets";
 
 import { X } from "@lucide/astro";
 
-import imgGroups from "../assets/pics/groups.webp";
-import imgEdu from "../assets/pics/edu.webp";
-import imgHackathon from "../assets/pics/hackathon.webp";
-import imgCamp from "../assets/pics/camp.webp";
+import imgGroups from "@/assets/pics/groups.webp";
+import imgEdu from "@/assets/pics/edu.webp";
+import imgHackathon from "@/assets/pics/hackathon.webp";
+import imgCamp from "@/assets/pics/camp.webp";
+
 import rawMembers from "@/data/members.json";
+import rawStats from "@/data/stats.json";
 
 interface Member {
   id: string;
@@ -17,41 +20,37 @@ interface Member {
   bio: string;
 }
 
+type StatImg = "groups" | "edu" | "hackathon" | "camp";
+
+type StatSingle = {
+  type: "single";
+  value: string;
+  label: string;
+  img: StatImg;
+  prefix?: string;
+};
+
+type StatSplit = {
+  type: "split";
+  items: { value: string; label: string }[];
+  img: StatImg;
+};
+
+type Stat = StatSingle | StatSplit;
+
+const imgMap: Record<StatImg, ImageMetadata> = {
+  groups: imgGroups,
+  edu: imgEdu,
+  hackathon: imgHackathon,
+  camp: imgCamp,
+};
+
 const members = rawMembers as Member[];
+const stats = rawStats as Stat[];
 
 const displayMembers: (Member & { cloned?: true })[] = [
   ...members,
   ...members.map((m) => ({ ...m, id: `${m.id}-clone`, cloned: true as const })),
-];
-
-const stats = [
-  {
-    type: "single",
-    value: "10000",
-    label: "名參與者",
-    bgImg: imgGroups,
-  },
-  {
-    type: "single",
-    value: "500",
-    label: "名學生講者",
-    bgImg: imgEdu,
-  },
-  {
-    type: "split",
-    items: [
-      { value: "500", label: "場聚會和講座" },
-      { value: "10", label: "場夏令營" },
-    ],
-    bgImg: imgHackathon,
-  },
-  {
-    type: "single",
-    prefix: "扶持近",
-    value: "1400",
-    label: "名熱愛資訊的志工",
-    bgImg: imgCamp,
-  },
 ];
 ---
 
@@ -95,7 +94,7 @@ const stats = [
         SITCON，13 年來全東亞最大的學生資訊社群
       </h2>
       <p
-        class="mx-auto max-w-4xl text-lg leading-relaxed text-gray-700 md:text-xl"
+        class="mx-auto max-w-4xl text-lg leading-relaxed text-foreground/70 md:text-xl"
       >
         我個人認為義大利麵就應該拌 42
         號混凝土，因為這個螺絲釘的長度很容易直接影響到挖掘機的扭矩。我個人認為義大利麵就應該拌
@@ -110,9 +109,9 @@ const stats = [
     >
       {
         stats.map((stat) => (
-          <div class="card-stat">
+          <div class="card-stat group">
             <Image
-              src={stat.bgImg}
+              src={imgMap[stat.img]}
               alt={
                 stat.type === "single" ? stat.label || "社群數據" : "社群數據"
               }
@@ -201,17 +200,25 @@ const stats = [
     @apply bg-background w-full px-6 py-16 font-sans md:px-12;
   }
   .card-stat {
-    @apply relative aspect-3/4 w-full overflow-hidden rounded-4xl bg-gray-900 shadow-lg;
+    @apply relative aspect-3/4 w-full overflow-hidden rounded-4xl bg-foreground shadow-lg;
   }
   .btn-green {
     @apply bg-green flex cursor-pointer items-center gap-2 rounded-xl px-10 py-3 text-lg font-bold text-black shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg active:scale-95;
   }
   .marquee-track {
     animation: marquee 20s linear infinite;
+    will-change: transform;
   }
   @keyframes marquee {
-    to {
-      transform: translateX(-50%);
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .marquee-track {
+      animation: none;
+    }
+    .dialog-content {
+      transition: none !important;
     }
   }
 
@@ -231,7 +238,7 @@ const stats = [
     place-items: center;
   }
   .member-dialog::backdrop {
-    background: oklch(0.1 0 0 / 0.5);
+    background: color-mix(in oklch, var(--color-foreground) 50%, transparent);
     backdrop-filter: blur(4px);
   }
   .dialog-backdrop {
@@ -242,11 +249,11 @@ const stats = [
   .dialog-content {
     position: relative;
     z-index: 1;
-    background: var(--color-background, #f9f5ef);
+    background: var(--color-background);
     border-radius: 1.5rem;
     padding: 2rem;
     width: min(420px, calc(100vw - 2rem));
-    box-shadow: 0 24px 64px oklch(0.1 0 0 / 0.2);
+    box-shadow: 0 24px 64px color-mix(in oklch, var(--color-foreground) 20%, transparent);
     opacity: 1;
     transform: scale(1) translateY(0);
     transition:
@@ -282,11 +289,16 @@ const stats = [
   const dialogRole = document.getElementById("dialog-role")!;
   const dialogName = document.getElementById("dialog-name")!;
   const dialogBio = document.getElementById("dialog-bio")!;
+  const dialogContent = dialog.querySelector<HTMLElement>(".dialog-content")!;
   const marqueeTrack = document.querySelector<HTMLElement>(".marquee-track");
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  let isClosing = false;
 
   function openDialog(id: string) {
     const m = membersMap.get(id);
     if (!m) return;
+    isClosing = false;
     dialogImg.src = m.imgUrl;
     dialogImg.alt = m.name;
     dialogRole.textContent = m.role;
@@ -297,19 +309,34 @@ const stats = [
   }
 
   function closeDialog() {
-    const content = dialog.querySelector<HTMLElement>(".dialog-content")!;
-    content.style.opacity = "0";
-    content.style.transform = "scale(0.95) translateY(8px)";
-    setTimeout(() => {
+    if (isClosing) return;
+    isClosing = true;
+
+    if (reducedMotion) {
       dialog.close();
-      content.style.opacity = "";
-      content.style.transform = "";
       if (marqueeTrack) marqueeTrack.style.animationPlayState = "";
-    }, 280);
+      isClosing = false;
+      return;
+    }
+
+    dialogContent.style.opacity = "0";
+    dialogContent.style.transform = "scale(0.95) translateY(8px)";
+
+    const onEnd = (e: TransitionEvent) => {
+      if (e.propertyName !== "opacity") return;
+      dialogContent.removeEventListener("transitionend", onEnd);
+      dialog.close();
+      dialogContent.style.opacity = "";
+      dialogContent.style.transform = "";
+      if (marqueeTrack) marqueeTrack.style.animationPlayState = "";
+      isClosing = false;
+    };
+    dialogContent.addEventListener("transitionend", onEnd);
   }
 
-  document.querySelectorAll<HTMLElement>(".member-card").forEach((card) => {
-    card.addEventListener("click", () => openDialog(card.dataset.memberId!));
+  document.querySelector(".marquee-track")!.addEventListener("click", (e) => {
+    const card = (e.target as Element).closest<HTMLElement>(".member-card");
+    if (card?.dataset.memberId) openDialog(card.dataset.memberId);
   });
 
   closeBtn.addEventListener("click", closeDialog);
