@@ -1,3 +1,12 @@
+# USE PNPM!!!
+package-lock.json
+yarn.lock
+bun.lockb
+
+# Keep your editor settings out of version control
+.vscode
+.jetbrains
+
 # build output
 dist/
 

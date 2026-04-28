@@ -12,7 +12,9 @@
     "prettier:check": "prettier --check .",
     "prettier:write": "prettier --write .",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "preinstall": "npx only-allow pnpm",
+		"prepare": "sh -c 'command -v git >/dev/null 2>&1 && [ -d .git ] && git config core.hooksPath .githooks || exit 0'"
   },
   "dependencies": {
     "@lucide/astro": "^1.11.0",
