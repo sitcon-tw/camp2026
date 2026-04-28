@@ -14,8 +14,8 @@ const members = rawMembers as Member[];
 
 const cardHues = members.map(() => Math.floor(Math.random() * 360));
 const displayMembers: (Member & { cloned?: true; hue?: number })[] = [
-  ...members.map((m, i) => ({ ...m, hue: cardHues[i] })),
-  ...members.map((m, i) => ({ ...m, id: `${m.id}-clone`, cloned: true as const, hue: cardHues[i] })),
+	...members.map((m, i) => ({ ...m, hue: cardHues[i] })),
+	...members.map((m, i) => ({ ...m, id: `${m.id}-clone`, cloned: true as const, hue: cardHues[i] }))
 ];
 ---
 
