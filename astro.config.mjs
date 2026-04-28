@@ -1,5 +1,6 @@
 // @ts-check
 import { defineConfig, fontProviders } from "astro/config";
+import Icons from "unplugin-icons/vite";
 
 import tailwindcss from "@tailwindcss/vite";
 
@@ -43,8 +44,12 @@ export default defineConfig({
 			}
 		}
 	],
-
 	vite: {
-		plugins: [tailwindcss()]
+		plugins: [
+			tailwindcss(),
+			Icons({
+				compiler: "astro"
+			})
+		]
 	}
 });
