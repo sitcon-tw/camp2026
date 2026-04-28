@@ -121,8 +121,11 @@ const { studentComment } = siteConfig;
 		if (e.target === dialog) closeModal();
 	});
 
+	dialog.addEventListener("close", e => {
+		iframe.src = "";
+	});
+
 	function closeModal() {
 		dialog.close();
-		iframe.src = "";
 	}
 </script>
