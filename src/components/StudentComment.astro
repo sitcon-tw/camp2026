@@ -52,7 +52,7 @@ const { studentComment } = siteConfig;
 				{
 					[0, 1].map(() =>
 						studentComment.video.map(v => (
-							<div class:list={["video-card bg-foreground relative aspect-video w-md cursor-pointer rounded-4xl bg-cover bg-center", `bg-[url(${v.cover})]`]} data-url={v.url}>
+							<div class="video-card bg-foreground relative aspect-video w-md cursor-pointer rounded-4xl bg-cover bg-center" style={`background-image: url('${v.cover}')`} data-url={v.url}>
 								<div class="flex h-full w-full items-center justify-center">
 									<MaterialSymbolsPlayCircleOutlineRounded class="text-background text-2xl" />
 								</div>
