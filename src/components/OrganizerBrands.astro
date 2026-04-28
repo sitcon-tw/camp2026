@@ -108,8 +108,8 @@ const sections = Object.entries(organizers as Record<string, Org[]>).filter(
   </div>
 </div>
 
-<script lang="ts">
-  const popover = document.getElementById("org-popover")!;
+<script>
+  const popoverEl = document.getElementById("org-popover")!;
   const icon = document.getElementById("org-popover-icon") as HTMLImageElement;
   const title = document.getElementById("org-popover-title")!;
   const roleEl = document.getElementById("org-popover-role")!;
@@ -117,9 +117,7 @@ const sections = Object.entries(organizers as Record<string, Org[]>).filter(
   const urlEl = document.getElementById("org-popover-url") as HTMLAnchorElement;
 
   document.addEventListener("click", (e) => {
-    const btn = (e.target as HTMLElement).closest<HTMLButtonElement>(
-      ".org-card",
-    );
+    const btn = (e.target as Element).closest<HTMLElement>(".org-card");
     if (!btn) return;
 
     const { icon: iconSrc, name, role, desc, url } = btn.dataset;
@@ -133,11 +131,15 @@ const sections = Object.entries(organizers as Record<string, Org[]>).filter(
     urlEl.hidden = !url;
 
     icon.style.opacity = "0";
-    icon.onload = () => (icon.style.opacity = "1");
     icon.alt = name ?? "";
     icon.src = iconSrc ?? "";
+    if (icon.complete) {
+      icon.style.opacity = "1";
+    } else {
+      icon.onload = () => (icon.style.opacity = "1");
+    }
 
-    popover.showPopover();
+    popoverEl.showPopover();
   });
 </script>
 
