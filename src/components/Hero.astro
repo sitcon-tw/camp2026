@@ -84,7 +84,7 @@ const heroPhotoWallColumns = [
 
 									return (
 										<figure class:list={["hero-photo-wall__tile", ...classes]}>
-											<img class="hero-photo-wall__image" src={image.src} width={image.width} height={image.height} alt="" loading="eager" decoding="async" />
+											<img class="hero-photo-wall__image" src={image.src} width={image.width} height={image.height} alt="" loading="lazy" decoding="async" />
 										</figure>
 									);
 								})}
