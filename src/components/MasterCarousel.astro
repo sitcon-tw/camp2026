@@ -11,7 +11,12 @@ interface Member {
 }
 
 const members = rawMembers as Member[];
-const displayMembers: (Member & { cloned?: true })[] = [...members, ...members.map(m => ({ ...m, id: `${m.id}-clone`, cloned: true as const }))];
+
+const cardHues = members.map(() => Math.floor(Math.random() * 360));
+const displayMembers: (Member & { cloned?: true; hue?: number })[] = [
+  ...members.map((m, i) => ({ ...m, hue: cardHues[i] })),
+  ...members.map((m, i) => ({ ...m, id: `${m.id}-clone`, cloned: true as const, hue: cardHues[i] })),
+];
 ---
 
 <div class="group w-full overflow-hidden py-8">
@@ -23,7 +28,7 @@ const displayMembers: (Member & { cloned?: true })[] = [...members, ...members.m
 					data-member-id={member.cloned ? member.id.replace("-clone", "") : member.id}
 					aria-haspopup="dialog"
 				>
-					<div class="border-green bg-background h-full w-full overflow-hidden rounded-[2.5rem] border-r-6 border-b-6">
+					<div class="bg-background h-full w-full overflow-hidden rounded-[2.5rem] border-r-6 border-b-6" style={`border-color: hsl(${member.hue}, 70%, 55%)`}>
 						<img src={member.imgUrl} alt={member.name} class="h-full w-full object-cover" loading="lazy" width="280" height="380" />
 					</div>
 					<div class="absolute right-4 bottom-4 left-4 rounded-xl bg-black/60 px-3 py-2 text-white backdrop-blur-sm">

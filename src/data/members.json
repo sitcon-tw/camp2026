@@ -1,30 +1,30 @@
 [
-  {
-    "id": "1",
-    "name": "Alice Chen",
-    "role": "前端工程師",
-    "imgUrl": "/src/assets/pics/hackathon.webp",
-    "bio": "專注 Svelte 5 與動效設計，熱愛開源。"
-  },
-  {
-    "id": "2",
-    "name": "Bob Lin",
-    "role": "後端工程師",
-    "imgUrl": "/src/assets/pics/camp.webp",
-    "bio": "擅長 Bun runtime 與 PostgreSQL 效能調優。"
-  },
-  {
-    "id": "3",
-    "name": "Carol Wu",
-    "role": "UI/UX 設計師",
-    "imgUrl": "/src/assets/pics/groups.webp",
-    "bio": "從 0→1 設計系統，Figma 魔法師。"
-  },
-  {
-    "id": "4",
-    "name": "David Huang",
-    "role": "DevOps 工程師",
-    "imgUrl": "/src/assets/pics/edu.webp",
-    "bio": "Docker、CI/CD 流水線，讓部署無痛。"
-  }
+	{
+		"id": "1",
+		"name": "Alice Chen",
+		"role": "前端工程師",
+		"imgUrl": "/src/assets/pics/hackathon.webp",
+		"bio": "專注 Svelte 5 與動效設計，熱愛開源。"
+	},
+	{
+		"id": "2",
+		"name": "Bob Lin",
+		"role": "後端工程師",
+		"imgUrl": "/src/assets/pics/camp.webp",
+		"bio": "擅長 Bun runtime 與 PostgreSQL 效能調優。"
+	},
+	{
+		"id": "3",
+		"name": "Carol Wu",
+		"role": "UI/UX 設計師",
+		"imgUrl": "/src/assets/pics/groups.webp",
+		"bio": "從 0→1 設計系統，Figma 魔法師。"
+	},
+	{
+		"id": "4",
+		"name": "David Huang",
+		"role": "DevOps 工程師",
+		"imgUrl": "/src/assets/pics/edu.webp",
+		"bio": "Docker、CI/CD 流水線，讓部署無痛。"
+	}
 ]

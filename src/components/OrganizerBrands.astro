@@ -45,7 +45,7 @@ const sections = await Promise.all(
 {
 	sections.map(([tag, items]) => (
 		<section class="mx-64 my-32">
-			<h3 class="mb-4 text-xl font-bold">{tag}</h3>
+			<h1 class="mb-4 text-[48px] font-bold">{tag}</h1>
 			<div class="flex flex-wrap items-center gap-x-8">
 				{items.map(org => (
 					<button
@@ -59,7 +59,7 @@ const sections = await Promise.all(
 						aria-controls="org-popover"
 						class="org-card group focus-visible:ring-primary-blue/50 cursor-pointer transition-transform hover:-translate-y-1 focus-visible:ring-2 focus-visible:outline-none"
 					>
-						{org.meta ? <Image src={org.meta} alt={org.name} class="h-16 w-auto object-contain sm:h-20" /> : <img src={org.iconPath} alt={org.name} class="h-16 w-auto object-contain sm:h-20" />}
+						{org.meta ? <Image src={org.meta} alt={org.name} class="h-32 w-auto object-contain" /> : <img src={org.iconPath} alt={org.name} class="h-32 w-auto object-contain" />}
 					</button>
 				))}
 			</div>
