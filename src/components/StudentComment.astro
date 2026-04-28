@@ -82,19 +82,19 @@ const videos: Video[] = [
 ---
 
 <div class="bg-background py-5">
-	<h2 class="mb-2 text-center text-2xl font-black">聽聽往年學員怎麼說的</h2>
+	<h2 class="mb-2 text-center text-5xl font-black">聽聽往年學員怎麼說的</h2>
 
 	<!-- 固定留言 -->
 	<div class="mx-auto my-5 grid grid-cols-1 gap-x-4 gap-y-2 sm:grid-cols-2 md:w-[80%] lg:grid-cols-3">
 		{
-			comments.map(c => (
+			pinComments.map(c => (
 				<div class="bg-foreground text-background w-full snap-start snap-always rounded-lg sm:w-fit">
 					<div class:list={["flex items-center rounded-t-lg px-4 py-2", `bg-${c.color}`]}>
 						<Image src="https://placehold.co/70x70" alt="Student's pfp" height="70" width="70" class="mr-5 rounded-full" />
 						<p class="text-2xl font-bold">{c.name}</p>
 						<div />
 					</div>
-					<p class="px-4 py-2 text-sm">{c.comment}</p>
+					<p class="px-4 py-2 text-[16px]">{c.comment}</p>
 				</div>
 			))
 		}
@@ -111,7 +111,7 @@ const videos: Video[] = [
 								<MaterialSymbolsPlayCircleOutlineRounded class="text-background text-2xl" />
 							</div>
 
-							<p class="text-background relative bottom-7 text-center text-2xl font-bold">{v.label}</p>
+							<p class="text-background relative bottom-12 text-center text-5xl font-bold">{v.label}</p>
 						</div>
 					))
 				}
@@ -124,7 +124,7 @@ const videos: Video[] = [
 								<MaterialSymbolsPlayCircleOutlineRounded class="text-background text-2xl" />
 							</div>
 
-							<p class="text-background relative bottom-7 text-center text-2xl font-bold">{v.label}</p>
+							<p class="text-background relative bottom-13 text-center text-5xl font-bold">{v.label}</p>
 						</div>
 					))
 				}
