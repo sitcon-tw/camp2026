@@ -7,14 +7,14 @@ import siteConfig from "@/data/site.json";
 const { studentComment } = siteConfig;
 ---
 
-<div class="bg-background relative overflow-hidden py-5">
+<div class="bg-background relative overflow-hidden">
 	<!-- 背景跑馬燈 -->
-	<div class="pointer-events-none absolute inset-0 flex flex-col justify-around opacity-15">
+	<div class="pointer-events-none absolute inset-0 z-0 flex flex-col justify-around opacity-15">
 		{
 			Array.from({ length: studentComment.bgMarquee.repeatRows }, (_, i) => (
 				<div class="marquee-row flex w-max" style={`animation-duration: ${9 + i * 0.9}s; animation-delay: ${-((i + 1) * 3) % 9}s`}>
 					{[0, 1].map(() => (
-						<span class="shrink-0 text-4xl font-bold whitespace-nowrap">{studentComment.bgMarquee.text.repeat(10)}&nbsp;</span>
+						<span class="shrink-0 text-[3rem] leading-[100%] font-bold text-nowrap whitespace-nowrap">{studentComment.bgMarquee.text.repeat(10)}&nbsp;</span>
 					))}
 				</div>
 			))
@@ -22,32 +22,33 @@ const { studentComment } = siteConfig;
 	</div>
 
 	<!-- 前景內容 -->
-	<div class="relative z-10">
-		<h2 class="mb-2 text-center text-5xl font-black">聽聽往年學員怎麼說的</h2>
+	<div class="relative">
+		<div class="z-10 flex flex-col gap-16 p-32 pb-16">
+			<h2 class="text-center text-[3rem] leading-[133%] font-bold">聽聽往年學員怎麼說的</h2>
 
-		<!-- 固定留言 -->
-		<div class="mx-auto my-5 grid grid-cols-1 gap-x-4 gap-y-2 sm:grid-cols-2 md:w-[80%] lg:grid-cols-3">
-			{
-				studentComment.comments.map(c => (
-					<div class="bg-foreground text-background w-full snap-start snap-always rounded-lg sm:w-fit">
-						<div class:list={["flex items-center rounded-t-lg px-4 py-2", `bg-${c.color}`]}>
-							<Image src="https://placehold.co/70x70" alt="Student's pfp" height="70" width="70" class="mr-5 rounded-full" />
-							<p class="text-2xl font-bold">{c.name}</p>
-							<div />
+			<!-- 固定留言 -->
+			<div class="grid grid-cols-3 gap-x-16 gap-y-1.5">
+				{
+					studentComment.comments.map(c => (
+						<div class="bg-foreground flex flex-col items-start rounded-4xl">
+							<div class:list={["flex h-19 items-center gap-4 self-stretch rounded-t-4xl p-4", `bg-${c.color}`]}>
+								<Image src="https://placehold.co/48x48" alt="Student's pfp" height="48" width="48" class="rounded-full" />
+								<p class="text-[1.5rem] leading-[100%] font-bold text-white">{c.name}</p>
+								<div />
+							</div>
+							<p class="text-background p-6 text-[1rem] leading-[133%]">{c.comment}</p>
 						</div>
-						<p class="px-4 py-2 text-[16px]">{c.comment}</p>
-					</div>
-				))
-			}
+					))
+				}
+			</div>
 		</div>
-
 		<!-- 影片跑馬燈 -->
-		<div class="marquee-container my-5 flex w-full overflow-hidden">
+		<div class="marquee-container mb-16 flex w-dvw overflow-hidden">
 			<div class="marquee-track flex w-max gap-4">
 				<div class="flex shrink-0 gap-4">
 					{
 						studentComment.video.map(v => (
-							<div class:list={["video-card bg-foreground aspect-video max-h-50 w-75 cursor-pointer rounded-lg", `bg-[url(${v.cover})]`]} data-url={v.url}>
+							<div class:list={["video-card bg-foreground aspect-video h-27.5 w-111.5 cursor-pointer rounded-4xl", `bg-[url(${v.cover})]`]} data-url={v.url}>
 								<div class="flex h-full w-full items-center justify-center">
 									<MaterialSymbolsPlayCircleOutlineRounded class="text-background text-2xl" />
 								</div>
@@ -60,80 +61,80 @@ const { studentComment } = siteConfig;
 				<div class="flex shrink-0 gap-4">
 					{
 						studentComment.video.map(v => (
-							<div class:list={["video-card bg-foreground aspect-video max-h-50 w-75 cursor-pointer rounded-lg", `bg-[url(${v.cover})]`]} data-url={v.url}>
+							<div class:list={["video-card bg-foreground aspect-video h-27.5 w-111.5 cursor-pointer rounded-4xl", `bg-[url(${v.cover})]`]} data-url={v.url}>
 								<div class="flex h-full w-full items-center justify-center">
 									<MaterialSymbolsPlayCircleOutlineRounded class="text-background text-2xl" />
 								</div>
 
-								<p class="text-background relative bottom-13 text-center text-4xl font-bold">{v.label}</p>
+								<p class="text-background relative bottom-12 text-center text-4xl font-bold">{v.label}</p>
 							</div>
 						))
 					}
 				</div>
 			</div>
 		</div>
+
+		<!-- 學員訪談 YouTube 影片 popup -->
+		<dialog id="comment-dialog" class="m-auto w-full max-w-3xl rounded-4xl">
+			<div class="aspect-video w-full">
+				<iframe id="comment-iframe" class="h-full w-full rounded-4xl" title="YouTube video player" allow="autoplay; encrypted-media;" src="" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+			</div>
+		</dialog>
+
+		<!-- 防止顏色被 TailwindCSS tree shaking 掉 -->
+		<div class="bg-green h-0 w-0"></div>
+		<div class="bg-dark-green h-0 w-0"></div>
+		<div class="bg-blue h-0 w-0"></div>
+		<div class="bg-sky-blue h-0 w-0"></div>
+		<div class="bg-soft-blue h-0 w-0"></div>
+		<div class="bg-orange h-0 w-0"></div>
 	</div>
 
-	<!-- 學員訪談 YouTube 影片 popup -->
-	<dialog id="comment-dialog" class="m-auto w-full max-w-3xl rounded-xl p-0 shadow-xl">
-		<div class="aspect-video w-full">
-			<iframe id="comment-iframe" class="h-full w-full rounded-xl" title="YouTube video player" allow="autoplay; encrypted-media;" src="" referrerpolicy="strict-origin-when-cross-origin"></iframe>
-		</div>
-	</dialog>
-
-	<!-- 防止顏色被 TailwindCSS tree shaking 掉 -->
-	<div class="bg-green h-0 w-0"></div>
-	<div class="bg-dark-green h-0 w-0"></div>
-	<div class="bg-blue h-0 w-0"></div>
-	<div class="bg-sky-blue h-0 w-0"></div>
-	<div class="bg-soft-blue h-0 w-0"></div>
-	<div class="bg-orange h-0 w-0"></div>
-</div>
-
-<style>
-	@keyframes marquee {
-		from {
-			transform: translateX(0);
+	<style>
+		@keyframes marquee {
+			from {
+				transform: translateX(0);
+			}
+			to {
+				transform: translateX(-50%);
+			}
 		}
-		to {
-			transform: translateX(-50%);
+
+		/* 影片跑馬燈 */
+		.marquee-track {
+			animation: marquee 20s linear infinite;
 		}
-	}
 
-	/* 影片跑馬燈 */
-	.marquee-track {
-		animation: marquee 20s linear infinite;
-	}
+		.marquee-container:hover .marquee-track {
+			animation-play-state: paused;
+		}
 
-	.marquee-container:hover .marquee-track {
-		animation-play-state: paused;
-	}
+		/* 背景文字跑馬燈 */
+		.marquee-row {
+			animation: marquee 10s linear infinite;
+		}
+	</style>
 
-	/* 背景文字跑馬燈 */
-	.marquee-row {
-		animation: marquee 10s linear infinite;
-	}
-</style>
+	<script>
+		const dialog = document.getElementById("comment-dialog") as HTMLDialogElement;
+		const iframe = document.getElementById("comment-iframe") as HTMLIFrameElement;
 
-<script>
-	const dialog = document.getElementById("comment-dialog") as HTMLDialogElement;
-	const iframe = document.getElementById("comment-iframe") as HTMLIFrameElement;
-
-	document.querySelectorAll<HTMLElement>(".video-card").forEach(card => {
-		card.addEventListener("click", () => {
-			const url = card.dataset.url;
-			if (!url) return;
-			iframe.src = url;
-			dialog.showModal();
+		document.querySelectorAll<HTMLElement>(".video-card").forEach(card => {
+			card.addEventListener("click", () => {
+				const url = card.dataset.url;
+				if (!url) return;
+				iframe.src = url;
+				dialog.showModal();
+			});
 		});
-	});
 
-	dialog.addEventListener("click", e => {
-		if (e.target === dialog) closeModal();
-	});
+		dialog.addEventListener("click", e => {
+			if (e.target === dialog) closeModal();
+		});
 
-	function closeModal() {
-		dialog.close();
-		iframe.src = "";
-	}
-</script>
+		function closeModal() {
+			dialog.close();
+			iframe.src = "";
+		}
+	</script>
+</div>
