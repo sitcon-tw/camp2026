@@ -1,68 +1,104 @@
 ---
 import { Image } from "astro:assets";
-import { Video } from "@lucide/astro";
+import { Video, Play } from "@lucide/astro";
 
 interface Comment {
   name: string;
-  tag?: string;
   comment: string;
+  color:
+    | "green"
+    | "dark-green"
+    | "primary-blue"
+    | "blue"
+    | "soft-blue"
+    | "sky-blue"
+    | "orange";
 }
 
 const comments: Comment[] = [
   {
     name: "Student 1",
-    tag: "SITCON CAMP 2025 學員",
     comment:
       "我個人認為義大利麵就應該拌 42 號混泥土因為這個螺絲釘的長度很容易直接影響到挖掘機的扭矩",
+    color: "blue",
   },
   {
     name: "Student 2",
-    tag: "SITCON CAMP 2025 學員",
     comment:
       "你往裡砸的時候一瞬間他就會產生大量的高能蛋白俗稱 UFO，會嚴重影響經濟的發展以至於對整個太平洋和充電器的核污染",
+    color: "orange",
   },
   {
     name: "Student 3",
-    tag: "SITCON CAMP 2025 學員",
     comment:
       "再或者說透過這勾股定理很容易推斷出人工飼養的東條英機他是可以捕獲野生的三角函數",
+    color: "green",
   },
   {
     name: "Student 4",
-    tag: "SITCON CAMP 2025 學員",
     comment:
       "所以說不管這秦始皇的切面是否具有放射性川普的 N 次方是否有沈澱物都不會影響到沃爾瑪跟維爾康在南極匯合",
+    color: "dark-green",
   },
   {
     name: "Student 5",
-    tag: "SITCON CAMP 2025 學員",
     comment:
       "你往裡砸的時候一瞬間他就會產生大量的高能蛋白俗稱 UFO，會嚴重影響經濟的發展以至於對整個太平洋和充電器的核污染",
+    color: "sky-blue",
   },
   {
     name: "Student 6",
-    tag: "SITCON CAMP 2025 學員",
     comment:
       "再或者說透過這勾股定理很容易推斷出人工飼養的東條英機他是可以捕獲野生的三角函數",
+    color: "soft-blue",
+  },
+];
+
+interface Video {
+  label: string;
+  cover: string;
+  url: string;
+}
+
+const videos: Video[] = [
+  {
+    label: "2019 夏令營",
+    cover: "https://placehold.co/300x200",
+    url: "https://youtu.be",
+  },
+  {
+    label: "2019 夏令營",
+    cover: "https://placehold.co/300x200",
+    url: "https://youtu.be",
+  },
+  {
+    label: "2019 夏令營",
+    cover: "https://placehold.co/300x200",
+    url: "https://youtu.be",
   },
 ];
 ---
 
 <div class="bg-background py-5">
-  <h2 class="mb-2 text-center text-2xl font-black">學員回饋</h2>
-  <button
+  <h2 class="mb-2 text-center text-2xl font-black">聽聽往年學員怎麼說的</h2>
+  <!-- <button
     id="comment-btn"
     class="border-sky-blue hover:bg-sky-blue hover:text-background mx-auto mb-4 flex w-fit cursor-pointer items-center gap-2 rounded-lg border-2 px-4 py-2 text-sm duration-200"
     ><Video size={20} stroke-width={1} />觀看訪談影片</button
-  >
+  > -->
 
   <div
-    class="mx-5 grid max-h-100 max-w-5xl snap-y snap-mandatory grid-cols-1 gap-2 overflow-scroll sm:max-h-none sm:grid-cols-2 lg:mx-auto lg:grid-cols-3"
+    class="m-5 grid max-h-100 max-w-5xl snap-y snap-mandatory grid-cols-1 gap-5 overflow-scroll sm:max-h-none sm:grid-cols-2 md:mx-0 md:w-[80%] lg:mx-auto lg:grid-cols-3"
   >
     {
       comments.map((c) => (
-        <div class="group w-full snap-start snap-always rounded-lg bg-white px-5 py-2 shadow-md sm:w-fit">
-          <div class="mb-2 flex items-center">
+        <div class="bg-foreground text-background w-full snap-start snap-always rounded-lg sm:w-fit">
+          <div
+            class:list={[
+              "flex items-center rounded-t-lg px-4 py-2",
+              `bg-${c.color}`,
+            ]}
+          >
             <Image
               src="https://placehold.co/70x70"
               alt="Student's pfp"
@@ -70,19 +106,38 @@ const comments: Comment[] = [
               width="70"
               class="mr-5 rounded-full"
             />
-            <div>
-              <p class="text-2xl">{c.name}</p>
-              <p class="text-foreground/50 text-sm">{c?.tag}</p>
+            <p class="text-2xl font-bold">{c.name}</p>
+            <div />
+          </div>
+          <p class="px-4 py-2 text-sm">{c.comment}</p>
+        </div>
+      ))
+    }
+  </div>
+
+  <div class="mx-auto my-5 flex w-[90%] gap-5">
+    {
+      videos.map((v) => (
+        <div
+          class:list={[
+            "aspect-video w-75 cursor-pointer rounded-lg",
+            `bg-[url(${v.cover})]`,
+          ]}
+        >
+          <div class="flex h-full w-full items-center justify-center">
+            <div class="border-background rounded-full border-2 p-2">
+              <Play class="text-background" />
             </div>
           </div>
-          <p class="text-sm">{c.comment}</p>
+
+          <p class="relative bottom-7 text-center text-2xl font-bold">{v.label}</p>
         </div>
       ))
     }
   </div>
 
   <!-- 學員訪談 YouTube 影片 popup -->
-  <dialog
+  <!-- <dialog
     id="comment-dialog"
     class="m-auto w-full max-w-3xl rounded-xl p-0 shadow-xl"
   >
@@ -95,29 +150,37 @@ const comments: Comment[] = [
         src=""
         referrerpolicy="strict-origin-when-cross-origin"></iframe>
     </div>
-  </dialog>
+  </dialog> -->
+
+  <!-- 防止顏色被 TailwindCSS tree shaking 掉 -->
+  <div class="bg-green h-0 w-0"></div>
+  <div class="bg-dark-green h-0 w-0"></div>
+  <div class="bg-blue h-0 w-0"></div>
+  <div class="bg-sky-blue h-0 w-0"></div>
+  <div class="bg-soft-blue h-0 w-0"></div>
+  <div class="bg-orange h-0 w-0"></div>
 </div>
 
 <script>
-  const commentVideoUrl =
-    "https://www.youtube-nocookie.com/embed/jbofh3u8XrI?si=S4Fo-GhGaEYvLaBW";
+  // const commentVideoUrl =
+  //   "https://www.youtube-nocookie.com/embed/jbofh3u8XrI?si=S4Fo-GhGaEYvLaBW";
 
-  const btn = document.getElementById("comment-btn")!;
-  const dialog = document.getElementById("comment-dialog") as HTMLDialogElement;
-  const iframe = document.getElementById("comment-iframe") as HTMLIFrameElement;
+  // const btn = document.getElementById("comment-btn")!;
+  // const dialog = document.getElementById("comment-dialog") as HTMLDialogElement;
+  // const iframe = document.getElementById("comment-iframe") as HTMLIFrameElement;
 
-  // when button click --> load video
-  btn.addEventListener("click", () => {
-    iframe.src = commentVideoUrl;
-    dialog.showModal();
-  });
+  // // when button click --> load video
+  // btn.addEventListener("click", () => {
+  //   iframe.src = commentVideoUrl;
+  //   dialog.showModal();
+  // });
 
-  dialog.addEventListener("click", (e) => {
-    if (e.target === dialog) closeModal();
-  });
+  // dialog.addEventListener("click", (e) => {
+  //   if (e.target === dialog) closeModal();
+  // });
 
-  function closeModal() {
-    dialog.close();
-    iframe.src = "";
-  }
+  // function closeModal() {
+  //   dialog.close();
+  //   iframe.src = "";
+  // }
 </script>
