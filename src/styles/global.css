@@ -1,29 +1,27 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans:
-    var(--font-line-seed-tw), ui-sans-serif, system-ui, -apple-system,
-    BlinkMacSystemFont, "Segoe UI", sans-serif;
+	--font-sans: var(--font-line-seed-tw), ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 
-  --color-background: #f9f5ef;
-  --color-foreground: #24272e;
-  --color-black: #000000;
-  --color-green: #80d34b;
-  --color-dark-green: #2d4219;
-  --color-primary-blue: #2464ea;
-  --color-blue: #0080c1;
-  --color-soft-blue: #60a7d5;
-  --color-sky-blue: #78a1f0;
-  --color-orange: #f69977;
+	--color-background: #f9f5ef;
+	--color-foreground: #24272e;
+	--color-black: #000000;
+	--color-green: #80d34b;
+	--color-dark-green: #2d4219;
+	--color-primary-blue: #2464ea;
+	--color-blue: #0080c1;
+	--color-soft-blue: #60a7d5;
+	--color-sky-blue: #78a1f0;
+	--color-orange: #f69977;
 }
 
 @layer base {
-  html,
-  body,
-  button,
-  input,
-  select,
-  textarea {
-    font-family: var(--font-sans);
-  }
+	html,
+	body,
+	button,
+	input,
+	select,
+	textarea {
+		font-family: var(--font-sans);
+	}
 }
