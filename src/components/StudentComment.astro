@@ -13,7 +13,7 @@ const { studentComment } = siteConfig;
 		<!-- 固定留言 -->
 		<div class="relative">
 			<!-- 背景跑馬燈 -->
-			<div class="pointer-events-none absolute inset-0 z-0 flex flex-col justify-around opacity-15">
+			<div class="pointer-events-none absolute inset-0 z-0 -mx-32 flex flex-col justify-around overflow-hidden opacity-15">
 				{
 					Array.from({ length: studentComment.bgMarquee.repeatRows }, (_, i) => (
 						<div
