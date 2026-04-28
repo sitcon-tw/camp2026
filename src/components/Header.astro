@@ -2,24 +2,19 @@
 import Menu from "~icons/lucide/menu";
 import X from "~icons/lucide/x";
 import SitconCampLogo from "@/assets/SITCONCampLogo.svg";
+import siteContent from "@/data/site.json";
 
-const navItems = [
-	{ label: "報名資訊", href: "/#registration-info" },
-	{ label: "主線課程", href: "/course/" },
-	{ label: "課程活動", href: "/#course-events" },
-	{ label: "籌備團隊", href: "/about/" },
-	{ label: "FAQ", href: "/#faq" }
-];
+const { header } = siteContent;
 ---
 
-<header class="site-header" data-site-header aria-label="SITCON Camp 2026">
-	<a class="site-header__brand" href="/" aria-label="SITCON Camp 2026 首頁">
-		<img class="site-header__logo" src={SitconCampLogo.src} width={SitconCampLogo.width} height={SitconCampLogo.height} alt="SITCON Camp 2026" />
+<header class="site-header" data-site-header aria-label={header.ariaLabel}>
+	<a class="site-header__brand" href={header.brand.href} aria-label={header.brand.ariaLabel}>
+		<img class="site-header__logo" src={SitconCampLogo.src} width={SitconCampLogo.width} height={SitconCampLogo.height} alt={header.brand.logoAlt} />
 	</a>
 
-	<nav class="site-header__nav" aria-label="主要導覽">
+	<nav class="site-header__nav" aria-label={header.navAriaLabel}>
 		{
-			navItems.map(item => (
+			header.navItems.map(item => (
 				<a class="site-header__link" href={item.href}>
 					{item.label}
 				</a>
@@ -27,25 +22,32 @@ const navItems = [
 		}
 	</nav>
 
-	<a class="site-header__cta" href="/#registration-info">立即報名</a>
+	<a class="site-header__cta" href={header.cta.href}>{header.cta.label}</a>
 
 	<details class="site-header__mobile-menu" data-mobile-menu>
-		<summary class="site-header__mobile-trigger" data-mobile-trigger aria-label="開啟主要導覽" aria-expanded="false">
+		<summary
+			class="site-header__mobile-trigger"
+			data-mobile-trigger
+			data-mobile-open-label={header.mobileMenu.openLabel}
+			data-mobile-close-label={header.mobileMenu.closeLabel}
+			aria-label={header.mobileMenu.openLabel}
+			aria-expanded="false"
+		>
 			<span class="site-header__mobile-icon" aria-hidden="true">
 				<Menu class="site-header__mobile-icon-glyph site-header__mobile-icon-glyph--menu" width={30} height={30} stroke-width={3} />
 				<X class="site-header__mobile-icon-glyph site-header__mobile-icon-glyph--close" width={30} height={30} stroke-width={3} />
 			</span>
 		</summary>
 		<div class="site-header__mobile-panel" data-mobile-panel>
-			<nav class="site-header__mobile-nav" aria-label="主要導覽">
+			<nav class="site-header__mobile-nav" aria-label={header.navAriaLabel}>
 				{
-					navItems.map(item => (
+					header.navItems.map(item => (
 						<a class="site-header__mobile-link" data-mobile-menu-link href={item.href}>
 							{item.label}
 						</a>
 					))
 				}
-				<a class="site-header__mobile-cta" data-mobile-menu-link href="/#registration-info">立即報名</a>
+				<a class="site-header__mobile-cta" data-mobile-menu-link href={header.cta.href}>{header.cta.label}</a>
 			</nav>
 		</div>
 	</details>
@@ -83,6 +85,8 @@ const navItems = [
 	const mobileMenuIcon = mobileMenu?.querySelector<SVGElement>(".site-header__mobile-icon-glyph--menu");
 	const mobileCloseIcon = mobileMenu?.querySelector<SVGElement>(".site-header__mobile-icon-glyph--close");
 	const mobileLinks = mobileMenu ? Array.from(mobileMenu.querySelectorAll<HTMLAnchorElement>("[data-mobile-menu-link]")) : [];
+	const mobileOpenLabel = mobileTrigger?.dataset.mobileOpenLabel || mobileTrigger?.getAttribute("aria-label") || "";
+	const mobileCloseLabel = mobileTrigger?.dataset.mobileCloseLabel || mobileOpenLabel;
 	const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 	let mobileMenuAnimating = false;
 
@@ -125,7 +129,7 @@ const navItems = [
 		}
 
 		mobileTrigger.setAttribute("aria-expanded", String(isOpen));
-		mobileTrigger.setAttribute("aria-label", isOpen ? "關閉主要導覽" : "開啟主要導覽");
+		mobileTrigger.setAttribute("aria-label", isOpen ? mobileCloseLabel : mobileOpenLabel);
 	};
 
 	const openMobileMenu = async () => {
