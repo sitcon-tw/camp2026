@@ -1,44 +1,66 @@
 ---
 import { X } from "@lucide/astro";
+import { Image } from "astro:assets";
 import rawMembers from "@/data/members.json";
+import hackathon from "@/assets/pics/hackathon.webp";
+import camp from "@/assets/pics/camp.webp";
+import groups from "@/assets/pics/groups.webp";
+import edu from "@/assets/pics/edu.webp";
+
+const imageMap: Record<string, ImageMetadata> = {
+	hackathon,
+	camp,
+	groups,
+	edu
+};
 
 interface Member {
 	id: string;
 	name: string;
 	role: string;
-	imgUrl: string;
+	imgKey: string;
 	bio: string;
 }
 
-const members = rawMembers as Member[];
+const members = rawMembers as unknown as Member[];
 
-const cardHues = members.map(() => Math.floor(Math.random() * 360));
-const displayMembers: (Member & { cloned?: true; hue?: number })[] = [
-	...members.map((m, i) => ({ ...m, hue: cardHues[i] })),
-	...members.map((m, i) => ({ ...m, id: `${m.id}-clone`, cloned: true as const, hue: cardHues[i] }))
-];
+const accentPalette = ["green", "primary-blue", "blue", "soft-blue", "sky-blue", "orange"] as const;
+type Accent = (typeof accentPalette)[number];
+
+type DisplayMember = Member & { _memberId: string; accent: Accent };
+const cardAccents: Accent[] = members.map(() => accentPalette[Math.floor(Math.random() * accentPalette.length)]);
+const trackMembers: DisplayMember[] = members.map((m, i) => ({
+	...m,
+	_memberId: m.id,
+	accent: cardAccents[i]
+}));
 ---
 
-<div class="group w-full overflow-hidden py-8">
-	<div class="marquee-track flex w-max gap-6 px-3 group-hover:[animation-play-state:paused]">
-		{
-			displayMembers.map(member => (
-				<button
-					class="member-card relative h-95 w-70 shrink-0 cursor-pointer rounded-[2.5rem] text-left transition-transform duration-300 hover:scale-105"
-					data-member-id={member.cloned ? member.id.replace("-clone", "") : member.id}
-					aria-haspopup="dialog"
-				>
-					<div class="bg-background h-full w-full overflow-hidden rounded-[2.5rem] border-r-6 border-b-6" style={`border-color: hsl(${member.hue}, 70%, 55%)`}>
-						<img src={member.imgUrl} alt={member.name} class="h-full w-full object-cover" loading="lazy" width="280" height="380" />
-					</div>
-					<div class="absolute right-4 bottom-4 left-4 rounded-xl bg-black/60 px-3 py-2 text-white backdrop-blur-sm">
-						<p class="text-sm leading-tight font-bold">{member.name}</p>
-						<p class="text-xs text-white/70">{member.role}</p>
-					</div>
-				</button>
-			))
-		}
-	</div>
+<div class="bg-background group flex w-full overflow-hidden py-8">
+	{
+		[0, 1].map(trackIdx => (
+			<div class="marquee-track flex shrink-0 gap-6 pr-6 group-hover:[animation-play-state:paused]" aria-hidden={trackIdx === 1 ? "true" : undefined}>
+				{trackMembers.map(member => (
+					<button
+						class="member-card relative h-95 w-70 shrink-0 cursor-pointer rounded-[2.5rem] text-left transition-transform duration-300 hover:scale-105"
+						data-member-id={member._memberId}
+						aria-haspopup="dialog"
+					>
+						<div class="relative h-full w-full overflow-hidden rounded-[2.5rem] border-r-6 border-b-6" style={`border-color: var(--color-${member.accent})`}>
+							<Image src={imageMap[member.imgKey]} alt={member.name} class="h-full w-full object-cover" loading="eager" decoding="async" width={280} height={380} format="webp" />
+
+							<div class="pointer-events-none absolute inset-x-0 bottom-0 h-3/5 bg-linear-to-t from-black/90 via-black/50 to-transparent" />
+
+							<div class="pointer-events-none absolute inset-x-0 bottom-0 p-6 text-white">
+								<h3 class="text-3xl font-bold tracking-widest">{member.name}</h3>
+								<p class="mt-2 text-lg font-medium text-white/90">{member.role}</p>
+							</div>
+						</div>
+					</button>
+				))}
+			</div>
+		))
+	}
 </div>
 
 <dialog id="member-dialog" class="member-dialog" aria-modal="true">
@@ -52,14 +74,14 @@ const displayMembers: (Member & { cloned?: true; hue?: number })[] = [
 		>
 			<X class="i-lucide-x text-lg" />
 		</button>
-		<img id="dialog-img" src="" alt="" width="96" height="96" class="mb-4 h-full w-full rounded-2xl object-cover" />
+		<img id="dialog-img" src={imageMap[members[0].imgKey].src} alt="" width="96" height="96" class="mb-4 h-full w-full rounded-2xl object-cover" />
 		<p id="dialog-role" class="text-foreground/60 mb-1 text-sm"></p>
 		<h2 id="dialog-name" class="mb-3 text-2xl font-bold"></h2>
 		<p id="dialog-bio" class="text-foreground/80 text-sm leading-relaxed"></p>
 	</div>
 </dialog>
 
-<script is:inline id="members-data" type="application/json" set:html={JSON.stringify(members)} />
+<script is:inline id="members-data" type="application/json" set:html={JSON.stringify(members.map(({ imgKey, ...rest }) => ({ ...rest, imgUrl: imageMap[imgKey].src })))} />
 
 <style>
 	.marquee-track {
@@ -71,7 +93,7 @@ const displayMembers: (Member & { cloned?: true; hue?: number })[] = [
 			transform: translateX(0);
 		}
 		to {
-			transform: translateX(-50%);
+			transform: translateX(-100%);
 		}
 	}
 	@media (prefers-reduced-motion: reduce) {
@@ -149,8 +171,10 @@ const displayMembers: (Member & { cloned?: true; hue?: number })[] = [
 	const dialogName = document.getElementById("dialog-name")!;
 	const dialogBio = document.getElementById("dialog-bio")!;
 	const dialogContent = dialog.querySelector<HTMLElement>(".dialog-content")!;
-	const marqueeTrack = document.querySelector<HTMLElement>(".marquee-track");
+	const marqueeTracks = document.querySelectorAll<HTMLElement>(".marquee-track");
 	const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+	const setTracksPlayState = (state: string) => marqueeTracks.forEach(t => (t.style.animationPlayState = state));
 
 	let isClosing = false;
 
@@ -163,7 +187,7 @@ const displayMembers: (Member & { cloned?: true; hue?: number })[] = [
 		dialogRole.textContent = m.role;
 		dialogName.textContent = m.name;
 		dialogBio.textContent = m.bio;
-		if (marqueeTrack) marqueeTrack.style.animationPlayState = "paused";
+		setTracksPlayState("paused");
 		dialog.showModal();
 	}
 
@@ -171,37 +195,74 @@ const displayMembers: (Member & { cloned?: true; hue?: number })[] = [
 		if (isClosing) return;
 		isClosing = true;
 
-		if (reducedMotion) {
+		const cleanup = () => {
 			dialog.close();
-			if (marqueeTrack) marqueeTrack.style.animationPlayState = "";
+			dialogContent.style.opacity = "";
+			dialogContent.style.transform = "";
+			setTracksPlayState("");
 			isClosing = false;
+		};
+
+		if (reducedMotion) {
+			cleanup();
 			return;
 		}
 
 		dialogContent.style.opacity = "0";
 		dialogContent.style.transform = "scale(0.95) translateY(8px)";
 
+		let closeTimer: ReturnType<typeof setTimeout>;
 		const onEnd = (e: TransitionEvent) => {
 			if (e.propertyName !== "opacity") return;
 			dialogContent.removeEventListener("transitionend", onEnd);
-			dialog.close();
-			dialogContent.style.opacity = "";
-			dialogContent.style.transform = "";
-			if (marqueeTrack) marqueeTrack.style.animationPlayState = "";
-			isClosing = false;
+			clearTimeout(closeTimer);
+			cleanup();
 		};
 		dialogContent.addEventListener("transitionend", onEnd);
+		closeTimer = setTimeout(() => {
+			dialogContent.removeEventListener("transitionend", onEnd);
+			cleanup();
+		}, 350);
 	}
 
-	document.querySelector(".marquee-track")!.addEventListener("click", e => {
-		const card = (e.target as Element).closest<HTMLElement>(".member-card");
-		if (card?.dataset.memberId) openDialog(card.dataset.memberId);
-	});
+	marqueeTracks.forEach(track =>
+		track.addEventListener("click", e => {
+			const card = (e.target as Element).closest<HTMLElement>(".member-card");
+			if (card?.dataset.memberId) openDialog(card.dataset.memberId);
+		})
+	);
 
 	closeBtn.addEventListener("click", closeDialog);
 	backdropEl.addEventListener("click", closeDialog);
 	dialog.addEventListener("cancel", e => {
 		e.preventDefault();
 		closeDialog();
+	});
+
+	function fillTracks() {
+		const target = window.innerWidth * 1.2;
+		marqueeTracks.forEach(track => {
+			const baseCount = Number(track.dataset.baseCount) || track.children.length;
+			track.dataset.baseCount = String(baseCount);
+			while (track.children.length > baseCount) track.lastElementChild!.remove();
+			const base = Array.from(track.children) as HTMLElement[];
+			let safety = 0;
+			while (track.scrollWidth < target && safety++ < 20) {
+				base.forEach(card => {
+					const clone = card.cloneNode(true) as HTMLElement;
+					clone.setAttribute("aria-hidden", "true");
+					clone.setAttribute("tabindex", "-1");
+					track.appendChild(clone);
+				});
+			}
+		});
+	}
+
+	fillTracks();
+
+	let resizeTimer: ReturnType<typeof setTimeout>;
+	window.addEventListener("resize", () => {
+		clearTimeout(resizeTimer);
+		resizeTimer = setTimeout(fillTracks, 200);
 	});
 </script>

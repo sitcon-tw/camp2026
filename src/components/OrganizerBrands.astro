@@ -42,33 +42,38 @@ const sections = await Promise.all(
 );
 ---
 
-{
-	sections.map(([tag, items]) => (
-		<section class="mx-64 my-32">
-			<h1 class="mb-4 text-[48px] font-bold">{tag}</h1>
-			<div class="flex flex-wrap items-center gap-x-8">
-				{items.map(org => (
-					<button
-						type="button"
-						data-icon-path={org.popoverSrc}
-						data-name={org.name}
-						data-role={org.role ?? ""}
-						data-desc={org.description ?? ""}
-						data-url={org.url ?? ""}
-						aria-haspopup="dialog"
-						aria-controls="org-popover"
-						class="org-card group focus-visible:ring-primary-blue/50 cursor-pointer transition-transform hover:-translate-y-1 focus-visible:ring-2 focus-visible:outline-none"
-					>
-						{org.meta ? <Image src={org.meta} alt={org.name} class="h-32 w-auto object-contain" /> : <img src={org.iconPath} alt={org.name} class="h-32 w-auto object-contain" />}
-					</button>
-				))}
-			</div>
-		</section>
-	))
-}
-
-<div id="org-popover" popover role="dialog" aria-labelledby="org-popover-title" class="org-popover m-auto w-full max-w-sm rounded-2xl border-0 p-0 shadow-2xl">
-	<div class="relative flex flex-col items-center gap-4 px-6 pt-8 pb-6">
+<div class="bg-background">
+	{
+		sections.map(([tag, items]) => (
+			<section class="mx-4 my-12 sm:mx-12 md:mx-24 md:my-24 lg:mx-64 lg:my-32">
+				<h1 class="mb-4 text-center text-3xl font-bold md:text-left md:text-4xl lg:text-[48px]">{tag}</h1>
+				<div class="flex flex-wrap items-center justify-center gap-4 gap-y-6 sm:gap-6 md:justify-start lg:gap-8">
+					{items.map(org => (
+						<button
+							type="button"
+							data-icon-path={org.popoverSrc}
+							data-name={org.name}
+							data-role={org.role ?? ""}
+							data-desc={org.description ?? ""}
+							data-url={org.url ?? ""}
+							aria-haspopup="dialog"
+							aria-controls="org-popover"
+							class="org-card group focus-visible:ring-primary-blue/50 cursor-pointer transition-transform hover:-translate-y-1 focus-visible:ring-2 focus-visible:outline-none"
+						>
+							{org.meta ? (
+								<Image src={org.meta} alt={org.name} class="h-20 w-auto object-contain md:h-28 lg:h-32" />
+							) : (
+								<img src={org.iconPath} alt={org.name} class="h-20 w-auto object-contain md:h-28 lg:h-32" />
+							)}
+						</button>
+					))}
+				</div>
+			</section>
+		))
+	}
+</div>
+<div id="org-popover" popover role="dialog" aria-labelledby="org-popover-title" class="org-popover m-auto w-[calc(100vw-2rem)] max-w-sm rounded-2xl border-0 p-0 shadow-2xl sm:w-full">
+	<div class="relative flex flex-col items-center gap-4 px-4 py-6 sm:px-6 sm:pt-8">
 		<button
 			type="button"
 			popovertarget="org-popover"
@@ -79,17 +84,17 @@ const sections = await Promise.all(
 			<X size={18} stroke-width={1.5} />
 		</button>
 
-		<div class="flex flex-col items-center gap-3">
-			<div class="flex h-36 w-full items-center justify-center rounded-2xl bg-white/70 p-4 shadow-sm">
+		<div class="flex w-full flex-col items-center gap-3">
+			<div class="flex h-28 w-full items-center justify-center rounded-2xl bg-white/70 p-4 shadow-sm sm:h-36">
 				<img id="org-popover-icon" alt="" class="max-h-full max-w-full object-contain" />
 			</div>
-			<div class="text-center">
+			<div class="px-2 text-center">
 				<h3 id="org-popover-title" class="text-foreground text-xl font-bold"></h3>
 				<p id="org-popover-role" class="text-foreground/50 mt-0.5 text-sm"></p>
 			</div>
 		</div>
 
-		<p id="org-popover-desc" class="text-foreground/65 w-full rounded-xl px-4 py-3 text-center text-sm leading-relaxed"></p>
+		<p id="org-popover-desc" class="text-foreground/65 w-full rounded-xl px-2 py-2 text-center text-sm leading-relaxed sm:px-4 sm:py-3"></p>
 
 		<a
 			id="org-popover-url"
