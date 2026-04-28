@@ -25,3 +25,10 @@
 		font-family: var(--font-sans);
 	}
 }
+
+@utility heading-section {
+	font-family: var(--font-line-seed-tw), ui-sans-serif;
+	font-size: 48px;
+	font-weight: 700;
+	line-height: 1;
+}

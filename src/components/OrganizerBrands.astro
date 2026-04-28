@@ -1,4 +1,5 @@
 ---
+import { Image, getImage } from "astro:assets";
 import organizers from "../data/Organizers.json";
 import { X } from "@lucide/astro";
 
@@ -10,33 +11,54 @@ type Org = {
 	url?: string;
 };
 
-const sections = Object.entries(organizers as Record<string, Org[]>).filter(([, list]) => list.length);
+const isOrg = (v: unknown): v is Org => {
+	if (typeof v !== "object" || v === null) return false;
+	const r = v as Record<string, unknown>;
+	return typeof r.name === "string" && typeof r.iconPath === "string";
+};
+
+const sponsorGlob = import.meta.glob<{ default: ImageMetadata }>("../assets/sponsors/*", { eager: true });
+
+function getMeta(iconPath: string): ImageMetadata | undefined {
+	const file = iconPath.split("/").pop();
+	return sponsorGlob[`../assets/sponsors/${file}`]?.default;
+}
+
+type ResolvedOrg = Org & { meta?: ImageMetadata; popoverSrc: string };
+
+async function resolve(org: Org): Promise<ResolvedOrg> {
+	const meta = getMeta(org.iconPath);
+	if (!meta) return { ...org, popoverSrc: org.iconPath };
+	const { src } = await getImage({ src: meta });
+	return { ...org, meta, popoverSrc: src };
+}
+
+const sections = await Promise.all(
+	Object.entries(organizers)
+		.map(([tag, items]): [string, Org[]] => [tag, (items as unknown[]).filter(isOrg)])
+		.filter(([, list]) => list.length > 0)
+		.map(async ([tag, items]) => [tag, await Promise.all(items.map(resolve))] as [string, ResolvedOrg[]])
+);
 ---
 
 {
 	sections.map(([tag, items]) => (
-		<section class="m-12">
-			<div class="mb-6 flex items-center gap-4">
-				<span class="bg-foreground/8 text-foreground/70 shrink-0 rounded-full px-3 py-1.5 text-sm font-semibold">{tag}</span>
-				<div class="from-foreground/15 h-px flex-1 bg-linear-to-r to-transparent" />
-			</div>
-			<div class="grid grid-cols-3 gap-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8">
+		<section class="mx-64 my-32">
+			<h3 class="mb-4 text-xl font-bold">{tag}</h3>
+			<div class="flex flex-wrap items-center gap-x-8">
 				{items.map(org => (
 					<button
 						type="button"
-						data-icon={org.iconPath}
+						data-icon-path={org.popoverSrc}
 						data-name={org.name}
 						data-role={org.role ?? ""}
 						data-desc={org.description ?? ""}
 						data-url={org.url ?? ""}
 						aria-haspopup="dialog"
 						aria-controls="org-popover"
-						class="org-card group bg-background/80 border-foreground/8 hover:bg-background hover:border-orange/30 focus-visible:ring-primary-blue/50 flex cursor-pointer flex-col items-center gap-2 rounded-2xl border p-3 transition-all duration-200 hover:-translate-y-1 hover:shadow-[0_4px_20px_rgba(246,153,119,0.18)] focus-visible:ring-2 focus-visible:ring-offset-1 focus-visible:outline-none"
+						class="org-card group focus-visible:ring-primary-blue/50 cursor-pointer transition-transform hover:-translate-y-1 focus-visible:ring-2 focus-visible:outline-none"
 					>
-						<div class="flex size-14 items-center justify-center rounded-xl bg-white/60 p-1 transition-all duration-200 group-hover:bg-white group-hover:shadow-sm">
-							<img src={org.iconPath} alt={org.name} class="size-full object-contain" />
-						</div>
-						<span class="text-foreground/55 group-hover:text-foreground/85 text-center text-xs leading-tight font-medium transition-colors duration-200">{org.name}</span>
+						{org.meta ? <Image src={org.meta} alt={org.name} class="h-16 w-auto object-contain sm:h-20" /> : <img src={org.iconPath} alt={org.name} class="h-16 w-auto object-contain sm:h-20" />}
 					</button>
 				))}
 			</div>
@@ -57,8 +79,8 @@ const sections = Object.entries(organizers as Record<string, Org[]>).filter(([, 
 		</button>
 
 		<div class="flex flex-col items-center gap-3">
-			<div class="flex size-20 items-center justify-center rounded-2xl bg-white/70 p-2 shadow-sm">
-				<img id="org-popover-icon" src="" alt="" class="size-full object-contain" />
+			<div class="flex h-36 w-full items-center justify-center rounded-2xl bg-white/70 p-4 shadow-sm">
+				<img id="org-popover-icon" alt="" class="max-h-full max-w-full object-contain" />
 			</div>
 			<div class="text-center">
 				<h3 id="org-popover-title" class="text-foreground text-xl font-bold"></h3>
@@ -81,41 +103,62 @@ const sections = Object.entries(organizers as Record<string, Org[]>).filter(([, 
 </div>
 
 <script>
-	const popoverEl = document.getElementById("org-popover")!;
-	const icon = document.getElementById("org-popover-icon") as HTMLImageElement;
-	const title = document.getElementById("org-popover-title")!;
-	const roleEl = document.getElementById("org-popover-role")!;
-	const descEl = document.getElementById("org-popover-desc")!;
-	const urlEl = document.getElementById("org-popover-url") as HTMLAnchorElement;
+	interface OrgDataset extends DOMStringMap {
+		iconPath: string;
+		name: string;
+		role: string;
+		desc: string;
+		url: string;
+	}
+
+	function getEl<T extends HTMLElement = HTMLElement>(id: string): T {
+		const el = document.getElementById(id);
+		if (!el) throw new Error(`[org-popover] missing #${id}`);
+		return el as T;
+	}
+
+	const popoverEl = getEl("org-popover");
+	const icon = getEl<HTMLImageElement>("org-popover-icon");
+	const title = getEl("org-popover-title");
+	const roleEl = getEl("org-popover-role");
+	const descEl = getEl("org-popover-desc");
+	const urlEl = getEl<HTMLAnchorElement>("org-popover-url");
 
 	function setIcon(src: string, alt: string) {
+		if (!src) return;
 		icon.style.opacity = "0";
 		icon.alt = alt;
-		const reveal = () => {
-			icon.style.opacity = "1";
-		};
-		icon.onload = reveal;
-		icon.onerror = reveal;
+		const reveal = () => (icon.style.opacity = "1");
+		icon.addEventListener("load", reveal, { once: true });
+		icon.addEventListener("error", reveal, { once: true });
 		icon.src = src;
+		// complete=true when src is already cached; no load event fires
 		if (icon.complete) reveal();
 	}
 
+	function renderPopover(d: OrgDataset) {
+		title.textContent = d.name;
+		roleEl.textContent = d.role;
+		descEl.textContent = d.desc;
+		urlEl.href = d.url || "#";
+		roleEl.hidden = !d.role;
+		descEl.hidden = !d.desc;
+		urlEl.hidden = !d.url;
+		setIcon(d.iconPath, d.name);
+	}
+
 	document.addEventListener("click", e => {
-		const btn = (e.target as Element).closest<HTMLElement>(".org-card");
+		const btn = (e.target as Element).closest<HTMLButtonElement>(".org-card");
 		if (!btn) return;
 
-		const { icon: src, name = "", role, desc, url } = btn.dataset;
+		renderPopover(btn.dataset as OrgDataset);
 
-		title.textContent = name;
-		roleEl.textContent = role ?? "";
-		roleEl.hidden = !role;
-		descEl.textContent = desc ?? "";
-		descEl.hidden = !desc;
-		urlEl.href = url ?? "#";
-		urlEl.hidden = !url;
-		setIcon(src ?? "", name);
-
-		popoverEl.showPopover();
+		if (!popoverEl.matches(":popover-open")) {
+			popoverEl.showPopover();
+			requestAnimationFrame(() => {
+				popoverEl.querySelector<HTMLButtonElement>("[popovertargetaction='hide']")?.focus();
+			});
+		}
 	});
 </script>
 

@@ -1,0 +1,202 @@
+---
+import { X } from "@lucide/astro";
+import rawMembers from "@/data/members.json";
+
+interface Member {
+	id: string;
+	name: string;
+	role: string;
+	imgUrl: string;
+	bio: string;
+}
+
+const members = rawMembers as Member[];
+const displayMembers: (Member & { cloned?: true })[] = [...members, ...members.map(m => ({ ...m, id: `${m.id}-clone`, cloned: true as const }))];
+---
+
+<div class="group w-full overflow-hidden py-8">
+	<div class="marquee-track flex w-max gap-6 px-3 group-hover:[animation-play-state:paused]">
+		{
+			displayMembers.map(member => (
+				<button
+					class="member-card relative h-95 w-70 shrink-0 cursor-pointer rounded-[2.5rem] text-left transition-transform duration-300 hover:scale-105"
+					data-member-id={member.cloned ? member.id.replace("-clone", "") : member.id}
+					aria-haspopup="dialog"
+				>
+					<div class="border-green bg-background h-full w-full overflow-hidden rounded-[2.5rem] border-r-6 border-b-6">
+						<img src={member.imgUrl} alt={member.name} class="h-full w-full object-cover" loading="lazy" width="280" height="380" />
+					</div>
+					<div class="absolute right-4 bottom-4 left-4 rounded-xl bg-black/60 px-3 py-2 text-white backdrop-blur-sm">
+						<p class="text-sm leading-tight font-bold">{member.name}</p>
+						<p class="text-xs text-white/70">{member.role}</p>
+					</div>
+				</button>
+			))
+		}
+	</div>
+</div>
+
+<dialog id="member-dialog" class="member-dialog" aria-modal="true">
+	<div id="dialog-backdrop" class="dialog-backdrop" aria-hidden="true"></div>
+	<div class="dialog-content">
+		<button
+			id="dialog-close"
+			class="bg-foreground/10 hover:bg-foreground/20 absolute top-4 right-4 flex h-8 w-8 items-center justify-center rounded-full transition-colors"
+			aria-label="關閉"
+			autofocus
+		>
+			<X class="i-lucide-x text-lg" />
+		</button>
+		<img id="dialog-img" src="" alt="" width="96" height="96" class="mb-4 h-24 w-24 rounded-2xl object-cover" />
+		<p id="dialog-role" class="text-foreground/60 mb-1 text-sm"></p>
+		<h2 id="dialog-name" class="mb-3 text-2xl font-bold"></h2>
+		<p id="dialog-bio" class="text-foreground/80 text-sm leading-relaxed"></p>
+	</div>
+</dialog>
+
+<script is:inline id="members-data" type="application/json" set:html={JSON.stringify(members)} />
+
+<style>
+	.marquee-track {
+		animation: marquee 20s linear infinite;
+		will-change: transform;
+	}
+	@keyframes marquee {
+		from {
+			transform: translateX(0);
+		}
+		to {
+			transform: translateX(-50%);
+		}
+	}
+	@media (prefers-reduced-motion: reduce) {
+		.marquee-track {
+			animation: none;
+		}
+		.dialog-content {
+			transition: none !important;
+		}
+	}
+
+	.member-dialog {
+		border: none;
+		padding: 0;
+		background: transparent;
+		max-width: 100vw;
+		max-height: 100dvh;
+		width: 100%;
+		height: 100%;
+		position: fixed;
+		inset: 0;
+	}
+	.member-dialog[open] {
+		display: grid;
+		place-items: center;
+	}
+	.member-dialog::backdrop {
+		background: color-mix(in oklch, var(--color-foreground) 50%, transparent);
+		backdrop-filter: blur(4px);
+	}
+	.dialog-backdrop {
+		position: fixed;
+		inset: 0;
+		z-index: 0;
+	}
+	.dialog-content {
+		position: relative;
+		z-index: 1;
+		background: var(--color-background);
+		border-radius: 1.5rem;
+		padding: 2rem;
+		width: min(420px, calc(100vw - 2rem));
+		box-shadow: 0 24px 64px color-mix(in oklch, var(--color-foreground) 20%, transparent);
+		opacity: 1;
+		transform: scale(1) translateY(0);
+		transition:
+			opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+			transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+	}
+	@starting-style {
+		.member-dialog[open] .dialog-content {
+			opacity: 0;
+			transform: scale(0.95) translateY(8px);
+		}
+	}
+</style>
+
+<script>
+	interface Member {
+		id: string;
+		name: string;
+		role: string;
+		imgUrl: string;
+		bio: string;
+	}
+
+	const members: Member[] = JSON.parse(document.getElementById("members-data")!.textContent!);
+	const membersMap = new Map(members.map(m => [m.id, m]));
+
+	const dialog = document.getElementById("member-dialog") as HTMLDialogElement;
+	const closeBtn = document.getElementById("dialog-close")!;
+	const backdropEl = document.getElementById("dialog-backdrop")!;
+	const dialogImg = document.getElementById("dialog-img") as HTMLImageElement;
+	const dialogRole = document.getElementById("dialog-role")!;
+	const dialogName = document.getElementById("dialog-name")!;
+	const dialogBio = document.getElementById("dialog-bio")!;
+	const dialogContent = dialog.querySelector<HTMLElement>(".dialog-content")!;
+	const marqueeTrack = document.querySelector<HTMLElement>(".marquee-track");
+	const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+	let isClosing = false;
+
+	function openDialog(id: string) {
+		const m = membersMap.get(id);
+		if (!m) return;
+		isClosing = false;
+		dialogImg.src = m.imgUrl;
+		dialogImg.alt = m.name;
+		dialogRole.textContent = m.role;
+		dialogName.textContent = m.name;
+		dialogBio.textContent = m.bio;
+		if (marqueeTrack) marqueeTrack.style.animationPlayState = "paused";
+		dialog.showModal();
+	}
+
+	function closeDialog() {
+		if (isClosing) return;
+		isClosing = true;
+
+		if (reducedMotion) {
+			dialog.close();
+			if (marqueeTrack) marqueeTrack.style.animationPlayState = "";
+			isClosing = false;
+			return;
+		}
+
+		dialogContent.style.opacity = "0";
+		dialogContent.style.transform = "scale(0.95) translateY(8px)";
+
+		const onEnd = (e: TransitionEvent) => {
+			if (e.propertyName !== "opacity") return;
+			dialogContent.removeEventListener("transitionend", onEnd);
+			dialog.close();
+			dialogContent.style.opacity = "";
+			dialogContent.style.transform = "";
+			if (marqueeTrack) marqueeTrack.style.animationPlayState = "";
+			isClosing = false;
+		};
+		dialogContent.addEventListener("transitionend", onEnd);
+	}
+
+	document.querySelector(".marquee-track")!.addEventListener("click", e => {
+		const card = (e.target as Element).closest<HTMLElement>(".member-card");
+		if (card?.dataset.memberId) openDialog(card.dataset.memberId);
+	});
+
+	closeBtn.addEventListener("click", closeDialog);
+	backdropEl.addEventListener("click", closeDialog);
+	dialog.addEventListener("cancel", e => {
+		e.preventDefault();
+		closeDialog();
+	});
+</script>
