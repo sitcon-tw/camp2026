@@ -8,7 +8,7 @@ interface Comment {
 	color?: "green" | "dark-green" | "primary-blue" | "blue" | "soft-blue" | "sky-blue" | "orange";
 }
 
-const pinComments: Comment[] = [
+const Comments: Comment[] = [
 	{
 		name: "Student 1",
 		comment: "我個人認為義大利麵就應該拌 42 號混泥土因為這個螺絲釘的長度很容易直接影響到挖掘機的扭矩",
@@ -43,8 +43,6 @@ const pinComments: Comment[] = [
 
 const textMarqueeRowCount: number = 10;
 const textMarqueeText: string = "Hello World ";
-
-const marqueeComments: Comment[] = [];
 
 interface Video {
 	label: string;
@@ -98,8 +96,6 @@ const videos: Video[] = [
 				</div>
 			))
 		}
-
-		<!-- 視父元素高度決定要幾行 -->
 	</div>
 
 	<!-- 前景內容 -->
@@ -109,7 +105,7 @@ const videos: Video[] = [
 		<!-- 固定留言 -->
 		<div class="mx-auto my-5 grid grid-cols-1 gap-x-4 gap-y-2 sm:grid-cols-2 md:w-[80%] lg:grid-cols-3">
 			{
-				pinComments.map(c => (
+				Comments.map(c => (
 					<div class="bg-foreground text-background w-full snap-start snap-always rounded-lg sm:w-fit">
 						<div class:list={["flex items-center rounded-t-lg px-4 py-2", `bg-${c.color}`]}>
 							<Image src="https://placehold.co/70x70" alt="Student's pfp" height="70" width="70" class="mr-5 rounded-full" />
@@ -154,6 +150,7 @@ const videos: Video[] = [
 			</div>
 		</div>
 	</div>
+
 	<!-- 防止顏色被 TailwindCSS tree shaking 掉 -->
 	<div class="bg-green h-0 w-0"></div>
 	<div class="bg-dark-green h-0 w-0"></div>
