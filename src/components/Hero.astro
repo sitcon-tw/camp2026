@@ -123,8 +123,8 @@ const heroPhotoWallColumns = [
 			<span>？</span>
 		</p>
 		<p class="hero-intro__final" data-hero-intro-final hidden>
-			<span data-hero-intro-final-prefix>{finalPrefix}</span>
-			<span class="hero-intro__final-title" data-hero-intro-final-title>
+			<span>{finalPrefix}</span>
+			<span class="hero-intro__final-title">
 				{heroTitle}
 			</span>
 		</p>
@@ -150,12 +150,9 @@ const heroPhotoWallColumns = [
 	const intro = document.querySelector<HTMLElement>("[data-hero-intro]");
 	const photoWallTracks = Array.from(document.querySelectorAll<HTMLElement>("[data-wall-track]"));
 	const heroSubtitle = document.querySelector<HTMLElement>("[data-hero-page-subtitle]");
-	const heroTitle = document.querySelector<HTMLElement>("[data-hero-page-title]");
 	const heroTitleLabel = document.querySelector<HTMLElement>("[data-hero-page-title-label]");
 	const question = intro?.querySelector<HTMLElement>("[data-hero-intro-question]");
 	const final = intro?.querySelector<HTMLElement>("[data-hero-intro-final]");
-	const finalPrefix = intro?.querySelector<HTMLElement>("[data-hero-intro-final-prefix]");
-	const finalTitle = intro?.querySelector<HTMLElement>("[data-hero-intro-final-title]");
 	const topCurtain = intro?.querySelector<HTMLElement>("[data-hero-intro-curtain-top]");
 	const bottomCurtain = intro?.querySelector<HTMLElement>("[data-hero-intro-curtain-bottom]");
 	const topicViewport = intro?.querySelector<HTMLElement>(".hero-intro__topic-viewport");
@@ -164,6 +161,10 @@ const heroPhotoWallColumns = [
 	const shouldSkipIntro = window.scrollY > 0;
 	const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 	let photoWallStarted = false;
+
+	if (heroTitleLabel) {
+		heroTitleLabel.style.visibility = "hidden";
+	}
 
 	const wait = (duration: number) => new Promise(resolve => window.setTimeout(resolve, duration));
 
@@ -201,7 +202,6 @@ const heroPhotoWallColumns = [
 
 	const finishIntro = () => {
 		document.documentElement.classList.remove("hero-intro-lock");
-		document.documentElement.classList.remove("hero-title-over-curtain");
 
 		if (intro) {
 			intro.hidden = true;
@@ -215,12 +215,45 @@ const heroPhotoWallColumns = [
 			intro.hidden = true;
 		}
 
+		if (heroTitleLabel) {
+			heroTitleLabel.style.visibility = "visible";
+			heroTitleLabel.style.transform = "none";
+		}
+
 		if (heroSubtitle) {
 			heroSubtitle.classList.add("is-visible");
 			heroSubtitle.style.transform = "none";
 		}
 
 		window.dispatchEvent(new CustomEvent("hero-intro:finished"));
+	};
+
+	const revealHeroTitle = async (prefersReducedMotion: boolean) => {
+		if (!heroTitleLabel) {
+			return;
+		}
+
+		if (prefersReducedMotion) {
+			heroTitleLabel.style.visibility = "visible";
+			heroTitleLabel.style.transform = "none";
+			return;
+		}
+
+		const { words } = splitText(heroTitleLabel, {
+			words: { class: "hero-page__title-word", wrap: "clip" },
+			accessible: true
+		});
+
+		words.forEach(word => {
+			word.style.transform = "translateY(115%)";
+		});
+		heroTitleLabel.style.visibility = "visible";
+
+		await animate(words, {
+			y: "0%",
+			duration: 720,
+			ease: "out(4)"
+		}).then();
 	};
 
 	const revealHeroSubtitle = async (prefersReducedMotion: boolean) => {
@@ -273,12 +306,12 @@ const heroPhotoWallColumns = [
 			keyframes: [
 				{
 					translateY: `${targetY - rowHeight * 0.1}px`,
-					duration: 280,
+					duration: 320,
 					ease: "outQuint"
 				},
 				{
 					translateY: `${targetY}px`,
-					duration: 150,
+					duration: 180,
 					ease: "outBack(1.9)"
 				}
 			]
@@ -301,78 +334,24 @@ const heroPhotoWallColumns = [
 
 		await animate(final, {
 			scale: [
-				{ to: 0.96, duration: 280, ease: "outQuint" },
-				{ to: 1, duration: 140, ease: "outBack(1.7)" }
+				{ to: 0.96, duration: 330, ease: "outQuint" },
+				{ to: 1, duration: 180, ease: "outBack(1.7)" }
 			]
 		}).then();
 
 		final.style.transform = "";
 	};
 
-	const openIntroToHero = async (prefersReducedMotion: boolean) => {
-		if (!intro || !heroTitle || !finalTitle || !topCurtain || !bottomCurtain) {
+	const openIntroCurtains = async (prefersReducedMotion: boolean) => {
+		if (final) {
+			final.hidden = true;
+		}
+
+		if (prefersReducedMotion || !topCurtain || !bottomCurtain) {
 			return;
 		}
-
-		if (prefersReducedMotion) {
-			return;
-		}
-
-		await document.fonts.ready;
-
-		document.documentElement.classList.add("hero-title-over-curtain");
-
-		const fromRect = finalTitle.getBoundingClientRect();
-		const toRect = heroTitleLabel?.getBoundingClientRect();
-
-		if (!toRect || fromRect.width <= 0 || fromRect.height <= 0) {
-			if (finalPrefix) {
-				finalPrefix.hidden = true;
-			}
-
-			if (heroTitleLabel) {
-				heroTitleLabel.hidden = true;
-			}
-
-			heroTitle.append(finalTitle);
-			return;
-		}
-
-		const computedFinalTitle = getComputedStyle(finalTitle);
-
-		finalTitle.classList.add("hero-intro__final-title--moving");
-		Object.assign(finalTitle.style, {
-			position: "fixed",
-			inset: "auto",
-			left: `${fromRect.left}px`,
-			top: `${fromRect.top}px`,
-			width: `${fromRect.width}px`,
-			height: `${fromRect.height}px`,
-			fontSize: computedFinalTitle.fontSize,
-			lineHeight: computedFinalTitle.lineHeight,
-			fontWeight: computedFinalTitle.fontWeight,
-			transformOrigin: "top left"
-		});
-		document.body.append(finalTitle);
-
-		if (finalPrefix) {
-			finalPrefix.hidden = true;
-		}
-
-		if (heroTitleLabel) {
-			heroTitleLabel.hidden = true;
-		}
-
-		const targetScale = toRect.width / fromRect.width;
 
 		await Promise.all([
-			animate(finalTitle, {
-				translateX: `${toRect.left - fromRect.left}px`,
-				translateY: `${toRect.top - fromRect.top}px`,
-				scale: targetScale,
-				duration: 720,
-				ease: "inOutCubic"
-			}).then(),
 			animate(topCurtain, {
 				translateY: "-100%",
 				duration: 720,
@@ -384,11 +363,6 @@ const heroPhotoWallColumns = [
 				ease: "inOutCubic"
 			}).then()
 		]);
-
-		finalTitle.classList.remove("hero-intro__final-title--moving");
-		finalTitle.classList.add("hero-page__title-label");
-		finalTitle.removeAttribute("style");
-		heroTitle.append(finalTitle);
 	};
 
 	if (intro && question && final && topicViewport && topicTrack && topics.length > 0) {
@@ -403,7 +377,7 @@ const heroPhotoWallColumns = [
 			}
 
 			for (let index = 1; index < topics.length; index += 1) {
-				await wait(index === 1 && !prefersReducedMotion ? 150 : 260);
+				await wait(index === 1 && !prefersReducedMotion ? 190 : 300);
 
 				if (prefersReducedMotion) {
 					const rowHeight = topicViewport.getBoundingClientRect().height;
@@ -415,11 +389,12 @@ const heroPhotoWallColumns = [
 				setActiveTopic(index);
 			}
 
-			await wait(300);
+			await wait(360);
 			await showFinal(prefersReducedMotion);
-			await wait(150);
-			await openIntroToHero(prefersReducedMotion);
+			await wait(190);
+			await openIntroCurtains(prefersReducedMotion);
 			finishIntro();
+			await revealHeroTitle(prefersReducedMotion);
 			await revealHeroSubtitle(prefersReducedMotion);
 		}
 	}
@@ -506,13 +481,16 @@ const heroPhotoWallColumns = [
 
 	.hero-page__content {
 		position: absolute;
-		inset-inline-start: clamp(1rem, 5vw, 5rem);
-		inset-block-end: clamp(1.5rem, 7vw, 6rem);
+		inset-inline: 0;
+		inset-block-end: 0;
 		z-index: 3;
+		box-sizing: border-box;
 		display: grid;
 		gap: clamp(0.35rem, 1.2vw, 0.9rem);
-		width: max-content;
-		max-width: calc(100vw - 2rem);
+		padding: clamp(0.95rem, 1.8vw, 1.55rem) clamp(1rem, 3vw, 3rem) clamp(1.05rem, 2vw, 1.7rem);
+		width: 100%;
+		background: var(--color-background);
+		border-block-start: 0.15rem solid var(--color-foreground);
 	}
 
 	.hero-page__subtitle {
@@ -546,11 +524,6 @@ const heroPhotoWallColumns = [
 
 	:global(html.hero-intro-lock) [data-hero-page-title-label] {
 		visibility: hidden;
-	}
-
-	:global(html.hero-title-over-curtain) .hero-page__title {
-		position: relative;
-		z-index: 10001;
 	}
 
 	[data-hero-intro] {
@@ -602,7 +575,6 @@ const heroPhotoWallColumns = [
 		justify-content: center;
 		margin: 0;
 		white-space: nowrap;
-		font-size: clamp(1rem, 5.6vw, 5rem);
 		font-weight: 800;
 		line-height: 1.1;
 		letter-spacing: 0;
@@ -612,25 +584,19 @@ const heroPhotoWallColumns = [
 	.hero-intro__question {
 		grid-template-columns: auto 4.2em auto;
 		column-gap: 0.18em;
+		font-size: clamp(2rem, 11vw, 7.75rem);
 	}
 
 	.hero-intro__final {
 		grid-auto-flow: column;
 		column-gap: 0.18em;
+		font-size: clamp(1rem, 5.6vw, 5rem);
 	}
 
 	.hero-intro__final-title {
 		display: inline-grid;
 		place-items: center;
 		color: var(--color-green);
-		transform-origin: center;
-		will-change: transform;
-	}
-
-	.hero-intro__final-title--moving {
-		z-index: 10002;
-		margin: 0;
-		pointer-events: none;
 	}
 
 	.hero-intro__topic-viewport {
@@ -670,8 +636,7 @@ const heroPhotoWallColumns = [
 		}
 
 		.hero-page__content {
-			inset-inline-start: 1rem;
-			inset-block-end: 2rem;
+			padding-inline: 1rem;
 		}
 
 		.hero-intro__stage {
