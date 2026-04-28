@@ -1,5 +1,6 @@
 ---
 import Menu from "~icons/lucide/menu";
+import X from "~icons/lucide/x";
 import SitconCampLogo from "@/assets/SITCONCampLogo.svg";
 
 const navItems = [
@@ -28,24 +29,31 @@ const navItems = [
 
 	<a class="site-header__cta" href="/#registration-info">立即報名</a>
 
-	<details class="site-header__mobile-menu">
-		<summary class="site-header__mobile-trigger" aria-label="開啟主要導覽">
-			<Menu width={30} height={30} stroke-width={3} aria-hidden="true" />
+	<details class="site-header__mobile-menu" data-mobile-menu>
+		<summary class="site-header__mobile-trigger" data-mobile-trigger aria-label="開啟主要導覽" aria-expanded="false">
+			<span class="site-header__mobile-icon" aria-hidden="true">
+				<Menu class="site-header__mobile-icon-glyph site-header__mobile-icon-glyph--menu" width={30} height={30} stroke-width={3} />
+				<X class="site-header__mobile-icon-glyph site-header__mobile-icon-glyph--close" width={30} height={30} stroke-width={3} />
+			</span>
 		</summary>
-		<nav class="site-header__mobile-nav" aria-label="主要導覽">
-			{
-				navItems.map(item => (
-					<a class="site-header__mobile-link" href={item.href}>
-						{item.label}
-					</a>
-				))
-			}
-			<a class="site-header__mobile-cta" href="/#registration-info">立即報名</a>
-		</nav>
+		<div class="site-header__mobile-panel" data-mobile-panel>
+			<nav class="site-header__mobile-nav" aria-label="主要導覽">
+				{
+					navItems.map(item => (
+						<a class="site-header__mobile-link" data-mobile-menu-link href={item.href}>
+							{item.label}
+						</a>
+					))
+				}
+				<a class="site-header__mobile-cta" data-mobile-menu-link href="/#registration-info">立即報名</a>
+			</nav>
+		</div>
 	</details>
 </header>
 
 <script>
+	import { animate } from "animejs";
+
 	const siteHeader = document.querySelector<HTMLElement>("[data-site-header]");
 
 	if (siteHeader) {
@@ -67,6 +75,140 @@ const navItems = [
 				window.setTimeout(revealHeader, 120);
 			});
 		}
+	}
+
+	const mobileMenu = document.querySelector<HTMLDetailsElement>("[data-mobile-menu]");
+	const mobileTrigger = mobileMenu?.querySelector<HTMLElement>("[data-mobile-trigger]");
+	const mobilePanel = mobileMenu?.querySelector<HTMLElement>("[data-mobile-panel]");
+	const mobileMenuIcon = mobileMenu?.querySelector<SVGElement>(".site-header__mobile-icon-glyph--menu");
+	const mobileCloseIcon = mobileMenu?.querySelector<SVGElement>(".site-header__mobile-icon-glyph--close");
+	const mobileLinks = mobileMenu ? Array.from(mobileMenu.querySelectorAll<HTMLAnchorElement>("[data-mobile-menu-link]")) : [];
+	const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+	let mobileMenuAnimating = false;
+
+	const setMobileIconState = (isOpen: boolean) => {
+		if (!mobileMenuIcon || !mobileCloseIcon) {
+			return;
+		}
+
+		if (prefersReducedMotion) {
+			Object.assign(mobileMenuIcon.style, {
+				opacity: isOpen ? "0" : "1",
+				transform: isOpen ? "rotate(90deg) scale(0.7)" : "rotate(0deg) scale(1)"
+			});
+			Object.assign(mobileCloseIcon.style, {
+				opacity: isOpen ? "1" : "0",
+				transform: isOpen ? "rotate(0deg) scale(1)" : "rotate(-90deg) scale(0.7)"
+			});
+			return;
+		}
+
+		animate(mobileMenuIcon, {
+			opacity: isOpen ? 0 : 1,
+			rotate: isOpen ? "90deg" : "0deg",
+			scale: isOpen ? 0.7 : 1,
+			duration: 240,
+			ease: "out(3)"
+		});
+		animate(mobileCloseIcon, {
+			opacity: isOpen ? 1 : 0,
+			rotate: isOpen ? "0deg" : "-90deg",
+			scale: isOpen ? 1 : 0.7,
+			duration: 240,
+			ease: "out(3)"
+		});
+	};
+
+	const setMobileTriggerState = (isOpen: boolean) => {
+		if (!mobileTrigger) {
+			return;
+		}
+
+		mobileTrigger.setAttribute("aria-expanded", String(isOpen));
+		mobileTrigger.setAttribute("aria-label", isOpen ? "關閉主要導覽" : "開啟主要導覽");
+	};
+
+	const openMobileMenu = async () => {
+		if (!mobileMenu || !mobilePanel || mobileMenuAnimating || mobileMenu.open) {
+			return;
+		}
+
+		mobileMenuAnimating = true;
+		mobileMenu.open = true;
+		setMobileTriggerState(true);
+		setMobileIconState(true);
+
+		mobilePanel.style.height = "0px";
+		mobilePanel.style.opacity = "0";
+
+		if (prefersReducedMotion) {
+			mobilePanel.style.height = "auto";
+			mobilePanel.style.opacity = "1";
+			mobileMenuAnimating = false;
+			return;
+		}
+
+		await animate(mobilePanel, {
+			height: `${mobilePanel.scrollHeight}px`,
+			opacity: [0, 1],
+			duration: 420,
+			ease: "inOutCubic"
+		}).then();
+
+		mobilePanel.style.height = "auto";
+		mobileMenuAnimating = false;
+	};
+
+	const closeMobileMenu = async () => {
+		if (!mobileMenu || !mobilePanel || mobileMenuAnimating || !mobileMenu.open) {
+			return;
+		}
+
+		mobileMenuAnimating = true;
+		setMobileTriggerState(false);
+		setMobileIconState(false);
+		mobilePanel.style.height = `${mobilePanel.scrollHeight}px`;
+
+		if (prefersReducedMotion) {
+			mobileMenu.open = false;
+			mobilePanel.style.height = "";
+			mobilePanel.style.opacity = "";
+			mobileMenuAnimating = false;
+			return;
+		}
+
+		await animate(mobilePanel, {
+			height: "0px",
+			opacity: [1, 0],
+			duration: 320,
+			ease: "inOutCubic"
+		}).then();
+
+		mobileMenu.open = false;
+		mobilePanel.style.height = "";
+		mobilePanel.style.opacity = "";
+		mobileMenuAnimating = false;
+	};
+
+	if (mobileMenu && mobileTrigger && mobilePanel) {
+		mobilePanel.style.height = "0px";
+		mobilePanel.style.opacity = "0";
+
+		mobileTrigger.addEventListener("click", event => {
+			event.preventDefault();
+
+			if (mobileMenu.open) {
+				void closeMobileMenu();
+			} else {
+				void openMobileMenu();
+			}
+		});
+
+		mobileLinks.forEach(link => {
+			link.addEventListener("click", () => {
+				void closeMobileMenu();
+			});
+		});
 	}
 </script>
 
@@ -183,6 +325,7 @@ const navItems = [
 	}
 
 	.site-header__mobile-trigger {
+		position: relative;
 		display: inline-grid;
 		place-items: center;
 		width: 3.4rem;
@@ -197,16 +340,58 @@ const navItems = [
 		display: none;
 	}
 
-	.site-header__mobile-nav {
+	.site-header__mobile-icon {
+		position: relative;
+		display: inline-grid;
+		place-items: center;
+		width: 1.875rem;
+		aspect-ratio: 1;
+	}
+
+	.site-header__mobile-icon-glyph {
+		grid-area: 1 / 1;
+		display: block;
+		transform-origin: center;
+		will-change: opacity, transform;
+	}
+
+	.site-header__mobile-icon-glyph--close {
+		opacity: 0;
+		transform: rotate(-90deg) scale(0.7);
+	}
+
+	.site-header__mobile-menu[open] .site-header__mobile-icon-glyph--menu {
+		opacity: 0;
+		transform: rotate(90deg) scale(0.7);
+	}
+
+	.site-header__mobile-menu[open] .site-header__mobile-icon-glyph--close {
+		opacity: 1;
+		transform: rotate(0deg) scale(1);
+	}
+
+	.site-header__mobile-panel {
 		position: absolute;
 		inset-block-start: calc(100% + 0.55rem);
 		inset-inline: 0;
-		display: grid;
-		gap: 0.4rem;
-		padding: 1rem;
+		overflow: hidden;
+		height: 0;
 		color: var(--color-background);
 		background: var(--color-foreground);
 		border-radius: 1.2rem;
+		opacity: 0;
+		will-change: height, opacity;
+	}
+
+	.site-header__mobile-menu[open] .site-header__mobile-panel {
+		height: auto;
+		opacity: 1;
+	}
+
+	.site-header__mobile-nav {
+		display: grid;
+		gap: 0.4rem;
+		padding: 1rem;
 	}
 
 	.site-header__mobile-link,
@@ -230,7 +415,7 @@ const navItems = [
 		background: var(--color-soft-blue);
 	}
 
-	@media (max-width: 72rem) {
+	@media (max-width: 52rem) {
 		.site-header {
 			min-height: 4.1rem;
 			padding: 0.75rem 1rem;
