@@ -62,6 +62,21 @@ const videos: Video[] = [
 		label: "2019 夏令營",
 		cover: "https://placehold.co/300x200",
 		url: "https://youtu.be"
+	},
+	{
+		label: "2019 夏令營",
+		cover: "https://placehold.co/300x200",
+		url: "https://youtu.be"
+	},
+	{
+		label: "2019 夏令營",
+		cover: "https://placehold.co/300x200",
+		url: "https://youtu.be"
+	},
+	{
+		label: "2019 夏令營",
+		cover: "https://placehold.co/300x200",
+		url: "https://youtu.be"
 	}
 ];
 ---
@@ -85,18 +100,36 @@ const videos: Video[] = [
 		}
 	</div>
 
-	<div class="mx-auto my-5 flex w-[90%] gap-5">
-		{
-			videos.map(v => (
-				<div class:list={["aspect-video w-75 cursor-pointer rounded-lg bg-black", `bg-[url(${v.cover})]`]}>
-					<div class="flex h-full w-full items-center justify-center">
-						<MaterialSymbolsPlayCircleOutlineRounded class="text-background text-2xl" />
-					</div>
+	<!-- 影片跑馬燈 -->
+	<div class="marquee-container my-5 flex w-full overflow-hidden">
+		<div class="marquee-track flex w-max gap-4">
+			<div class="flex shrink-0 gap-4">
+				{
+					videos.map(v => (
+						<div class:list={["bg-foreground aspect-video max-h-50 w-75 cursor-pointer rounded-lg", `bg-[url(${v.cover})]`]}>
+							<div class="flex h-full w-full items-center justify-center">
+								<MaterialSymbolsPlayCircleOutlineRounded class="text-background text-2xl" />
+							</div>
 
-					<p class="relative bottom-7 text-center text-2xl font-bold">{v.label}</p>
-				</div>
-			))
-		}
+							<p class="text-background relative bottom-7 text-center text-2xl font-bold">{v.label}</p>
+						</div>
+					))
+				}
+			</div>
+			<div class="flex shrink-0 gap-4">
+				{
+					videos.map(v => (
+						<div class:list={["bg-foreground aspect-video max-h-50 w-75 cursor-pointer rounded-lg", `bg-[url(${v.cover})]`]}>
+							<div class="flex h-full w-full items-center justify-center">
+								<MaterialSymbolsPlayCircleOutlineRounded class="text-background text-2xl" />
+							</div>
+
+							<p class="text-background relative bottom-7 text-center text-2xl font-bold">{v.label}</p>
+						</div>
+					))
+				}
+			</div>
+		</div>
 	</div>
 
 	<!-- 學員訪談 YouTube 影片 popup -->
@@ -123,6 +156,25 @@ const videos: Video[] = [
 	<div class="bg-soft-blue h-0 w-0"></div>
 	<div class="bg-orange h-0 w-0"></div>
 </div>
+
+<style>
+	@keyframes marquee {
+		from {
+			transform: translateX(0);
+		}
+		to {
+			transform: translateX(-50%);
+		}
+	}
+
+	.marquee-track {
+		animation: marquee 20s linear infinite;
+	}
+
+	.marquee-container:hover .marquee-track {
+		animation-play-state: paused;
+	}
+</style>
 
 <script>
 	// const commentVideoUrl =
