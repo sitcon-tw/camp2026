@@ -2,96 +2,19 @@
 import { Image } from "astro:assets";
 import MaterialSymbolsPlayCircleOutlineRounded from "~icons/material-symbols/play-circle-outline-rounded";
 
-interface Comment {
-	name: string;
-	comment: string;
-	color?: "green" | "dark-green" | "primary-blue" | "blue" | "soft-blue" | "sky-blue" | "orange";
-}
+import siteConfig from "@/data/site.json";
 
-const Comments: Comment[] = [
-	{
-		name: "Student 1",
-		comment: "我個人認為義大利麵就應該拌 42 號混泥土因為這個螺絲釘的長度很容易直接影響到挖掘機的扭矩",
-		color: "blue"
-	},
-	{
-		name: "Student 2",
-		comment: "你往裡砸的時候一瞬間他就會產生大量的高能蛋白俗稱 UFO，會嚴重影響經濟的發展以至於對整個太平洋和充電器的核污染",
-		color: "orange"
-	},
-	{
-		name: "Student 3",
-		comment: "再或者說透過這勾股定理很容易推斷出人工飼養的東條英機他是可以捕獲野生的三角函數",
-		color: "green"
-	},
-	{
-		name: "Student 4",
-		comment: "所以說不管這秦始皇的切面是否具有放射性川普的 N 次方是否有沈澱物都不會影響到沃爾瑪跟維爾康在南極匯合",
-		color: "dark-green"
-	},
-	{
-		name: "Student 5",
-		comment: "你往裡砸的時候一瞬間他就會產生大量的高能蛋白俗稱 UFO，會嚴重影響經濟的發展以至於對整個太平洋和充電器的核污染",
-		color: "sky-blue"
-	},
-	{
-		name: "Student 6",
-		comment: "再或者說透過這勾股定理很容易推斷出人工飼養的東條英機他是可以捕獲野生的三角函數",
-		color: "soft-blue"
-	}
-];
-
-const textMarqueeRowCount: number = 10;
-const textMarqueeText: string = "Hello World ";
-
-interface Video {
-	label: string;
-	cover: string;
-	url: string;
-}
-
-const videos: Video[] = [
-	{
-		label: "2026 年會回顧",
-		cover: "https://placehold.co/300x200",
-		url: "https://www.youtube-nocookie.com/embed/jbofh3u8XrI"
-	},
-	{
-		label: "2026 年會開幕",
-		cover: "https://placehold.co/300x200",
-		url: "https://www.youtube-nocookie.com/embed/_gvPCsdmeNs"
-	},
-	{
-		label: "2026 年會閉幕",
-		cover: "https://placehold.co/300x200",
-		url: "https://www.youtube-nocookie.com/embed/xN-Tj83adDQ"
-	},
-	{
-		label: "2019 夏令營",
-		cover: "https://placehold.co/300x200",
-		url: "https://www.youtube-nocookie.com/embed/jbofh3u8XrI"
-	},
-	{
-		label: "2019 夏令營",
-		cover: "https://placehold.co/300x200",
-		url: "https://www.youtube-nocookie.com/embed/jbofh3u8XrI"
-	},
-	{
-		label: "2019 夏令營",
-		cover: "https://placehold.co/300x200",
-		url: "https://www.youtube-nocookie.com/embed/jbofh3u8XrI"
-	}
-];
+const { studentComment } = siteConfig;
 ---
 
 <div class="bg-background relative overflow-hidden py-5">
 	<!-- 背景跑馬燈 -->
 	<div class="pointer-events-none absolute inset-0 flex flex-col justify-around opacity-15">
 		{
-			Array.from({ length: textMarqueeRowCount }, (_, i) => (
+			Array.from({ length: studentComment.bgMarquee.repeatRows }, (_, i) => (
 				<div class="marquee-row flex w-max" style={`animation-duration: ${9 + i * 0.9}s; animation-delay: ${-((i + 1) * 3) % 9}s`}>
 					{[0, 1].map(() => (
-						<span class="shrink-0 text-4xl font-bold whitespace-nowrap">{textMarqueeText.repeat(10)}&nbsp;</span>
+						<span class="shrink-0 text-4xl font-bold whitespace-nowrap">{studentComment.bgMarquee.text.repeat(10)}&nbsp;</span>
 					))}
 				</div>
 			))
@@ -105,7 +28,7 @@ const videos: Video[] = [
 		<!-- 固定留言 -->
 		<div class="mx-auto my-5 grid grid-cols-1 gap-x-4 gap-y-2 sm:grid-cols-2 md:w-[80%] lg:grid-cols-3">
 			{
-				Comments.map(c => (
+				studentComment.comments.map(c => (
 					<div class="bg-foreground text-background w-full snap-start snap-always rounded-lg sm:w-fit">
 						<div class:list={["flex items-center rounded-t-lg px-4 py-2", `bg-${c.color}`]}>
 							<Image src="https://placehold.co/70x70" alt="Student's pfp" height="70" width="70" class="mr-5 rounded-full" />
@@ -123,7 +46,7 @@ const videos: Video[] = [
 			<div class="marquee-track flex w-max gap-4">
 				<div class="flex shrink-0 gap-4">
 					{
-						videos.map(v => (
+						studentComment.video.map(v => (
 							<div class:list={["video-card bg-foreground aspect-video max-h-50 w-75 cursor-pointer rounded-lg", `bg-[url(${v.cover})]`]} data-url={v.url}>
 								<div class="flex h-full w-full items-center justify-center">
 									<MaterialSymbolsPlayCircleOutlineRounded class="text-background text-2xl" />
@@ -136,7 +59,7 @@ const videos: Video[] = [
 				</div>
 				<div class="flex shrink-0 gap-4">
 					{
-						videos.map(v => (
+						studentComment.video.map(v => (
 							<div class:list={["video-card bg-foreground aspect-video max-h-50 w-75 cursor-pointer rounded-lg", `bg-[url(${v.cover})]`]} data-url={v.url}>
 								<div class="flex h-full w-full items-center justify-center">
 									<MaterialSymbolsPlayCircleOutlineRounded class="text-background text-2xl" />
