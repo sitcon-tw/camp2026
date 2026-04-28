@@ -1,0 +1,10 @@
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "camp2026",
+	"main": "./src/worker.js",
+	"compatibility_date": "2026-04-28",
+	"assets": {
+		"directory": "./dist",
+		"binding": "ASSETS"
+	}
+}
