@@ -69,9 +69,29 @@ const { header } = siteContent;
 		if (prefersReducedMotion) {
 			revealHeader();
 		} else if (shouldWaitForHeroIntro) {
-			window.addEventListener("hero-intro:finished", revealHeader, {
+			let heroIntroRevealTimeout: number | undefined;
+			let didRevealAfterHeroIntro = false;
+
+			const revealHeaderAfterHeroIntro = () => {
+				if (didRevealAfterHeroIntro) {
+					return;
+				}
+
+				didRevealAfterHeroIntro = true;
+
+				if (heroIntroRevealTimeout !== undefined) {
+					window.clearTimeout(heroIntroRevealTimeout);
+					heroIntroRevealTimeout = undefined;
+				}
+
+				window.removeEventListener("hero-intro:finished", revealHeaderAfterHeroIntro);
+				revealHeader();
+			};
+
+			window.addEventListener("hero-intro:finished", revealHeaderAfterHeroIntro, {
 				once: true
 			});
+			heroIntroRevealTimeout = window.setTimeout(revealHeaderAfterHeroIntro, 5000);
 		} else {
 			requestAnimationFrame(() => {
 				window.setTimeout(revealHeader, 120);
