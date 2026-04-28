@@ -161,6 +161,9 @@ const heroPhotoWallColumns = [
 	const shouldSkipIntro = window.scrollY > 0;
 	const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 	let photoWallStarted = false;
+	let introFinished = false;
+	let heroTitleRevealed = false;
+	let heroSubtitleRevealed = false;
 
 	if (heroTitleLabel) {
 		heroTitleLabel.style.visibility = "hidden";
@@ -201,6 +204,11 @@ const heroPhotoWallColumns = [
 	};
 
 	const finishIntro = () => {
+		if (introFinished) {
+			return;
+		}
+
+		introFinished = true;
 		document.documentElement.classList.remove("hero-intro-lock");
 
 		if (intro) {
@@ -210,22 +218,38 @@ const heroPhotoWallColumns = [
 		window.dispatchEvent(new CustomEvent("hero-intro:finished"));
 	};
 
+	const forceRevealHeroTitle = () => {
+		if (!heroTitleLabel) {
+			return;
+		}
+
+		heroTitleLabel.style.visibility = "visible";
+		heroTitleLabel.style.transform = "none";
+		heroTitleLabel.querySelectorAll<HTMLElement>(".hero-page__title-word").forEach(word => {
+			word.style.transform = "none";
+		});
+	};
+
+	const forceRevealHeroSubtitle = () => {
+		if (!heroSubtitle) {
+			return;
+		}
+
+		heroSubtitle.classList.add("is-visible");
+		heroSubtitle.style.transform = "none";
+		heroSubtitle.querySelectorAll<HTMLElement>(".hero-page__subtitle-char").forEach(char => {
+			char.style.transform = "none";
+		});
+	};
+
 	const skipIntro = () => {
 		if (intro) {
 			intro.hidden = true;
 		}
 
-		if (heroTitleLabel) {
-			heroTitleLabel.style.visibility = "visible";
-			heroTitleLabel.style.transform = "none";
-		}
-
-		if (heroSubtitle) {
-			heroSubtitle.classList.add("is-visible");
-			heroSubtitle.style.transform = "none";
-		}
-
-		window.dispatchEvent(new CustomEvent("hero-intro:finished"));
+		forceRevealHeroTitle();
+		forceRevealHeroSubtitle();
+		finishIntro();
 	};
 
 	const revealHeroTitle = async (prefersReducedMotion: boolean) => {
@@ -371,31 +395,67 @@ const heroPhotoWallColumns = [
 		} else {
 			document.documentElement.classList.add("hero-intro-lock");
 
-			if (!prefersReducedMotion) {
-				await wait(180);
-				await bounceQuestion();
-			}
-
-			for (let index = 1; index < topics.length; index += 1) {
-				await wait(index === 1 && !prefersReducedMotion ? 190 : 300);
-
-				if (prefersReducedMotion) {
-					const rowHeight = topicViewport.getBoundingClientRect().height;
-					topicTrack.style.transform = `translateY(${-index * rowHeight}px)`;
-				} else {
-					await slideToTopic(index);
+			try {
+				if (!prefersReducedMotion) {
+					await wait(180);
+					await bounceQuestion();
 				}
 
-				setActiveTopic(index);
-			}
+				for (let index = 1; index < topics.length; index += 1) {
+					await wait(index === 1 && !prefersReducedMotion ? 190 : 300);
 
-			await wait(360);
-			await showFinal(prefersReducedMotion);
-			await wait(190);
-			await openIntroCurtains(prefersReducedMotion);
-			finishIntro();
-			await revealHeroTitle(prefersReducedMotion);
-			await revealHeroSubtitle(prefersReducedMotion);
+					if (prefersReducedMotion) {
+						const rowHeight = topicViewport.getBoundingClientRect().height;
+						topicTrack.style.transform = `translateY(${-index * rowHeight}px)`;
+					} else {
+						await slideToTopic(index);
+					}
+
+					setActiveTopic(index);
+				}
+
+				await wait(360);
+				await showFinal(prefersReducedMotion);
+				await wait(190);
+				await openIntroCurtains(prefersReducedMotion);
+				finishIntro();
+				await revealHeroTitle(prefersReducedMotion);
+				heroTitleRevealed = true;
+				await revealHeroSubtitle(prefersReducedMotion);
+				heroSubtitleRevealed = true;
+			} finally {
+				document.documentElement.classList.remove("hero-intro-lock");
+
+				if (!introFinished) {
+					finishIntro();
+				}
+
+				setActiveTopic(0);
+
+				if (topicViewport) {
+					const rowHeight = topicViewport.getBoundingClientRect().height;
+					const resetIndex = 0;
+					topicTrack.style.transform = `translateY(${-resetIndex * rowHeight}px)`;
+				}
+
+				if (!heroTitleRevealed) {
+					try {
+						await revealHeroTitle(prefersReducedMotion);
+						heroTitleRevealed = true;
+					} catch {
+						forceRevealHeroTitle();
+					}
+				}
+
+				if (!heroSubtitleRevealed) {
+					try {
+						await revealHeroSubtitle(prefersReducedMotion);
+						heroSubtitleRevealed = true;
+					} catch {
+						forceRevealHeroSubtitle();
+					}
+				}
+			}
 		}
 	}
 </script>
