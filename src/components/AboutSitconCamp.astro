@@ -40,14 +40,14 @@ const stats = rawStats as Stat[];
 <section class="section-cream">
 	<div class="mx-auto flex max-w-7xl flex-col items-center">
 		<header class="mb-16 text-center">
-			<h2 class="mb-8 text-4xl font-bold tracking-tight text-black md:text-5xl">SITCON，13 年來全東亞最大的學生資訊社群</h2>
-			<p class="text-foreground/70 mx-auto max-w-4xl text-lg leading-relaxed md:text-xl">
+			<h2 class="mb-8 text-4xl font-bold tracking-tight text-black min-[530px]:text-5xl">SITCON，13 年來全東亞最大的學生資訊社群</h2>
+			<p class="text-foreground/70 mx-auto max-w-4xl text-lg leading-relaxed min-[530px]:text-xl">
 				我個人認為義大利麵就應該拌 42 號混凝土，因為這個螺絲釘的長度很容易直接影響到挖掘機的扭矩。我個人認為義大利麵就應該拌 42
 				號混凝土，因為這個螺絲釘的長度很容易直接影響到挖掘機的扭矩。我個人認為義大利麵就應該拌 42 號混凝土，因為這個螺絲釘的長度很容易直接影響到挖掘機的扭矩。
 			</p>
 		</header>
 
-		<div class="mb-12 grid w-full grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+		<div class="mb-8 grid w-full grid-cols-1 gap-4 min-[530px]:grid-cols-2 min-[530px]:gap-6 min-[1124px]:grid-cols-4 min-[1124px]:gap-6">
 			{
 				stats.map(stat => (
 					<div class="card-stat group">
@@ -60,19 +60,19 @@ const stats = rawStats as Stat[];
 						/>
 						<div class="pointer-events-none absolute inset-0 bg-linear-to-t from-black/90 via-black/30 to-transparent" />
 
-						<div class="absolute bottom-8 left-0 flex w-full justify-center px-4 text-white">
+						<div class="absolute bottom-0 left-0 flex h-full w-full items-center justify-center px-4 text-white min-[1124px]:bottom-6 min-[1124px]:h-auto min-[1124px]:items-end">
 							{stat.type === "single" ? (
 								<div class="flex flex-col items-center text-center">
-									{stat.prefix && <span class="mb-1 text-sm font-medium">{stat.prefix}</span>}
-									<strong class="mb-2 font-mono text-6xl font-black tracking-tighter">{stat.value}</strong>
-									<span class="text-base font-bold tracking-wide">{stat.label}</span>
+									{stat.prefix && <span class="mb-0 text-[10px] font-medium min-[1124px]:mb-0.5">{stat.prefix}</span>}
+									<strong class="mb-0 font-mono font-black tracking-tighter text-4xl min-[530px]:mb-0.5 min-[530px]:text-3xl min-[800px]:text-5xl min-[1124px]:text-4xl min-[1280px]:text-5xl">{stat.value}</strong>
+									<span class="font-bold tracking-wide text-xs min-[530px]:text-[10px] min-[800px]:text-sm min-[1124px]:text-[10px] min-[1280px]:text-xs">{stat.label}</span>
 								</div>
 							) : (
-								<div class="flex gap-8">
+								<div class="flex gap-8 min-[530px]:gap-4 min-[800px]:gap-8 min-[1124px]:gap-2 min-[1280px]:gap-4">
 									{stat.items?.map(item => (
 										<div class="flex flex-col items-center text-center">
-											<strong class="mb-2 font-mono text-6xl font-black tracking-tighter">{item.value}</strong>
-											<span class="text-sm font-bold tracking-wide">{item.label}</span>
+											<strong class="mb-0 font-mono font-black tracking-tighter text-3xl min-[530px]:mb-0.5 min-[530px]:text-2xl min-[800px]:text-4xl min-[1124px]:text-2xl min-[1280px]:text-3xl">{item.value}</strong>
+											<span class="font-bold tracking-wide text-[10px] min-[800px]:text-xs min-[1124px]:text-[10px] min-[1280px]:text-xs">{item.label}</span>
 										</div>
 									))}
 								</div>
@@ -88,16 +88,22 @@ const stats = rawStats as Stat[];
 			<span class="i-carbon-chevron-right text-xl"></span>
 		</button>
 	</div>
+
 </section>
 
 <style>
 	@reference "../styles/global.css";
 
 	.section-cream {
-		@apply bg-background w-full px-6 py-16 font-sans md:px-12;
+		@apply bg-background w-full px-4 py-8 font-sans min-[530px]:px-12 min-[530px]:py-16;
 	}
 	.card-stat {
-		@apply bg-foreground relative aspect-3/4 w-full overflow-hidden rounded-4xl shadow-lg;
+		@apply bg-foreground relative w-full overflow-hidden rounded-2xl min-[530px]:rounded-3xl shadow-sm 
+		aspect-375/181 
+		min-[530px]:aspect-23/12 
+		min-[530px]:max-h-60
+		min-[1124px]:aspect-15/23
+		min-[1124px]:max-h-none;
 	}
 	.btn-green {
 		@apply bg-green flex cursor-pointer items-center gap-2 rounded-xl px-10 py-3 text-lg font-bold text-black shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg active:scale-95;
