@@ -52,34 +52,34 @@ interface Video {
 
 const videos: Video[] = [
 	{
-		label: "2019 夏令營",
+		label: "2026 年會回顧",
 		cover: "https://placehold.co/300x200",
-		url: "https://youtu.be"
+		url: "https://www.youtube-nocookie.com/embed/jbofh3u8XrI"
+	},
+	{
+		label: "2026 年會開幕",
+		cover: "https://placehold.co/300x200",
+		url: "https://www.youtube-nocookie.com/embed/_gvPCsdmeNs"
+	},
+	{
+		label: "2026 年會閉幕",
+		cover: "https://placehold.co/300x200",
+		url: "https://www.youtube-nocookie.com/embed/xN-Tj83adDQ"
 	},
 	{
 		label: "2019 夏令營",
 		cover: "https://placehold.co/300x200",
-		url: "https://youtu.be"
+		url: "https://www.youtube-nocookie.com/embed/jbofh3u8XrI"
 	},
 	{
 		label: "2019 夏令營",
 		cover: "https://placehold.co/300x200",
-		url: "https://youtu.be"
+		url: "https://www.youtube-nocookie.com/embed/jbofh3u8XrI"
 	},
 	{
 		label: "2019 夏令營",
 		cover: "https://placehold.co/300x200",
-		url: "https://youtu.be"
-	},
-	{
-		label: "2019 夏令營",
-		cover: "https://placehold.co/300x200",
-		url: "https://youtu.be"
-	},
-	{
-		label: "2019 夏令營",
-		cover: "https://placehold.co/300x200",
-		url: "https://youtu.be"
+		url: "https://www.youtube-nocookie.com/embed/jbofh3u8XrI"
 	}
 ];
 ---
@@ -124,12 +124,12 @@ const videos: Video[] = [
 				<div class="flex shrink-0 gap-4">
 					{
 						videos.map(v => (
-							<div class:list={["bg-foreground aspect-video max-h-50 w-75 cursor-pointer rounded-lg", `bg-[url(${v.cover})]`]}>
+							<div class:list={["video-card bg-foreground aspect-video max-h-50 w-75 cursor-pointer rounded-lg", `bg-[url(${v.cover})]`]} data-url={v.url}>
 								<div class="flex h-full w-full items-center justify-center">
 									<MaterialSymbolsPlayCircleOutlineRounded class="text-background text-2xl" />
 								</div>
 
-								<p class="text-background relative bottom-12 text-center text-5xl font-bold">{v.label}</p>
+								<p class="text-background relative bottom-12 text-center text-4xl font-bold">{v.label}</p>
 							</div>
 						))
 					}
@@ -137,12 +137,12 @@ const videos: Video[] = [
 				<div class="flex shrink-0 gap-4">
 					{
 						videos.map(v => (
-							<div class:list={["bg-foreground aspect-video max-h-50 w-75 cursor-pointer rounded-lg", `bg-[url(${v.cover})]`]}>
+							<div class:list={["video-card bg-foreground aspect-video max-h-50 w-75 cursor-pointer rounded-lg", `bg-[url(${v.cover})]`]} data-url={v.url}>
 								<div class="flex h-full w-full items-center justify-center">
 									<MaterialSymbolsPlayCircleOutlineRounded class="text-background text-2xl" />
 								</div>
 
-								<p class="text-background relative bottom-13 text-center text-5xl font-bold">{v.label}</p>
+								<p class="text-background relative bottom-13 text-center text-4xl font-bold">{v.label}</p>
 							</div>
 						))
 					}
@@ -150,6 +150,13 @@ const videos: Video[] = [
 			</div>
 		</div>
 	</div>
+
+	<!-- 學員訪談 YouTube 影片 popup -->
+	<dialog id="comment-dialog" class="m-auto w-full max-w-3xl rounded-xl p-0 shadow-xl">
+		<div class="aspect-video w-full">
+			<iframe id="comment-iframe" class="h-full w-full rounded-xl" title="YouTube video player" allow="autoplay; encrypted-media;" src="" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+		</div>
+	</dialog>
 
 	<!-- 防止顏色被 TailwindCSS tree shaking 掉 -->
 	<div class="bg-green h-0 w-0"></div>
@@ -184,3 +191,26 @@ const videos: Video[] = [
 		animation: marquee 10s linear infinite;
 	}
 </style>
+
+<script>
+	const dialog = document.getElementById("comment-dialog") as HTMLDialogElement;
+	const iframe = document.getElementById("comment-iframe") as HTMLIFrameElement;
+
+	document.querySelectorAll<HTMLElement>(".video-card").forEach(card => {
+		card.addEventListener("click", () => {
+			const url = card.dataset.url;
+			if (!url) return;
+			iframe.src = url;
+			dialog.showModal();
+		});
+	});
+
+	dialog.addEventListener("click", e => {
+		if (e.target === dialog) closeModal();
+	});
+
+	function closeModal() {
+		dialog.close();
+		iframe.src = "";
+	}
+</script>
