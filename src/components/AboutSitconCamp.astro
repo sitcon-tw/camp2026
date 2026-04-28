@@ -1,79 +1,321 @@
 ---
 import { Image } from "astro:assets";
-import camp from "../assets/pics/camp.webp";
-import hackathon from "../assets/pics/hackathon.webp";
+
+import { X } from "@lucide/astro";
+
+import imgGroups from "../assets/pics/groups.webp";
+import imgEdu from "../assets/pics/edu.webp";
+import imgHackathon from "../assets/pics/hackathon.webp";
+import imgCamp from "../assets/pics/camp.webp";
+import rawMembers from "@/data/members.json";
+
+interface Member {
+  id: string;
+  name: string;
+  role: string;
+  imgUrl: string;
+  bio: string;
+}
+
+const members = rawMembers as Member[];
+
+const displayMembers: (Member & { cloned?: true })[] = [
+  ...members,
+  ...members.map((m) => ({ ...m, id: `${m.id}-clone`, cloned: true as const })),
+];
+
+const stats = [
+  {
+    type: "single",
+    value: "10000",
+    label: "名參與者",
+    bgImg: imgGroups,
+  },
+  {
+    type: "single",
+    value: "500",
+    label: "名學生講者",
+    bgImg: imgEdu,
+  },
+  {
+    type: "split",
+    items: [
+      { value: "500", label: "場聚會和講座" },
+      { value: "10", label: "場夏令營" },
+    ],
+    bgImg: imgHackathon,
+  },
+  {
+    type: "single",
+    prefix: "扶持近",
+    value: "1400",
+    label: "名熱愛資訊的志工",
+    bgImg: imgCamp,
+  },
+];
 ---
+
+<section class="section-cream">
+  <div class="mx-auto flex max-w-7xl flex-col items-center">
+    <div class="group mb-20 w-full overflow-hidden py-8">
+      <div
+        class="marquee-track flex w-max gap-6 px-3 group-hover:[animation-play-state:paused]"
+      >
+        {
+          displayMembers.map((member) => (
+            <button
+              class="member-card relative h-95 w-70 shrink-0 cursor-pointer rounded-[2.5rem] text-left transition-transform duration-300 hover:scale-105"
+              data-member-id={
+                member.cloned ? member.id.replace("-clone", "") : member.id
+              }
+              aria-haspopup="dialog"
+            >
+              <div class="border-green bg-background h-full w-full overflow-hidden rounded-[2.5rem] border-r-6 border-b-6">
+                <img
+                  src={member.imgUrl}
+                  alt={member.name}
+                  class="h-full w-full object-cover"
+                  loading="lazy"
+                  width="280"
+                  height="380"
+                />
+              </div>
+              <div class="absolute right-4 bottom-4 left-4 rounded-xl bg-black/60 px-3 py-2 text-white backdrop-blur-sm">
+                <p class="text-sm leading-tight font-bold">{member.name}</p>
+                <p class="text-xs text-white/70">{member.role}</p>
+              </div>
+            </button>
+          ))
+        }
+      </div>
+    </div>
+
+    <header class="mb-16 text-center">
+      <h2 class="mb-8 text-4xl font-bold tracking-tight text-black md:text-5xl">
+        SITCON，13 年來全東亞最大的學生資訊社群
+      </h2>
+      <p
+        class="mx-auto max-w-4xl text-lg leading-relaxed text-gray-700 md:text-xl"
+      >
+        我個人認為義大利麵就應該拌 42
+        號混凝土，因為這個螺絲釘的長度很容易直接影響到挖掘機的扭矩。我個人認為義大利麵就應該拌
+        42
+        號混凝土，因為這個螺絲釘的長度很容易直接影響到挖掘機的扭矩。我個人認為義大利麵就應該拌
+        42 號混凝土，因為這個螺絲釘的長度很容易直接影響到挖掘機的扭矩。
+      </p>
+    </header>
+
+    <div
+      class="mb-12 grid w-full grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4"
+    >
+      {
+        stats.map((stat) => (
+          <div class="card-stat">
+            <Image
+              src={stat.bgImg}
+              alt={
+                stat.type === "single" ? stat.label || "社群數據" : "社群數據"
+              }
+              class="absolute inset-0 h-full w-full object-cover opacity-70 transition-transform duration-500 group-hover:scale-105"
+              loading="lazy"
+              decoding="async"
+            />
+            <div class="pointer-events-none absolute inset-0 bg-linear-to-t from-black/90 via-black/30 to-transparent" />
+
+            <div class="absolute bottom-8 left-0 flex w-full justify-center px-4 text-white">
+              {stat.type === "single" ? (
+                <div class="flex flex-col items-center text-center">
+                  {stat.prefix && (
+                    <span class="mb-1 text-sm font-medium">{stat.prefix}</span>
+                  )}
+                  <strong class="mb-2 font-mono text-6xl font-black tracking-tighter">
+                    {stat.value}
+                  </strong>
+                  <span class="text-base font-bold tracking-wide">
+                    {stat.label}
+                  </span>
+                </div>
+              ) : (
+                <div class="flex gap-8">
+                  {stat.items?.map((item) => (
+                    <div class="flex flex-col items-center text-center">
+                      <strong class="mb-2 font-mono text-6xl font-black tracking-tighter">
+                        {item.value}
+                      </strong>
+                      <span class="text-sm font-bold tracking-wide">
+                        {item.label}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+        ))
+      }
+    </div>
+
+    <button class="btn-green">
+      了解更多
+      <span class="i-carbon-chevron-right text-xl"></span>
+    </button>
+  </div>
+</section>
+
+<dialog id="member-dialog" class="member-dialog" aria-modal="true">
+  <div id="dialog-backdrop" class="dialog-backdrop" aria-hidden="true"></div>
+  <div class="dialog-content">
+    <button
+      id="dialog-close"
+      class="bg-foreground/10 hover:bg-foreground/20 absolute top-4 right-4 flex h-8 w-8 items-center justify-center rounded-full transition-colors"
+      aria-label="關閉"
+      autofocus
+    >
+      <X class="i-lucide-x text-lg" />
+    </button>
+    <img
+      id="dialog-img"
+      src=""
+      alt=""
+      width="96"
+      height="96"
+      class="mb-4 h-24 w-24 rounded-2xl object-cover"
+    />
+    <p id="dialog-role" class="text-foreground/60 mb-1 text-sm"></p>
+    <h2 id="dialog-name" class="mb-3 text-2xl font-bold"></h2>
+    <p id="dialog-bio" class="text-foreground/80 text-sm leading-relaxed"></p>
+  </div>
+</dialog>
+
+<script
+  is:inline
+  id="members-data"
+  type="application/json"
+  set:html={JSON.stringify(members)}
+/>
 
 <style>
   @reference "../styles/global.css";
 
-  .section {
-    @apply px-4 py-16;
+  .section-cream {
+    @apply bg-background w-full px-6 py-16 font-sans md:px-12;
   }
-  .section-inner {
-    @apply mx-auto max-w-6xl;
+  .card-stat {
+    @apply relative aspect-3/4 w-full overflow-hidden rounded-4xl bg-gray-900 shadow-lg;
   }
-  .grid-2col {
-    @apply grid items-center justify-center gap-8 md:grid-cols-2;
+  .btn-green {
+    @apply bg-green flex cursor-pointer items-center gap-2 rounded-xl px-10 py-3 text-lg font-bold text-black shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg active:scale-95;
   }
-  .text-card {
-    @apply bg-background/80 flex flex-col items-start justify-center gap-4 rounded-2xl p-8 shadow-sm;
+  .marquee-track {
+    animation: marquee 20s linear infinite;
   }
-  .img-wrapper {
-    @apply relative aspect-5/2 overflow-hidden rounded-2xl shadow-sm;
+  @keyframes marquee {
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  .member-dialog {
+    border: none;
+    padding: 0;
+    background: transparent;
+    max-width: 100vw;
+    max-height: 100dvh;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    inset: 0;
+  }
+  .member-dialog[open] {
+    display: grid;
+    place-items: center;
+  }
+  .member-dialog::backdrop {
+    background: oklch(0.1 0 0 / 0.5);
+    backdrop-filter: blur(4px);
+  }
+  .dialog-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+  }
+  .dialog-content {
+    position: relative;
+    z-index: 1;
+    background: var(--color-background, #f9f5ef);
+    border-radius: 1.5rem;
+    padding: 2rem;
+    width: min(420px, calc(100vw - 2rem));
+    box-shadow: 0 24px 64px oklch(0.1 0 0 / 0.2);
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    transition:
+      opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  @starting-style {
+    .member-dialog[open] .dialog-content {
+      opacity: 0;
+      transform: scale(0.95) translateY(8px);
+    }
   }
 </style>
 
-<div class="bg-background text-foreground">
-  <section class="section">
-    <div class="section-inner">
-      <div class="grid-2col">
-        <div class="img-wrapper group">
-          <Image
-            src={camp}
-            alt="營隊活動 - SITCON 夏日學院學生實作工作坊"
-            class="h-full w-full object-cover"
-          />
-        </div>
+<script>
+  interface Member {
+    id: string;
+    name: string;
+    role: string;
+    imgUrl: string;
+    bio: string;
+  }
 
-        <div class="text-card">
-          <h2 class="text-primary-blue text-3xl font-bold">SITCON 夏日學院</h2>
-          <p class="text-foreground">
-            自 2014 年創立，SITCON Camp
-            今年邁入第十屆。五天四夜的資訊旅程，以「探索型」與「導覽型」為核心，跳脫傳統入門框架——聚焦於已具備基礎、卻不知道下一步該往哪走的你。資安、AI、競程、系統、開源，每條路都值得被認真看見。
-          </p>
-          <p class="text-foreground">
-            透過主題日
-            Masterclass、社群闖關、視界咖啡館，由各領域實務專家親自帶路，在一天內真正觸碰資訊科學最迷人的那一面。這裡的學習不是單向灌輸，而是和隊輔、講者、夥伴一起討論、實作、卡關再突破——找到讓自己想持續鑽研的
-            What's Next。
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>
+  const members: Member[] = JSON.parse(
+    document.getElementById("members-data")!.textContent!,
+  );
+  const membersMap = new Map(members.map((m) => [m.id, m]));
 
-  <section class="section">
-    <div class="section-inner">
-      <div class="grid-2col">
-        <div class="text-card md:order-0">
-          <h2 class="text-primary-blue text-3xl font-bold">黑客松</h2>
-          <p class="text-foreground">
-            黑客松是 SITCON Camp
-            的核心活動，也是整個營期的高潮。學員以小隊為單位，在有限時間內將五天所學轉化為真實可運行的作品，親身體驗「想法化為程式」的過程。不是為了比賽，而是為了真的做出一件事。
-          </p>
-          <p class="text-foreground">
-            不論你擅長寫程式、做設計、規劃產品或負責溝通協作，每個人都能在隊伍中找到自己的位置。最終成果展示不只是終點，更是探索資訊領域下一步的起點——你會帶著一個真實作品離開這裡。
-          </p>
-        </div>
+  const dialog = document.getElementById("member-dialog") as HTMLDialogElement;
+  const closeBtn = document.getElementById("dialog-close")!;
+  const backdropEl = document.getElementById("dialog-backdrop")!;
+  const dialogImg = document.getElementById("dialog-img") as HTMLImageElement;
+  const dialogRole = document.getElementById("dialog-role")!;
+  const dialogName = document.getElementById("dialog-name")!;
+  const dialogBio = document.getElementById("dialog-bio")!;
+  const marqueeTrack = document.querySelector<HTMLElement>(".marquee-track");
 
-        <div class="img-wrapper group order-first md:order-0">
-          <Image
-            src={hackathon}
-            alt="黑客松大賽 - 團隊協作coding實況"
-            class="h-full w-full object-cover"
-          />
-        </div>
-      </div>
-    </div>
-  </section>
-</div>
+  function openDialog(id: string) {
+    const m = membersMap.get(id);
+    if (!m) return;
+    dialogImg.src = m.imgUrl;
+    dialogImg.alt = m.name;
+    dialogRole.textContent = m.role;
+    dialogName.textContent = m.name;
+    dialogBio.textContent = m.bio;
+    if (marqueeTrack) marqueeTrack.style.animationPlayState = "paused";
+    dialog.showModal();
+  }
+
+  function closeDialog() {
+    const content = dialog.querySelector<HTMLElement>(".dialog-content")!;
+    content.style.opacity = "0";
+    content.style.transform = "scale(0.95) translateY(8px)";
+    setTimeout(() => {
+      dialog.close();
+      content.style.opacity = "";
+      content.style.transform = "";
+      if (marqueeTrack) marqueeTrack.style.animationPlayState = "";
+    }, 280);
+  }
+
+  document.querySelectorAll<HTMLElement>(".member-card").forEach((card) => {
+    card.addEventListener("click", () => openDialog(card.dataset.memberId!));
+  });
+
+  closeBtn.addEventListener("click", closeDialog);
+  backdropEl.addEventListener("click", closeDialog);
+  dialog.addEventListener("cancel", (e) => {
+    e.preventDefault();
+    closeDialog();
+  });
+</script>
