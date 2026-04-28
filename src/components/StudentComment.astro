@@ -69,7 +69,8 @@ const videos: Video[] = [
 <div class="bg-background py-5">
 	<h2 class="mb-2 text-center text-2xl font-black">聽聽往年學員怎麼說的</h2>
 
-	<div class="m-5 grid max-h-100 max-w-5xl snap-y snap-mandatory grid-cols-1 gap-5 overflow-scroll sm:max-h-none sm:grid-cols-2 md:mx-0 md:w-[80%] lg:mx-auto lg:grid-cols-3">
+	<!-- 固定留言 -->
+	<div class="mx-auto my-5 grid grid-cols-1 gap-x-4 gap-y-2 sm:grid-cols-2 md:w-[80%] lg:grid-cols-3">
 		{
 			comments.map(c => (
 				<div class="bg-foreground text-background w-full snap-start snap-always rounded-lg sm:w-fit">
