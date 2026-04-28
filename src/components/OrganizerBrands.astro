@@ -28,7 +28,6 @@ const sections = Object.entries(organizers as Record<string, Org[]>).filter(
         {items.map((org) => (
           <button
             type="button"
-            type="button"
             data-icon={org.iconPath}
             data-name={org.name}
             data-role={org.role ?? ""}
@@ -109,7 +108,7 @@ const sections = Object.entries(organizers as Record<string, Org[]>).filter(
   </div>
 </div>
 
-<script>
+<script lang="ts">
   const popover = document.getElementById("org-popover")!;
   const icon = document.getElementById("org-popover-icon") as HTMLImageElement;
   const title = document.getElementById("org-popover-title")!;
@@ -135,10 +134,6 @@ const sections = Object.entries(organizers as Record<string, Org[]>).filter(
 
     icon.style.opacity = "0";
     icon.onload = () => (icon.style.opacity = "1");
-    urlEl.href = url ?? "#";
-    urlEl.hidden = !url;
-
-    icon.style.opacity = "0";
     icon.alt = name ?? "";
     icon.src = iconSrc ?? "";
 
