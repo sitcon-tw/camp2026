@@ -1,0 +1,52 @@
+{
+	"header": {
+		"ariaLabel": "SITCON Camp 2026",
+		"brand": {
+			"href": "/",
+			"ariaLabel": "SITCON Camp 2026 首頁",
+			"logoAlt": "SITCON Camp 2026"
+		},
+		"navAriaLabel": "主要導覽",
+		"navItems": [
+			{
+				"label": "報名資訊",
+				"href": "/#registration-info"
+			},
+			{
+				"label": "主線課程",
+				"href": "/course/"
+			},
+			{
+				"label": "課程活動",
+				"href": "/#course-events"
+			},
+			{
+				"label": "籌備團隊",
+				"href": "/about/"
+			},
+			{
+				"label": "FAQ",
+				"href": "/#faq"
+			}
+		],
+		"cta": {
+			"label": "立即報名",
+			"href": "/#registration-info"
+		},
+		"mobileMenu": {
+			"openLabel": "開啟主要導覽",
+			"closeLabel": "關閉主要導覽"
+		}
+	},
+	"hero": {
+		"title": "SITCON Camp 2026",
+		"subtitle": "陽明交通大學 7/8 - 7/12",
+		"intro": {
+			"ariaLabel": "SITCON Camp 2026 介紹",
+			"questionPrefix": "想要學",
+			"questionSuffix": "？",
+			"topics": ["資訊安全", "人工智慧", "軟體工程"],
+			"finalPrefix": "那就來"
+		}
+	}
+}

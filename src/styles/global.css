@@ -16,6 +16,10 @@
 }
 
 @layer base {
+	html {
+		scrollbar-gutter: stable;
+	}
+
 	html,
 	body,
 	button,
