@@ -1,1 +1,777 @@
-<div>Master Class</div>
+---
+import type { ImageMetadata } from "astro";
+
+const masterImages = Object.entries(
+	import.meta.glob<{ default: ImageMetadata }>("../assets/hero/wall/*.jpg", {
+		eager: true
+	})
+)
+	.sort(([firstPath], [secondPath]) => firstPath.localeCompare(secondPath))
+	.map(([, image]) => image.default);
+
+const masterClasses = [
+	{
+		title: "軟體工程",
+		kicker: "Software Engineering / 軟體工程",
+		instructor: "待公布講師 A",
+		achievement: "曾主導高流量服務從 0 到 1 的架構演進",
+		role: "大型服務架構 / 開源專案實戰講師",
+		imageIndex: 1,
+		imagePosition: "50% 42%",
+		accent: "green",
+		summary: "從需求拆解、版本控管到可維護架構，把真實產品開發會遇到的取捨帶進課堂。",
+		profile: ["曾參與高流量服務架構設計", "長期維護開源專案與工程流程", "擅長把工程決策轉成可操作方法"],
+		outcome: "你會帶走一套能放進團隊協作的開發節奏，理解怎麼讓程式碼在多人專案裡持續演進。"
+	},
+	{
+		title: "資訊安全",
+		kicker: "Cybersecurity / 資訊安全",
+		instructor: "待公布講師 B",
+		achievement: "曾在攻防實戰中協助團隊找出關鍵風險",
+		role: "攻防演練 / 資安事件應變講師",
+		imageIndex: 7,
+		imagePosition: "48% 44%",
+		accent: "blue",
+		summary: "用攻防視角理解漏洞、權限與防禦設計，不只看工具，也看判斷與證據鏈。",
+		profile: ["具備資安競賽與實務稽核經驗", "熟悉 Web、系統與雲端安全風險", "能把攻擊流程轉譯成防禦策略"],
+		outcome: "你會學會如何從威脅模型出發，判斷風險、驗證漏洞，並提出能落地的修補方向。"
+	},
+	{
+		title: "人工智慧",
+		kicker: "Artificial Intelligence / 人工智慧",
+		instructor: "待公布講師 C",
+		achievement: "曾把 AI 原型落地成可被真實使用的產品流程",
+		role: "機器學習 / 生成式 AI 應用講師",
+		imageIndex: 10,
+		imagePosition: "52% 40%",
+		accent: "orange",
+		summary: "從模型能力、資料品質到應用設計，理解 AI 專案不是只會呼叫 API，而是能做出可靠系統。",
+		profile: ["曾落地資料驅動與 AI 應用專案", "熟悉模型評估、提示設計與產品整合", "關注 AI 工具鏈與真實使用情境"],
+		outcome: "你會建立 AI 應用的工程觀：知道什麼問題適合 AI、如何驗證效果，以及怎麼把結果接進產品。"
+	}
+];
+---
+
+<section class="master-class" aria-labelledby="master-class-title" data-master-class>
+	<div class="master-class__sticky">
+		<div class="master-class__intro" data-master-intro>
+			<p class="master-class__eyebrow">Master Class</p>
+			<h2 id="master-class-title" class="master-class__title">三大實戰主題，由強者講師帶路</h2>
+			<p class="master-class__lead">每堂 Master Class 都由具備實務經驗的講師帶領，課程會從真實場景出發，把技術判斷、工作流程與專案思維拆成可以帶走的方法。</p>
+		</div>
+
+		<div class="master-class__stage" data-master-stage>
+			<div class="master-class__deck" aria-label="Master Class 課程卡片" data-master-deck>
+				{
+					masterClasses.map((masterClass, index) => {
+						const image = masterImages[masterClass.imageIndex % masterImages.length];
+
+						return (
+							<article class:list={["master-card", `master-card--${masterClass.accent}`]} data-master-card data-master-index={index}>
+								<figure class="master-card__media">
+									<img
+										class="master-card__image"
+										src={image.src}
+										width={image.width}
+										height={image.height}
+										alt={`${masterClass.title} ${masterClass.instructor} 講師照片佔位`}
+										loading="lazy"
+										decoding="async"
+										style={`object-position: ${masterClass.imagePosition}`}
+									/>
+								</figure>
+								<div class="master-card__body">
+									<p class="master-card__kicker">{masterClass.kicker}</p>
+									<h3 class="master-card__title">{masterClass.instructor}</h3>
+									<p class="master-card__achievement">{masterClass.achievement}</p>
+									<ul class="master-card__profile" aria-label={`${masterClass.title} 講師履歷亮點`}>
+										<li>{masterClass.role}</li>
+										{masterClass.profile.map(item => (
+											<li>{item}</li>
+										))}
+									</ul>
+								</div>
+							</article>
+						);
+					})
+				}
+			</div>
+
+			<div class="master-class__details" aria-live="polite">
+				{
+					masterClasses.map((masterClass, index) => (
+						<article class="master-detail" data-master-detail data-master-index={index}>
+							<p class="master-detail__count">0{index + 1} / 03</p>
+							<h3 class="master-detail__title">{masterClass.title}</h3>
+							<p class="master-detail__summary">{masterClass.summary}</p>
+							<p class="master-detail__outcome">{masterClass.outcome}</p>
+						</article>
+					))
+				}
+			</div>
+		</div>
+	</div>
+</section>
+
+<noscript>
+	<style>
+		[data-master-card],
+		[data-master-detail],
+		[data-master-intro] {
+			opacity: 1 !important;
+			transform: none !important;
+		}
+	</style>
+</noscript>
+
+<script>
+	import { animate, onScroll, stagger } from "animejs";
+
+	const section = document.querySelector<HTMLElement>("[data-master-class]");
+	const intro = section?.querySelector<HTMLElement>("[data-master-intro]");
+	const deck = section?.querySelector<HTMLElement>("[data-master-deck]");
+	const cards = section ? Array.from(section.querySelectorAll<HTMLElement>("[data-master-card]")) : [];
+	const details = section ? Array.from(section.querySelectorAll<HTMLElement>("[data-master-detail]")) : [];
+	const desktopQuery = window.matchMedia("(min-width: 52.001rem)");
+	const reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+	let observer: ReturnType<typeof onScroll> | undefined;
+	let mobileRevealObserver: IntersectionObserver | undefined;
+	let activeDetailIndex = -1;
+	let resizeFrame = 0;
+
+	const clamp = (value: number, min = 0, max = 1) => Math.min(Math.max(value, min), max);
+	const lerp = (from: number, to: number, progress: number) => from + (to - from) * progress;
+	const easeOutCubic = (value: number) => 1 - Math.pow(1 - value, 3);
+	const easeInOutCubic = (value: number) => (value < 0.5 ? 4 * value * value * value : 1 - Math.pow(-2 * value + 2, 3) / 2);
+
+	const setCardTransform = (card: HTMLElement, x: number, y: number, rotate: number, scale: number) => {
+		card.style.transform = `translate3d(${x}px, ${y}px, 0) rotate(${rotate}deg) scale(${scale})`;
+	};
+
+	const resetInlineStyles = () => {
+		observer?.revert();
+		observer = undefined;
+		mobileRevealObserver?.disconnect();
+		mobileRevealObserver = undefined;
+		activeDetailIndex = -1;
+		intro?.classList.remove("master-class__intro--compact");
+
+		cards.forEach(card => {
+			card.style.transform = "";
+			card.style.opacity = "";
+			card.style.zIndex = "";
+			card.classList.remove("master-card--active");
+		});
+
+		details.forEach(detail => {
+			detail.style.transform = "";
+			detail.style.opacity = "";
+			detail.style.pointerEvents = "";
+			detail.classList.remove("master-detail--active");
+			detail.setAttribute("aria-hidden", "false");
+		});
+	};
+
+	const revealMobile = () => {
+		resetInlineStyles();
+
+		if (reducedMotionQuery.matches) {
+			return;
+		}
+
+		const revealTargets = [intro, ...cards, ...details].filter(Boolean) as HTMLElement[];
+		revealTargets.forEach(target => {
+			target.style.opacity = "0";
+			target.style.transform = "translate3d(0, 2rem, 0)";
+		});
+
+		mobileRevealObserver = new IntersectionObserver(
+			entries => {
+				entries.forEach(entry => {
+					if (!entry.isIntersecting) {
+						return;
+					}
+
+					const target = entry.target as HTMLElement;
+					animate(target, {
+						opacity: 1,
+						y: 0,
+						duration: 620,
+						ease: "out(4)"
+					});
+					mobileRevealObserver?.unobserve(target);
+				});
+			},
+			{ threshold: 0.18 }
+		);
+
+		revealTargets.forEach(target => mobileRevealObserver?.observe(target));
+	};
+
+	const setActiveDetail = (index: number) => {
+		if (activeDetailIndex === index) {
+			return;
+		}
+
+		activeDetailIndex = index;
+
+		details.forEach((detail, detailIndex) => {
+			const isActive = detailIndex === index;
+			detail.classList.toggle("master-detail--active", isActive);
+			detail.setAttribute("aria-hidden", String(!isActive));
+			detail.style.pointerEvents = isActive ? "auto" : "none";
+
+			animate(detail, {
+				opacity: isActive ? 1 : 0,
+				y: isActive ? 0 : 22,
+				duration: 420,
+				ease: "out(4)"
+			});
+		});
+	};
+
+	const renderDesktop = (progress: number) => {
+		const stackProgress = easeInOutCubic(clamp((progress - 0.22) / 0.22));
+		const revealProgress = clamp((progress - 0.48) / 0.52);
+		const revealStarted = easeOutCubic(clamp((progress - 0.48) / 0.08));
+		const activeIndex = Math.min(cards.length - 1, Math.max(0, Math.floor(revealProgress * cards.length)));
+		const deckLeft = deck?.getBoundingClientRect().left ?? 0;
+		const viewportWidth = window.innerWidth;
+		const sideInset = clamp(viewportWidth * 0.08, 80, 144);
+
+		intro?.classList.toggle("master-class__intro--compact", progress > 0.28);
+
+		cards.forEach((card, index) => {
+			const layoutLeft = deckLeft + card.offsetLeft;
+			const cardWidth = card.offsetWidth;
+			const baseX = 0;
+			const baseY = 0;
+			const stackLeft = viewportWidth - cardWidth - sideInset - index * 18;
+			const activeLeft = sideInset;
+			const afterLeft = Math.min(-cardWidth * 0.28 + index * 18, sideInset * 0.35);
+			const futureRestLeft = viewportWidth - cardWidth * 0.12 + index * 18;
+			const stackX = stackLeft - layoutLeft;
+			const futureRestX = futureRestLeft - layoutLeft;
+			const stackY = (index - 1) * 28;
+			const stackRotate = (index - 1) * 5;
+			const stackScale = 0.8 - index * 0.018;
+			const cardStart = index / cards.length;
+			const cardEnd = (index + 0.92) / cards.length;
+			const cardProgress = easeOutCubic(clamp((revealProgress - cardStart) / (cardEnd - cardStart)));
+			const activeX = activeLeft - layoutLeft;
+			const activeY = 0;
+			const afterX = afterLeft - layoutLeft;
+			const afterY = -38 - index * 12;
+			const afterProgress = index === cards.length - 1 ? 0 : easeOutCubic(clamp((revealProgress - cardEnd) / 0.18));
+			const startX = lerp(stackX, futureRestX, revealStarted);
+			const targetX = lerp(startX, activeX, cardProgress);
+			const targetY = lerp(stackY, activeY, cardProgress);
+			const targetRotate = lerp(stackRotate, 0, cardProgress);
+			const targetScale = lerp(stackScale, 0.95, cardProgress);
+			const finalX = lerp(targetX, afterX, afterProgress);
+			const finalY = lerp(targetY, afterY, afterProgress);
+			const finalRotate = lerp(targetRotate, -5, afterProgress);
+			const finalScale = lerp(targetScale, 0.82, afterProgress);
+			const x = lerp(baseX, finalX, stackProgress);
+			const y = lerp(baseY, finalY, stackProgress);
+			const rotate = lerp(0, finalRotate, stackProgress);
+			const scale = lerp(1, finalScale, stackProgress);
+			const isActive = progress < 0.48 ? false : index === activeIndex;
+			const inactiveOpacity = index < activeIndex ? 0.06 : 0.08;
+			const stackOpacity = lerp(1, inactiveOpacity, revealStarted);
+			const enteringOpacity = lerp(stackOpacity, 1, cardProgress);
+			const finalOpacity = isActive ? enteringOpacity : lerp(enteringOpacity, inactiveOpacity, afterProgress || revealStarted);
+
+			card.style.zIndex = String(isActive ? 20 : 10 - index);
+			card.style.opacity = String(finalOpacity);
+			card.classList.toggle("master-card--active", isActive);
+			setCardTransform(card, x, y, rotate, scale);
+		});
+
+		if (progress < 0.48) {
+			setActiveDetail(-1);
+		} else {
+			setActiveDetail(activeIndex);
+		}
+	};
+
+	const setupDesktop = () => {
+		if (!section) {
+			return;
+		}
+
+		resetInlineStyles();
+
+		if (reducedMotionQuery.matches) {
+			return;
+		}
+
+		details.forEach(detail => {
+			detail.style.opacity = "0";
+			detail.style.pointerEvents = "none";
+			detail.setAttribute("aria-hidden", "true");
+		});
+
+		animate(cards, {
+			opacity: [0, 1],
+			duration: 720,
+			delay: stagger(90),
+			ease: "out(4)"
+		});
+
+		observer = onScroll({
+			target: section,
+			enter: "start start",
+			leave: "end end",
+			sync: true,
+			onUpdate: self => renderDesktop(self.progress),
+			onResize: self => renderDesktop(self.progress)
+		});
+
+		renderDesktop(observer.progress);
+	};
+
+	const setup = () => {
+		if (!section || cards.length === 0 || details.length === 0) {
+			return;
+		}
+
+		if (desktopQuery.matches) {
+			setupDesktop();
+		} else {
+			revealMobile();
+		}
+	};
+
+	const requestSetup = () => {
+		window.cancelAnimationFrame(resizeFrame);
+		resizeFrame = window.requestAnimationFrame(setup);
+	};
+
+	setup();
+	desktopQuery.addEventListener("change", requestSetup);
+	reducedMotionQuery.addEventListener("change", requestSetup);
+	window.addEventListener("resize", requestSetup, { passive: true });
+</script>
+
+<style>
+	.master-class {
+		position: relative;
+		min-height: 360svh;
+		--master-header-offset: clamp(5.2rem, 7.2vw, 6.75rem);
+		background: var(--color-background);
+		color: var(--color-foreground);
+		isolation: isolate;
+	}
+
+	.master-class__sticky {
+		position: sticky;
+		inset-block-start: 0;
+		display: grid;
+		grid-template-rows: auto auto;
+		align-content: center;
+		gap: clamp(0.95rem, 1.7vw, 1.45rem);
+		box-sizing: border-box;
+		min-height: 100svh;
+		padding: var(--master-header-offset) clamp(1rem, 3.5vw, 3.25rem) clamp(1.2rem, 3vw, 2.4rem);
+		overflow: hidden;
+	}
+
+	.master-class__intro {
+		position: relative;
+		z-index: 4;
+		display: grid;
+		gap: clamp(0.52rem, 1.1vw, 0.82rem);
+		width: 100%;
+		max-width: none;
+		transition:
+			transform 360ms ease,
+			opacity 360ms ease;
+	}
+
+	.master-class__intro--compact {
+		max-width: none;
+		transform: translate3d(0, -0.3rem, 0);
+	}
+
+	.master-class__eyebrow {
+		margin: 0;
+		color: var(--color-primary-blue);
+		font-size: clamp(0.82rem, 1vw, 0.95rem);
+		font-weight: 800;
+		line-height: 1;
+		letter-spacing: 0;
+		text-transform: uppercase;
+	}
+
+	.master-class__title {
+		max-width: none;
+		margin: 0;
+		color: var(--color-foreground);
+		font-size: clamp(2.15rem, 5.35vw, 4.9rem);
+		font-weight: 800;
+		line-height: 0.98;
+		letter-spacing: 0;
+	}
+
+	.master-class__lead {
+		max-width: min(100%, 76rem);
+		margin: 0;
+		font-size: clamp(1rem, 1.55vw, 1.35rem);
+		font-weight: 700;
+		line-height: 1.6;
+		letter-spacing: 0;
+	}
+
+	.master-class__stage {
+		position: relative;
+		z-index: 2;
+		display: grid;
+		align-items: start;
+		min-height: 0;
+	}
+
+	.master-class__deck {
+		position: relative;
+		z-index: 2;
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: clamp(0.9rem, 1.7vw, 1.35rem);
+		width: min(100%, 86rem);
+		margin-inline: auto;
+	}
+
+	.master-card {
+		--master-accent: var(--color-green);
+		position: relative;
+		display: grid;
+		grid-template-rows: minmax(16rem, 1fr) auto;
+		min-width: 0;
+		overflow: hidden;
+		border: 0.18rem solid var(--color-foreground);
+		border-radius: 8px;
+		background: var(--color-background);
+		box-shadow: 0.6rem 0.6rem 0 var(--color-foreground);
+		transform-origin: center;
+		will-change: transform, opacity;
+	}
+
+	.master-card--blue {
+		--master-accent: var(--color-primary-blue);
+	}
+
+	.master-card--orange {
+		--master-accent: var(--color-orange);
+	}
+
+	.master-card--active {
+		box-shadow: 0.75rem 0.75rem 0 var(--master-accent);
+	}
+
+	.master-card__media {
+		position: relative;
+		min-height: clamp(16rem, 34svh, 25rem);
+		margin: 0;
+		overflow: hidden;
+		background: var(--color-soft-blue);
+	}
+
+	.master-card__media::after {
+		position: absolute;
+		inset: 0;
+		content: "";
+		background: linear-gradient(180deg, transparent 45%, color-mix(in srgb, var(--color-foreground) 58%, transparent));
+		pointer-events: none;
+	}
+
+	.master-card__image {
+		display: block;
+		width: 100%;
+		height: 100%;
+		min-height: inherit;
+		object-fit: cover;
+		filter: saturate(0.95) contrast(1.04);
+		transform: scale(1.07);
+		transform-origin: center;
+	}
+
+	.master-card__body {
+		display: grid;
+		gap: 0.42rem;
+		padding: clamp(0.85rem, 1.35vw, 1.08rem);
+	}
+
+	.master-card__kicker,
+	.master-card__achievement,
+	.master-card__profile {
+		margin: 0;
+	}
+
+	.master-card__kicker {
+		color: var(--master-accent);
+		font-size: clamp(0.95rem, 1.12vw, 1.1rem);
+		font-weight: 800;
+		line-height: 1.05;
+		letter-spacing: 0;
+		text-transform: uppercase;
+	}
+
+	.master-card__title {
+		margin: 0;
+		font-size: clamp(1.6rem, 2.6vw, 2.45rem);
+		font-weight: 800;
+		line-height: 1;
+		letter-spacing: 0;
+	}
+
+	.master-card__achievement {
+		color: var(--color-dark-green);
+		font-size: clamp(1.02rem, 1.35vw, 1.2rem);
+		font-weight: 800;
+		line-height: 1.35;
+		letter-spacing: 0;
+	}
+
+	.master-card__profile {
+		display: grid;
+		gap: 0.35rem;
+		padding: 0;
+		list-style: none;
+	}
+
+	.master-card__profile li {
+		position: relative;
+		padding-inline-start: 1rem;
+		font-size: clamp(1rem, 1.15vw, 1.12rem);
+		font-weight: 700;
+		line-height: 1.4;
+		letter-spacing: 0;
+	}
+
+	.master-card__profile li::before {
+		position: absolute;
+		inset-block-start: 0.58em;
+		inset-inline-start: 0;
+		width: 0.45rem;
+		height: 0.45rem;
+		border-radius: 999px;
+		background: var(--master-accent);
+		content: "";
+	}
+
+	.master-class__details {
+		position: absolute;
+		inset-block: 0;
+		inset-inline-start: 47vw;
+		inset-inline-end: clamp(1.25rem, 4vw, 5rem);
+		z-index: 30;
+		box-sizing: border-box;
+		display: grid;
+		align-items: center;
+		width: auto;
+		pointer-events: none;
+	}
+
+	.master-detail {
+		grid-area: 1 / 1;
+		display: grid;
+		gap: clamp(0.8rem, 1.6vw, 1.25rem);
+		max-width: 44rem;
+		opacity: 0;
+		transform: translate3d(0, 1.4rem, 0);
+		will-change: opacity, transform;
+	}
+
+	.master-detail__count,
+	.master-detail__title,
+	.master-detail__summary,
+	.master-detail__outcome {
+		margin: 0;
+	}
+
+	.master-detail__count {
+		color: var(--color-primary-blue);
+		font-size: clamp(0.92rem, 1.2vw, 1.05rem);
+		font-weight: 800;
+		line-height: 1;
+		letter-spacing: 0;
+	}
+
+	.master-detail__title {
+		color: var(--color-green);
+		font-size: clamp(2.65rem, 6.1vw, 5.25rem);
+		font-weight: 800;
+		line-height: 0.9;
+		letter-spacing: 0;
+	}
+
+	.master-detail__summary {
+		font-size: clamp(1.15rem, 2vw, 1.65rem);
+		font-weight: 800;
+		line-height: 1.4;
+		letter-spacing: 0;
+	}
+
+	.master-detail__outcome {
+		padding-block-start: clamp(0.85rem, 1.6vw, 1.2rem);
+		border-block-start: 0.16rem solid var(--color-foreground);
+		font-size: clamp(1rem, 1.35vw, 1.22rem);
+		font-weight: 700;
+		line-height: 1.65;
+		letter-spacing: 0;
+	}
+
+	@media (max-width: 72rem) {
+		.master-class__sticky {
+			padding-inline: clamp(1rem, 2.4vw, 2rem);
+		}
+
+		.master-class__deck {
+			gap: 0.85rem;
+		}
+
+		.master-card {
+			box-shadow: 0.42rem 0.42rem 0 var(--color-foreground);
+		}
+
+		.master-card__profile li {
+			font-size: 0.98rem;
+		}
+	}
+
+	@media (max-width: 52rem) {
+		.master-class {
+			min-height: auto;
+		}
+
+		.master-class__sticky {
+			position: relative;
+			display: grid;
+			gap: 2rem;
+			min-height: auto;
+			padding: clamp(4.5rem, 16vw, 6rem) 1rem clamp(3rem, 12vw, 5rem);
+			overflow: visible;
+		}
+
+		.master-class__intro,
+		.master-class__intro--compact {
+			max-width: none;
+			transform: none;
+		}
+
+		.master-class__title {
+			font-size: clamp(2rem, 10.5vw, 3.35rem);
+		}
+
+		.master-class__lead {
+			font-size: 1rem;
+		}
+
+		.master-class__stage {
+			display: grid;
+			gap: 1.5rem;
+		}
+
+		.master-class__deck {
+			display: grid;
+			grid-template-columns: 1fr;
+			gap: 1.2rem;
+			width: 100%;
+		}
+
+		.master-card {
+			grid-template-rows: auto;
+			box-shadow: 0.38rem 0.38rem 0 var(--color-foreground);
+		}
+
+		.master-card__media {
+			min-height: clamp(16rem, 68vw, 25rem);
+		}
+
+		.master-card__body {
+			padding: 1rem;
+		}
+
+		.master-card__title {
+			font-size: clamp(1.65rem, 8vw, 2.6rem);
+		}
+
+		.master-card__achievement,
+		.master-card__profile li {
+			font-size: 0.98rem;
+		}
+
+		.master-class__details {
+			position: relative;
+			inset: auto;
+			display: grid;
+			gap: 1rem;
+			width: 100%;
+			pointer-events: auto;
+		}
+
+		.master-detail {
+			position: relative;
+			grid-area: auto;
+			gap: 0.75rem;
+			padding-block: 1.1rem;
+			border-block-start: 0.16rem solid var(--color-foreground);
+			opacity: 1;
+			transform: none;
+		}
+
+		.master-detail__title {
+			font-size: clamp(2rem, 10vw, 3.2rem);
+		}
+
+		.master-detail__summary {
+			font-size: clamp(1.08rem, 5vw, 1.35rem);
+		}
+
+		.master-detail__outcome {
+			font-size: 0.98rem;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.master-class {
+			min-height: auto;
+		}
+
+		.master-class__sticky {
+			position: relative;
+			min-height: auto;
+			overflow: visible;
+		}
+
+		.master-class__intro,
+		.master-card,
+		.master-detail {
+			transition: none;
+			transform: none !important;
+			opacity: 1 !important;
+		}
+
+		.master-class__stage {
+			gap: 2rem;
+		}
+
+		.master-class__details {
+			position: relative;
+			inset: auto;
+			display: grid;
+			gap: 1.2rem;
+			width: min(100%, 72rem);
+			margin-inline: auto;
+			pointer-events: auto;
+		}
+
+		.master-detail {
+			position: relative;
+			grid-area: auto;
+			padding-block-start: 1rem;
+			border-block-start: 0.16rem solid var(--color-foreground);
+		}
+	}
+</style>
