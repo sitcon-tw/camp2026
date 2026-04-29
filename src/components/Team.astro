@@ -1,1 +1,88 @@
-<div>Team</div>
+---
+import { Image } from "astro:assets";
+
+const example_data = {
+	DevTeam: [
+		{
+			Name: "Whitedragon",
+			Description: "Hi I'm whitedragon, I love nightfury so so so so much!",
+			AvatarImgUrl: "https://",
+			AvatarLink: "https://whitedragon.life"
+		},
+		{
+			Name: "Whitedragon",
+			Description: "Hi I'm whitedragon, I love nightfury so so so so much!",
+			AvatarImgUrl: "https://",
+			AvatarLink: "https://whitedragon.life"
+		},
+		{
+			Name: "Whitedragon",
+			Description: "Hi I'm whitedragon, I love nightfury so so so so much!",
+			AvatarImgUrl: "https://",
+			AvatarLink: "https://whitedragon.life"
+		},
+		{
+			Name: "Whitedragon",
+			Description: "Hi I'm whitedragon, I love nightfury so so so so much!",
+			AvatarImgUrl: "https://",
+			AvatarLink: "https://whitedragon.life"
+		}
+	],
+	SaleTeam: [
+		{
+			Name: "Whitedragon",
+			Description: "Hi I'm whitedragon, I love nightfury so so so so much!",
+			AvatarImgUrl: "https://",
+			AvatarLink: "https://whitedragon.life"
+		},
+		{
+			Name: "Whitedragon",
+			Description: "Hi I'm whitedragon, I love nightfury so so so so much!",
+			AvatarImgUrl: "https://",
+			AvatarLink: "https://whitedragon.life"
+		},
+		{
+			Name: "Whitedragon",
+			Description: "Hi I'm whitedragon, I love nightfury so so so so much!",
+			AvatarImgUrl: "https://",
+			AvatarLink: "https://whitedragon.life"
+		},
+		{
+			Name: "Whitedragon",
+			Description: "Hi I'm whitedragon, I love nightfury so so so so much!",
+			AvatarImgUrl: "https://",
+			AvatarLink: "https://whitedragon.life"
+		}
+	]
+};
+
+const data = {
+	Name: "白龍",
+	Description: "Hi I'm whitedragon, I love nightfury so so so so much!",
+    Job:"組長",
+	AvatarImgUrl: "https://gravatar.com/avatar/8ed5daf641164b6e5a3044e8fa2cfe06c6c42747bc20571cd48844b8767b2ac3",
+	AvatarLink: "https://whitedragon.life"
+};
+---
+
+<div class="bg-background mt-32 h-screen w-full px-32 py-12">
+	<section>
+		<h1 class="bg-green h-fit w-fit p-3 text-5xl font-bold text-black">團隊成員</h1>
+
+		<section class="my-8">
+			<h2 class="text-4xl font-bold text-black">開發團隊</h2>
+
+			<div class="my-4 flex h-fit w-full flex-wrap justify-between gap-4">
+				<article class="h-fit w-fit p-4">
+					<Image src={data.AvatarImgUrl + "?s=150"} alt={"avatar"} width={100} height={100} class="rounded-xl" />
+                    <div class="w-full h-fit mt-2 flex items-center justify-between">
+                        <h3 class="text-xl font-bold">{data.Name}</h3>
+                        <div class="bg-foreground w-fit h-fit px-1.5 py-0.5 flex items-center justify-center rounded-full">
+                            <p class="text-sm text-white">#{data.Job}</p>
+                        </div>
+                    </div>
+				</article>
+			</div>
+		</section>
+	</section>
+</div>
