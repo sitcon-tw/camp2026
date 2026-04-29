@@ -6,6 +6,7 @@ bun.lock
 # Keep your editor settings out of version control
 .vscode
 .jetbrains
+.zed
 
 # build output
 dist/
