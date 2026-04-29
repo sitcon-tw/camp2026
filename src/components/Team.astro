@@ -1,88 +1,277 @@
----
+﻿---
 import { Image } from "astro:assets";
-
+import LucideX from "~icons/lucide/x";
 const example_data = {
 	DevTeam: [
 		{
-			Name: "Whitedragon",
-			Description: "Hi I'm whitedragon, I love nightfury so so so so much!",
-			AvatarImgUrl: "https://",
-			AvatarLink: "https://whitedragon.life"
+			Name: "陳小明",
+			Description: "Full-stack developer，喜歡解決複雜問題與優化系統效能。",
+			Job: "組長",
+			AvatarImgUrl: "https://i.pravatar.cc/150?img=12",
+			AvatarLink: "https://example.com/chensiaoming"
 		},
 		{
-			Name: "Whitedragon",
-			Description: "Hi I'm whitedragon, I love nightfury so so so so much!",
-			AvatarImgUrl: "https://",
-			AvatarLink: "https://whitedragon.life"
+			Name: "林佳儀",
+			Description: "前端工程師，專注於可訪問性與互動式 UI。",
+			Job: "副組長",
+			AvatarImgUrl: "https://i.pravatar.cc/150?img=47",
+			AvatarLink: "https://example.com/linjiayi"
 		},
 		{
-			Name: "Whitedragon",
-			Description: "Hi I'm whitedragon, I love nightfury so so so so much!",
-			AvatarImgUrl: "https://",
-			AvatarLink: "https://whitedragon.life"
+			Name: "張家維",
+			Description: "後端工程師，熱衷於資料庫設計與 CI/CD 自動化。",
+			Job: "組員",
+			AvatarImgUrl: "https://i.pravatar.cc/150?img=32",
+			AvatarLink: "https://example.com/zhangjiawei"
 		},
 		{
-			Name: "Whitedragon",
-			Description: "Hi I'm whitedragon, I love nightfury so so so so much!",
-			AvatarImgUrl: "https://",
-			AvatarLink: "https://whitedragon.life"
+			Name: "KW",
+			Description: "UI/UX 設計師，關注使用者流程與視覺一致性。",
+			Job: "精靈",
+			AvatarImgUrl: "https://i.pravatar.cc/150?img=55",
+			AvatarLink: "https://example.com/wangxiaomei"
+		},
+		{
+			Name: "陳小明",
+			Description: "Full-stack developer，喜歡解決複雜問題與優化系統效能。",
+			Job: "組長",
+			AvatarImgUrl: "https://i.pravatar.cc/150?img=12",
+			AvatarLink: "https://example.com/chensiaoming"
+		},
+		{
+			Name: "林佳儀",
+			Description: "前端工程師，專注於可訪問性與互動式 UI。",
+			Job: "副組長",
+			AvatarImgUrl: "https://i.pravatar.cc/150?img=47",
+			AvatarLink: "https://example.com/linjiayi"
+		},
+		{
+			Name: "張家維",
+			Description: "後端工程師，熱衷於資料庫設計與 CI/CD 自動化。",
+			Job: "組員",
+			AvatarImgUrl: "https://i.pravatar.cc/150?img=32",
+			AvatarLink: "https://example.com/zhangjiawei"
+		},
+		{
+			Name: "KW",
+			Description: "UI/UX 設計師，關注使用者流程與視覺一致性。",
+			Job: "精靈",
+			AvatarImgUrl: "https://i.pravatar.cc/150?img=55",
+			AvatarLink: "https://example.com/wangxiaomei"
+		},
+		{
+			Name: "KW",
+			Description: "UI/UX 設計師，關注使用者流程與視覺一致性。",
+			Job: "精靈",
+			AvatarImgUrl: "https://i.pravatar.cc/150?img=55",
+			AvatarLink: "https://example.com/wangxiaomei"
+		},
+		{
+			Name: "KW",
+			Description: "UI/UX 設計師，關注使用者流程與視覺一致性。",
+			Job: "精靈",
+			AvatarImgUrl: "https://i.pravatar.cc/150?img=55",
+			AvatarLink: "https://example.com/wangxiaomei"
+		},
+		{
+			Name: "KW",
+			Description: "UI/UX 設計師，關注使用者流程與視覺一致性。",
+			Job: "精靈",
+			AvatarImgUrl: "https://i.pravatar.cc/150?img=55",
+			AvatarLink: "https://example.com/wangxiaomei"
+		},
+		{
+			Name: "KW",
+			Description: "UI/UX 設計師，關注使用者流程與視覺一致性。",
+			Job: "精靈",
+			AvatarImgUrl: "https://i.pravatar.cc/150?img=55",
+			AvatarLink: "https://example.com/wangxiaomei"
+		},
+		{
+			Name: "KW",
+			Description: "UI/UX 設計師，關注使用者流程與視覺一致性。",
+			Job: "精靈",
+			AvatarImgUrl: "https://i.pravatar.cc/150?img=55",
+			AvatarLink: "https://example.com/wangxiaomei"
 		}
 	],
 	SaleTeam: [
 		{
-			Name: "Whitedragon",
-			Description: "Hi I'm whitedragon, I love nightfury so so so so much!",
-			AvatarImgUrl: "https://",
-			AvatarLink: "https://whitedragon.life"
+			Name: "劉志成",
+			Description: "業務經理，擅長客戶關係與專案協調。",
+			Job: "業務",
+			AvatarImgUrl: "https://i.pravatar.cc/150?img=5",
+			AvatarLink: "https://example.com/liuzhicheng"
 		},
 		{
-			Name: "Whitedragon",
-			Description: "Hi I'm whitedragon, I love nightfury so so so so much!",
-			AvatarImgUrl: "https://",
-			AvatarLink: "https://whitedragon.life"
+			Name: "許淑芬",
+			Description: "市場行銷，負責品牌與活動企劃。",
+			Job: "行銷",
+			AvatarImgUrl: "https://i.pravatar.cc/150?img=8",
+			AvatarLink: "https://example.com/xushufen"
 		},
 		{
-			Name: "Whitedragon",
-			Description: "Hi I'm whitedragon, I love nightfury so so so so much!",
-			AvatarImgUrl: "https://",
-			AvatarLink: "https://whitedragon.life"
-		},
-		{
-			Name: "Whitedragon",
-			Description: "Hi I'm whitedragon, I love nightfury so so so so much!",
-			AvatarImgUrl: "https://",
-			AvatarLink: "https://whitedragon.life"
+			Name: "高振宇",
+			Description: "業務代表，專注於企業合作與拓展通路。",
+			Job: "業務",
+			AvatarImgUrl: "https://i.pravatar.cc/150?img=25",
+			AvatarLink: "https://example.com/gaozhenyu"
 		}
 	]
 };
-
-const data = {
-	Name: "白龍",
-	Description: "Hi I'm whitedragon, I love nightfury so so so so much!",
-    Job:"組長",
-	AvatarImgUrl: "https://gravatar.com/avatar/8ed5daf641164b6e5a3044e8fa2cfe06c6c42747bc20571cd48844b8767b2ac3",
-	AvatarLink: "https://whitedragon.life"
-};
 ---
 
-<div class="bg-background mt-32 h-screen w-full px-32 py-12">
+<script>
+	document.querySelectorAll<HTMLElement>("[data-member-id]").forEach(async el => {
+		el.addEventListener("mousedown", async () => {
+			//Fetching elements
+			const overlay = document.getElementById("overlay");
+			const closeBtn = document.getElementById("layout-cancel");
+			const nameEle = document.getElementById("layout-name");
+			const desEle = document.getElementById("layout-des");
+			const linkEle = document.getElementById("layout-link");
+			const backavatarEle = document.getElementById(`b-${el.dataset.memberId}`);
+			const avatarEle = document.getElementById("layout-avatar");
+
+			const newAvatarRect = avatarEle?.getBoundingClientRect();
+			const oldAvatarRect = el.getBoundingClientRect();
+
+			if (!closeBtn || !nameEle || !desEle || !linkEle || !overlay || !backavatarEle) return;
+			if (!newAvatarRect) return;
+
+			//Instant set
+
+			const avatarX = newAvatarRect.x;
+			const avatarY = newAvatarRect.y;
+
+			el.style.translate = "4px 4px";
+			el.style.boxShadow = "0 0 0 0";
+			el.style.position = "fixed";
+			el.style.zIndex = "50";
+
+			backavatarEle.style.display = "block";
+			overlay.style.zIndex = "10";
+
+			el.style.transform = `translate(${avatarX - oldAvatarRect.x}px, ${avatarY - oldAvatarRect.y}px)`;
+			el.style.width = `${newAvatarRect.width}px`;
+			el.style.height = `${newAvatarRect.height}px`;
+
+			//Animation Start
+			await new Promise(resolve => setTimeout(resolve, 300));
+
+			overlay.style.opacity = "1";
+
+			await new Promise(resolve => setTimeout(resolve, 300));
+
+			//Setting content
+
+			//Closing Logic
+
+			closeBtn.addEventListener(
+				"click",
+				() => {
+					el.style.translate = "";
+					el.style.boxShadow = "";
+					el.style.transform = "";
+					el.style.zIndex = "";
+					el.style.width = "";
+					el.style.height = "";
+
+					overlay.style.opacity = "0";
+					setTimeout(() => {
+						backavatarEle.style.display = "none";
+						overlay.style.zIndex = "-10";
+						el.style.position = "";
+					}, 300);
+				},
+				{ once: true }
+			);
+		});
+	});
+</script>
+
+<div class="bg-background mt-32 h-fit w-full px-32 py-12">
+	<!-- <div class="fixed inset-0 h-full w-full flex items-center justify-center bg-black/30 transition-all duration-300 z-10" id="overlay"> -->
+	<div class="fixed inset-0 -z-10 flex h-full w-full items-center justify-center bg-black/30 opacity-0 transition-all duration-300" id="overlay">
+		<div class="bg-background relative h-98 w-5xl overflow-hidden rounded-4xl p-24">
+			<section class="flex h-full w-full justify-start gap-12">
+				<Image
+					src="https://i.pravatar.cc/300?img=12"
+					alt={"avatar"}
+					width={200}
+					height={200}
+					class="border-foreground cursor-pointer rounded-xl border-4 shadow-[4px_4px_0_2px_#60A7D5]"
+					id="layout-avatar"
+				/>
+				<div class="flex h-full w-full flex-col justify-between">
+					<h1 class="text-6xl font-bold" id="layout-name">PLACEHOLDER</h1>
+					<p class="text-foreground my-4 text-xl font-bold" id="layout-des">PLACEHOLDER</p>
+					<a class="text-blue mt-auto text-lg font-bold underline underline-offset-3" id="layout-link" href="https://example.com/longdragon">PLACEHOLDER</a>
+				</div>
+			</section>
+			<div class="absolute top-0 right-0 flex h-12 w-16 items-center justify-center rounded-bl-4xl bg-red-500 transition-all duration-300 hover:scale-105" id="layout-cancel">
+				<LucideX class="text-foreground h-10 w-10" />
+			</div>
+		</div>
+	</div>
+
 	<section>
 		<h1 class="bg-green h-fit w-fit p-3 text-5xl font-bold text-black">團隊成員</h1>
 
-		<section class="my-8">
+		<section class="my-8 mt-16">
 			<h2 class="text-4xl font-bold text-black">開發團隊</h2>
 
-			<div class="my-4 flex h-fit w-full flex-wrap justify-between gap-4">
-				<article class="h-fit w-fit p-4">
-					<Image src={data.AvatarImgUrl + "?s=150"} alt={"avatar"} width={100} height={100} class="rounded-xl" />
-                    <div class="w-full h-fit mt-2 flex items-center justify-between">
-                        <h3 class="text-xl font-bold">{data.Name}</h3>
-                        <div class="bg-foreground w-fit h-fit px-1.5 py-0.5 flex items-center justify-center rounded-full">
-                            <p class="text-sm text-white">#{data.Job}</p>
-                        </div>
-                    </div>
-				</article>
+			<div class="my-4 flex h-fit w-full flex-wrap gap-8">
+				{
+					example_data.DevTeam.map(data => (
+						<article class="h-fit w-44 p-4">
+							{/* <article class="h-fit w-44 p-4 animate__animated animate__fadeInUp animate__delay-1s"> */}
+							<Image
+								src={data.AvatarImgUrl}
+								alt={"avatar"}
+								width={150}
+								height={150}
+								class="border-foreground mx-auto h-[150px] w-[150px] rounded-xl border-4 shadow-[4px_4px_0_2px_#60A7D5] transition-all duration-300 hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[2px_2px_0_2px_#60A7D5]"
+								data-member-id={data.Name}
+							/>
+							<div class="hidden h-[150px] w-[150px]" id={`b-${data.Name}`} />
+							<div class="mt-4 flex h-fit w-full items-center justify-between gap-2">
+								<h3 class="text-xl font-bold">{data.Name}</h3>
+								<div class="bg-foreground flex h-fit w-fit items-center justify-center rounded-full px-2 py-0.5">
+									<p class="text-sm text-white">#{data.Job}</p>
+								</div>
+							</div>
+						</article>
+					))
+				}
 			</div>
 		</section>
+
+		<!-- <section class="my-8 mt-16">
+			<h2 class="text-4xl font-bold text-black">銷售團隊</h2>
+
+			<div class="my-4 flex h-fit w-full flex-wrap gap-8">
+				{
+					example_data.SaleTeam.map(data => (
+						<article class="h-fit w-44 p-4 animate__animated animate__fadeInUp animate__delay-1s">
+							<Image
+								src={data.AvatarImgUrl}
+								alt={"avatar"}
+								width={150}
+								height={150}
+								class="mx-auto border-4 border-foreground rounded-xl shadow-[4px_4px_0_2px_#60A7D5] transition-all duration-300 hover:translate-y-0.5 hover:translate-x-0.5 hover:shadow-[2px_2px_0_2px_#60A7D5] active:translate-y-1 active:translate-x-1 active:shadow-[0_0_0_0]"
+								data-member-id={data.Name}
+							/>
+							<div class="w-full h-fit mt-4 flex items-center gap-2 justify-between">
+								<h3 class="text-xl font-bold">{data.Name}</h3>
+								<div class="bg-foreground w-fit h-fit px-1.5 py-0.5 flex items-center justify-center rounded-full">
+									<p class="text-sm text-white">#{data.Job}</p>
+								</div>
+							</div>
+						</article>
+					))
+				}
+			</div>
+		</section> -->
 	</section>
 </div>
