@@ -109,6 +109,7 @@ const sections = await Promise.all(
 </div>
 
 <script>
+	// --- Types ---
 	interface OrgDataset extends DOMStringMap {
 		iconPath: string;
 		name: string;
@@ -117,12 +118,16 @@ const sections = await Promise.all(
 		url: string;
 	}
 
+	// --- Helpers ---
+
+	// getEl: typed shortcut for document.getElementById, throws on missing element
 	function getEl<T extends HTMLElement = HTMLElement>(id: string): T {
 		const el = document.getElementById(id);
 		if (!el) throw new Error(`[org-popover] missing #${id}`);
 		return el as T;
 	}
 
+	// Cache DOM references for popover inner nodes
 	const popoverEl = getEl("org-popover");
 	const icon = getEl<HTMLImageElement>("org-popover-icon");
 	const title = getEl("org-popover-title");
@@ -130,6 +135,7 @@ const sections = await Promise.all(
 	const descEl = getEl("org-popover-desc");
 	const urlEl = getEl<HTMLAnchorElement>("org-popover-url");
 
+	// setIcon: fade-in icon after load (or immediately if cached)
 	function setIcon(src: string, alt: string) {
 		if (!src) return;
 		icon.style.opacity = "0";
@@ -142,6 +148,7 @@ const sections = await Promise.all(
 		if (icon.complete) reveal();
 	}
 
+	// renderPopover: fill popover fields from button dataset
 	function renderPopover(d: OrgDataset) {
 		title.textContent = d.name;
 		roleEl.textContent = d.role;
@@ -153,6 +160,9 @@ const sections = await Promise.all(
 		setIcon(d.iconPath, d.name);
 	}
 
+	// --- Event handlers ---
+
+	// Global click: open popover on .org-card, focus close button after open
 	document.addEventListener("click", e => {
 		const btn = (e.target as Element).closest<HTMLButtonElement>(".org-card");
 		if (!btn) return;
@@ -165,6 +175,29 @@ const sections = await Promise.all(
 				popoverEl.querySelector<HTMLButtonElement>("[popovertargetaction='hide']")?.focus();
 			});
 		}
+	});
+
+	// Track pointer for light-dismiss → reopen on another card
+	let lastPointer = { x: 0, y: 0 };
+	document.addEventListener(
+		"pointerdown",
+		e => {
+			lastPointer = { x: e.clientX, y: e.clientY };
+		},
+		true
+	);
+
+	// On popover close, reopen if pointer lands on another .org-card
+	popoverEl.addEventListener("toggle", e => {
+		const ev = e as ToggleEvent;
+		if (ev.newState !== "closed") return;
+		requestAnimationFrame(() => {
+			const el = document.elementFromPoint(lastPointer.x, lastPointer.y);
+			const card = el?.closest<HTMLButtonElement>(".org-card");
+			if (!card) return;
+			renderPopover(card.dataset as OrgDataset);
+			popoverEl.showPopover();
+		});
 	});
 </script>
 
