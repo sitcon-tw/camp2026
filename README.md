@@ -50,5 +50,5 @@ git config core.hooksPath .githooks
 - 圖片、字型等專案資源請放在 `src/assets/`，圖片請使用 Astro 的 `<Image />` 元件。
 - 字型由 `astro.config.mjs` 的 `fonts` 設定導入，全站預設字體在 `src/styles/global.css` 套用。
 - 顏色請使用 `src/styles/global.css` 中定義的 theme token。
-- Icon 優先使用 `@lucide/astro`。
+- Icon 優先使用 `unplugin-icons` 套件的 [`ic`](https://icon-sets.iconify.design/ic/) 和 [`lucide`](https://icon-sets.iconify.design/lucide/) 圖示集。
 - 動畫可依需求使用 GSAP 或 Anime.js。
