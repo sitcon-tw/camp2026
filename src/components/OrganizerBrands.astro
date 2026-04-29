@@ -72,36 +72,32 @@ const sections = await Promise.all(
 		))
 	}
 </div>
-<div id="org-popover" popover role="dialog" aria-labelledby="org-popover-title" class="org-popover m-auto w-[calc(100vw-2rem)] max-w-sm rounded-2xl border-0 p-0 shadow-2xl sm:w-full">
-	<div class="relative flex flex-col items-center gap-4 px-4 py-6 sm:px-6 sm:pt-8">
+<div id="org-popover" popover role="dialog" aria-labelledby="org-popover-title" class="org-popover bg-background m-auto w-[calc(100vw-2rem)] max-w-md rounded-4xl border-0 p-0 shadow-2xl sm:w-full">
+	<div class="relative flex flex-col items-center px-6 py-8 sm:px-8 sm:py-10">
 		<button
 			type="button"
 			popovertarget="org-popover"
 			popovertargetaction="hide"
-			class="text-foreground/35 hover:bg-orange/8 hover:text-foreground/70 absolute top-3 right-3 flex size-8 cursor-pointer items-center justify-center rounded-full border-none bg-transparent transition-all duration-150"
+			class="bg-foreground absolute top-5 right-5 flex size-8 cursor-pointer items-center justify-center rounded-full border-none text-white transition-transform hover:scale-105"
 			aria-label="關閉"
 		>
-			<X size={18} stroke-width={1.5} />
+			<X size={16} stroke-width={2} />
 		</button>
 
-		<div class="flex w-full flex-col items-center gap-3">
-			<div class="flex h-28 w-full items-center justify-center rounded-2xl bg-white/70 p-4 shadow-sm sm:h-36">
-				<img id="org-popover-icon" alt="" class="max-h-full max-w-full object-contain" />
-			</div>
-			<div class="px-2 text-center">
-				<h3 id="org-popover-title" class="text-foreground text-xl font-bold"></h3>
-				<p id="org-popover-role" class="text-foreground/50 mt-0.5 text-sm"></p>
-			</div>
-		</div>
+		<span id="org-popover-role" class="bg-orange text-foreground mb-5 rounded-full px-3 py-1 text-xs font-bold"></span>
 
-		<p id="org-popover-desc" class="text-foreground/65 w-full rounded-xl px-2 py-2 text-center text-sm leading-relaxed sm:px-4 sm:py-3"></p>
+		<img id="org-popover-icon" alt="" class="mb-5 h-20 max-w-full object-contain sm:h-24" />
+
+		<h3 id="org-popover-title" class="text-foreground mb-4 text-center text-lg font-bold sm:text-xl"></h3>
+
+		<p id="org-popover-desc" class="text-foreground/60 w-full text-justify text-sm leading-relaxed sm:text-base"></p>
 
 		<a
 			id="org-popover-url"
 			href="#"
 			target="_blank"
 			rel="noopener noreferrer"
-			class="bg-blue w-full rounded-xl py-2.5 text-center text-sm font-semibold text-white no-underline transition-colors duration-150"
+			class="bg-foreground text-background mt-6 w-full rounded-xl py-3 text-center text-sm font-bold no-underline transition-colors hover:bg-black"
 		>
 			前往官網
 		</a>
@@ -179,10 +175,13 @@ const sections = await Promise.all(
 
 	// Track pointer for light-dismiss → reopen on another card
 	let lastPointer = { x: 0, y: 0 };
+	let dismissByCloseBtn = false;
 	document.addEventListener(
 		"pointerdown",
 		e => {
 			lastPointer = { x: e.clientX, y: e.clientY };
+			// Close btn has priority: if pointerdown hits it, skip reopen on close
+			dismissByCloseBtn = !!(e.target as Element).closest("[popovertargetaction='hide']");
 		},
 		true
 	);
@@ -191,6 +190,10 @@ const sections = await Promise.all(
 	popoverEl.addEventListener("toggle", e => {
 		const ev = e as ToggleEvent;
 		if (ev.newState !== "closed") return;
+		if (dismissByCloseBtn) {
+			dismissByCloseBtn = false;
+			return;
+		}
 		requestAnimationFrame(() => {
 			const el = document.elementFromPoint(lastPointer.x, lastPointer.y);
 			const card = el?.closest<HTMLButtonElement>(".org-card");
@@ -209,7 +212,6 @@ const sections = await Promise.all(
 	.org-popover {
 		padding: 0;
 		border: none;
-		background: var(--color-background);
 		margin: auto;
 		min-width: 320px;
 		max-height: 90vh;
@@ -217,7 +219,7 @@ const sections = await Promise.all(
 	}
 
 	.org-popover::backdrop {
-		background-color: rgba(0, 0, 0, 0.35);
+		background-color: color-mix(in oklch, var(--color-foreground) 35%, transparent);
 		backdrop-filter: blur(8px);
 		-webkit-backdrop-filter: blur(8px);
 	}
