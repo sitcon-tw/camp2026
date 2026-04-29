@@ -1,0 +1,41 @@
+[
+	{
+		"title": "軟體工程",
+		"kicker": "Software Engineering / 軟體工程",
+		"instructor": "待公布講師 A",
+		"achievement": "曾主導高流量服務從 0 到 1 的架構演進",
+		"role": "大型服務架構 / 開源專案實戰講師",
+		"imageIndex": 1,
+		"imagePosition": "50% 42%",
+		"accent": "green",
+		"summary": "從需求拆解、版本控管到可維護架構，把真實產品開發會遇到的取捨帶進課堂。",
+		"profile": ["曾參與高流量服務架構設計", "長期維護開源專案與工程流程", "擅長把工程決策轉成可操作方法"],
+		"outcome": "你會帶走一套能放進團隊協作的開發節奏，理解怎麼讓程式碼在多人專案裡持續演進。"
+	},
+	{
+		"title": "資訊安全",
+		"kicker": "Cybersecurity / 資訊安全",
+		"instructor": "待公布講師 B",
+		"achievement": "曾在攻防實戰中協助團隊找出關鍵風險",
+		"role": "攻防演練 / 資安事件應變講師",
+		"imageIndex": 7,
+		"imagePosition": "48% 44%",
+		"accent": "blue",
+		"summary": "用攻防視角理解漏洞、權限與防禦設計，不只看工具，也看判斷與證據鏈。",
+		"profile": ["具備資安競賽與實務稽核經驗", "熟悉 Web、系統與雲端安全風險", "能把攻擊流程轉譯成防禦策略"],
+		"outcome": "你會學會如何從威脅模型出發，判斷風險、驗證漏洞，並提出能落地的修補方向。"
+	},
+	{
+		"title": "人工智慧",
+		"kicker": "Artificial Intelligence / 人工智慧",
+		"instructor": "待公布講師 C",
+		"achievement": "曾把 AI 原型落地成可被真實使用的產品流程",
+		"role": "機器學習 / 生成式 AI 應用講師",
+		"imageIndex": 10,
+		"imagePosition": "52% 40%",
+		"accent": "orange",
+		"summary": "從模型能力、資料品質到應用設計，理解 AI 專案不是只會呼叫 API，而是能做出可靠系統。",
+		"profile": ["曾落地資料驅動與 AI 應用專案", "熟悉模型評估、提示設計與產品整合", "關注 AI 工具鏈與真實使用情境"],
+		"outcome": "你會建立 AI 應用的工程觀：知道什麼問題適合 AI、如何驗證效果，以及怎麼把結果接進產品。"
+	}
+]
