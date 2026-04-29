@@ -48,5 +48,13 @@
 			"topics": ["資訊安全", "人工智慧", "軟體工程"],
 			"finalPrefix": "那就來"
 		}
+	},
+	"sitconData": {
+		"datas": [
+			{ "progress": 0, "value": 0, "prefix": "SITCON", "suffix": "一切的起點" },
+			{ "progress": 0.3, "value": 400, "prefix": "寬頻", "suffix": "元年" },
+			{ "progress": 0.7, "value": 1600, "prefix": "行動", "suffix": "爆發" },
+			{ "progress": 1.0, "value": 2100, "prefix": "全民", "suffix": "上網" }
+		]
 	}
 }
