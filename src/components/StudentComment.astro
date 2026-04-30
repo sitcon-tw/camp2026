@@ -8,8 +8,8 @@ const { studentComment } = siteConfig;
 ---
 
 <div class="bg-background relative overflow-hidden">
-	<div class="flex flex-col gap-16 p-32 pb-16">
-		<h2 class="text-center text-[3rem] leading-[133%] font-bold">聽聽往年學員怎麼說的</h2>
+	<div class="flex flex-col p-4 sm:p-32 sm:pb-16">
+		<h2 class="text-center text-[3rem] leading-[133%] font-bold text-balance">聽聽往年學員怎麼說的</h2>
 		<!-- 固定留言 -->
 		<div class="relative">
 			<!-- 背景跑馬燈 -->
@@ -28,7 +28,7 @@ const { studentComment } = siteConfig;
 				}
 			</div>
 			<div class="relative z-10">
-				<div class="grid grid-cols-2 gap-x-8 gap-y-1.5 lg:grid-cols-3 lg:gap-x-16">
+				<div class="grid grid-cols-2 gap-1.5 md:gap-x-8 lg:grid-cols-3 lg:gap-x-16">
 					{
 						studentComment.comments.map(c => (
 							<div class="bg-foreground flex flex-col items-start rounded-4xl">
