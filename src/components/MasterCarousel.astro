@@ -6,7 +6,7 @@ import camp from "@/assets/pics/camp.webp";
 import groups from "@/assets/pics/groups.webp";
 import edu from "@/assets/pics/edu.webp";
 
-// Maps image key → Astro ImageMetadata
+// maps image key → astro ImageMetadata
 const imageMap: Record<string, ImageMetadata> = {
 	hackathon,
 	camp,
@@ -24,7 +24,7 @@ interface Member {
 
 const members = rawMembers as unknown as Member[];
 
-// Card border accent palette — one random color per card
+// card border accent palette — one random color per card
 const accentPalette = ["green", "primary-blue", "blue", "soft-blue", "sky-blue", "orange"] as const;
 type Accent = (typeof accentPalette)[number];
 
@@ -42,18 +42,18 @@ const trackMembers: DisplayMember[] = members.map((m, i) => ({
 		[0, 1].map(trackIdx => (
 			<div class="marquee-track flex shrink-0 gap-6 pr-6 group-hover:[animation-play-state:paused]" aria-hidden={trackIdx === 1 ? "true" : undefined}>
 				{trackMembers.map(member => (
-					<button class="member-card relative h-95 w-70 shrink-0 rounded-[2.5rem] text-left" data-member-id={member._memberId}>
+					<div class="member-card relative h-95 w-70 shrink-0 cursor-pointer rounded-[2.5rem] text-left" data-member-id={member._memberId}>
 						<div class="relative h-full w-full overflow-hidden rounded-[2.5rem] border-r-6 border-b-6" style={`border-color: var(--color-${member.accent})`}>
 							<Image src={imageMap[member.imgKey]} alt={member.name} class="h-full w-full object-cover" loading="eager" decoding="async" width={280} height={380} format="webp" />
 
-							<div class="pointer-events-none absolute inset-x-0 bottom-0 h-3/5 bg-linear-to-t from-black/90 via-black/50 to-transparent" />
+							<div class="pointer-events-none absolute inset-x-0 bottom-0 z-0 h-3/5 bg-linear-to-t from-black/90 via-black/50 to-transparent" />
 
-							<div class="pointer-events-none absolute inset-x-0 bottom-0 p-6 text-white">
+							<div class="absolute inset-x-0 bottom-0 z-10 cursor-text p-6 text-white select-text">
 								<h3 class="text-3xl font-bold tracking-widest">{member.name}</h3>
 								<p class="mt-2 text-lg font-medium text-white/90">{member.role}</p>
 							</div>
 						</div>
-					</button>
+					</div>
 				))}
 			</div>
 		))
