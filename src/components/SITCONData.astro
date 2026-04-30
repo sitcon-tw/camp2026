@@ -1,5 +1,7 @@
 ---
 import siteContent from "@/data/site.json";
+// import { getImage } from "astro:assets";
+// import { Image } from "astro:assets";
 
 const { sitconData } = siteContent;
 
@@ -15,7 +17,12 @@ const first = data[0];
 		<div class="pointer-events-none absolute inset-0 z-0">
 			{
 				data.map((d, i) => (
-					<img data-bg-image src={d.image.src} alt={d.image.alt} class={`absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ${i === 0 ? "opacity-100" : "opacity-0"}`} />
+					<img
+						data-bg-image
+						src={`${sitconData.config.imageBasePath}/${d.image.src}`}
+						alt={d.image.alt}
+						class={`absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ${i === 0 ? "opacity-100" : "opacity-0"}`}
+					/>
 				))
 			}
 			<div class="bg-background/50 absolute inset-0"></div>
