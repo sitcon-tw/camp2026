@@ -1,7 +1,5 @@
 ---
 import siteContent from "@/data/site.json";
-import LucideCircleArrowUp from "~icons/lucide/circle-arrow-up";
-import LucideCircleArrowDown from "~icons/lucide/circle-arrow-down";
 
 const { sitconData } = siteContent;
 
@@ -50,22 +48,6 @@ const first = data[0];
 				{data.map(d => <div class="text-foreground flex h-10 items-center justify-start text-2xl leading-none whitespace-nowrap max-sm:justify-center">{d.suffix}</div>)}
 			</div>
 		</div>
-
-		<!-- 導航箭頭 -->
-		<button
-			data-btn-prev
-			class="text-green enabled:hover:text-dark-green absolute right-[5vw] bottom-[calc(50%+2.8rem)] z-10 flex h-8 w-8 cursor-pointer items-center justify-center text-5xl transition-[border-color,color] duration-200 disabled:cursor-not-allowed disabled:opacity-20"
-			aria-label="上一個節點"
-		>
-			<LucideCircleArrowUp />
-		</button>
-		<button
-			data-btn-next
-			class="text-green enabled:hover:text-dark-green absolute top-[calc(50%+2.8rem)] right-[5vw] z-10 flex h-8 w-8 cursor-pointer items-center justify-center text-5xl transition-[border-color,color] duration-200 disabled:cursor-not-allowed disabled:opacity-20"
-			aria-label="下一個節點"
-		>
-			<LucideCircleArrowDown />
-		</button>
 	</div>
 </div>
 
@@ -97,8 +79,6 @@ const first = data[0];
 		const prefixTrack = container.querySelector("[data-prefix-track]");
 		const suffixTrack = container.querySelector("[data-suffix-track]");
 		const bgImages = container.querySelectorAll("[data-bg-image]");
-		const btnPrev = container.querySelector("[data-btn-prev]");
-		const btnNext = container.querySelector("[data-btn-next]");
 
 		let targetValue = 0;
 		let displayedValue = 0;
@@ -137,14 +117,6 @@ const first = data[0];
 			}
 		}
 
-		btnPrev.addEventListener("click", () => scrollToNode(activeIdx - 1));
-		btnNext.addEventListener("click", () => scrollToNode(activeIdx + 1));
-
-		function updateNavState(idx) {
-			btnPrev.disabled = idx === 0;
-			btnNext.disabled = idx === data.length - 1;
-		}
-
 		function slideToIdx(idx) {
 			if (activeIdx === idx) return;
 			activeIdx = idx;
@@ -165,7 +137,6 @@ const first = data[0];
 
 			const state = getState(currentProgress);
 			targetValue = Math.round(state.value);
-			updateNavState(state.activeIdx);
 			progressFill.style.width = currentProgress * 100 + "%";
 
 			const isActive = rect.top <= 0 && rect.bottom >= window.innerHeight;
