@@ -1,212 +1,248 @@
-﻿---
+---
 import { Image } from "astro:assets";
 import LucideX from "~icons/lucide/x";
+
+
+
+
+
 const example_data = {
-	DevTeam: [
+	"開發組": [
 		{
-			Name: "陳小明",
-			Description: "Full-stack developer，喜歡解決複雜問題與優化系統效能。",
+			Name: "王大明",
+			Description: "系統架構師，熱衷於分散式系統設計與效能調優。",
 			Job: "組長",
-			AvatarImgUrl: "https://i.pravatar.cc/150?img=12",
-			AvatarLink: "https://example.com/chensiaoming"
+			AvatarImgUrl: "https://i.pravatar.cc/150?img=3",
+			AvatarLink: "https://example.com/wangdaming"
 		},
 		{
-			Name: "林佳儀",
-			Description: "前端工程師，專注於可訪問性與互動式 UI。",
+			Name: "吳佳玲",
+			Description: "前端工程師，擅長動畫效果與響應式設計。",
 			Job: "副組長",
-			AvatarImgUrl: "https://i.pravatar.cc/150?img=47",
-			AvatarLink: "https://example.com/linjiayi"
+			AvatarImgUrl: "https://i.pravatar.cc/150?img=44",
+			AvatarLink: "https://example.com/wujaling"
 		},
 		{
-			Name: "張家維",
-			Description: "後端工程師，熱衷於資料庫設計與 CI/CD 自動化。",
+			Name: "黃俊傑",
+			Description: "後端工程師，專注於 API 設計與微服務架構。",
 			Job: "組員",
-			AvatarImgUrl: "https://i.pravatar.cc/150?img=32",
-			AvatarLink: "https://example.com/zhangjiawei"
+			AvatarImgUrl: "https://i.pravatar.cc/150?img=15",
+			AvatarLink: "https://example.com/huangjunjie"
 		},
 		{
-			Name: "KW",
-			Description: "UI/UX 設計師，關注使用者流程與視覺一致性。",
+			Name: "鄭雅婷",
+			Description: "DevOps 工程師，負責雲端部署與監控基礎設施。",
 			Job: "精靈",
-			AvatarImgUrl: "https://i.pravatar.cc/150?img=55",
-			AvatarLink: "https://example.com/wangxiaomei"
+			AvatarImgUrl: "https://i.pravatar.cc/150?img=49",
+			AvatarLink: "https://example.com/zhengyating"
 		},
 		{
-			Name: "陳小明",
-			Description: "Full-stack developer，喜歡解決複雜問題與優化系統效能。",
+			Name: "蔡佳霖",
+			Description: "資安工程師，專注於滲透測試與漏洞分析。",
 			Job: "組長",
-			AvatarImgUrl: "https://i.pravatar.cc/150?img=12",
-			AvatarLink: "https://example.com/chensiaoming"
+			AvatarImgUrl: "https://i.pravatar.cc/150?img=21",
+			AvatarLink: "https://example.com/caijialin"
 		},
 		{
-			Name: "林佳儀",
-			Description: "前端工程師，專注於可訪問性與互動式 UI。",
+			Name: "謝文志",
+			Description: "行動應用開發者，熟悉 iOS 與 Android 跨平台開發。",
 			Job: "副組長",
-			AvatarImgUrl: "https://i.pravatar.cc/150?img=47",
-			AvatarLink: "https://example.com/linjiayi"
+			AvatarImgUrl: "https://i.pravatar.cc/150?img=33",
+			AvatarLink: "https://example.com/xiewenzhi"
 		},
 		{
-			Name: "張家維",
-			Description: "後端工程師，熱衷於資料庫設計與 CI/CD 自動化。",
+			Name: "周怡君",
+			Description: "資料工程師，擅長 ETL 流程設計與大數據分析。",
 			Job: "組員",
-			AvatarImgUrl: "https://i.pravatar.cc/150?img=32",
-			AvatarLink: "https://example.com/zhangjiawei"
+			AvatarImgUrl: "https://i.pravatar.cc/150?img=56",
+			AvatarLink: "https://example.com/zhouyijun"
 		},
 		{
-			Name: "KW",
-			Description: "UI/UX 設計師，關注使用者流程與視覺一致性。",
+			Name: "楊建宏",
+			Description: "嵌入式系統工程師，熱衷於硬體軟體整合開發。",
 			Job: "精靈",
-			AvatarImgUrl: "https://i.pravatar.cc/150?img=55",
-			AvatarLink: "https://example.com/wangxiaomei"
+			AvatarImgUrl: "https://i.pravatar.cc/150?img=7",
+			AvatarLink: "https://example.com/yangjanhong"
 		},
 		{
-			Name: "KW",
-			Description: "UI/UX 設計師，關注使用者流程與視覺一致性。",
+			Name: "何雅雯",
+			Description: "機器學習工程師，專注於自然語言處理與模型訓練。",
 			Job: "精靈",
-			AvatarImgUrl: "https://i.pravatar.cc/150?img=55",
-			AvatarLink: "https://example.com/wangxiaomei"
+			AvatarImgUrl: "https://i.pravatar.cc/150?img=62",
+			AvatarLink: "https://example.com/heyawen"
 		},
 		{
-			Name: "KW",
-			Description: "UI/UX 設計師，關注使用者流程與視覺一致性。",
+			Name: "蘇俊宏",
+			Description: "網路工程師，擅長網路拓撲規劃與流量優化。",
 			Job: "精靈",
-			AvatarImgUrl: "https://i.pravatar.cc/150?img=55",
-			AvatarLink: "https://example.com/wangxiaomei"
+			AvatarImgUrl: "https://i.pravatar.cc/150?img=18",
+			AvatarLink: "https://example.com/sujunhong"
 		},
 		{
-			Name: "KW",
-			Description: "UI/UX 設計師，關注使用者流程與視覺一致性。",
+			Name: "賴佳妮",
+			Description: "測試工程師，專精自動化測試框架與品質保證流程。",
 			Job: "精靈",
-			AvatarImgUrl: "https://i.pravatar.cc/150?img=55",
-			AvatarLink: "https://example.com/wangxiaomei"
+			AvatarImgUrl: "https://i.pravatar.cc/150?img=39",
+			AvatarLink: "https://example.com/laijiani"
 		},
 		{
-			Name: "KW",
-			Description: "UI/UX 設計師，關注使用者流程與視覺一致性。",
+			Name: "江志偉",
+			Description: "遊戲開發者，熱衷於即時渲染與物理引擎整合。",
 			Job: "精靈",
-			AvatarImgUrl: "https://i.pravatar.cc/150?img=55",
-			AvatarLink: "https://example.com/wangxiaomei"
+			AvatarImgUrl: "https://i.pravatar.cc/150?img=11",
+			AvatarLink: "https://example.com/jiangzhiwei"
 		},
 		{
-			Name: "KW",
-			Description: "UI/UX 設計師，關注使用者流程與視覺一致性。",
+			Name: "李小華",
+			Description: "區塊鏈開發者，專注於智能合約與去中心化應用。",
 			Job: "精靈",
-			AvatarImgUrl: "https://i.pravatar.cc/150?img=55",
-			AvatarLink: "https://example.com/wangxiaomei"
+			AvatarImgUrl: "https://i.pravatar.cc/150?img=64",
+			AvatarLink: "https://example.com/lixiaohua"
 		}
 	],
-	SaleTeam: [
+	"行銷組": [
 		{
-			Name: "劉志成",
-			Description: "業務經理，擅長客戶關係與專案協調。",
+			Name: "林思穎",
+			Description: "業務開發經理，擅長建立合作夥伴關係與談判策略。",
 			Job: "業務",
-			AvatarImgUrl: "https://i.pravatar.cc/150?img=5",
-			AvatarLink: "https://example.com/liuzhicheng"
+			AvatarImgUrl: "https://i.pravatar.cc/150?img=43",
+			AvatarLink: "https://example.com/linsiying"
 		},
 		{
-			Name: "許淑芬",
-			Description: "市場行銷，負責品牌與活動企劃。",
+			Name: "陳宜蓁",
+			Description: "品牌行銷專員，負責社群經營與內容策略規劃。",
 			Job: "行銷",
-			AvatarImgUrl: "https://i.pravatar.cc/150?img=8",
-			AvatarLink: "https://example.com/xushufen"
+			AvatarImgUrl: "https://i.pravatar.cc/150?img=58",
+			AvatarLink: "https://example.com/chenyizhen"
 		},
 		{
-			Name: "高振宇",
-			Description: "業務代表，專注於企業合作與拓展通路。",
+			Name: "洪冠宇",
+			Description: "企業客戶顧問，專注於解決方案銷售與客戶成功管理。",
 			Job: "業務",
-			AvatarImgUrl: "https://i.pravatar.cc/150?img=25",
-			AvatarLink: "https://example.com/gaozhenyu"
+			AvatarImgUrl: "https://i.pravatar.cc/150?img=22",
+			AvatarLink: "https://example.com/hongguanyu"
 		}
 	]
 };
+
+const team = Object.keys(example_data) as (keyof typeof example_data)[];
+
+
+
 ---
 
 <script>
 	document.querySelectorAll<HTMLElement>("[data-member-id]").forEach(async el => {
 		el.addEventListener("mousedown", async () => {
+
 			//Fetching elements
 			const overlay = document.getElementById("overlay");
 			const closeBtn = document.getElementById("layout-cancel");
+
 			const nameEle = document.getElementById("layout-name");
 			const desEle = document.getElementById("layout-des");
-			const linkEle = document.getElementById("layout-link");
+			const linkEle = document.getElementById("layout-link") as HTMLAnchorElement | null;
+			const avatarEle = document.getElementById("layout-avatar") as HTMLImageElement | null;
+
 			const backavatarEle = document.getElementById(`b-${el.dataset.memberId}`);
-			const avatarEle = document.getElementById("layout-avatar");
 
 			const newAvatarRect = avatarEle?.getBoundingClientRect();
 			const oldAvatarRect = el.getBoundingClientRect();
 
-			if (!closeBtn || !nameEle || !desEle || !linkEle || !overlay || !backavatarEle) return;
+			if (!closeBtn || !nameEle || !desEle || !linkEle || !avatarEle || !overlay || !backavatarEle) return;
 			if (!newAvatarRect) return;
 
 			//Instant set
 
 			const avatarX = newAvatarRect.x;
 			const avatarY = newAvatarRect.y;
+            const oldAvatarX = oldAvatarRect.x;
+			const oldAvatarY = oldAvatarRect.y;
 
-			el.style.translate = "4px 4px";
 			el.style.boxShadow = "0 0 0 0";
+			el.style.left = String(oldAvatarRect.x) + "px";
+			el.style.top = String(oldAvatarRect.y) + "px";
 			el.style.position = "fixed";
 			el.style.zIndex = "50";
-
+			el.style.maxWidth = '200px'
+			el.style.maxHeight = '200px'
+			
 			backavatarEle.style.display = "block";
 			overlay.style.zIndex = "10";
-
-			el.style.transform = `translate(${avatarX - oldAvatarRect.x}px, ${avatarY - oldAvatarRect.y}px)`;
+			
+			el.style.transform = `translate(${avatarX - oldAvatarX}px, ${avatarY - oldAvatarY}px)`;
 			el.style.width = `${newAvatarRect.width}px`;
 			el.style.height = `${newAvatarRect.height}px`;
-
+            
+			//Setting content
+			const member = JSON.parse(el.dataset.member ?? "{}");
+			
+			nameEle.textContent = member.Name;
+			desEle.textContent = member.Description;
+			linkEle.href = member.AvatarLink;
+			linkEle.textContent = member.AvatarLink;
+			avatarEle.src = member.AvatarImgUrl;
+			
 			//Animation Start
 			await new Promise(resolve => setTimeout(resolve, 300));
-
 			overlay.style.opacity = "1";
-
+            
+			//Animation Finish
 			await new Promise(resolve => setTimeout(resolve, 300));
-
-			//Setting content
-
+			el.style.opacity = "0";
+            
 			//Closing Logic
+			closeBtn.addEventListener("click", closeAnimation, { once: true });
+			document.addEventListener("keydown", onEsc, { once: true });
+			
+			function onEsc(e: KeyboardEvent) {
+				if (e.key === "Escape") closeAnimation();
+				else document.addEventListener("keydown", onEsc, { once: true });
+			}
+			
+			function closeAnimation() {
+				el.style.boxShadow = "";
+				el.style.transform = "translate(-2px, -2px)";
+				el.style.zIndex = "";
+				el.style.width = "";
+				el.style.height = "";
+				el.style.opacity = "";
+				el.style.maxWidth = ''
+				el.style.maxHeight = ''
 
-			closeBtn.addEventListener(
-				"click",
-				() => {
-					el.style.translate = "";
-					el.style.boxShadow = "";
-					el.style.transform = "";
-					el.style.zIndex = "";
-					el.style.width = "";
-					el.style.height = "";
+				if (!overlay || !backavatarEle) return;
 
-					overlay.style.opacity = "0";
-					setTimeout(() => {
-						backavatarEle.style.display = "none";
-						overlay.style.zIndex = "-10";
-						el.style.position = "";
-					}, 300);
-				},
-				{ once: true }
-			);
+				overlay.style.opacity = "0";
+				setTimeout(() => {
+					backavatarEle.style.display = "none";
+					overlay.style.zIndex = "-10";
+
+					el.style.position = "";
+					el.style.top = "";
+					el.style.left = "";
+				}, 250);
+			}
 		});
 	});
 </script>
 
-<div class="bg-background mt-32 h-fit w-full px-32 py-12">
+<div class="bg-background mt-32 h-fit w-full px-4 py-12 md:px-20 lg:px-32">
 	<!-- <div class="fixed inset-0 h-full w-full flex items-center justify-center bg-black/30 transition-all duration-300 z-10" id="overlay"> -->
 	<div class="fixed inset-0 -z-10 flex h-full w-full items-center justify-center bg-black/30 opacity-0 transition-all duration-300" id="overlay">
-		<div class="bg-background relative h-98 w-5xl overflow-hidden rounded-4xl p-24">
+		<div class="bg-background relative h-98 w-5xl overflow-hidden rounded-4xl p-24 mx-8">
 			<section class="flex h-full w-full justify-start gap-12">
 				<Image
 					src="https://i.pravatar.cc/300?img=12"
 					alt={"avatar"}
 					width={200}
 					height={200}
-					class="border-foreground cursor-pointer rounded-xl border-4 shadow-[4px_4px_0_2px_#60A7D5]"
+					class="border-foreground cursor-pointer rounded-xl border-4 shadow-[4px_4px_0_2px_#60A7D5] hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[2px_2px_0_2px_#60A7D5]"
 					id="layout-avatar"
 				/>
 				<div class="flex h-full w-full flex-col justify-between">
 					<h1 class="text-6xl font-bold" id="layout-name">PLACEHOLDER</h1>
 					<p class="text-foreground my-4 text-xl font-bold" id="layout-des">PLACEHOLDER</p>
-					<a class="text-blue mt-auto text-lg font-bold underline underline-offset-3" id="layout-link" href="https://example.com/longdragon">PLACEHOLDER</a>
+					<a class="text-blue mt-auto text-lg font-bold underline underline-offset-3" id="layout-link" href="https://example.com/longdragon" target="_blank" rel="noopener noreferrer">PLACEHOLDER</a>
 				</div>
 			</section>
 			<div class="absolute top-0 right-0 flex h-12 w-16 items-center justify-center rounded-bl-4xl bg-red-500 transition-all duration-300 hover:scale-105" id="layout-cancel">
@@ -217,61 +253,38 @@ const example_data = {
 
 	<section>
 		<h1 class="bg-green h-fit w-fit p-3 text-5xl font-bold text-black">團隊成員</h1>
-
-		<section class="my-8 mt-16">
-			<h2 class="text-4xl font-bold text-black">開發團隊</h2>
-
-			<div class="my-4 flex h-fit w-full flex-wrap gap-8">
-				{
-					example_data.DevTeam.map(data => (
-						<article class="h-fit w-44 p-4">
-							{/* <article class="h-fit w-44 p-4 animate__animated animate__fadeInUp animate__delay-1s"> */}
-							<Image
-								src={data.AvatarImgUrl}
-								alt={"avatar"}
-								width={150}
-								height={150}
-								class="border-foreground mx-auto h-[150px] w-[150px] rounded-xl border-4 shadow-[4px_4px_0_2px_#60A7D5] transition-all duration-300 hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[2px_2px_0_2px_#60A7D5]"
-								data-member-id={data.Name}
-							/>
-							<div class="hidden h-[150px] w-[150px]" id={`b-${data.Name}`} />
-							<div class="mt-4 flex h-fit w-full items-center justify-between gap-2">
-								<h3 class="text-xl font-bold">{data.Name}</h3>
-								<div class="bg-foreground flex h-fit w-fit items-center justify-center rounded-full px-2 py-0.5">
-									<p class="text-sm text-white">#{data.Job}</p>
-								</div>
-							</div>
-						</article>
-					))
-				}
-			</div>
-		</section>
-
-		<!-- <section class="my-8 mt-16">
-			<h2 class="text-4xl font-bold text-black">銷售團隊</h2>
-
-			<div class="my-4 flex h-fit w-full flex-wrap gap-8">
-				{
-					example_data.SaleTeam.map(data => (
-						<article class="h-fit w-44 p-4 animate__animated animate__fadeInUp animate__delay-1s">
-							<Image
-								src={data.AvatarImgUrl}
-								alt={"avatar"}
-								width={150}
-								height={150}
-								class="mx-auto border-4 border-foreground rounded-xl shadow-[4px_4px_0_2px_#60A7D5] transition-all duration-300 hover:translate-y-0.5 hover:translate-x-0.5 hover:shadow-[2px_2px_0_2px_#60A7D5] active:translate-y-1 active:translate-x-1 active:shadow-[0_0_0_0]"
-								data-member-id={data.Name}
-							/>
-							<div class="w-full h-fit mt-4 flex items-center gap-2 justify-between">
-								<h3 class="text-xl font-bold">{data.Name}</h3>
-								<div class="bg-foreground w-fit h-fit px-1.5 py-0.5 flex items-center justify-center rounded-full">
-									<p class="text-sm text-white">#{data.Job}</p>
-								</div>
-							</div>
-						</article>
-					))
-				}
-			</div>
-		</section> -->
+        {
+            team.map(t => (
+            <section class="my-4 mt-12 lg:mt-16">
+                <h2 class="text-4xl font-bold text-black">{t}</h2>
+    
+                <div class="my-4 h-fit w-full grid grid-cols-2 md:grid-cols-4 xl:grid-cols-6 gap-12 md:gap-4">
+                    {
+                        example_data[t].map(data => (
+                            <article class="h-fit w-fit my-4">
+                                {/* <article class="h-fit w-44 p-4 animate__animated animate__fadeInUp animate__delay-1s"> */}
+                                <Image
+                                    src={data.AvatarImgUrl}
+                                    alt={"avatar"}
+                                    width={150}
+                                    height={150}
+                                    class="border-foreground mx-auto w-full max-w-[150px] max-h-[150px] rounded-xl border-4 shadow-[4px_4px_0_2px_#60A7D5] transition-all duration-300 hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[2px_2px_0_2px_#60A7D5]"
+                                    data-member-id={data.Name} 
+                                    data-member={JSON.stringify({ Name: data.Name, Description: data.Description, AvatarLink: data.AvatarLink, AvatarImgUrl: data.AvatarImgUrl })}
+                                />
+                                <div class="hidden h-[150px] w-[150px]" id={`b-${data.Name}`} />
+                                <div class="mt-4 flex h-fit w-full items-center justify-between gap-2">
+                                    <h3 class="text-xl font-bold">{data.Name}</h3>
+                                    <div class="bg-foreground flex h-fit w-fit items-center justify-center rounded-full px-2 py-0.5">
+                                        <p class="text-sm text-white">#{data.Job}</p>
+                                    </div>
+                                </div>
+                            </article>
+                        ))
+                    }
+                </div>
+            </section>
+            ))
+        }
 	</section>
 </div>
