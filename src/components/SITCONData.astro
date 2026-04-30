@@ -1,19 +1,11 @@
 ---
-interface Data {
-	progress: number;
-	value: number;
-	prefix: string;
-	suffix: string;
-}
+import siteContent from "@/data/site.json";
+import LucideCircleArrowUp from "~icons/lucide/circle-arrow-up";
+import LucideCircleArrowDown from "~icons/lucide/circle-arrow-down";
 
-const data: Data[] = [
-	{ progress: 0, value: 0, prefix: "起點", suffix: "萌芽期" },
-	{ progress: 0.3, value: 400, prefix: "寬頻", suffix: "元年" },
-	{ progress: 0.7, value: 1600, prefix: "行動", suffix: "爆發" },
-	{ progress: 1.0, value: 2100, prefix: "全民", suffix: "上網" }
-];
+const { sitconData } = siteContent;
 
-const scrollHeight = 600;
+const data = sitconData.datas;
 const first = data[0];
 ---
 

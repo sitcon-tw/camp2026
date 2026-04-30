@@ -50,6 +50,9 @@
 		}
 	},
 	"sitconData": {
+		"config": {
+			"scrollHeight": 600
+		},
 		"datas": [
 			{ "progress": 0, "value": 0, "prefix": "SITCON", "suffix": "一切的起點" },
 			{ "progress": 0.3, "value": 400, "prefix": "寬頻", "suffix": "元年" },
