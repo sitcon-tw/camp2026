@@ -1,0 +1,711 @@
+---
+import type { ImageMetadata } from "astro";
+import siteContent from "@/data/site.json";
+
+const { hero } = siteContent;
+const heroIntro = hero.intro;
+const topics = heroIntro.topics;
+const heroWallImages = Object.entries(
+	import.meta.glob<{ default: ImageMetadata }>("../assets/hero/wall/*.jpg", {
+		eager: true
+	})
+)
+	.sort(([firstPath], [secondPath]) => firstPath.localeCompare(secondPath))
+	.map(([, image]) => image.default);
+const heroPhotoWallColumns = [
+	{
+		className: "hero-photo-wall__column--one",
+		duration: 38000,
+		offset: 10000,
+		items: [
+			{ imageIndex: 0, classes: ["hero-photo-wall__tile--large"] },
+			{ imageIndex: 5, classes: [] },
+			{ imageIndex: 10, classes: ["hero-photo-wall__tile--tall"] },
+			{ imageIndex: 3, classes: [] }
+		]
+	},
+	{
+		className: "hero-photo-wall__column--two",
+		duration: 47000,
+		offset: 22000,
+		items: [
+			{ imageIndex: 1, classes: [] },
+			{ imageIndex: 6, classes: ["hero-photo-wall__tile--tall"] },
+			{ imageIndex: 11, classes: [] },
+			{ imageIndex: 4, classes: ["hero-photo-wall__tile--large"] }
+		]
+	},
+	{
+		className: "hero-photo-wall__column--three",
+		duration: 41000,
+		offset: 16000,
+		items: [
+			{ imageIndex: 2, classes: ["hero-photo-wall__tile--tall"] },
+			{ imageIndex: 7, classes: [] },
+			{ imageIndex: 0, classes: ["hero-photo-wall__tile--large"] },
+			{ imageIndex: 9, classes: [] }
+		]
+	},
+	{
+		className: "hero-photo-wall__column--four",
+		duration: 53000,
+		offset: 28000,
+		items: [
+			{ imageIndex: 3, classes: [] },
+			{ imageIndex: 8, classes: ["hero-photo-wall__tile--large"] },
+			{ imageIndex: 1, classes: [] },
+			{ imageIndex: 10, classes: ["hero-photo-wall__tile--tall"] }
+		]
+	},
+	{
+		className: "hero-photo-wall__column--five",
+		duration: 44000,
+		offset: 7000,
+		items: [
+			{ imageIndex: 4, classes: ["hero-photo-wall__tile--large"] },
+			{ imageIndex: 9, classes: [] },
+			{ imageIndex: 2, classes: ["hero-photo-wall__tile--tall"] },
+			{ imageIndex: 11, classes: [] }
+		]
+	}
+];
+---
+
+<section class="hero-page" aria-labelledby="hero-page-title">
+	<div class="hero-photo-wall" aria-hidden="true">
+		{
+			heroPhotoWallColumns.map(column => (
+				<div class:list={["hero-photo-wall__column", column.className]}>
+					<div class="hero-photo-wall__column-track" data-wall-track data-wall-duration={column.duration} data-wall-offset={column.offset}>
+						{[0, 1].map(() => (
+							<div class="hero-photo-wall__column-set">
+								{column.items.map(({ imageIndex, classes }) => {
+									const image = heroWallImages[imageIndex % heroWallImages.length];
+
+									return (
+										<figure class:list={["hero-photo-wall__tile", ...classes]}>
+											<img class="hero-photo-wall__image" src={image.src} width={image.width} height={image.height} alt="" loading="lazy" decoding="async" />
+										</figure>
+									);
+								})}
+							</div>
+						))}
+					</div>
+				</div>
+			))
+		}
+	</div>
+	<div class="hero-page__content">
+		<p class="hero-page__subtitle" data-hero-page-subtitle>{hero.subtitle}</p>
+		<h1 id="hero-page-title" class="hero-page__title" data-hero-page-title>
+			<span data-hero-page-title-label>{hero.title}</span>
+		</h1>
+	</div>
+</section>
+
+<section data-hero-intro aria-label={heroIntro.ariaLabel}>
+	<span class="hero-intro__curtain hero-intro__curtain--top" data-hero-intro-curtain-top></span>
+	<span class="hero-intro__curtain hero-intro__curtain--bottom" data-hero-intro-curtain-bottom></span>
+	<div class="hero-intro__stage">
+		<p class="hero-intro__question" data-hero-intro-question aria-live="polite">
+			<span>{heroIntro.questionPrefix}</span>
+			<span class="hero-intro__topic-viewport">
+				<span class="hero-intro__topic-track" data-hero-intro-topic-track>
+					{
+						topics.map((topic, index) => (
+							<span class:list={["hero-intro__topic", index === 0 && "hero-intro__topic--current"]} data-hero-intro-topic aria-hidden={index === 0 ? "false" : "true"}>
+								{topic}
+							</span>
+						))
+					}
+				</span>
+			</span>
+			<span>{heroIntro.questionSuffix}</span>
+		</p>
+		<p class="hero-intro__final" data-hero-intro-final hidden>
+			<span>{heroIntro.finalPrefix}</span>
+			<span class="hero-intro__final-title">
+				{hero.title}
+			</span>
+		</p>
+	</div>
+</section>
+
+<noscript>
+	<style>
+		[data-hero-intro] {
+			display: none !important;
+		}
+
+		[data-hero-page-subtitle] {
+			visibility: visible !important;
+			transform: none !important;
+		}
+	</style>
+</noscript>
+
+<script>
+	import { animate, splitText, stagger, waapi } from "animejs";
+
+	const intro = document.querySelector<HTMLElement>("[data-hero-intro]");
+	const photoWallTracks = Array.from(document.querySelectorAll<HTMLElement>("[data-wall-track]"));
+	const heroSubtitle = document.querySelector<HTMLElement>("[data-hero-page-subtitle]");
+	const heroTitleLabel = document.querySelector<HTMLElement>("[data-hero-page-title-label]");
+	const question = intro?.querySelector<HTMLElement>("[data-hero-intro-question]");
+	const final = intro?.querySelector<HTMLElement>("[data-hero-intro-final]");
+	const topCurtain = intro?.querySelector<HTMLElement>("[data-hero-intro-curtain-top]");
+	const bottomCurtain = intro?.querySelector<HTMLElement>("[data-hero-intro-curtain-bottom]");
+	const topicViewport = intro?.querySelector<HTMLElement>(".hero-intro__topic-viewport");
+	const topicTrack = intro?.querySelector<HTMLElement>("[data-hero-intro-topic-track]");
+	const topics = intro ? Array.from(intro.querySelectorAll<HTMLElement>("[data-hero-intro-topic]")) : [];
+	const shouldSkipIntro = window.scrollY > 0;
+	const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+	let photoWallStarted = false;
+	let introFinished = false;
+	let heroTitleRevealed = false;
+	let heroSubtitleRevealed = false;
+
+	if (heroTitleLabel) {
+		heroTitleLabel.style.visibility = "hidden";
+	}
+
+	const wait = (duration: number) => new Promise(resolve => window.setTimeout(resolve, duration));
+
+	const startPhotoWallAnimations = () => {
+		if (prefersReducedMotion || photoWallTracks.length === 0 || photoWallStarted) {
+			return;
+		}
+
+		photoWallStarted = true;
+
+		photoWallTracks.forEach(track => {
+			const duration = Number(track.dataset.wallDuration) || 42000;
+			const offset = Number(track.dataset.wallOffset) || 0;
+			const animation = waapi.animate(track, {
+				transform: ["translate3d(0, 0, 0)", "translate3d(0, -50%, 0)"],
+				duration,
+				ease: "linear",
+				loop: true,
+				autoplay: false
+			});
+
+			animation.currentTime = offset % duration;
+			animation.play();
+		});
+	};
+
+	startPhotoWallAnimations();
+
+	const setActiveTopic = (activeIndex: number) => {
+		topics.forEach((topic, index) => {
+			topic.classList.toggle("hero-intro__topic--current", index === activeIndex);
+			topic.setAttribute("aria-hidden", String(index !== activeIndex));
+		});
+	};
+
+	const finishIntro = () => {
+		if (introFinished) {
+			return;
+		}
+
+		introFinished = true;
+		document.documentElement.classList.remove("hero-intro-lock");
+
+		if (intro) {
+			intro.hidden = true;
+		}
+
+		window.dispatchEvent(new CustomEvent("hero-intro:finished"));
+	};
+
+	const forceRevealHeroTitle = () => {
+		if (!heroTitleLabel) {
+			return;
+		}
+
+		heroTitleLabel.style.visibility = "visible";
+		heroTitleLabel.style.transform = "none";
+		heroTitleLabel.querySelectorAll<HTMLElement>(".hero-page__title-word").forEach(word => {
+			word.style.transform = "none";
+		});
+	};
+
+	const forceRevealHeroSubtitle = () => {
+		if (!heroSubtitle) {
+			return;
+		}
+
+		heroSubtitle.classList.add("is-visible");
+		heroSubtitle.style.transform = "none";
+		heroSubtitle.querySelectorAll<HTMLElement>(".hero-page__subtitle-char").forEach(char => {
+			char.style.transform = "none";
+		});
+	};
+
+	const skipIntro = () => {
+		if (intro) {
+			intro.hidden = true;
+		}
+
+		forceRevealHeroTitle();
+		forceRevealHeroSubtitle();
+		finishIntro();
+	};
+
+	const revealHeroTitle = async (prefersReducedMotion: boolean) => {
+		if (!heroTitleLabel) {
+			return;
+		}
+
+		if (prefersReducedMotion) {
+			heroTitleLabel.style.visibility = "visible";
+			heroTitleLabel.style.transform = "none";
+			return;
+		}
+
+		const { words } = splitText(heroTitleLabel, {
+			words: { class: "hero-page__title-word", wrap: "clip" },
+			accessible: true
+		});
+
+		words.forEach(word => {
+			word.style.transform = "translateY(115%)";
+		});
+		heroTitleLabel.style.visibility = "visible";
+
+		await animate(words, {
+			y: "0%",
+			duration: 720,
+			ease: "out(4)"
+		}).then();
+	};
+
+	const revealHeroSubtitle = async (prefersReducedMotion: boolean) => {
+		if (!heroSubtitle) {
+			return;
+		}
+
+		heroSubtitle.classList.add("is-visible");
+
+		if (prefersReducedMotion) {
+			heroSubtitle.style.transform = "none";
+			return;
+		}
+
+		const { chars } = splitText(heroSubtitle, {
+			chars: { class: "hero-page__subtitle-char", wrap: "clip" },
+			accessible: true
+		});
+
+		await animate(chars, {
+			y: ["85%", "-8%", "0%"],
+			duration: 620,
+			ease: "out(3)",
+			delay: stagger(28)
+		}).then();
+	};
+
+	const bounceQuestion = async () => {
+		if (!question) {
+			return;
+		}
+
+		await animate(question, {
+			scale: [
+				{ to: 1.025, duration: 140, ease: "outQuad" },
+				{ to: 1, duration: 260, ease: "outBounce" }
+			]
+		}).then();
+	};
+
+	const slideToTopic = async (index: number) => {
+		if (!topicTrack || !topicViewport) {
+			return;
+		}
+
+		const rowHeight = topicViewport.getBoundingClientRect().height;
+		const targetY = -index * rowHeight;
+
+		await animate(topicTrack, {
+			keyframes: [
+				{
+					translateY: `${targetY - rowHeight * 0.1}px`,
+					duration: 320,
+					ease: "outQuint"
+				},
+				{
+					translateY: `${targetY}px`,
+					duration: 180,
+					ease: "outBack(1.9)"
+				}
+			]
+		}).then();
+	};
+
+	const showFinal = async (prefersReducedMotion: boolean) => {
+		if (!question || !final) {
+			return;
+		}
+
+		question.hidden = true;
+		final.hidden = false;
+
+		if (prefersReducedMotion) {
+			return;
+		}
+
+		final.style.transform = "scale(1.85)";
+
+		await animate(final, {
+			scale: [
+				{ to: 0.96, duration: 330, ease: "outQuint" },
+				{ to: 1, duration: 180, ease: "outBack(1.7)" }
+			]
+		}).then();
+
+		final.style.transform = "";
+	};
+
+	const openIntroCurtains = async (prefersReducedMotion: boolean) => {
+		if (final) {
+			final.hidden = true;
+		}
+
+		if (prefersReducedMotion || !topCurtain || !bottomCurtain) {
+			return;
+		}
+
+		await Promise.all([
+			animate(topCurtain, {
+				translateY: "-100%",
+				duration: 720,
+				ease: "inOutCubic"
+			}).then(),
+			animate(bottomCurtain, {
+				translateY: "100%",
+				duration: 720,
+				ease: "inOutCubic"
+			}).then()
+		]);
+	};
+
+	if (intro && question && final && topicViewport && topicTrack && topics.length > 0) {
+		if (shouldSkipIntro) {
+			skipIntro();
+		} else {
+			document.documentElement.classList.add("hero-intro-lock");
+
+			try {
+				if (!prefersReducedMotion) {
+					await wait(180);
+					await bounceQuestion();
+				}
+
+				for (let index = 1; index < topics.length; index += 1) {
+					await wait(index === 1 && !prefersReducedMotion ? 190 : 300);
+
+					if (prefersReducedMotion) {
+						const rowHeight = topicViewport.getBoundingClientRect().height;
+						topicTrack.style.transform = `translateY(${-index * rowHeight}px)`;
+					} else {
+						await slideToTopic(index);
+					}
+
+					setActiveTopic(index);
+				}
+
+				await wait(360);
+				await showFinal(prefersReducedMotion);
+				await wait(190);
+				await openIntroCurtains(prefersReducedMotion);
+				finishIntro();
+				await revealHeroTitle(prefersReducedMotion);
+				heroTitleRevealed = true;
+				await revealHeroSubtitle(prefersReducedMotion);
+				heroSubtitleRevealed = true;
+			} finally {
+				document.documentElement.classList.remove("hero-intro-lock");
+
+				if (!introFinished) {
+					finishIntro();
+				}
+
+				setActiveTopic(0);
+
+				if (topicViewport) {
+					const rowHeight = topicViewport.getBoundingClientRect().height;
+					const resetIndex = 0;
+					topicTrack.style.transform = `translateY(${-resetIndex * rowHeight}px)`;
+				}
+
+				if (!heroTitleRevealed) {
+					try {
+						await revealHeroTitle(prefersReducedMotion);
+						heroTitleRevealed = true;
+					} catch {
+						forceRevealHeroTitle();
+					}
+				}
+
+				if (!heroSubtitleRevealed) {
+					try {
+						await revealHeroSubtitle(prefersReducedMotion);
+						heroSubtitleRevealed = true;
+					} catch {
+						forceRevealHeroSubtitle();
+					}
+				}
+			}
+		}
+	}
+</script>
+
+<style>
+	.hero-page {
+		position: relative;
+		isolation: isolate;
+		min-height: 100svh;
+		overflow: hidden;
+		background: var(--color-background);
+		color: var(--color-foreground);
+	}
+
+	.hero-photo-wall {
+		--wall-gap: clamp(1rem, 2svh, 2.15rem);
+		position: absolute;
+		inset: 0;
+		z-index: 0;
+		display: grid;
+		grid-template-columns: repeat(5, minmax(0, 1fr));
+		box-sizing: border-box;
+		overflow: hidden;
+		pointer-events: none;
+	}
+
+	.hero-photo-wall__column {
+		min-width: 0;
+		padding-inline: calc(var(--wall-gap) / 2);
+		overflow: hidden;
+	}
+
+	.hero-photo-wall__column-track {
+		display: flex;
+		flex-direction: column;
+		width: 100%;
+		transform: translate3d(0, 0, 0);
+		will-change: transform;
+	}
+
+	.hero-photo-wall__column-set {
+		display: grid;
+		gap: var(--wall-gap);
+		padding-block-end: var(--wall-gap);
+	}
+
+	.hero-photo-wall__tile {
+		block-size: clamp(8.5rem, 24svh, 17rem);
+		min-width: 0;
+		margin: 0;
+		overflow: hidden;
+		background: var(--color-background);
+	}
+
+	.hero-photo-wall__tile--tall {
+		block-size: clamp(12rem, 34svh, 25rem);
+	}
+
+	.hero-photo-wall__tile--large {
+		block-size: clamp(10.5rem, 29svh, 21rem);
+	}
+
+	.hero-photo-wall__image {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		display: block;
+	}
+
+	.hero-photo-wall__tile:nth-child(3n) .hero-photo-wall__image {
+		object-position: 35% 50%;
+		transform: scale(1.05);
+	}
+
+	.hero-photo-wall__tile:nth-child(4n) .hero-photo-wall__image {
+		object-position: 65% 50%;
+		transform: scale(1.08);
+	}
+
+	.hero-photo-wall__tile:nth-child(5n) .hero-photo-wall__image {
+		object-position: 50% 35%;
+	}
+
+	.hero-page__content {
+		position: absolute;
+		inset-inline: 0;
+		inset-block-end: 0;
+		z-index: 3;
+		box-sizing: border-box;
+		display: grid;
+		gap: clamp(0.35rem, 1.2vw, 0.9rem);
+		padding: clamp(0.95rem, 1.8vw, 1.55rem) clamp(1rem, 3vw, 3rem) clamp(1.05rem, 2vw, 1.7rem);
+		width: 100%;
+		background: var(--color-background);
+	}
+
+	.hero-page__subtitle {
+		margin: 0;
+		font-size: clamp(1.125rem, 2.8vw, 2.25rem);
+		font-weight: 700;
+		line-height: 1.2;
+		letter-spacing: 0;
+		visibility: hidden;
+		transform-origin: left center;
+	}
+
+	.hero-page__subtitle.is-visible {
+		visibility: visible;
+	}
+
+	.hero-page__title {
+		margin: 0;
+		color: var(--color-green);
+		white-space: nowrap;
+		font-size: clamp(1.75rem, 7.5vw, 6rem);
+		font-weight: 800;
+		line-height: 0.9;
+		letter-spacing: 0;
+	}
+
+	:global(html.hero-intro-lock),
+	:global(html.hero-intro-lock body) {
+		overflow: hidden;
+	}
+
+	:global(html.hero-intro-lock) [data-hero-page-title-label] {
+		visibility: hidden;
+	}
+
+	[data-hero-intro] {
+		position: fixed;
+		inset: 0;
+		z-index: 10000;
+		display: grid;
+		place-items: center;
+		overflow: hidden;
+		overscroll-behavior: contain;
+		touch-action: none;
+		color: var(--color-foreground);
+	}
+
+	.hero-intro__curtain {
+		position: absolute;
+		inset-inline: 0;
+		z-index: 0;
+		height: 50%;
+		background: var(--color-background);
+		will-change: transform;
+	}
+
+	.hero-intro__curtain--top {
+		inset-block-start: 0;
+	}
+
+	.hero-intro__curtain--bottom {
+		inset-block-end: 0;
+	}
+
+	[data-hero-intro][hidden],
+	.hero-intro__question[hidden],
+	.hero-intro__final[hidden] {
+		display: none;
+	}
+
+	.hero-intro__stage {
+		position: relative;
+		z-index: 1;
+		width: min(calc(100vw - 2rem), 1100px);
+		text-align: center;
+	}
+
+	.hero-intro__question,
+	.hero-intro__final {
+		display: grid;
+		align-items: center;
+		justify-content: center;
+		margin: 0;
+		white-space: nowrap;
+		font-weight: 800;
+		line-height: 1.1;
+		letter-spacing: 0;
+		transform-origin: center;
+	}
+
+	.hero-intro__question {
+		grid-template-columns: auto 4.2em auto;
+		column-gap: 0.18em;
+		font-size: clamp(2rem, 11vw, 7.75rem);
+	}
+
+	.hero-intro__final {
+		grid-auto-flow: column;
+		column-gap: 0.18em;
+		font-size: clamp(1rem, 5.6vw, 5rem);
+	}
+
+	.hero-intro__final-title {
+		display: inline-grid;
+		place-items: center;
+		color: var(--color-green);
+	}
+
+	.hero-intro__topic-viewport {
+		display: block;
+		height: 1.1em;
+		overflow: hidden;
+		color: var(--color-primary-blue);
+	}
+
+	.hero-intro__topic-track {
+		display: flex;
+		flex-direction: column;
+		height: 100%;
+		transform: translateY(0px);
+		will-change: transform;
+	}
+
+	.hero-intro__topic {
+		display: grid;
+		flex: 0 0 100%;
+		place-items: center;
+		height: 100%;
+		line-height: 1.1;
+		white-space: nowrap;
+	}
+
+	@media (max-width: 52rem) {
+		.hero-photo-wall {
+			--wall-gap: clamp(0.7rem, 2svh, 1rem);
+
+			grid-template-columns: repeat(3, minmax(0, 1fr));
+		}
+
+		.hero-photo-wall__column--four,
+		.hero-photo-wall__column--five {
+			display: none;
+		}
+
+		.hero-page__content {
+			padding-inline: 1rem;
+		}
+
+		.hero-intro__stage {
+			width: calc(100vw - 1rem);
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.hero-photo-wall__column-track {
+			transform: none;
+		}
+	}
+</style>

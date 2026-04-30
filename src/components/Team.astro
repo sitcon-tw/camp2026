@@ -1,0 +1,291 @@
+﻿---
+import { Image } from "astro:assets";
+import LucideX from "~icons/lucide/x";
+
+const example_data = {
+	開發組: [
+		{
+			Name: "王大明",
+			Description: "系統架構師，熱衷於分散式系統設計與效能調優。",
+			Job: "組長",
+			AvatarImgUrl: "https://i.pravatar.cc/150?img=3",
+			AvatarLink: "https://example.com/wangdaming"
+		},
+		{
+			Name: "吳佳玲",
+			Description: "前端工程師，擅長動畫效果與響應式設計。",
+			Job: "副組長",
+			AvatarImgUrl: "https://i.pravatar.cc/150?img=44",
+			AvatarLink: "https://example.com/wujaling"
+		},
+		{
+			Name: "黃俊傑",
+			Description: "後端工程師，專注於 API 設計與微服務架構。",
+			Job: "組員",
+			AvatarImgUrl: "https://i.pravatar.cc/150?img=15",
+			AvatarLink: "https://example.com/huangjunjie"
+		},
+		{
+			Name: "鄭雅婷",
+			Description: "DevOps 工程師，負責雲端部署與監控基礎設施。",
+			Job: "精靈",
+			AvatarImgUrl: "https://i.pravatar.cc/150?img=49",
+			AvatarLink: "https://example.com/zhengyating"
+		},
+		{
+			Name: "蔡佳霖",
+			Description: "資安工程師，專注於滲透測試與漏洞分析。",
+			Job: "組長",
+			AvatarImgUrl: "https://i.pravatar.cc/150?img=21",
+			AvatarLink: "https://example.com/caijialin"
+		},
+		{
+			Name: "謝文志",
+			Description: "行動應用開發者，熟悉 iOS 與 Android 跨平台開發。",
+			Job: "副組長",
+			AvatarImgUrl: "https://i.pravatar.cc/150?img=33",
+			AvatarLink: "https://example.com/xiewenzhi"
+		},
+		{
+			Name: "周怡君",
+			Description: "資料工程師，擅長 ETL 流程設計與大數據分析。",
+			Job: "組員",
+			AvatarImgUrl: "https://i.pravatar.cc/150?img=56",
+			AvatarLink: "https://example.com/zhouyijun"
+		},
+		{
+			Name: "楊建宏",
+			Description: "嵌入式系統工程師，熱衷於硬體軟體整合開發。",
+			Job: "精靈",
+			AvatarImgUrl: "https://i.pravatar.cc/150?img=7",
+			AvatarLink: "https://example.com/yangjanhong"
+		},
+		{
+			Name: "何雅雯",
+			Description: "機器學習工程師，專注於自然語言處理與模型訓練。",
+			Job: "精靈",
+			AvatarImgUrl: "https://i.pravatar.cc/150?img=62",
+			AvatarLink: "https://example.com/heyawen"
+		},
+		{
+			Name: "蘇俊宏",
+			Description: "網路工程師，擅長網路拓撲規劃與流量優化。",
+			Job: "精靈",
+			AvatarImgUrl: "https://i.pravatar.cc/150?img=18",
+			AvatarLink: "https://example.com/sujunhong"
+		},
+		{
+			Name: "賴佳妮",
+			Description: "測試工程師，專精自動化測試框架與品質保證流程。",
+			Job: "精靈",
+			AvatarImgUrl: "https://i.pravatar.cc/150?img=39",
+			AvatarLink: "https://example.com/laijiani"
+		},
+		{
+			Name: "江志偉",
+			Description: "遊戲開發者，熱衷於即時渲染與物理引擎整合。",
+			Job: "精靈",
+			AvatarImgUrl: "https://i.pravatar.cc/150?img=11",
+			AvatarLink: "https://example.com/jiangzhiwei"
+		},
+		{
+			Name: "李小華",
+			Description: "區塊鏈開發者，專注於智能合約與去中心化應用。",
+			Job: "精靈",
+			AvatarImgUrl: "https://i.pravatar.cc/150?img=64",
+			AvatarLink: "https://example.com/lixiaohua"
+		}
+	],
+	行銷組: [
+		{
+			Name: "林思穎",
+			Description: "業務開發經理，擅長建立合作夥伴關係與談判策略。",
+			Job: "業務",
+			AvatarImgUrl: "https://i.pravatar.cc/150?img=43",
+			AvatarLink: "https://example.com/linsiying"
+		},
+		{
+			Name: "陳宜蓁",
+			Description: "品牌行銷專員，負責社群經營與內容策略規劃。",
+			Job: "行銷",
+			AvatarImgUrl: "https://i.pravatar.cc/150?img=58",
+			AvatarLink: "https://example.com/chenyizhen"
+		},
+		{
+			Name: "洪冠宇",
+			Description: "企業客戶顧問，專注於解決方案銷售與客戶成功管理。",
+			Job: "業務",
+			AvatarImgUrl: "https://i.pravatar.cc/150?img=22",
+			AvatarLink: "https://example.com/hongguanyu"
+		}
+	]
+};
+
+const team = Object.keys(example_data) as (keyof typeof example_data)[];
+---
+
+<script>
+	document.querySelectorAll<HTMLElement>("[data-member-id]").forEach(async el => {
+		el.addEventListener("mousedown", async () => {
+			//Fetching elements
+			const overlay = document.getElementById("overlay");
+			const closeBtn = document.getElementById("layout-cancel");
+			const closeSmBtn = document.getElementById("layout-cancel-sm");
+
+			const nameEle = document.getElementById("layout-name");
+			const desEle = document.getElementById("layout-des");
+			const linkEle = document.getElementById("layout-link") as HTMLAnchorElement | null;
+			const avatarEle = document.getElementById("layout-avatar") as HTMLImageElement | null;
+
+			const backavatarEle = document.getElementById(`b-${el.dataset.memberId}`);
+
+			if (!closeBtn || !closeSmBtn || !nameEle || !desEle || !linkEle || !avatarEle || !overlay || !backavatarEle) return;
+
+			//Setting content first so card height is correct before measuring layout-avatar position ( CLaude Fix )
+			const member = JSON.parse(el.dataset.member ?? "{}");
+			nameEle.textContent = member.Name;
+			desEle.textContent = member.Description;
+			linkEle.href = member.AvatarLink;
+			linkEle.textContent = member.AvatarLink;
+			avatarEle.src = member.AvatarImgUrl;
+
+			//Instant set styling
+			const newAvatarRect = avatarEle.getBoundingClientRect();
+			const oldAvatarRect = el.getBoundingClientRect();
+			const avatarX = newAvatarRect.x;
+			const avatarY = newAvatarRect.y;
+			const oldAvatarX = oldAvatarRect.x;
+			const oldAvatarY = oldAvatarRect.y;
+
+			el.style.boxShadow = "0 0 0 0";
+			el.style.left = String(oldAvatarRect.x) + "px";
+			el.style.top = String(oldAvatarRect.y) + "px";
+			el.style.position = "fixed";
+			el.style.zIndex = "50";
+			el.style.maxWidth = window.innerWidth >= 768 ? "200px" : "150px";
+			el.style.maxHeight = window.innerWidth >= 768 ? "200px" : "150px";
+
+			backavatarEle.style.display = "block";
+			overlay.style.zIndex = "10";
+
+			el.style.transform = `translate(${avatarX - oldAvatarX}px, ${avatarY - oldAvatarY}px)`;
+			el.style.width = `${newAvatarRect.width}px`;
+			el.style.height = `${newAvatarRect.height}px`;
+
+			//Animation Start
+			await new Promise(resolve => setTimeout(resolve, 300));
+			overlay.style.opacity = "1";
+
+			//Animation Finish after work
+			await new Promise(resolve => setTimeout(resolve, 300));
+			el.style.opacity = "0";
+
+			//Closing Logic
+			closeBtn.addEventListener("click", closeAnimation, { once: true });
+			closeSmBtn.addEventListener("click", closeAnimation, { once: true });
+			document.addEventListener("keydown", onEsc, { once: true });
+
+			function onEsc(e: KeyboardEvent) {
+				if (e.key === "Escape") closeAnimation();
+				else document.addEventListener("keydown", onEsc, { once: true });
+			}
+
+			async function closeAnimation() {
+				if (!overlay || !backavatarEle) return;
+
+				el.style.opacity = "";
+
+				await new Promise(resolve => setTimeout(resolve, 50));
+				overlay.style.opacity = "0";
+
+				await new Promise(resolve => setTimeout(resolve, 100));
+				el.style.boxShadow = "";
+				el.style.transform = "translate(-2px, -2px)";
+				el.style.width = "";
+				el.style.height = "";
+				el.style.maxWidth = "";
+				el.style.maxHeight = "";
+
+				await new Promise(resolve => setTimeout(resolve, 250));
+
+				backavatarEle.style.display = "none";
+				overlay.style.zIndex = "-10";
+
+				el.style.zIndex = "";
+				el.style.position = "";
+				el.style.top = "";
+				el.style.left = "";
+			}
+		});
+	});
+</script>
+
+<div class="bg-background mt-32 h-fit w-full px-4 py-12 md:px-20 lg:px-32">
+	<div class="fixed inset-0 -z-10 flex h-full w-full flex-col items-start justify-center bg-black/30 px-8 opacity-0 transition-all duration-300 md:items-center" id="overlay">
+		<div class="bg-background relative mt-24 h-fit w-full overflow-hidden rounded-4xl p-8 md:max-w-5xl md:p-16 lg:h-98 lg:p-24">
+			<section class="row flex h-full w-full flex-col justify-start gap-4 md:flex-row md:gap-12">
+				<Image
+					src="https://i.pravatar.cc/300?img=12"
+					alt={"avatar"}
+					width={200}
+					height={200}
+					class="border-foreground mx-auto h-[150px] w-[150px] cursor-pointer rounded-xl border-4 hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[2px_2px_0_2px_#60A7D5] md:h-[200px] md:w-[200px]"
+					id="layout-avatar"
+				/>
+				<div class="flex h-full w-full flex-col justify-between">
+					<h1 class="mx-auto text-5xl font-bold md:mx-0 md:text-6xl" id="layout-name">PLACEHOLDER</h1>
+					<p class="text-foreground my-4 text-xl font-bold" id="layout-des">PLACEHOLDER</p>
+					<a
+						class="text-blue mt-auto overflow-x-scroll text-lg font-bold underline underline-offset-3"
+						id="layout-link"
+						href="https://example.com/longdragon"
+						target="_blank"
+						rel="noopener noreferrer"
+					>
+						PLACEHOLDER
+					</a>
+				</div>
+			</section>
+			<div class="absolute top-0 right-0 hidden h-12 w-16 items-center justify-center rounded-bl-4xl bg-red-500 transition-all duration-300 hover:scale-105 md:flex" id="layout-cancel">
+				<LucideX class="text-foreground h-10 w-10" />
+			</div>
+		</div>
+		<div class="text-foreground visible mt-4 flex h-16 w-full cursor-pointer items-center justify-center rounded-full bg-red-400 font-bold md:hidden" id="layout-cancel-sm">
+			<p class="text-3xl font-bold">Close</p>
+		</div>
+	</div>
+
+	<section>
+		<h1 class="bg-green h-fit w-fit p-3 text-5xl font-bold text-black">團隊成員</h1>
+		{
+			team.map(t => (
+				<section class="my-4 mt-12 lg:mt-16">
+					<h2 class="text-4xl font-bold text-black">{t}</h2>
+
+					<div class="my-4 grid h-fit w-full grid-cols-2 gap-x-8 md:grid-cols-4 md:gap-x-4 xl:grid-cols-6 2xl:grid-cols-8">
+						{example_data[t].map(data => (
+							<article class="my-4 h-fit w-fit">
+								<Image
+									src={data.AvatarImgUrl}
+									alt={"avatar"}
+									width={150}
+									height={150}
+									class="border-foreground mx-auto h-full max-h-[150px] w-full max-w-[150px] rounded-xl border-4 shadow-[4px_4px_0_2px_#60A7D5] transition-all duration-300 hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[2px_2px_0_2px_#60A7D5]"
+									data-member-id={data.Name}
+									data-member={JSON.stringify({ Name: data.Name, Description: data.Description, AvatarLink: data.AvatarLink, AvatarImgUrl: data.AvatarImgUrl })}
+								/>
+								<div class="hidden h-[150px] w-[150px]" id={`b-${data.Name}`} />
+								<div class="mt-4 flex h-fit w-full items-center justify-between gap-2">
+									<h3 class="text-xl font-bold">{data.Name}</h3>
+									<div class="bg-foreground flex h-fit w-fit items-center justify-center rounded-full px-2 py-0.5">
+										<p class="text-sm text-white">#{data.Job}</p>
+									</div>
+								</div>
+							</article>
+						))}
+					</div>
+				</section>
+			))
+		}
+	</section>
+</div>
