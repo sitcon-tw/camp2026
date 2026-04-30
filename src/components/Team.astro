@@ -116,7 +116,7 @@ const example_data = {
 			Description: "企業客戶顧問，專注於解決方案銷售與客戶成功管理。",
 			Job: "業務",
 			AvatarImgUrl: "https://i.pravatar.cc/150?img=22",
-			AvatarLink: "https://example.com/hongguanyu"
+			AvatarLink: "https://example.com/somethingthatcoolandverylong"
 		}
 	]
 };
@@ -147,6 +147,14 @@ const team = Object.keys(example_data) as (keyof typeof example_data)[];
 			desEle.textContent = member.Description;
 			linkEle.href = member.AvatarLink;
 			linkEle.textContent = member.AvatarLink;
+			if (linkEle.scrollWidth > linkEle.offsetWidth) {
+				let text = member.AvatarLink as string;
+				while (text.length > 0) {
+					text = text.slice(0, -3);
+					linkEle.textContent = text + '...';
+					if (linkEle.scrollWidth <= linkEle.offsetWidth) break;
+				}
+			}
 			avatarEle.src = member.AvatarImgUrl;
 
 			//Instant set styling
@@ -233,10 +241,10 @@ const team = Object.keys(example_data) as (keyof typeof example_data)[];
 					class="border-foreground mx-auto h-[150px] w-[150px] cursor-pointer rounded-xl border-4 hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[2px_2px_0_2px_#60A7D5] md:h-[200px] md:w-[200px]"
 					id="layout-avatar"
 				/>
-				<div class="flex h-full w-full flex-col justify-between">
+				<div class="flex h-full min-w-0 w-full flex-col justify-between">
 					<h1 class="mx-auto text-5xl font-bold md:mx-0 md:text-6xl" id="layout-name">PLACEHOLDER</h1>
 					<p class="text-foreground my-4 text-xl font-bold" id="layout-des">PLACEHOLDER</p>
-					<a class="text-blue mt-auto overflow-x-auto text-lg font-bold underline underline-offset-3" id="layout-link" href="https://example.com/longdragon" target="_blank" rel="noopener noreferrer">
+					<a class="text-blue mt-auto block truncate text-lg font-bold underline underline-offset-3" id="layout-link" href="https://example.com/longdragon" target="_blank" rel="noopener noreferrer">
 						PLACEHOLDER
 					</a>
 				</div>
