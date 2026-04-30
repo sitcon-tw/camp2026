@@ -10,61 +10,58 @@ const first = data[0];
 ---
 
 <!-- data-scroll-counter 作為穩定的 JS 選取點 -->
-<div data-scroll-counter style={`height: ${scrollHeight}vh`} class="relative">
+<div data-scroll-counter style={`height: ${sitconData.config.scrollHeight}vh`} class="relative">
 	<div
-		class="sticky top-0 grid h-screen [grid-template-columns:1fr_auto_1fr] items-center gap-8 overflow-hidden bg-[#0a0a0f] px-[5vw] max-sm:[grid-template-columns:1fr] max-sm:[grid-template-rows:auto_auto_auto] max-sm:justify-items-center max-sm:gap-6 max-sm:px-6"
+		class="bg-background sticky top-0 grid h-screen grid-cols-[1fr_auto_1fr] items-center gap-8 overflow-hidden px-[5vw] max-sm:grid-cols-[1fr] max-sm:grid-rows-[auto_auto_auto] max-sm:justify-items-center max-sm:gap-6 max-sm:px-6"
 	>
 		<!-- 進度條 -->
-		<div class="absolute top-0 right-0 left-0 z-10 h-0.5 bg-[#1e1e2e]">
-			<div data-progress-fill class="h-full w-0 bg-gradient-to-r from-[#7eb8c9] to-[#e8d5a3] transition-[width] duration-[50ms] [transition-timing-function:linear]"></div>
+		<div class="bg-background absolute top-0 right-0 left-0 z-10 h-0.5">
+			<div data-progress-fill class="from-sky-blue to-blue h-full w-0 bg-linear-to-r transition-[width] duration-50 ease-linear"></div>
 		</div>
 
 		<!-- 左側文字軌道 -->
-		<div class="relative z-[5] h-10 overflow-hidden text-right max-sm:text-center">
-			<div data-prefix-track class="flex flex-col transition-transform duration-[550ms] [transition-timing-function:cubic-bezier(0.4,0,0.2,1)] will-change-transform">
-				{data.map(d => <div class="flex h-10 items-center justify-end text-[clamp(1rem,2vw,1.4rem)] leading-none whitespace-nowrap text-[#e8d5a3] max-sm:justify-center">{d.prefix}</div>)}
+		<div class="relative z-5 h-10 overflow-hidden text-right max-sm:text-center">
+			<div data-prefix-track class="flex flex-col transition-transform duration-550 ease-in-out will-change-transform">
+				{data.map(d => <div class="text-foreground flex h-10 items-center justify-end text-[clamp(1rem,2vw,1.4rem)] leading-none whitespace-nowrap max-sm:justify-center">{d.prefix}</div>)}
 			</div>
 		</div>
 
 		<!-- 中央數字 -->
-		<div class="relative z-[5] flex min-w-72 flex-col items-center gap-2">
+		<div class="relative z-5 flex min-w-72 flex-col items-center gap-2">
 			<!-- 垂直裝飾線 -->
-			<div
-				class="pointer-events-none absolute top-1/2 left-1/2 -z-[1] [height:calc(100%+3rem)] w-px -translate-x-1/2 -translate-y-1/2 [background:linear-gradient(to_bottom,transparent,#3a3a52_30%,#3a3a52_70%,transparent)]"
-			>
-			</div>
-			<div data-number class="text-[clamp(3.5rem,10vw,7rem)] leading-none font-bold tracking-[-0.03em] text-white tabular-nums max-sm:text-[4.5rem]">
+			<div class="pointer-events-none absolute top-1/2 left-1/2 -z-1 h-[calc(100%+3rem)] w-px -translate-x-1/2 -translate-y-1/2"></div>
+			<div data-number class="text-orange text-[clamp(3.5rem,10vw,7rem)] leading-none font-bold tracking-[-0.03em] tabular-nums max-sm:text-[4.5rem]">
 				{first.value.toLocaleString()}
 			</div>
-			<div class="my-0.5 h-px w-full [background:linear-gradient(90deg,transparent,#3a3a52,transparent)]"></div>
+			<div class="my-0.5 h-1 w-full [background:linear-gradient(90deg,transparent,var(--color-orange),transparent)]"></div>
 		</div>
 
 		<!-- 右側文字軌道 -->
-		<div class="relative z-[5] h-10 overflow-hidden text-left max-sm:text-center">
-			<div data-suffix-track class="flex flex-col transition-transform duration-[550ms] [transition-timing-function:cubic-bezier(0.4,0,0.2,1)] will-change-transform">
-				{data.map(d => <div class="flex h-10 items-center justify-start text-[clamp(1rem,2vw,1.4rem)] leading-none whitespace-nowrap text-[#e8d5a3] max-sm:justify-center">{d.suffix}</div>)}
+		<div class="relative z-5 h-10 overflow-hidden text-left max-sm:text-center">
+			<div data-suffix-track class="flex flex-col transition-transform duration-550 ease-in-out will-change-transform">
+				{data.map(d => <div class="text-foreground flex h-10 items-center justify-start text-2xl leading-none whitespace-nowrap max-sm:justify-center">{d.suffix}</div>)}
 			</div>
 		</div>
 
 		<!-- 導航箭頭 -->
 		<button
 			data-btn-prev
-			class="absolute right-[5vw] bottom-[calc(50%+2.8rem)] z-10 flex h-8 w-8 cursor-pointer items-center justify-center rounded border border-[#3a3a52] bg-transparent text-sm text-[#555570] transition-[border-color,color] duration-200 enabled:hover:border-[#e8d5a3] enabled:hover:text-[#e8d5a3] disabled:cursor-default disabled:opacity-20"
+			class="text-green enabled:hover:text-dark-green absolute right-[5vw] bottom-[calc(50%+2.8rem)] z-10 flex h-8 w-8 cursor-pointer items-center justify-center text-5xl transition-[border-color,color] duration-200 disabled:cursor-not-allowed disabled:opacity-20"
 			aria-label="上一個節點"
 		>
-			&#8593;
+			<LucideCircleArrowUp />
 		</button>
 		<button
 			data-btn-next
-			class="absolute top-[calc(50%+2.8rem)] right-[5vw] z-10 flex h-8 w-8 cursor-pointer items-center justify-center rounded border border-[#3a3a52] bg-transparent text-sm text-[#555570] transition-[border-color,color] duration-200 enabled:hover:border-[#e8d5a3] enabled:hover:text-[#e8d5a3] disabled:cursor-default disabled:opacity-20"
+			class="text-green enabled:hover:text-dark-green absolute top-[calc(50%+2.8rem)] right-[5vw] z-10 flex h-8 w-8 cursor-pointer items-center justify-center text-5xl transition-[border-color,color] duration-200 disabled:cursor-not-allowed disabled:opacity-20"
 			aria-label="下一個節點"
 		>
-			&#8595;
+			<LucideCircleArrowDown />
 		</button>
 	</div>
 </div>
 
-<script define:vars={{ data }}>
+<script define:vars={{ data }} is:inline>
 	function lerp(a, b, t) {
 		return a + (b - a) * t;
 	}
