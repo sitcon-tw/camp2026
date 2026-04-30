@@ -1,6 +1,5 @@
 # USE PNPM!!!
 package-lock.json
-pnpm-lock.yaml
 yarn.lock
 bun.lockb
 
@@ -33,4 +32,3 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
-package.json
