@@ -183,6 +183,7 @@ const team = Object.keys(example_data) as (keyof typeof example_data)[];
 			//Closing Logic
 			closeBtn.addEventListener("click", closeAnimation, { once: true });
 			closeSmBtn.addEventListener("click", closeAnimation, { once: true });
+			overlay.addEventListener("click", closeAnimation, { once: true });
 			document.addEventListener("keydown", onEsc, { once: true });
 
 			function onEsc(e: KeyboardEvent) {
@@ -235,13 +236,7 @@ const team = Object.keys(example_data) as (keyof typeof example_data)[];
 				<div class="flex h-full w-full flex-col justify-between">
 					<h1 class="mx-auto text-5xl font-bold md:mx-0 md:text-6xl" id="layout-name">PLACEHOLDER</h1>
 					<p class="text-foreground my-4 text-xl font-bold" id="layout-des">PLACEHOLDER</p>
-					<a
-						class="text-blue mt-auto overflow-x-scroll text-lg font-bold underline underline-offset-3"
-						id="layout-link"
-						href="https://example.com/longdragon"
-						target="_blank"
-						rel="noopener noreferrer"
-					>
+					<a class="text-blue mt-auto overflow-x-auto text-lg font-bold underline underline-offset-3" id="layout-link" href="https://example.com/longdragon" target="_blank" rel="noopener noreferrer">
 						PLACEHOLDER
 					</a>
 				</div>
@@ -262,15 +257,15 @@ const team = Object.keys(example_data) as (keyof typeof example_data)[];
 				<section class="my-4 mt-12 lg:mt-16">
 					<h2 class="text-4xl font-bold text-black">{t}</h2>
 
-					<div class="my-4 grid h-fit w-full grid-cols-2 gap-x-8 md:grid-cols-4 md:gap-x-4 xl:grid-cols-6 2xl:grid-cols-8">
+					<div class="my-4 grid h-fit w-full grid-cols-[repeat(auto-fill,minmax(150px,1fr))] justify-items-center gap-[clamp(1rem,2vw,2rem)]">
 						{example_data[t].map(data => (
-							<article class="my-4 h-fit w-fit">
+							<article class="my-4 flex h-fit w-full max-w-[150px] flex-col items-center">
 								<Image
 									src={data.AvatarImgUrl}
 									alt={"avatar"}
 									width={150}
 									height={150}
-									class="border-foreground mx-auto h-full max-h-[150px] w-full max-w-[150px] rounded-xl border-4 shadow-[4px_4px_0_2px_#60A7D5] transition-all duration-300 hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[2px_2px_0_2px_#60A7D5]"
+									class="border-foreground h-[150px] w-[150px] flex-none cursor-pointer rounded-xl border-4 object-cover shadow-[4px_4px_0_2px_#60A7D5] transition-all duration-300 hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[2px_2px_0_2px_#60A7D5]"
 									data-member-id={data.Name}
 									data-member={JSON.stringify({ Name: data.Name, Description: data.Description, AvatarLink: data.AvatarLink, AvatarImgUrl: data.AvatarImgUrl })}
 								/>
