@@ -26,11 +26,9 @@ const first = data[0];
 			<div data-progress-fill class="from-sky-blue to-blue h-full w-0 bg-linear-to-r transition-[width] duration-50 ease-linear"></div>
 		</div>
 
-		<!-- 左側文字軌道 -->
-		<div class="relative z-5 h-10 overflow-hidden text-right max-sm:text-center">
-			<div data-prefix-track class="flex flex-col transition-transform duration-550 ease-in-out will-change-transform">
-				{data.map(d => <div class="text-foreground flex h-10 items-center justify-end text-[clamp(1rem,2vw,1.4rem)] leading-none whitespace-nowrap max-sm:justify-center">{d.prefix}</div>)}
-			</div>
+		<!-- 左側文字 -->
+		<div class="relative z-5 text-right max-sm:text-center">
+			<span data-prefix class="text-foreground text-[clamp(1rem,2vw,1.4rem)] leading-none whitespace-nowrap">{first.prefix}</span>
 		</div>
 
 		<!-- 中央數字 -->
@@ -42,11 +40,9 @@ const first = data[0];
 			<div class="my-0.5 h-1 w-full [background:linear-gradient(90deg,transparent,var(--color-orange),transparent)]"></div>
 		</div>
 
-		<!-- 右側文字軌道 -->
-		<div class="relative z-5 h-10 overflow-hidden text-left max-sm:text-center">
-			<div data-suffix-track class="flex flex-col transition-transform duration-550 ease-in-out will-change-transform">
-				{data.map(d => <div class="text-foreground flex h-10 items-center justify-start text-2xl leading-none whitespace-nowrap max-sm:justify-center">{d.suffix}</div>)}
-			</div>
+		<!-- 右側文字 -->
+		<div class="relative z-5 text-left max-sm:text-center">
+			<span data-suffix class="text-foreground text-2xl leading-none whitespace-nowrap">{first.suffix}</span>
 		</div>
 	</div>
 </div>
@@ -76,8 +72,8 @@ const first = data[0];
 	document.querySelectorAll("[data-scroll-counter]").forEach(container => {
 		const progressFill = container.querySelector("[data-progress-fill]");
 		const numberEl = container.querySelector("[data-number]");
-		const prefixTrack = container.querySelector("[data-prefix-track]");
-		const suffixTrack = container.querySelector("[data-suffix-track]");
+		const prefixEl = container.querySelector("[data-prefix]");
+		const suffixEl = container.querySelector("[data-suffix]");
 		const bgImages = container.querySelectorAll("[data-bg-image]");
 
 		let targetValue = 0;
@@ -120,8 +116,8 @@ const first = data[0];
 		function slideToIdx(idx) {
 			if (activeIdx === idx) return;
 			activeIdx = idx;
-			prefixTrack.style.transform = `translateY(${-(idx * 2.5)}rem)`;
-			suffixTrack.style.transform = `translateY(${-(idx * 2.5)}rem)`;
+			prefixEl.textContent = data[idx].prefix;
+			suffixEl.textContent = data[idx].suffix;
 			bgImages.forEach((img, i) => {
 				img.style.opacity = i === idx ? "1" : "0";
 			});
