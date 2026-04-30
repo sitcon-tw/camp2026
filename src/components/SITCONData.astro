@@ -28,13 +28,13 @@ const first = data[0];
 
 		<!-- 左側文字 -->
 		<div class="relative z-5 text-right max-sm:text-center">
-			<span data-prefix class="text-foreground text-[clamp(1rem,2vw,1.4rem)] leading-none whitespace-nowrap">{first.prefix}</span>
+			<span data-prefix class="text-foreground text-[2rem] leading-none font-bold whitespace-nowrap lg:text-[4rem] xl:text-[5rem]">{first.prefix}</span>
 		</div>
 
 		<!-- 中央數字 -->
 		<div class="relative z-5 flex min-w-72 flex-col items-center gap-2">
 			<div class="pointer-events-none absolute top-1/2 left-1/2 -z-1 h-[calc(100%+3rem)] w-px -translate-x-1/2 -translate-y-1/2"></div>
-			<div data-number class="text-orange text-[clamp(3.5rem,10vw,7rem)] leading-none font-bold tracking-[-0.03em] tabular-nums max-sm:text-[4.5rem]">
+			<div data-number class="text-orange text-[6rem] leading-none font-bold tracking-[-0.03em] tabular-nums max-sm:text-[4.5rem] lg:text-[8rem] xl:text-[9rem]">
 				{first.value.toLocaleString()}
 			</div>
 			<div class="my-0.5 h-1 w-full [background:linear-gradient(90deg,transparent,var(--color-orange),transparent)]"></div>
@@ -42,7 +42,7 @@ const first = data[0];
 
 		<!-- 右側文字 -->
 		<div class="relative z-5 text-left max-sm:text-center">
-			<span data-suffix class="text-foreground text-2xl leading-none whitespace-nowrap">{first.suffix}</span>
+			<span data-suffix class="text-foreground text-[2rem] leading-none font-bold whitespace-nowrap lg:text-[4rem] xl:text-[5rem]">{first.suffix}</span>
 		</div>
 	</div>
 </div>
