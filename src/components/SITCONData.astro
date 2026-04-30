@@ -1,12 +1,17 @@
 ---
 import siteContent from "@/data/site.json";
-// import { getImage } from "astro:assets";
-// import { Image } from "astro:assets";
+import { Image } from "astro:assets";
 
 const { sitconData } = siteContent;
 
 const data = sitconData.datas;
 const first = data[0];
+
+const bgImages = Object.values(
+	import.meta.glob<{ default: ImageMetadata }>("../assets/about/data/*.jpg", {
+		eager: true
+	})
+);
 ---
 
 <div data-scroll-counter style={`height: ${sitconData.config.scrollHeight}vh`} class="relative">
@@ -16,13 +21,8 @@ const first = data[0];
 		<!-- 背景圖片層 -->
 		<div class="pointer-events-none absolute inset-0 z-0">
 			{
-				data.map((d, i) => (
-					<img
-						data-bg-image
-						src={`${sitconData.config.imageBasePath}/${d.image.src}`}
-						alt={d.image.alt}
-						class={`absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ${i === 0 ? "opacity-100" : "opacity-0"}`}
-					/>
+				bgImages.map((image, i) => (
+					<Image data-bg-image src={image.default} alt="" class={`absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ${i === 0 ? "opacity-100" : "opacity-0"}`} />
 				))
 			}
 			<div class="bg-background/50 absolute inset-0"></div>
