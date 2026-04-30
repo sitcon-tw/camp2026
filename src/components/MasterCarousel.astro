@@ -1,5 +1,4 @@
 ---
-import { X } from "@lucide/astro";
 import { Image } from "astro:assets";
 import rawMembers from "@/data/members.json";
 import hackathon from "@/assets/pics/hackathon.webp";
@@ -7,7 +6,7 @@ import camp from "@/assets/pics/camp.webp";
 import groups from "@/assets/pics/groups.webp";
 import edu from "@/assets/pics/edu.webp";
 
-// Maps image key → Astro ImageMetadata, shared by template & JSON data script
+// Maps image key → Astro ImageMetadata
 const imageMap: Record<string, ImageMetadata> = {
 	hackathon,
 	camp,
@@ -43,11 +42,7 @@ const trackMembers: DisplayMember[] = members.map((m, i) => ({
 		[0, 1].map(trackIdx => (
 			<div class="marquee-track flex shrink-0 gap-6 pr-6 group-hover:[animation-play-state:paused]" aria-hidden={trackIdx === 1 ? "true" : undefined}>
 				{trackMembers.map(member => (
-					<button
-						class="member-card relative h-95 w-70 shrink-0 cursor-pointer rounded-[2.5rem] text-left transition-transform duration-300 hover:scale-105"
-						data-member-id={member._memberId}
-						aria-haspopup="dialog"
-					>
+					<button class="member-card relative h-95 w-70 shrink-0 rounded-[2.5rem] text-left" data-member-id={member._memberId}>
 						<div class="relative h-full w-full overflow-hidden rounded-[2.5rem] border-r-6 border-b-6" style={`border-color: var(--color-${member.accent})`}>
 							<Image src={imageMap[member.imgKey]} alt={member.name} class="h-full w-full object-cover" loading="eager" decoding="async" width={280} height={380} format="webp" />
 
@@ -65,41 +60,6 @@ const trackMembers: DisplayMember[] = members.map((m, i) => ({
 	}
 </div>
 
-<dialog id="member-dialog" class="member-dialog" aria-modal="true">
-	<div id="dialog-backdrop" class="dialog-backdrop" aria-hidden="true"></div>
-	<div class="dialog-content">
-		<button
-			id="dialog-close"
-			class="bg-foreground/10 hover:bg-foreground/20 absolute top-4 right-4 flex h-8 w-8 items-center justify-center rounded-full transition-colors"
-			aria-label="關閉"
-			autofocus
-		>
-			<X class="i-lucide-x text-lg" />
-		</button>
-
-		<!-- Mobile: grid-cols-[auto_1fr] round avatar + name on same row; Desktop: left large img row-span-2, name + bio stacked on right -->
-		<div class="grid grid-cols-[auto_1fr] gap-4 md:grid-cols-[280px_1fr] md:grid-rows-[auto_1fr] md:gap-x-8 md:gap-y-4">
-			<img
-				id="dialog-img"
-				src={imageMap[members[0].imgKey].src}
-				alt=""
-				class="h-16 w-16 rounded-full object-cover md:col-start-1 md:row-span-2 md:aspect-3/4 md:h-full md:min-h-80 md:w-full md:rounded-2xl"
-			/>
-
-			<div class="flex flex-col justify-center md:col-start-2 md:row-start-1 md:justify-end md:pt-4">
-				<h2 id="dialog-name" class="text-xl font-bold md:text-3xl"></h2>
-				<p id="dialog-role" class="text-foreground/60 mt-1 text-sm font-medium md:text-base"></p>
-			</div>
-
-			<div class="col-span-2 overflow-y-auto pr-2 md:col-span-1 md:col-start-2 md:row-start-2">
-				<p id="dialog-bio" class="text-foreground/80 text-sm leading-relaxed whitespace-pre-wrap md:text-base"></p>
-			</div>
-		</div>
-	</div>
-</dialog>
-
-<script is:inline id="members-data" type="application/json" set:html={JSON.stringify(members.map(({ imgKey, ...rest }) => ({ ...rest, imgUrl: imageMap[imgKey].src })))} />
-
 <style>
 	.marquee-track {
 		animation: marquee 20s linear infinite;
@@ -113,203 +73,4 @@ const trackMembers: DisplayMember[] = members.map((m, i) => ({
 			transform: translateX(-100%);
 		}
 	}
-	@media (prefers-reduced-motion: reduce) {
-		.marquee-track {
-			animation: none;
-		}
-		.dialog-content {
-			transition: none !important;
-		}
-	}
-
-	.member-dialog {
-		border: none;
-		padding: 0;
-		background: transparent;
-		max-width: 100vw;
-		max-height: 100dvh;
-		width: 100%;
-		height: 100%;
-		position: fixed;
-		inset: 0;
-	}
-	.member-dialog[open] {
-		display: grid;
-		place-items: center;
-	}
-	.member-dialog::backdrop {
-		background: color-mix(in oklch, var(--color-foreground) 50%, transparent);
-		backdrop-filter: blur(4px);
-	}
-	.dialog-backdrop {
-		position: fixed;
-		inset: 0;
-		z-index: 0;
-	}
-	.dialog-content {
-		position: relative;
-		z-index: 1;
-		background: var(--color-background);
-		border-radius: 1.5rem;
-		padding: 1.5rem;
-		width: calc(100vw - 2rem);
-		max-width: 420px;
-		box-shadow: 0 24px 64px color-mix(in oklch, var(--color-foreground) 20%, transparent);
-		opacity: 1;
-		transform: scale(1) translateY(0);
-		transition:
-			opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1),
-			transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-	}
-	@media (min-width: 768px) {
-		.dialog-content {
-			padding: 2.5rem;
-			max-width: 800px;
-			border-radius: 2rem;
-		}
-	}
-	@starting-style {
-		.member-dialog[open] .dialog-content {
-			opacity: 0;
-			transform: scale(0.95) translateY(8px);
-		}
-	}
 </style>
-
-<script>
-	interface Member {
-		id: string;
-		name: string;
-		role: string;
-		imgUrl: string;
-		bio: string;
-	}
-
-	// Parse member data from inline JSON script, build id → Member lookup
-	const members: Member[] = JSON.parse(document.getElementById("members-data")!.textContent!);
-	const membersMap = new Map(members.map(m => [m.id, m]));
-
-	// DOM refs — dialog internals
-	const dialog = document.getElementById("member-dialog") as HTMLDialogElement;
-	const closeBtn = document.getElementById("dialog-close")!;
-	const backdropEl = document.getElementById("dialog-backdrop")!;
-	const dialogImg = document.getElementById("dialog-img") as HTMLImageElement;
-	const dialogRole = document.getElementById("dialog-role")!;
-	const dialogName = document.getElementById("dialog-name")!;
-	const dialogBio = document.getElementById("dialog-bio")!;
-	const dialogContent = dialog.querySelector<HTMLElement>(".dialog-content")!;
-	const marqueeTracks = document.querySelectorAll<HTMLElement>(".marquee-track");
-	// Skip close transition when user prefers reduced motion
-	const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-	// Pause/resume marquee animation
-	const setTracksPlayState = (state: string) => marqueeTracks.forEach(t => (t.style.animationPlayState = state));
-
-	// Guard against duplicate close calls during transition
-	let isClosing = false;
-
-	/** Click card → populate dialog content & open */
-	function openDialog(id: string) {
-		const m = membersMap.get(id);
-		if (!m) return;
-		isClosing = false;
-		dialogImg.src = m.imgUrl;
-		dialogImg.alt = m.name;
-		dialogRole.textContent = m.role;
-		dialogName.textContent = m.name;
-		dialogBio.textContent = m.bio;
-		setTracksPlayState("paused");
-		dialog.showModal();
-	}
-
-	/** Close dialog: play scale+fade-out transition, then close() */
-	function closeDialog() {
-		if (isClosing) return;
-		isClosing = true;
-
-		// Reset state & close dialog
-		const cleanup = () => {
-			dialog.close();
-			dialogContent.style.opacity = "";
-			dialogContent.style.transform = "";
-			setTracksPlayState("");
-			isClosing = false;
-		};
-
-		// Skip transition when reduced motion is preferred
-		if (reducedMotion) {
-			cleanup();
-			return;
-		}
-
-		// Trigger CSS transition (opacity + scale)
-		dialogContent.style.opacity = "0";
-		dialogContent.style.transform = "scale(0.95) translateY(8px)";
-
-		// Dual safety: transitionend listener + fallback timeout
-		let closeTimer: ReturnType<typeof setTimeout>;
-		const onEnd = (e: TransitionEvent) => {
-			if (e.propertyName !== "opacity") return;
-			dialogContent.removeEventListener("transitionend", onEnd);
-			clearTimeout(closeTimer);
-			cleanup();
-		};
-		dialogContent.addEventListener("transitionend", onEnd);
-		closeTimer = setTimeout(() => {
-			dialogContent.removeEventListener("transitionend", onEnd);
-			cleanup();
-		}, 350);
-	}
-
-	// Delegate click on marquee cards — resolve member via data-member-id
-	marqueeTracks.forEach(track =>
-		track.addEventListener("click", e => {
-			const card = (e.target as Element).closest<HTMLElement>(".member-card");
-			if (card?.dataset.memberId) openDialog(card.dataset.memberId);
-		})
-	);
-
-	// Close triggers: close button, backdrop click, Escape key
-	closeBtn.addEventListener("click", closeDialog);
-	backdropEl.addEventListener("click", closeDialog);
-	dialog.addEventListener("cancel", e => {
-		e.preventDefault();
-		closeDialog();
-	});
-
-	/**
-	 * Dynamically fill marquee tracks so content width ≥ 1.2× viewport.
-	 * Keep base cards, clone extras with aria-hidden.
-	 * Recalculate on resize.
-	 */
-	function fillTracks() {
-		const target = window.innerWidth * 1.2;
-		marqueeTracks.forEach(track => {
-			// Persist original card count to prevent infinite growth on repeated calls
-			const baseCount = Number(track.dataset.baseCount) || track.children.length;
-			track.dataset.baseCount = String(baseCount);
-			// Strip excess clones first (keep base)
-			while (track.children.length > baseCount) track.lastElementChild!.remove();
-			const base = Array.from(track.children) as HTMLElement[];
-			let safety = 0;
-			// Clone base set until width is sufficient, max 20 rounds as safety net
-			while (track.scrollWidth < target && safety++ < 20) {
-				base.forEach(card => {
-					const clone = card.cloneNode(true) as HTMLElement;
-					clone.setAttribute("aria-hidden", "true");
-					clone.setAttribute("tabindex", "-1");
-					track.appendChild(clone);
-				});
-			}
-		});
-	}
-
-	// Initial fill + debounced recalculation on resize
-	fillTracks();
-
-	let resizeTimer: ReturnType<typeof setTimeout>;
-	window.addEventListener("resize", () => {
-		clearTimeout(resizeTimer);
-		resizeTimer = setTimeout(fillTracks, 200);
-	});
-</script>

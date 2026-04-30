@@ -1,8 +1,6 @@
 ---
-import { Image, getImage } from "astro:assets";
+import { Image } from "astro:assets";
 import organizers from "../data/organizers.json";
-
-import { X } from "@lucide/astro";
 
 type Org = {
 	name: string;
@@ -25,13 +23,11 @@ function getMeta(iconPath: string): ImageMetadata | undefined {
 	return sponsorGlob[`../assets/sponsors/${file}`]?.default;
 }
 
-type ResolvedOrg = Org & { meta?: ImageMetadata; popoverSrc: string };
+type ResolvedOrg = Org & { meta?: ImageMetadata };
 
 async function resolve(org: Org): Promise<ResolvedOrg> {
 	const meta = getMeta(org.iconPath);
-	if (!meta) return { ...org, popoverSrc: org.iconPath };
-	const { src } = await getImage({ src: meta });
-	return { ...org, meta, popoverSrc: src };
+	return { ...org, meta };
 }
 
 const sections = await Promise.all(
@@ -49,17 +45,7 @@ const sections = await Promise.all(
 				<h1 class="mb-4 text-center text-3xl font-bold md:text-left md:text-4xl lg:text-[48px]">{tag}</h1>
 				<div class="flex flex-wrap items-center justify-center gap-4 gap-y-6 sm:gap-6 md:justify-start lg:gap-8">
 					{items.map(org => (
-						<button
-							type="button"
-							data-icon-path={org.popoverSrc}
-							data-name={org.name}
-							data-role={org.role ?? ""}
-							data-desc={org.description ?? ""}
-							data-url={org.url ?? ""}
-							aria-haspopup="dialog"
-							aria-controls="org-popover"
-							class="org-card group focus-visible:ring-primary-blue/50 cursor-pointer transition-transform hover:-translate-y-1 focus-visible:ring-2 focus-visible:outline-none"
-						>
+						<button type="button" class="org-card group focus-visible:ring-primary-blue/50 focus-visible:ring-2 focus-visible:outline-none">
 							{org.meta ? (
 								<Image src={org.meta} alt={org.name} class="h-20 w-auto object-contain md:h-28 lg:h-32" />
 							) : (
@@ -72,162 +58,3 @@ const sections = await Promise.all(
 		))
 	}
 </div>
-<div id="org-popover" popover role="dialog" aria-labelledby="org-popover-title" class="org-popover bg-background m-auto w-[calc(100vw-2rem)] max-w-md rounded-4xl border-0 p-0 shadow-2xl sm:w-full">
-	<div class="relative flex flex-col items-center px-6 py-8 sm:px-8 sm:py-10">
-		<button
-			type="button"
-			popovertarget="org-popover"
-			popovertargetaction="hide"
-			class="bg-foreground absolute top-5 right-5 flex size-8 cursor-pointer items-center justify-center rounded-full border-none text-white transition-transform hover:scale-105"
-			aria-label="關閉"
-		>
-			<X size={16} stroke-width={2} />
-		</button>
-
-		<span id="org-popover-role" class="bg-orange text-foreground mb-5 rounded-full px-3 py-1 text-xs font-bold"></span>
-
-		<img id="org-popover-icon" alt="" class="mb-5 h-20 max-w-full object-contain sm:h-24" />
-
-		<h3 id="org-popover-title" class="text-foreground mb-4 text-center text-lg font-bold sm:text-xl"></h3>
-
-		<p id="org-popover-desc" class="text-foreground/60 w-full text-justify text-sm leading-relaxed sm:text-base"></p>
-
-		<a
-			id="org-popover-url"
-			href="#"
-			target="_blank"
-			rel="noopener noreferrer"
-			class="bg-foreground text-background mt-6 w-full rounded-xl py-3 text-center text-sm font-bold no-underline transition-colors hover:bg-black"
-		>
-			前往官網
-		</a>
-	</div>
-</div>
-
-<script>
-	// --- Types ---
-	interface OrgDataset extends DOMStringMap {
-		iconPath: string;
-		name: string;
-		role: string;
-		desc: string;
-		url: string;
-	}
-
-	// --- Helpers ---
-
-	// getEl: typed shortcut for document.getElementById, throws on missing element
-	function getEl<T extends HTMLElement = HTMLElement>(id: string): T {
-		const el = document.getElementById(id);
-		if (!el) throw new Error(`[org-popover] missing #${id}`);
-		return el as T;
-	}
-
-	// Cache DOM references for popover inner nodes
-	const popoverEl = getEl("org-popover");
-	const icon = getEl<HTMLImageElement>("org-popover-icon");
-	const title = getEl("org-popover-title");
-	const roleEl = getEl("org-popover-role");
-	const descEl = getEl("org-popover-desc");
-	const urlEl = getEl<HTMLAnchorElement>("org-popover-url");
-
-	// setIcon: fade-in icon after load (or immediately if cached)
-	function setIcon(src: string, alt: string) {
-		if (!src) return;
-		icon.style.opacity = "0";
-		icon.alt = alt;
-		const reveal = () => (icon.style.opacity = "1");
-		icon.addEventListener("load", reveal, { once: true });
-		icon.addEventListener("error", reveal, { once: true });
-		icon.src = src;
-		// complete=true when src is already cached; no load event fires
-		if (icon.complete) reveal();
-	}
-
-	// renderPopover: fill popover fields from button dataset
-	function renderPopover(d: OrgDataset) {
-		title.textContent = d.name;
-		roleEl.textContent = d.role;
-		descEl.textContent = d.desc;
-		urlEl.href = d.url || "#";
-		roleEl.hidden = !d.role;
-		descEl.hidden = !d.desc;
-		urlEl.hidden = !d.url;
-		setIcon(d.iconPath, d.name);
-	}
-
-	// --- Event handlers ---
-
-	// Global click: open popover on .org-card, focus close button after open
-	document.addEventListener("click", e => {
-		const btn = (e.target as Element).closest<HTMLButtonElement>(".org-card");
-		if (!btn) return;
-
-		renderPopover(btn.dataset as OrgDataset);
-
-		if (!popoverEl.matches(":popover-open")) {
-			popoverEl.showPopover();
-			requestAnimationFrame(() => {
-				popoverEl.querySelector<HTMLButtonElement>("[popovertargetaction='hide']")?.focus();
-			});
-		}
-	});
-
-	// Track pointer for light-dismiss → reopen on another card
-	let lastPointer = { x: 0, y: 0 };
-	let dismissByCloseBtn = false;
-	document.addEventListener(
-		"pointerdown",
-		e => {
-			lastPointer = { x: e.clientX, y: e.clientY };
-			// Close btn has priority: if pointerdown hits it, skip reopen on close
-			dismissByCloseBtn = !!(e.target as Element).closest("[popovertargetaction='hide']");
-		},
-		true
-	);
-
-	// On popover close, reopen if pointer lands on another .org-card
-	popoverEl.addEventListener("toggle", e => {
-		const ev = e as ToggleEvent;
-		if (ev.newState !== "closed") return;
-		if (dismissByCloseBtn) {
-			dismissByCloseBtn = false;
-			return;
-		}
-		requestAnimationFrame(() => {
-			const el = document.elementFromPoint(lastPointer.x, lastPointer.y);
-			const card = el?.closest<HTMLButtonElement>(".org-card");
-			if (!card) return;
-			renderPopover(card.dataset as OrgDataset);
-			popoverEl.showPopover();
-		});
-	});
-</script>
-
-<style>
-	#org-popover-icon {
-		transition: opacity 0.15s ease;
-	}
-
-	.org-popover {
-		padding: 0;
-		border: none;
-		margin: auto;
-		min-width: 320px;
-		max-height: 90vh;
-		overflow-y: auto;
-	}
-
-	.org-popover::backdrop {
-		background-color: color-mix(in oklch, var(--color-foreground) 35%, transparent);
-		backdrop-filter: blur(8px);
-		-webkit-backdrop-filter: blur(8px);
-	}
-
-	@media (prefers-reduced-motion: reduce) {
-		.org-popover::backdrop {
-			backdrop-filter: none;
-			-webkit-backdrop-filter: none;
-		}
-	}
-</style>
