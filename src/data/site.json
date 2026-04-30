@@ -54,10 +54,10 @@
 			"scrollHeight": 600
 		},
 		"datas": [
-			{ "progress": 0, "value": 0, "prefix": "SITCON", "suffix": "一切的起點" },
-			{ "progress": 0.3, "value": 400, "prefix": "寬頻", "suffix": "元年" },
-			{ "progress": 0.7, "value": 1600, "prefix": "行動", "suffix": "爆發" },
-			{ "progress": 1.0, "value": 2100, "prefix": "全民", "suffix": "上網" }
+			{ "progress": 0, "value": 0, "image": { "src": "/2026/src/assets/hero/wall/sitcon-wall-01.jpg", "alt": "Alt 01" }, "prefix": "SITCON", "suffix": "一切的起點" },
+			{ "progress": 0.3, "value": 400, "image": { "src": "/2026/src/assets/hero/wall/sitcon-wall-02.jpg", "alt": "Alt 02" }, "prefix": "寬頻", "suffix": "元年" },
+			{ "progress": 0.7, "value": 1600, "image": { "src": "/2026/src/assets/hero/wall/sitcon-wall-03.jpg", "alt": "Alt 03" }, "prefix": "行動", "suffix": "爆發" },
+			{ "progress": 1.0, "value": 2100, "image": { "src": "/2026/src/assets/hero/wall/sitcon-wall-04.jpg", "alt": "Alt 04" }, "prefix": "全民", "suffix": "上網" }
 		]
 	}
 }

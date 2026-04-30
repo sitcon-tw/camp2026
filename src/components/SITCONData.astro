@@ -9,11 +9,20 @@ const data = sitconData.datas;
 const first = data[0];
 ---
 
-<!-- data-scroll-counter 作為穩定的 JS 選取點 -->
 <div data-scroll-counter style={`height: ${sitconData.config.scrollHeight}vh`} class="relative">
 	<div
 		class="bg-background sticky top-0 grid h-screen grid-cols-[1fr_auto_1fr] items-center gap-8 overflow-hidden px-[5vw] max-sm:grid-cols-[1fr] max-sm:grid-rows-[auto_auto_auto] max-sm:justify-items-center max-sm:gap-6 max-sm:px-6"
 	>
+		<!-- 背景圖片層 -->
+		<div class="pointer-events-none absolute inset-0 z-0">
+			{
+				data.map((d, i) => (
+					<img data-bg-image src={d.image.src} alt={d.image.alt} class={`absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ${i === 0 ? "opacity-100" : "opacity-0"}`} />
+				))
+			}
+			<div class="bg-background/50 absolute inset-0"></div>
+		</div>
+
 		<!-- 進度條 -->
 		<div class="bg-background absolute top-0 right-0 left-0 z-10 h-0.5">
 			<div data-progress-fill class="from-sky-blue to-blue h-full w-0 bg-linear-to-r transition-[width] duration-50 ease-linear"></div>
@@ -28,7 +37,6 @@ const first = data[0];
 
 		<!-- 中央數字 -->
 		<div class="relative z-5 flex min-w-72 flex-col items-center gap-2">
-			<!-- 垂直裝飾線 -->
 			<div class="pointer-events-none absolute top-1/2 left-1/2 -z-1 h-[calc(100%+3rem)] w-px -translate-x-1/2 -translate-y-1/2"></div>
 			<div data-number class="text-orange text-[clamp(3.5rem,10vw,7rem)] leading-none font-bold tracking-[-0.03em] tabular-nums max-sm:text-[4.5rem]">
 				{first.value.toLocaleString()}
@@ -88,6 +96,7 @@ const first = data[0];
 		const numberEl = container.querySelector("[data-number]");
 		const prefixTrack = container.querySelector("[data-prefix-track]");
 		const suffixTrack = container.querySelector("[data-suffix-track]");
+		const bgImages = container.querySelectorAll("[data-bg-image]");
 		const btnPrev = container.querySelector("[data-btn-prev]");
 		const btnNext = container.querySelector("[data-btn-next]");
 
@@ -106,16 +115,12 @@ const first = data[0];
 			const offsetTop = container.getBoundingClientRect().top + window.scrollY;
 			isSnapping = true;
 			window.scrollTo({ top: offsetTop + data[clamped].progress * scrollable, behavior: "smooth" });
-			// smooth scroll 沒有完成回呼，用 timeout 等待動畫結束後再解鎖
 			clearTimeout(snapTimer);
 			snapTimer = setTimeout(() => {
 				isSnapping = false;
 			}, 700);
 		}
 
-		// ── 依滾動方向決定要 snap 到哪個節點 ──────────
-		// 向下 → 找第一個 progress >= 當前的節點（前方節點）
-		// 向上 → 找最後一個 progress <= 當前的節點（後方節點）
 		function snapIdxByDirection() {
 			if (scrollDir > 0) {
 				const idx = data.findIndex(k => k.progress >= currentProgress);
@@ -140,16 +145,16 @@ const first = data[0];
 			btnNext.disabled = idx === data.length - 1;
 		}
 
-		// ── 文字軌道滑動 ─────────────────────────────
 		function slideToIdx(idx) {
 			if (activeIdx === idx) return;
 			activeIdx = idx;
-			// 每個項目高度固定為 h-10 = 2.5rem，用 rem 而非 % 才能正確移動一格
 			prefixTrack.style.transform = `translateY(${-(idx * 2.5)}rem)`;
 			suffixTrack.style.transform = `translateY(${-(idx * 2.5)}rem)`;
+			bgImages.forEach((img, i) => {
+				img.style.opacity = i === idx ? "1" : "0";
+			});
 		}
 
-		// ── Scroll handler ───────────────────────────
 		function onScroll() {
 			scrollDir = window.scrollY >= lastScrollY ? 1 : -1;
 			lastScrollY = window.scrollY;
@@ -163,8 +168,6 @@ const first = data[0];
 			updateNavState(state.activeIdx);
 			progressFill.style.width = currentProgress * 100 + "%";
 
-			// 只有在元件的滾動範圍內（sticky 生效中）才吸附
-			// rect.top <= 0 且 rect.bottom >= innerHeight 代表 sticky 正在作用
 			const isActive = rect.top <= 0 && rect.bottom >= window.innerHeight;
 			if (isActive && !isSnapping) {
 				clearTimeout(snapTimer);
@@ -172,8 +175,6 @@ const first = data[0];
 			}
 		}
 
-		// ── rAF 主循環：chasing counter ──────────────
-		// 文字軌道也在這裡更新，確保永遠與顯示的數字同步
 		function tick() {
 			requestAnimationFrame(tick);
 
@@ -186,7 +187,6 @@ const first = data[0];
 				numberEl.textContent = displayedValue.toLocaleString();
 			}
 
-			// 找到 displayedValue 最接近的節點，滑動文字軌道
 			let closestIdx = 0;
 			let minDist = Infinity;
 			data.forEach((d, i) => {
