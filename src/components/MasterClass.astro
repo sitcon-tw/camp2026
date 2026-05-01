@@ -79,11 +79,7 @@ const masterClassDetails = masterClasses.map((masterClass, index) => ({
 				<div class="master-class__details" aria-live="polite">
 					{
 						masterClassDetails.map(({ masterClass, index, isDuplicate }) => (
-							<article
-								class:list={["master-detail", `master-detail--${masterClass.accent}`, isDuplicate && "master-detail--mobile-duplicate"]}
-								data-master-detail
-								data-master-index={index}
-							>
+							<article class:list={["master-detail", `master-detail--${masterClass.accent}`, isDuplicate && "master-detail--mobile-duplicate"]} data-master-detail data-master-index={index}>
 								<h3 class="master-detail__title">{masterClass.title}</h3>
 								<p class="master-detail__summary">
 									{masterClass.summary.map(line => (
