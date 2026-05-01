@@ -5,7 +5,22 @@ import "../styles/global.css";
 import Header from "@components/Header.astro";
 import layoutData from "@/data/layout.json";
 
+interface Props {
+	title?: string;
+	description?: string;
+	ogImage?: string;
+}
+
+const { title, description, ogImage } = Astro.props;
 const { document: pageDocument } = layoutData;
+
+const seoData = {
+	title: title ? `${title} - ${pageDocument.siteName}` : pageDocument.siteName,
+	description: description ?? pageDocument.description,
+	canonicalURL: new URL(Astro.url.pathname, Astro.site),
+	// TODO: Add ogImage
+	ogImage: ""
+};
 ---
 
 <!doctype html>
@@ -32,6 +47,22 @@ const { document: pageDocument } = layoutData;
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width" />
 		<Font cssVariable="--font-line-seed-tw" preload />
+
+		<!-- SEO: Basic Info -->
+		<title>{seoData.title}</title>
+		<meta name="description" content={seoData.description} />
+		<link rel="icon" href="/2026/favicon.svg" type="images/svg+html" />
+		<link rel="canonical" href={seoData.canonicalURL} />
+
+		<!-- SEO: Open Graph -->
+		<meta property="og:type" content="website" />
+		<meta property="og:locale" content="zh_tw" />
+		<meta property="or:url" content={seoData.canonicalURL} />
+		<meta property="og:title" content={seoData.title} />
+		<meta property="og:description" content={seoData.description} />
+		<!-- <meta property="og:image" content={seoData.ogImage} /> -->
+		<!-- <meta property="og:image:width" content="1200" /> -->
+		<!-- <meta property="og:image:height" content="630" /> -->
 	</head>
 	<body>
 		<!-- Google Tag Manager (noscript) -->
@@ -40,7 +71,9 @@ const { document: pageDocument } = layoutData;
 		</noscript>
 		<!-- End Google Tag Manager (noscript) -->
 		<Header />
-		<slot />
+		<main>
+			<slot />
+		</main>
 		<Footer />
 	</body>
 </html>

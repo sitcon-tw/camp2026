@@ -1,8 +1,11 @@
 ---
 import FAQ from "@/components/FAQ.astro";
 import Layout from "@/layouts/Layout.astro";
+import pageData from "@/data/faq.json";
+
+const { pageMeta } = pageData;
 ---
 
-<Layout>
+<Layout title={pageMeta.title} description={pageMeta.description} ogImage={pageMeta.ogImage}>
 	<FAQ />
 </Layout>

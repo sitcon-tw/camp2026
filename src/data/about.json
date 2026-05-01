@@ -1,4 +1,9 @@
 {
+	"pageMeta": {
+		"title": "關於",
+		"description": "關於 - 學生計算機年會是誰？可以吃嗎？這裡有你要的答案！",
+		"ogImage": ""
+	},
 	"eventsHeld": {
 		"eyebrow": "Past Events",
 		"title": "我們做過的事",
