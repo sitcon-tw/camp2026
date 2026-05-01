@@ -1,1 +1,0 @@
-<div>Curriculum</div>

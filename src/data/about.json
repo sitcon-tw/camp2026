@@ -1,0 +1,271 @@
+{
+	"eventsHeld": {
+		"eyebrow": "Past Events",
+		"title": "我們做過的事",
+		"lead": "SITCON 是由學生組成、投身資訊教育與推廣開源精神的社群；SITCON Camp 自 2014 年起，把主線課程、黑客松、社群闖關、視界咖啡館與開源精神帶進同一個夏天，讓學生在實作與交流中找到自己的資訊路線。",
+		"stats": [
+			{
+				"value": "第 10 屆",
+				"label": "SITCON Camp 2026",
+				"note": "從 2014 年一路走到現在"
+			},
+			{
+				"value": "五天四夜",
+				"label": "沉浸式營隊",
+				"note": "課程、實作、交流與生活一起發生"
+			},
+			{
+				"value": "10 場",
+				"label": "夏令營累積",
+				"note": "由學生社群持續籌辦與傳承"
+			}
+		],
+		"activities": [
+			{
+				"title": "主線課程",
+				"kicker": "Core Curriculum",
+				"description": "由講師與助教帶領，從程式語言、網路概念、專案工具到實作任務，讓學員把知識轉成可以運作的作品。",
+				"imageKey": "camp",
+				"iconKey": "code",
+				"color": "soft-blue"
+			},
+			{
+				"title": "黑客松",
+				"kicker": "Hackathon",
+				"description": "在有限時間內發想、分工、實作與發表，練習把問題拆解成專案，也把團隊的想法變成成果。",
+				"imageKey": "hackathon",
+				"iconKey": "rocket",
+				"color": "orange"
+			},
+			{
+				"title": "社群闖關",
+				"kicker": "Community Challenge",
+				"description": "透過互動任務、攤位與闖關，認識不同資訊社群的文化、運作方式與開源協作精神。",
+				"imageKey": "groups",
+				"iconKey": "network",
+				"color": "green"
+			},
+			{
+				"title": "視界咖啡館",
+				"kicker": "Vision Cafe",
+				"description": "把傳統座談會改成近距離對話，讓學員能直接向業界與社群前輩提問，交換對未來路線的想法。",
+				"imageKey": "edu",
+				"iconKey": "coffee",
+				"color": "sky-blue"
+			},
+			{
+				"title": "開源精神與社群",
+				"kicker": "Open Source",
+				"description": "透過短講、社群博覽會與交流活動，理解 Open Source 不只是程式碼，也是共同學習與回饋的方式。",
+				"imageKey": "groups",
+				"iconKey": "sparkles",
+				"color": "dark-green"
+			}
+		]
+	},
+	"sitconTimeline": {
+		"config": {
+			"scrollHeight": 600
+		},
+		"items": [
+			{ "progress": 0, "value": 0, "prefix": "SITCON", "suffix": "一切的起點" },
+			{ "progress": 0.3, "value": 400, "prefix": "寬頻", "suffix": "元年" },
+			{ "progress": 0.7, "value": 1600, "prefix": "行動", "suffix": "爆發" },
+			{ "progress": 1.0, "value": 2100, "prefix": "全民", "suffix": "上網" }
+		]
+	},
+	"team": {
+		"title": "團隊成員",
+		"modal": {
+			"defaultAvatarUrl": "https://i.pravatar.cc/300?img=12",
+			"avatarAlt": "avatar",
+			"namePlaceholder": "PLACEHOLDER",
+			"descriptionPlaceholder": "PLACEHOLDER",
+			"linkPlaceholder": "PLACEHOLDER",
+			"linkHref": "",
+			"closeLabel": "Close"
+		},
+		"groups": [
+			{
+				"name": "開發組",
+				"description": "負責網站、系統工具與活動期間的技術支援，讓營隊的線上流程與現場體驗穩定運作。",
+				"members": [
+					{
+						"name": "王大明",
+						"description": "系統架構師，熱衷於分散式系統設計與效能調優。",
+						"job": "組長",
+						"avatarImgUrl": "https://i.pravatar.cc/150?img=3",
+						"avatarLink": ""
+					},
+					{
+						"name": "吳佳玲",
+						"description": "前端工程師，擅長動畫效果與響應式設計。",
+						"job": "副組長",
+						"avatarImgUrl": "https://i.pravatar.cc/150?img=44",
+						"avatarLink": ""
+					},
+					{
+						"name": "黃俊傑",
+						"description": "後端工程師，專注於 API 設計與微服務架構。",
+						"job": "組員",
+						"avatarImgUrl": "https://i.pravatar.cc/150?img=15",
+						"avatarLink": ""
+					},
+					{
+						"name": "鄭雅婷",
+						"description": "DevOps 工程師，負責雲端部署與監控基礎設施。",
+						"job": "精靈",
+						"avatarImgUrl": "https://i.pravatar.cc/150?img=49",
+						"avatarLink": ""
+					},
+					{
+						"name": "蔡佳霖",
+						"description": "資安工程師，專注於滲透測試與漏洞分析。",
+						"job": "組長",
+						"avatarImgUrl": "https://i.pravatar.cc/150?img=21",
+						"avatarLink": ""
+					},
+					{
+						"name": "謝文志",
+						"description": "行動應用開發者，熟悉 iOS 與 Android 跨平台開發。",
+						"job": "副組長",
+						"avatarImgUrl": "https://i.pravatar.cc/150?img=33",
+						"avatarLink": ""
+					},
+					{
+						"name": "周怡君",
+						"description": "資料工程師，擅長 ETL 流程設計與大數據分析。",
+						"job": "組員",
+						"avatarImgUrl": "https://i.pravatar.cc/150?img=56",
+						"avatarLink": ""
+					},
+					{
+						"name": "楊建宏",
+						"description": "嵌入式系統工程師，熱衷於硬體軟體整合開發。",
+						"job": "精靈",
+						"avatarImgUrl": "https://i.pravatar.cc/150?img=7",
+						"avatarLink": ""
+					},
+					{
+						"name": "何雅雯",
+						"description": "機器學習工程師，專注於自然語言處理與模型訓練。",
+						"job": "精靈",
+						"avatarImgUrl": "https://i.pravatar.cc/150?img=62",
+						"avatarLink": ""
+					},
+					{
+						"name": "蘇俊宏",
+						"description": "網路工程師，擅長網路拓撲規劃與流量優化。",
+						"job": "精靈",
+						"avatarImgUrl": "https://i.pravatar.cc/150?img=18",
+						"avatarLink": ""
+					},
+					{
+						"name": "賴佳妮",
+						"description": "測試工程師，專精自動化測試框架與品質保證流程。",
+						"job": "精靈",
+						"avatarImgUrl": "https://i.pravatar.cc/150?img=39",
+						"avatarLink": ""
+					},
+					{
+						"name": "江志偉",
+						"description": "遊戲開發者，熱衷於即時渲染與物理引擎整合。",
+						"job": "精靈",
+						"avatarImgUrl": "https://i.pravatar.cc/150?img=11",
+						"avatarLink": ""
+					},
+					{
+						"name": "李小華",
+						"description": "區塊鏈開發者，專注於智能合約與去中心化應用。",
+						"job": "精靈",
+						"avatarImgUrl": "https://i.pravatar.cc/150?img=64",
+						"avatarLink": ""
+					}
+				]
+			},
+			{
+				"name": "行銷組",
+				"description": "負責對外溝通、品牌呈現與社群內容，讓更多學生認識 SITCON Camp 的精神與活動資訊。",
+				"members": [
+					{
+						"name": "林思穎",
+						"description": "業務開發經理，擅長建立合作夥伴關係與談判策略。",
+						"job": "業務",
+						"avatarImgUrl": "https://i.pravatar.cc/150?img=43",
+						"avatarLink": ""
+					},
+					{
+						"name": "陳宜蓁",
+						"description": "品牌行銷專員，負責社群經營與內容策略規劃。",
+						"job": "行銷",
+						"avatarImgUrl": "https://i.pravatar.cc/150?img=58",
+						"avatarLink": ""
+					},
+					{
+						"name": "洪冠宇",
+						"description": "企業客戶顧問，專注於解決方案銷售與客戶成功管理。",
+						"job": "業務",
+						"avatarImgUrl": "https://i.pravatar.cc/150?img=22",
+						"avatarLink": ""
+					}
+				]
+			}
+		]
+	},
+	"organizerBrands": {
+		"sections": [
+			{
+				"tag": "主辦",
+				"items": [
+					{
+						"name": "SITCON 學生計算機年會",
+						"role": "主辦單位",
+						"description": "SITCON 學生計算機年會是一個由學生主辦的資訊科技研討會，致力於推廣資訊科技教育並提供學生交流平台。",
+						"iconPath": "/sponsors/SITCON.svg",
+						"url": "https://sitcon.org"
+					},
+					{
+						"name": "中央研究院資訊科學研究所",
+						"role": "主辦單位",
+						"description": "中央研究院資訊科學研究所從事前瞻資訊科技研究，培育頂尖資訊科研人才。",
+						"iconPath": "/sponsors/iis.webp",
+						"url": "https://www.iis.sinica.edu.tw"
+					},
+					{
+						"name": "財團法人開放文化基金會",
+						"role": "主辦單位",
+						"description": "開放文化基金會致力於推動開放文化、開放原始碼及自由軟體運動。",
+						"iconPath": "/sponsors/ocf.webp",
+						"url": "https://ocf.tw"
+					}
+				]
+			},
+			{
+				"tag": "黃金贊助",
+				"items": [
+					{
+						"name": "LINE 台灣",
+						"role": "黃金贊助",
+						"description": "LINE Taiwan 提供即時通訊、行動支付等多元服務，致力於打造智慧生活。",
+						"iconPath": "/sponsors/line.webp",
+						"url": "https://linecorp.com"
+					},
+					{
+						"name": "台灣積體電路製造股份有限公司",
+						"role": "黃金贊助",
+						"description": "台積電是全球領先的半導體製造公司，推動尖端科技發展。",
+						"iconPath": "/sponsors/tsmc.svg",
+						"url": "https://tsmc.com"
+					},
+					{
+						"name": "AMD",
+						"role": "黃金贊助",
+						"description": "AMD 提供高效能運算與圖形處理器，引領高效能運算時代。",
+						"iconPath": "/sponsors/amd.svg",
+						"url": "https://www.amd.com/en.html"
+					}
+				]
+			}
+		]
+	}
+}

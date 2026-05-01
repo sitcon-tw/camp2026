@@ -1,1 +1,204 @@
-<div>Student Comment</div>
+---
+import { Image } from "astro:assets";
+import MaterialSymbolsPlayCircleOutlineRounded from "~icons/material-symbols/play-circle-outline-rounded";
+
+import homeData from "@/data/home.json";
+
+const { studentComment } = homeData;
+const commentColorClassMap: Record<string, string> = {
+	blue: "bg-blue",
+	orange: "bg-orange",
+	green: "bg-green",
+	"dark-green": "bg-dark-green",
+	"sky-blue": "bg-sky-blue",
+	"soft-blue": "bg-soft-blue"
+};
+---
+
+<div class="bg-background relative overflow-hidden">
+	<div class="site-container flex flex-col gap-20 py-4 sm:pt-32 sm:pb-16">
+		<h2 class="text-center text-[3rem] leading-[133%] font-bold text-balance">{studentComment.sectionTitle}</h2>
+		<!-- 固定留言 -->
+		<div class="relative py-8">
+			<!-- 背景跑馬燈 -->
+			<div
+				class="pointer-events-none absolute inset-y-0 left-1/2 z-0 flex w-screen -translate-x-1/2 flex-col justify-between overflow-hidden opacity-15"
+				data-student-bg-marquee
+				data-marquee-text={studentComment.bgMarquee.text}
+			>
+			</div>
+			<div class="relative z-10">
+				<div class="grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-4 md:gap-x-8 md:gap-y-10 lg:grid-cols-3 lg:gap-x-16">
+					{
+						studentComment.comments.map(c => (
+							<div class="bg-foreground flex flex-col items-start rounded-4xl">
+								<div class:list={["flex h-19 items-center gap-4 self-stretch rounded-t-4xl p-4", commentColorClassMap[c.color] ?? "bg-blue"]}>
+									<Image src={studentComment.avatarSrc} alt={studentComment.avatarAlt} height="48" width="48" class="rounded-full" />
+									<p class="text-[1.5rem] leading-[100%] font-bold text-white">{c.name}</p>
+									<div />
+								</div>
+								<p class="text-background p-6 text-[1rem] leading-[133%]">{c.comment}</p>
+							</div>
+						))
+					}
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- 影片跑馬燈 -->
+	<div class="marquee-container mb-16 flex w-screen overflow-hidden" data-video-marquee-container>
+		<div class="marquee-track flex w-max" data-video-marquee-track>
+			{
+				[0, 1].map(groupIndex => (
+					<div class="marquee-group flex shrink-0 gap-4 pr-4" data-marquee-group aria-hidden={groupIndex === 1 ? "true" : undefined}>
+						{studentComment.video.map(v => (
+							<button
+								type="button"
+								class="video-card bg-foreground relative aspect-video w-[min(82vw,28rem)] cursor-pointer rounded-4xl bg-cover bg-center"
+								style={`background-image: url('${v.cover}')`}
+								data-url={v.url}
+								aria-label={`播放 ${v.label} 影片`}
+							>
+								<div class="from-foreground flex h-full w-full items-center justify-center rounded-4xl bg-linear-to-t from-0% to-transparent to-30%">
+									<MaterialSymbolsPlayCircleOutlineRounded class="text-background text-2xl" />
+								</div>
+								<p class="text-background absolute bottom-3 left-0 w-full text-center text-4xl font-bold">{v.label}</p>
+							</button>
+						))}
+					</div>
+				))
+			}
+		</div>
+	</div>
+
+	<!-- 學員訪談 YouTube 影片 popup -->
+	<dialog id="comment-dialog" class="m-auto w-full max-w-3xl rounded-4xl">
+		<div class="aspect-video w-full">
+			<iframe id="comment-iframe" class="h-full w-full rounded-4xl" title="YouTube video player" allow="autoplay; encrypted-media;" src="" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+		</div>
+	</dialog>
+</div>
+
+<style>
+	@keyframes marquee {
+		from {
+			transform: translateX(0);
+		}
+		to {
+			transform: translateX(-50%);
+		}
+	}
+
+	/* 影片跑馬燈 */
+	.marquee-track {
+		animation: marquee 60s linear infinite;
+	}
+
+	.marquee-container:hover .marquee-track {
+		animation-play-state: paused;
+	}
+
+	/* 背景文字跑馬燈 */
+	:global(.student-comment-marquee-row) {
+		animation: marquee 50s linear infinite;
+		width: max-content;
+	}
+
+	:global(.student-comment-marquee-text) {
+		font-size: 3rem;
+		font-weight: 700;
+		line-height: 100%;
+		white-space: nowrap;
+		user-select: none;
+	}
+</style>
+
+<script>
+	const dialog = document.getElementById("comment-dialog") as HTMLDialogElement;
+	const iframe = document.getElementById("comment-iframe") as HTMLIFrameElement;
+	const bgMarquee = document.querySelector<HTMLElement>("[data-student-bg-marquee]");
+	const videoMarqueeTrack = document.querySelector<HTMLElement>("[data-video-marquee-track]");
+	const videoMarqueeContainer = document.querySelector<HTMLElement>("[data-video-marquee-container]");
+
+	function renderBgMarqueeRows() {
+		if (!bgMarquee) return;
+
+		const text = bgMarquee.dataset.marqueeText ?? "";
+		const targetRowGap = window.innerWidth < 640 ? 96 : window.innerWidth < 1024 ? 128 : 160;
+		const rowCount = Math.min(24, Math.max(6, Math.ceil(bgMarquee.clientHeight / targetRowGap)));
+		const minimumTextRepeat = Math.max(20, Math.ceil((window.innerWidth * 2.5) / Math.max(text.length * 24, 1)));
+		const textRepeat = minimumTextRepeat + (minimumTextRepeat % 2);
+		const renderKey = `${rowCount}:${textRepeat}`;
+		if (bgMarquee.dataset.renderKey === renderKey) return;
+
+		bgMarquee.dataset.renderKey = renderKey;
+		bgMarquee.replaceChildren();
+
+		for (let i = 0; i < rowCount; i += 1) {
+			const row = document.createElement("div");
+			row.className = "student-comment-marquee-row";
+			row.style.marginLeft = `${(i % 3) * -8}rem`;
+
+			const rowText = document.createElement("span");
+			rowText.className = "student-comment-marquee-text";
+			rowText.textContent = `${text.repeat(textRepeat)}\u00A0`;
+
+			row.append(rowText);
+			bgMarquee.append(row);
+		}
+	}
+
+	if (bgMarquee) {
+		renderBgMarqueeRows();
+		new ResizeObserver(renderBgMarqueeRows).observe(bgMarquee);
+		window.addEventListener("resize", renderBgMarqueeRows);
+	}
+
+	if (videoMarqueeTrack) {
+		const groups = Array.from(videoMarqueeTrack.querySelectorAll<HTMLElement>("[data-marquee-group]"));
+		const sourceItems = groups[0] ? Array.from(groups[0].children).map(item => item.cloneNode(true)) : [];
+
+		function fillVideoMarquee() {
+			if (!sourceItems.length) return;
+
+			const targetWidth = window.innerWidth * 1.25;
+			for (const group of groups) {
+				group.replaceChildren();
+
+				let index = 0;
+				const maxItems = sourceItems.length * 50;
+				while ((group.scrollWidth < targetWidth || index < sourceItems.length) && index < maxItems) {
+					group.append(sourceItems[index % sourceItems.length].cloneNode(true));
+					index += 1;
+				}
+			}
+		}
+
+		fillVideoMarquee();
+		window.addEventListener("resize", fillVideoMarquee);
+	}
+
+	videoMarqueeContainer?.addEventListener("click", e => {
+		if (!(e.target instanceof Element)) return;
+
+		const card = e.target.closest<HTMLElement>(".video-card");
+		if (!card || !videoMarqueeContainer.contains(card)) return;
+
+		const url = card.dataset.url;
+		if (!url) return;
+		iframe.src = url;
+		dialog.showModal();
+	});
+
+	dialog.addEventListener("click", e => {
+		if (e.target === dialog) closeModal();
+	});
+
+	dialog.addEventListener("close", _ => {
+		iframe.src = "";
+	});
+
+	function closeModal() {
+		dialog.close();
+	}
+</script>

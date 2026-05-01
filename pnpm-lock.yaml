@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@lucide/astro':
+        specifier: ^1.11.0
+        version: 1.11.0(astro@6.1.5(jiti@2.6.1)(lightningcss@1.32.0)(rollup@4.60.1)(typescript@5.9.3)(yaml@2.8.3))
       '@tailwindcss/vite':
         specifier: ^4.2.2
         version: 4.2.2(vite@7.3.2(jiti@2.6.1)(lightningcss@1.32.0)(yaml@2.8.3))
@@ -20,6 +23,9 @@ importers:
       gsap:
         specifier: ^3.14.2
         version: 3.14.2
+      prettier-plugin-tailwindcss:
+        specifier: ^0.7.2
+        version: 0.7.2(prettier-plugin-astro@0.14.1)(prettier-plugin-organize-imports@4.3.0(prettier@3.8.2)(typescript@5.9.3))(prettier@3.8.2)
       sharp:
         specifier: ^0.34.5
         version: 0.34.5
@@ -36,6 +42,9 @@ importers:
       '@iconify-json/lucide':
         specifier: ^1.2.104
         version: 1.2.104
+      '@iconify-json/simple-icons':
+        specifier: ^1.2.80
+        version: 1.2.80
       '@iconify/json':
         specifier: ^2.2.467
         version: 2.2.467
@@ -51,9 +60,6 @@ importers:
       prettier-plugin-packagejson:
         specifier: ^3.0.2
         version: 3.0.2(prettier@3.8.2)
-      prettier-plugin-tailwindcss:
-        specifier: ^0.7.2
-        version: 0.7.2(prettier-plugin-astro@0.14.1)(prettier-plugin-organize-imports@4.3.0(prettier@3.8.2)(typescript@5.9.3))(prettier@3.8.2)
       typescript:
         specifier: ^5.9.3
         version: 5.9.3
@@ -320,6 +326,9 @@ packages:
   '@iconify-json/lucide@1.2.104':
     resolution: {integrity: sha512-Vh4VPA/UNFhSPzEdDnSuOPA1xO6b/kI1w4SLBEiKnsFYPWimq2tVDynMgKnwddz6iZpuZfZU4PXR6kn0hJayKw==}
 
+  '@iconify-json/simple-icons@1.2.80':
+    resolution: {integrity: sha512-iglncJJ6X/dVuzFDU32MrHwwo4RBwivGf108dgyYg+HKS78ifx0h7sTenpDZMVT+UhdS6CSgZcvY/SvRXlIEUg==}
+
   '@iconify/json@2.2.467':
     resolution: {integrity: sha512-vjw27l6Sp6OJnCSNAhE6PGCZFYNSp68j1xK+hws0T5mptSEez0EjmmJBQLUk4yM5nhA9G5H5mW3EF2/yRfk74Q==}
 
@@ -497,6 +506,11 @@ packages:
 
   '@jridgewell/trace-mapping@0.3.31':
     resolution: {integrity: sha512-zzNR+SdQSDJzc8joaeP8QQoCQr8NuYx2dIIytl1QeBEZHJ9uW6hebsrYgbz8hJwUQao3TWCMtmfV8Nu1twOLAw==}
+
+  '@lucide/astro@1.11.0':
+    resolution: {integrity: sha512-b9AA35k3L/DR9J9OoGWIHks4dtMzcDo9P0sZEEDmFxIy0qqw+rKMt3TLk+YEoXppcqXMK/DTM1tIfuaH+frX/w==}
+    peerDependencies:
+      astro: ^4 || ^5 || ^6
 
   '@oslojs/encoding@1.1.0':
     resolution: {integrity: sha512-70wQhgYmndg4GCPxPPxPGevRKqTIJ2Nh4OkiMWmDAVYsTQ+Ta7Sq+rPevXyXGdzr30/qZBnyOalCszoMxlyldQ==}
@@ -2404,6 +2418,10 @@ snapshots:
     dependencies:
       '@iconify/types': 2.0.0
 
+  '@iconify-json/simple-icons@1.2.80':
+    dependencies:
+      '@iconify/types': 2.0.0
+
   '@iconify/json@2.2.467':
     dependencies:
       '@iconify/types': 2.0.0
@@ -2531,6 +2549,10 @@ snapshots:
     dependencies:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.5
+
+  '@lucide/astro@1.11.0(astro@6.1.5(jiti@2.6.1)(lightningcss@1.32.0)(rollup@4.60.1)(typescript@5.9.3)(yaml@2.8.3))':
+    dependencies:
+      astro: 6.1.5(jiti@2.6.1)(lightningcss@1.32.0)(rollup@4.60.1)(typescript@5.9.3)(yaml@2.8.3)
 
   '@oslojs/encoding@1.1.0': {}
 

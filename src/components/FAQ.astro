@@ -1,1 +1,9 @@
-<div>FAQ</div>
+---
+import faqData from "@/data/faq.json";
+
+const { faq } = faqData;
+---
+
+<section id="faq">
+	<div>{faq.title}</div>
+</section>

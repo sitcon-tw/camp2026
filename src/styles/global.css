@@ -6,6 +6,8 @@
 	--color-background: #f9f5ef;
 	--color-foreground: #24272e;
 	--color-black: #000000;
+	--color-white: #ffffff;
+	--color-transparent: transparent;
 	--color-green: #80d34b;
 	--color-dark-green: #2d4219;
 	--color-primary-blue: #2464ea;
@@ -13,11 +15,30 @@
 	--color-soft-blue: #60a7d5;
 	--color-sky-blue: #78a1f0;
 	--color-orange: #f69977;
+	--color-muted: oklch(70.7% 0.022 261.325);
+	--color-danger: oklch(63.7% 0.237 25.331);
+	--color-danger-soft: oklch(70.4% 0.191 22.216);
+	--color-sitcon-brand: #77b55a;
 }
 
 @layer base {
+	:root {
+		--site-content-max: 80rem;
+		--site-content-gutter: clamp(1rem, 4vw, 4rem);
+	}
+
 	html {
-		scrollbar-gutter: stable;
+		min-height: 100%;
+		background-color: var(--color-background);
+	}
+
+	body {
+		min-height: 100vh;
+		min-height: 100svh;
+		margin: 0;
+		display: flex;
+		flex-direction: column;
+		background-color: var(--color-background);
 	}
 
 	html,
@@ -27,5 +48,17 @@
 	select,
 	textarea {
 		font-family: var(--font-sans);
+	}
+
+	body > footer {
+		margin-top: auto;
+	}
+}
+
+@layer utilities {
+	.site-container {
+		box-sizing: border-box;
+		width: min(calc(100% - var(--site-content-gutter) - var(--site-content-gutter)), var(--site-content-max));
+		margin-inline: auto;
 	}
 }

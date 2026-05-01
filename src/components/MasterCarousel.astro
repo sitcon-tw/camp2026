@@ -1,0 +1,115 @@
+---
+import type { ImageMetadata } from "astro";
+import { Image } from "astro:assets";
+import homeData from "@/data/home.json";
+import hackathon from "@/assets/pics/hackathon.webp";
+import camp from "@/assets/pics/camp.webp";
+import groups from "@/assets/pics/groups.webp";
+import edu from "@/assets/pics/edu.webp";
+
+// maps image key → astro ImageMetadata
+const imageMap: Record<string, ImageMetadata> = {
+	hackathon,
+	camp,
+	groups,
+	edu
+};
+
+const { masterCarousel } = homeData;
+
+interface Member {
+	id: string;
+	name: string;
+	role: string;
+	imgKey: string;
+	bio: string;
+}
+
+const members = masterCarousel.members as Member[];
+
+// card border accent palette — one random color per card
+const accentPalette = masterCarousel.accentPalette;
+type Accent = (typeof accentPalette)[number];
+
+type DisplayMember = Member & { _memberId: string; accent: Accent };
+const cardAccents: Accent[] = members.map(() => accentPalette[Math.floor(Math.random() * accentPalette.length)]);
+const trackMembers: DisplayMember[] = members.map((m, i) => ({
+	...m,
+	_memberId: m.id,
+	accent: cardAccents[i]
+}));
+---
+
+<section class="bg-background overflow-hidden py-8" style="--gap: clamp(1.5rem, 4.2vw, 4rem); --heading-size: clamp(1.65rem, 3.25vw, 2.5rem)">
+	<div class="site-container">
+		<div class="bg-green flex w-fit items-center justify-center gap-2.5 p-2.5">
+			<h2 class="text-foreground leading-none font-bold" style="font-size: var(--heading-size)">{masterCarousel.sectionTitle}</h2>
+		</div>
+	</div>
+
+	<div class="group mt-(--gap) flex w-screen overflow-hidden" data-master-marquee-track>
+		{
+			[0, 1].map(trackIdx => (
+				<div class="marquee-track flex shrink-0 gap-6 pr-6 group-hover:[animation-play-state:paused]" data-marquee-group aria-hidden={trackIdx === 1 ? "true" : undefined}>
+					{trackMembers.map(member => (
+						<div class="member-card relative h-95 w-70 shrink-0 cursor-pointer rounded-[2.5rem] text-left" data-member-id={member._memberId}>
+							<div class="relative h-full w-full overflow-hidden rounded-[2.5rem] border-r-6 border-b-6" style={`border-color: var(--color-${member.accent})`}>
+								<Image src={imageMap[member.imgKey]} alt={member.name} class="h-full w-full object-cover" loading="eager" decoding="async" width={280} height={380} format="webp" />
+
+								<div class="pointer-events-none absolute inset-x-0 bottom-0 z-0 h-3/5 bg-linear-to-t from-black/90 via-black/50 to-transparent" />
+
+								<div class="absolute inset-x-0 bottom-0 z-10 cursor-text p-6 text-white select-text">
+									<h3 class="text-3xl font-bold tracking-widest">{member.name}</h3>
+									<p class="mt-2 text-lg font-medium text-white/90">{member.role}</p>
+								</div>
+							</div>
+						</div>
+					))}
+				</div>
+			))
+		}
+	</div>
+</section>
+
+<style>
+	.marquee-track {
+		animation: marquee 20s linear infinite;
+		will-change: transform;
+	}
+	@keyframes marquee {
+		from {
+			transform: translateX(0);
+		}
+		to {
+			transform: translateX(-100%);
+		}
+	}
+</style>
+
+<script>
+	const masterMarqueeTrack = document.querySelector<HTMLElement>("[data-master-marquee-track]");
+
+	if (masterMarqueeTrack) {
+		const groups = Array.from(masterMarqueeTrack.querySelectorAll<HTMLElement>("[data-marquee-group]"));
+		const sourceItems = groups[0] ? Array.from(groups[0].children).map(item => item.cloneNode(true)) : [];
+
+		function fillMasterMarquee() {
+			if (!sourceItems.length) return;
+
+			const targetWidth = window.innerWidth * 1.25;
+			for (const group of groups) {
+				group.replaceChildren();
+
+				let index = 0;
+				const maxItems = sourceItems.length * 50;
+				while ((group.scrollWidth < targetWidth || index < sourceItems.length) && index < maxItems) {
+					group.append(sourceItems[index % sourceItems.length].cloneNode(true));
+					index += 1;
+				}
+			}
+		}
+
+		fillMasterMarquee();
+		window.addEventListener("resize", fillMasterMarquee);
+	}
+</script>
