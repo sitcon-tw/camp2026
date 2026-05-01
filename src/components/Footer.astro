@@ -64,9 +64,7 @@ type FooterIcon = keyof typeof iconMap;
 			{
 				footer.sections.map(section => (
 					<div class="flex flex-col">
-						<h1 class:list={["label-base", `label-${section.variant}`]}>
-							{section.title}
-						</h1>
+						<h1 class:list={["label-base", `label-${section.variant}`]}>{section.title}</h1>
 
 						{section.type === "contact" && (
 							<div class="mb-5">
