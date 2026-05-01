@@ -102,27 +102,32 @@
 				"links": [
 					{
 						"label": "Instagram",
-						"href": "https://www.instagram.com/sitcon.tw",
+						"href": "https://sitcon.org/ig",
 						"icon": "instagram"
 					},
 					{
+						"label": "Threads",
+						"href": "https://sitcon.org/threads",
+						"icon": "threads"
+					},
+					{
 						"label": "Facebook",
-						"href": "https://www.facebook.com/SITCONtw",
+						"href": "https://sitcon.org/fb",
 						"icon": "facebook"
 					},
 					{
-						"label": "YouTube",
-						"href": "https://www.youtube.com/@SITCONtw",
+						"label": "Youtube",
+						"href": "https://sitcon.org/youtube",
 						"icon": "youtube"
 					},
 					{
 						"label": "Flickr",
-						"href": "https://www.flickr.com/photos/sitcon/",
+						"href": "https://sitcon.org/flickr",
 						"icon": "flickr"
 					},
 					{
 						"label": "Telegram",
-						"href": "https://t.me/SITCONgeneral",
+						"href": "https://sitcon.org/telegram",
 						"icon": "telegram"
 					}
 				]
