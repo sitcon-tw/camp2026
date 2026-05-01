@@ -4,7 +4,8 @@
 	"type": "module",
 	"scripts": {
 		"astro": "astro",
-		"build": "astro build",
+		"build": "astro build && node scripts/font-subset.mjs",
+		"build:subset": "node scripts/font-subset.mjs",
 		"dev": "astro dev",
 		"preinstall": "npx only-allow pnpm",
 		"lint": "astro check",
@@ -34,6 +35,7 @@
 		"prettier-plugin-organize-imports": "^4.3.0",
 		"prettier-plugin-packagejson": "^3.0.2",
 		"prettier-plugin-tailwindcss": "^0.7.2",
+		"subset-font": "^2.5.0",
 		"typescript": "^5.9.3",
 		"unplugin-icons": "^23.0.1"
 	},
