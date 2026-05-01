@@ -4,10 +4,10 @@
 	"exclude": ["dist", "public/video/intro-hls/**/*.ts"],
 	"compilerOptions": {
 		"baseUrl": ".",
+		"types": ["unplugin-icons/types/astro"],
 		"paths": {
 			"@/*": ["src/*"],
 			"@components/*": ["src/components/*"]
-		},
-		"types": ["unplugin-icons/types/astro"]
+		}
 	}
 }

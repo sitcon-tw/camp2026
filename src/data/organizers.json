@@ -1,0 +1,48 @@
+{
+	"主辦": [
+		{
+			"name": "SITCON 學生計算機年會",
+			"role": "主辦單位",
+			"description": "SITCON 學生計算機年會是一個由學生主辦的資訊科技研討會，致力於推廣資訊科技教育並提供學生交流平台。",
+			"iconPath": "/sponsors/SITCON.svg",
+			"url": "https://sitcon.org"
+		},
+		{
+			"name": "中央研究院資訊科學研究所",
+			"role": "主辦單位",
+			"description": "中央研究院資訊科學研究所從事前瞻資訊科技研究，培育頂尖資訊科研人才。",
+			"iconPath": "/sponsors/iis.webp",
+			"url": "https://www.iis.sinica.edu.tw"
+		},
+		{
+			"name": "財團法人開放文化基金會",
+			"role": "主辦單位",
+			"description": "開放文化基金會致力於推動開放文化、開放原始碼及自由軟體運動。",
+			"iconPath": "/sponsors/ocf.webp",
+			"url": "https://ocf.tw"
+		}
+	],
+	"黃金贊助": [
+		{
+			"name": "LINE 台灣",
+			"role": "黃金贊助",
+			"description": "LINE Taiwan 提供即時通訊、行動支付等多元服務，致力於打造智慧生活。",
+			"iconPath": "/sponsors/line.webp",
+			"url": "https://linecorp.com"
+		},
+		{
+			"name": "台灣積體電路製造股份有限公司",
+			"role": "黃金贊助",
+			"description": "台積電是全球領先的半導體製造公司，推動尖端科技發展。",
+			"iconPath": "/sponsors/tsmc.svg",
+			"url": "https://tsmc.com"
+		},
+		{
+			"name": "AMD",
+			"role": "黃金贊助",
+			"description": "AMD 提供高效能運算與圖形處理器，引領高效能運算時代。",
+			"iconPath": "/sponsors/amd.svg",
+			"url": "https://amd.com"
+		}
+	]
+}

@@ -16,10 +16,6 @@
 }
 
 @layer base {
-	html {
-		scrollbar-gutter: stable;
-	}
-
 	html,
 	body,
 	button,
@@ -31,3 +27,9 @@
 }
 
 @source inline("{bg-blue,bg-orange,bg-green,bg-dark-green,bg-sky-blue,bg-soft-blue}");
+
+@utility heading-section {
+	font-family: var(--font-line-seed-tw), ui-sans-serif;
+	font-size: 48px;
+	font-weight: 700;
+	line-height: 1;

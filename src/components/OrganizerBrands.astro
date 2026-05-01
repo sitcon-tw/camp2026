@@ -1,1 +1,60 @@
-<div>Organizer Brands</div>
+---
+import { Image } from "astro:assets";
+import organizers from "../data/organizers.json";
+
+type Org = {
+	name: string;
+	role?: string;
+	description?: string;
+	iconPath: string;
+	url?: string;
+};
+
+const isOrg = (v: unknown): v is Org => {
+	if (typeof v !== "object" || v === null) return false;
+	const r = v as Record<string, unknown>;
+	return typeof r.name === "string" && typeof r.iconPath === "string";
+};
+
+const sponsorGlob = import.meta.glob<{ default: ImageMetadata }>("../assets/sponsors/*", { eager: true });
+
+function getMeta(iconPath: string): ImageMetadata | undefined {
+	const file = iconPath.split("/").pop();
+	return sponsorGlob[`../assets/sponsors/${file}`]?.default;
+}
+
+type ResolvedOrg = Org & { meta?: ImageMetadata };
+
+async function resolve(org: Org): Promise<ResolvedOrg> {
+	const meta = getMeta(org.iconPath);
+	return { ...org, meta };
+}
+
+const sections = await Promise.all(
+	Object.entries(organizers)
+		.map(([tag, items]): [string, Org[]] => [tag, (items as unknown[]).filter(isOrg)])
+		.filter(([, list]) => list.length > 0)
+		.map(async ([tag, items]) => [tag, await Promise.all(items.map(resolve))] as [string, ResolvedOrg[]])
+);
+---
+
+<div class="bg-background py-20">
+	{
+		sections.map(([tag, items]) => (
+			<section class="mx-4 mt-12 sm:mx-12 md:mx-24 md:mt-24 lg:mx-64 lg:mt-32">
+				<h1 class="mb-4 text-center text-3xl font-bold md:text-left md:text-4xl lg:text-[48px]">{tag}</h1>
+				<div class="flex flex-wrap items-center justify-center gap-4 gap-y-6 sm:gap-6 md:justify-start lg:gap-8">
+					{items.map(org => (
+						<button type="button" class="org-card group focus-visible:ring-primary-blue/50 focus-visible:ring-2 focus-visible:outline-none">
+							{org.meta ? (
+								<Image src={org.meta} alt={org.name} class="h-20 w-auto object-contain md:h-28 lg:h-32" />
+							) : (
+								<img src={org.iconPath} alt={org.name} class="h-20 w-auto object-contain md:h-28 lg:h-32" />
+							)}
+						</button>
+					))}
+				</div>
+			</section>
+		))
+	}
+</div>

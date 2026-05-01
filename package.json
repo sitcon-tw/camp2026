@@ -14,10 +14,12 @@
 		"preview": "astro preview"
 	},
 	"dependencies": {
+		"@lucide/astro": "^1.11.0",
 		"@tailwindcss/vite": "^4.2.2",
 		"animejs": "^4.3.6",
 		"astro": "^6.1.5",
 		"gsap": "^3.14.2",
+		"prettier-plugin-tailwindcss": "^0.7.2",
 		"sharp": "^0.34.5",
 		"tailwindcss": "^4.2.2"
 	},

@@ -1,12 +1,17 @@
 # USE PNPM!!!
 package-lock.json
 yarn.lock
-bun.lockb
+bun.lock
 
 # Keep your editor settings out of version control
 .vscode
 .jetbrains
 .zed
+
+# local AI assistant workspaces
+ai/
+.claude/
+.codex/
 
 # build output
 dist/
@@ -16,6 +21,7 @@ dist/
 
 # dependencies
 node_modules/
+package-lock.json
 
 # logs
 npm-debug.log*
