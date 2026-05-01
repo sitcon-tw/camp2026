@@ -96,7 +96,7 @@ const colorClassMap: Record<ActivityColor, { bar: string; icon: string; ring: st
 ---
 
 <section class="bg-background text-foreground relative isolate overflow-hidden px-4 pt-[clamp(7rem,12vw,11rem)] pb-[clamp(4rem,8vw,7rem)] sm:px-8 lg:px-16">
-	<div class="pointer-events-none absolute inset-x-0 top-[8rem] -z-10 flex flex-col gap-4 overflow-hidden opacity-10" aria-hidden="true">
+	<div class="pointer-events-none absolute inset-x-0 top-32 -z-10 flex flex-col gap-4 overflow-hidden opacity-10" aria-hidden="true">
 		{
 			Array.from({ length: 5 }, (_, i) => (
 				<div class="events-held-marquee text-[clamp(3rem,7vw,7rem)] leading-none font-extrabold whitespace-nowrap" style={`--offset: ${i * -8}rem`}>
@@ -121,7 +121,7 @@ const colorClassMap: Record<ActivityColor, { bar: string; icon: string; ring: st
 			<div class="grid gap-3 sm:grid-cols-3 lg:grid-cols-1">
 				{
 					eventsHeld.stats.map((stat, i) => (
-						<article class="bg-foreground text-background grid min-h-[8rem] grid-cols-[auto_1fr] items-center gap-4 overflow-hidden rounded-[2rem_0_2rem_0] p-5 shadow-[0.35rem_0.35rem_0_0_var(--color-soft-blue)] sm:grid-cols-1 sm:items-start lg:grid-cols-[auto_1fr]">
+						<article class="bg-foreground text-background grid min-h-32 grid-cols-[auto_1fr] items-center gap-4 overflow-hidden rounded-[2rem_0_2rem_0] p-5 shadow-[0.35rem_0.35rem_0_0_var(--color-soft-blue)] sm:grid-cols-1 sm:items-start lg:grid-cols-[auto_1fr]">
 							<div class:list={["text-foreground grid h-14 w-14 place-items-center rounded-full text-xl font-extrabold", i === 0 ? "bg-orange" : i === 1 ? "bg-green" : "bg-soft-blue"]}>{i + 1}</div>
 							<div>
 								<strong class="block text-[clamp(1.65rem,3vw,2.35rem)] leading-none font-extrabold">{stat.value}</strong>
@@ -143,7 +143,7 @@ const colorClassMap: Record<ActivityColor, { bar: string; icon: string; ring: st
 					return (
 						<article
 							class:list={[
-								"group bg-foreground text-background relative flex min-h-[24rem] flex-col overflow-hidden rounded-[1.75rem_0_1.75rem_0] ring-4 transition-transform duration-300 hover:-translate-y-1 md:min-h-[27rem] xl:min-h-[34rem]",
+								"group bg-foreground text-background relative flex min-h-96 flex-col overflow-hidden rounded-[1.75rem_0_1.75rem_0] ring-4 transition-transform duration-300 hover:-translate-y-1 md:min-h-108 xl:min-h-136",
 								color.ring
 							]}
 						>

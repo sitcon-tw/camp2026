@@ -30,10 +30,10 @@ const cards = registration.infoCards.map(card => ({
 </div>
 
 <section
-	class="bg-foreground px-[clamp(1.25rem,8.5vw,8rem)] pt-[var(--gap)] pb-[var(--gap)] text-white"
+	class="bg-foreground px-[clamp(1.25rem,8.5vw,8rem)] pt-(--gap) pb-(--gap) text-white"
 	style="--row-h: clamp(3rem, 5.4vw, 5.125rem); --radius: clamp(1.75rem, 4.2vw, 4rem); --gap: clamp(1.5rem, 4.2vw, 4rem); --label-size: clamp(1.0625rem, 2.1vw, 2rem); --heading-size: clamp(1.65rem, 3.25vw, 2.5rem)"
 >
-	<div class="bg-green flex w-fit items-center justify-center gap-[0.625rem] p-2.5">
+	<div class="bg-green flex w-fit items-center justify-center gap-2.5 p-2.5">
 		<span class="text-foreground leading-none font-bold" style="font-size: var(--heading-size)">{registration.sectionTitle}</span>
 	</div>
 
@@ -41,7 +41,7 @@ const cards = registration.infoCards.map(card => ({
 	<div class="grid w-full grid-cols-1 md:grid-cols-3" style="margin-top: var(--gap); gap: var(--gap)">
 		{
 			cards.map(({ title, main, note, icon: Icon, iconClass = "" }) => (
-				<div class="bg-soft-blue relative mx-auto aspect-[375/260] w-full max-w-[24rem] min-w-0 overflow-hidden md:aspect-[375/318] md:max-w-none" style="border-radius: var(--radius) 0">
+				<div class="bg-soft-blue relative mx-auto aspect-375/260 w-full max-w-96 min-w-0 overflow-hidden md:aspect-375/318 md:max-w-none" style="border-radius: var(--radius) 0">
 					<span class="text-background absolute top-[15.7%] left-[8.4%] text-[clamp(1rem,1.45vw,1.25rem)] leading-none font-bold">{title}</span>
 					<span class="text-background absolute top-[28%] left-[8.4%] max-w-[78%] text-[clamp(1.25rem,2vw,1.75rem)] leading-[160%] font-bold">{main}</span>
 					<Icon class={`text-background/30 absolute top-[46%] right-[-6%] h-auto w-[44%] md:top-[52%] md:right-auto md:left-[60%] md:w-[50%] ${iconClass}`} />
@@ -53,7 +53,7 @@ const cards = registration.infoCards.map(card => ({
 
 	<div class="flex w-full flex-col items-start lg:flex-row" style="margin-top: var(--gap)">
 		<!-- 組合卡片：--row-h 統一控制，Object 1 = 5× row，其餘 1× row -->
-		<div class="flex w-full flex-col items-start lg:flex-[691]">
+		<div class="flex w-full flex-col items-start lg:flex-691">
 			{
 				registration.pricingRows.map(({ label, color, price, roundedStart, roundedEnd }) => (
 					<div
@@ -71,8 +71,8 @@ const cards = registration.infoCards.map(card => ({
 			}
 		</div>
 
-		<div class="relative mt-[var(--gap)] aspect-[565/410] w-full overflow-hidden lg:mt-0 lg:flex-[565]">
-			<Image src={registrationPhoto} alt={registration.photoAlt} class="absolute top-[6.585%] left-[7.434%] aspect-[239/159] w-[85.133%] object-cover" loading="lazy" decoding="async" />
+		<div class="relative mt-(--gap) aspect-565/410 w-full overflow-hidden lg:mt-0 lg:flex-565">
+			<Image src={registrationPhoto} alt={registration.photoAlt} class="absolute top-[6.585%] left-[7.434%] aspect-239/159 w-[85.133%] object-cover" loading="lazy" decoding="async" />
 			<a
 				href={registration.cta.href}
 				class="bg-green absolute bottom-[4.878%] left-[35.929%] flex h-[clamp(3rem,17.561%,4.5rem)] items-center justify-center rounded-2xl px-3 text-[clamp(1.125rem,2.25vw,2.125rem)] leading-[150%] font-extrabold text-white shadow-[clamp(0.25rem,0.53vw,0.5rem)_clamp(0.25rem,0.53vw,0.5rem)_0_0_var(--color-orange)]"
@@ -82,7 +82,7 @@ const cards = registration.infoCards.map(card => ({
 		</div>
 	</div>
 
-	<div class="bg-orange flex w-fit items-center justify-center gap-[0.625rem] p-2.5" style="margin-top: var(--gap)">
+	<div class="bg-orange flex w-fit items-center justify-center gap-2.5 p-2.5" style="margin-top: var(--gap)">
 		<span class="text-foreground leading-none font-bold" style="font-size: var(--heading-size)">{registration.noticeTitle}</span>
 	</div>
 
