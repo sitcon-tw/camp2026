@@ -16,27 +16,15 @@ const commentColorClassMap: Record<string, string> = {
 ---
 
 <div class="bg-background relative overflow-hidden">
-	<div class="flex flex-col p-4 sm:p-32 sm:pb-16 gap-20">
+	<div class="mx-auto flex w-full max-w-6xl flex-col gap-20 px-4 py-4 sm:px-6 sm:pt-32 sm:pb-16 lg:px-8">
 		<h2 class="text-center text-[3rem] leading-[133%] font-bold text-balance">{studentComment.sectionTitle}</h2>
 		<!-- 固定留言 -->
 		<div class="relative py-8">
 			<!-- 背景跑馬燈 -->
-			<div class="pointer-events-none absolute inset-0 z-0 -mx-32 flex flex-col justify-around overflow-hidden opacity-15">
-				{
-					Array.from({ length: studentComment.bgMarquee.repeatRows }, (_, i) => (
-						<div
-							class="marquee-row w-max"
-							style={`
-          margin-left: ${(i % 3) * -8}rem;
-        `}
-						>
-							<span class="shrink-0 text-[3rem] leading-[100%] font-bold text-nowrap whitespace-nowrap select-none">{studentComment.bgMarquee.text.repeat(20)}&nbsp;</span>
-						</div>
-					))
-				}
+			<div class="pointer-events-none absolute inset-0 z-0 -mx-32 flex flex-col justify-between overflow-hidden opacity-15" data-student-bg-marquee data-marquee-text={studentComment.bgMarquee.text}>
 			</div>
 			<div class="relative z-10">
-				<div class="grid grid-cols-2 gap-1.5 md:gap-x-8 lg:grid-cols-3 lg:gap-x-16">
+				<div class="grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-4 md:gap-x-8 md:gap-y-10 lg:grid-cols-3 lg:gap-x-16">
 					{
 						studentComment.comments.map(c => (
 							<div class="bg-foreground flex flex-col items-start rounded-4xl">
@@ -107,14 +95,55 @@ const commentColorClassMap: Record<string, string> = {
 	}
 
 	/* 背景文字跑馬燈 */
-	.marquee-row {
+	:global(.student-comment-marquee-row) {
 		animation: marquee 50s linear infinite;
+		width: max-content;
+	}
+
+	:global(.student-comment-marquee-text) {
+		font-size: 3rem;
+		font-weight: 700;
+		line-height: 100%;
+		white-space: nowrap;
+		user-select: none;
 	}
 </style>
 
 <script>
 	const dialog = document.getElementById("comment-dialog") as HTMLDialogElement;
 	const iframe = document.getElementById("comment-iframe") as HTMLIFrameElement;
+	const bgMarquee = document.querySelector<HTMLElement>("[data-student-bg-marquee]");
+
+	function renderBgMarqueeRows() {
+		if (!bgMarquee) return;
+
+		const text = bgMarquee.dataset.marqueeText ?? "";
+		const targetRowGap = window.innerWidth < 640 ? 96 : window.innerWidth < 1024 ? 128 : 160;
+		const rowCount = Math.min(24, Math.max(6, Math.ceil(bgMarquee.clientHeight / targetRowGap)));
+		if (bgMarquee.dataset.rowCount === String(rowCount)) return;
+
+		bgMarquee.dataset.rowCount = String(rowCount);
+		bgMarquee.replaceChildren();
+
+		for (let i = 0; i < rowCount; i += 1) {
+			const row = document.createElement("div");
+			row.className = "student-comment-marquee-row";
+			row.style.marginLeft = `${(i % 3) * -8}rem`;
+
+			const rowText = document.createElement("span");
+			rowText.className = "student-comment-marquee-text";
+			rowText.textContent = `${text.repeat(20)}\u00A0`;
+
+			row.append(rowText);
+			bgMarquee.append(row);
+		}
+	}
+
+	if (bgMarquee) {
+		renderBgMarqueeRows();
+		new ResizeObserver(renderBgMarqueeRows).observe(bgMarquee);
+		window.addEventListener("resize", renderBgMarqueeRows);
+	}
 
 	document.querySelectorAll<HTMLElement>(".video-card").forEach(card => {
 		card.addEventListener("click", () => {
