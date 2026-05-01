@@ -94,7 +94,7 @@
 			"namePlaceholder": "PLACEHOLDER",
 			"descriptionPlaceholder": "PLACEHOLDER",
 			"linkPlaceholder": "PLACEHOLDER",
-			"linkHref": "https://example.com/longdragon",
+			"linkHref": "",
 			"closeLabel": "Close"
 		},
 		"groups": [
@@ -106,91 +106,91 @@
 						"description": "系統架構師，熱衷於分散式系統設計與效能調優。",
 						"job": "組長",
 						"avatarImgUrl": "https://i.pravatar.cc/150?img=3",
-						"avatarLink": "https://example.com/wangdaming"
+						"avatarLink": ""
 					},
 					{
 						"name": "吳佳玲",
 						"description": "前端工程師，擅長動畫效果與響應式設計。",
 						"job": "副組長",
 						"avatarImgUrl": "https://i.pravatar.cc/150?img=44",
-						"avatarLink": "https://example.com/wujaling"
+						"avatarLink": ""
 					},
 					{
 						"name": "黃俊傑",
 						"description": "後端工程師，專注於 API 設計與微服務架構。",
 						"job": "組員",
 						"avatarImgUrl": "https://i.pravatar.cc/150?img=15",
-						"avatarLink": "https://example.com/huangjunjie"
+						"avatarLink": ""
 					},
 					{
 						"name": "鄭雅婷",
 						"description": "DevOps 工程師，負責雲端部署與監控基礎設施。",
 						"job": "精靈",
 						"avatarImgUrl": "https://i.pravatar.cc/150?img=49",
-						"avatarLink": "https://example.com/zhengyating"
+						"avatarLink": ""
 					},
 					{
 						"name": "蔡佳霖",
 						"description": "資安工程師，專注於滲透測試與漏洞分析。",
 						"job": "組長",
 						"avatarImgUrl": "https://i.pravatar.cc/150?img=21",
-						"avatarLink": "https://example.com/caijialin"
+						"avatarLink": ""
 					},
 					{
 						"name": "謝文志",
 						"description": "行動應用開發者，熟悉 iOS 與 Android 跨平台開發。",
 						"job": "副組長",
 						"avatarImgUrl": "https://i.pravatar.cc/150?img=33",
-						"avatarLink": "https://example.com/xiewenzhi"
+						"avatarLink": ""
 					},
 					{
 						"name": "周怡君",
 						"description": "資料工程師，擅長 ETL 流程設計與大數據分析。",
 						"job": "組員",
 						"avatarImgUrl": "https://i.pravatar.cc/150?img=56",
-						"avatarLink": "https://example.com/zhouyijun"
+						"avatarLink": ""
 					},
 					{
 						"name": "楊建宏",
 						"description": "嵌入式系統工程師，熱衷於硬體軟體整合開發。",
 						"job": "精靈",
 						"avatarImgUrl": "https://i.pravatar.cc/150?img=7",
-						"avatarLink": "https://example.com/yangjanhong"
+						"avatarLink": ""
 					},
 					{
 						"name": "何雅雯",
 						"description": "機器學習工程師，專注於自然語言處理與模型訓練。",
 						"job": "精靈",
 						"avatarImgUrl": "https://i.pravatar.cc/150?img=62",
-						"avatarLink": "https://example.com/heyawen"
+						"avatarLink": ""
 					},
 					{
 						"name": "蘇俊宏",
 						"description": "網路工程師，擅長網路拓撲規劃與流量優化。",
 						"job": "精靈",
 						"avatarImgUrl": "https://i.pravatar.cc/150?img=18",
-						"avatarLink": "https://example.com/sujunhong"
+						"avatarLink": ""
 					},
 					{
 						"name": "賴佳妮",
 						"description": "測試工程師，專精自動化測試框架與品質保證流程。",
 						"job": "精靈",
 						"avatarImgUrl": "https://i.pravatar.cc/150?img=39",
-						"avatarLink": "https://example.com/laijiani"
+						"avatarLink": ""
 					},
 					{
 						"name": "江志偉",
 						"description": "遊戲開發者，熱衷於即時渲染與物理引擎整合。",
 						"job": "精靈",
 						"avatarImgUrl": "https://i.pravatar.cc/150?img=11",
-						"avatarLink": "https://example.com/jiangzhiwei"
+						"avatarLink": ""
 					},
 					{
 						"name": "李小華",
 						"description": "區塊鏈開發者，專注於智能合約與去中心化應用。",
 						"job": "精靈",
 						"avatarImgUrl": "https://i.pravatar.cc/150?img=64",
-						"avatarLink": "https://example.com/lixiaohua"
+						"avatarLink": ""
 					}
 				]
 			},
@@ -202,21 +202,21 @@
 						"description": "業務開發經理，擅長建立合作夥伴關係與談判策略。",
 						"job": "業務",
 						"avatarImgUrl": "https://i.pravatar.cc/150?img=43",
-						"avatarLink": "https://example.com/linsiying"
+						"avatarLink": ""
 					},
 					{
 						"name": "陳宜蓁",
 						"description": "品牌行銷專員，負責社群經營與內容策略規劃。",
 						"job": "行銷",
 						"avatarImgUrl": "https://i.pravatar.cc/150?img=58",
-						"avatarLink": "https://example.com/chenyizhen"
+						"avatarLink": ""
 					},
 					{
 						"name": "洪冠宇",
 						"description": "企業客戶顧問，專注於解決方案銷售與客戶成功管理。",
 						"job": "業務",
 						"avatarImgUrl": "https://i.pravatar.cc/150?img=22",
-						"avatarLink": "https://example.com/somethingthatcoolandverylong"
+						"avatarLink": ""
 					}
 				]
 			}
@@ -272,7 +272,7 @@
 						"role": "黃金贊助",
 						"description": "AMD 提供高效能運算與圖形處理器，引領高效能運算時代。",
 						"iconPath": "/sponsors/amd.svg",
-						"url": "https://amd.com"
+						"url": "https://www.amd.com/en.html"
 					}
 				]
 			}

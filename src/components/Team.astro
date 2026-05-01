@@ -29,15 +29,23 @@ const { modal } = teamContent;
 			const member = JSON.parse(el.dataset.member ?? "{}");
 			nameEle.textContent = member.name;
 			desEle.textContent = member.description;
-			linkEle.href = member.avatarLink;
-			linkEle.textContent = member.avatarLink;
-			if (linkEle.scrollWidth > linkEle.offsetWidth) {
-				let text = member.avatarLink as string;
-				while (text.length > 0) {
-					text = text.slice(0, -3);
-					linkEle.textContent = text + "...";
-					if (linkEle.scrollWidth <= linkEle.offsetWidth) break;
+			const memberLink = typeof member.avatarLink === "string" ? member.avatarLink.trim() : "";
+			if (memberLink) {
+				linkEle.href = memberLink;
+				linkEle.textContent = memberLink;
+				linkEle.hidden = false;
+				if (linkEle.scrollWidth > linkEle.offsetWidth) {
+					let text = memberLink;
+					while (text.length > 0) {
+						text = text.slice(0, -3);
+						linkEle.textContent = text + "...";
+						if (linkEle.scrollWidth <= linkEle.offsetWidth) break;
+					}
 				}
+			} else {
+				linkEle.removeAttribute("href");
+				linkEle.textContent = "";
+				linkEle.hidden = true;
 			}
 			avatarEle.src = member.avatarImgUrl;
 
@@ -114,7 +122,7 @@ const { modal } = teamContent;
 	});
 </script>
 
-<div class="bg-background h-fit w-full px-4 py-12 md:px-20 lg:px-32">
+<div id="team" class="bg-background h-fit w-full px-4 py-12 md:px-20 lg:px-32">
 	<div class="fixed inset-0 -z-10 flex h-full w-full flex-col items-start justify-center bg-black/30 px-8 opacity-0 transition-all duration-300 md:items-center" id="overlay">
 		<div class="bg-background relative mt-24 h-fit w-full overflow-hidden rounded-4xl p-8 md:max-w-5xl md:p-16 lg:h-98 lg:p-24">
 			<section class="row flex h-full w-full flex-col justify-start gap-4 md:flex-row md:gap-12">
@@ -129,7 +137,7 @@ const { modal } = teamContent;
 				<div class="flex h-full w-full min-w-0 flex-col justify-between">
 					<h1 class="mx-auto text-5xl font-bold md:mx-0 md:text-6xl" id="layout-name">{modal.namePlaceholder}</h1>
 					<p class="text-foreground my-4 text-xl font-bold" id="layout-des">{modal.descriptionPlaceholder}</p>
-					<a class="text-blue mt-auto block truncate text-lg font-bold underline underline-offset-3" id="layout-link" href={modal.linkHref} target="_blank" rel="noopener noreferrer">
+					<a class="text-blue mt-auto block truncate text-lg font-bold underline underline-offset-3" id="layout-link" target="_blank" rel="noopener noreferrer" hidden>
 						{modal.linkPlaceholder}
 					</a>
 				</div>

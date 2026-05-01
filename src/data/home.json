@@ -125,6 +125,7 @@
 		}
 	],
 	"masterCarousel": {
+		"sectionTitle": "強大的團隊陣容",
 		"accentPalette": ["green", "primary-blue", "blue", "soft-blue", "sky-blue", "orange"],
 		"members": [
 			{
@@ -191,7 +192,7 @@
 		],
 		"learnMore": {
 			"label": "了解更多",
-			"href": "2026/about"
+			"href": "/2026/about/"
 		}
 	},
 	"studentComment": {
@@ -216,7 +217,7 @@
 			},
 			{
 				"name": "Student 4",
-				"comment": "所以說不管這秦始皇的切面是否具有放射性川普的 N 次方是否有沈澱物都不會影響到沃爾瑪跟維爾康在南極匯合",
+				"comment": "所以說不管這秦始皇的切面是否具有放射性川普的 N 次方是否有沈澱物都不會影響到沃爾瑪跟維爾康在南極匯合所以說不管這秦始皇的切面是否具有放射性川普的 N 次方是否有沈澱物都不會影響到沃爾瑪跟維爾康在南極匯合",
 				"color": "dark-green"
 			},
 			{
@@ -231,8 +232,7 @@
 			}
 		],
 		"bgMarquee": {
-			"text": "Hello World ",
-			"repeatRows": 10
+			"text": "Hello World "
 		},
 		"video": [
 			{
@@ -272,7 +272,7 @@
 		"photoAlt": "SITCON Camp 活動照片",
 		"cta": {
 			"label": "立即報名",
-			"href": "#"
+			"href": "/2026/#registration-info"
 		},
 		"noticeTitle": "注意事項",
 		"infoCards": [
