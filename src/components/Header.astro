@@ -162,7 +162,7 @@ const { header } = layoutData;
 		setMobileTriggerState(true);
 		setMobileIconState(true);
 
-		mobilePanel.style.height = "0px";
+		mobilePanel.style.height = "0";
 		mobilePanel.style.opacity = "0";
 
 		if (prefersReducedMotion) {
@@ -202,7 +202,7 @@ const { header } = layoutData;
 		}
 
 		await animate(mobilePanel, {
-			height: "0px",
+			height: "0",
 			opacity: [1, 0],
 			duration: 320,
 			ease: "inOutCubic"
@@ -215,7 +215,7 @@ const { header } = layoutData;
 	};
 
 	if (mobileMenu && mobileTrigger && mobilePanel) {
-		mobilePanel.style.height = "0px";
+		mobilePanel.style.height = "0";
 		mobilePanel.style.opacity = "0";
 
 		mobileTrigger.addEventListener("click", event => {

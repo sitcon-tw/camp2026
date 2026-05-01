@@ -54,8 +54,9 @@ const { modal } = teamContent;
 			el.style.top = String(oldAvatarRect.y) + "px";
 			el.style.position = "fixed";
 			el.style.zIndex = "50";
-			el.style.maxWidth = window.innerWidth >= 768 ? "200px" : "150px";
-			el.style.maxHeight = window.innerWidth >= 768 ? "200px" : "150px";
+			const isDesktopAvatar = window.matchMedia("(min-width: 48rem)").matches;
+			el.style.maxWidth = isDesktopAvatar ? "12.5rem" : "9.375rem";
+			el.style.maxHeight = isDesktopAvatar ? "12.5rem" : "9.375rem";
 
 			backavatarEle.style.display = "block";
 			overlay.style.zIndex = "10";
@@ -122,7 +123,7 @@ const { modal } = teamContent;
 					alt={modal.avatarAlt}
 					width={200}
 					height={200}
-					class="border-foreground mx-auto h-[150px] w-[150px] cursor-pointer rounded-xl border-4 hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[2px_2px_0_2px_#60A7D5] md:h-[200px] md:w-[200px]"
+					class="border-foreground mx-auto h-[9.375rem] w-[9.375rem] cursor-pointer rounded-xl border-4 hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[2px_2px_0_2px_#60A7D5] md:h-[12.5rem] md:w-[12.5rem]"
 					id="layout-avatar"
 				/>
 				<div class="flex h-full w-full min-w-0 flex-col justify-between">
@@ -149,19 +150,19 @@ const { modal } = teamContent;
 				<section class="my-4 mt-12 lg:mt-16">
 					<h2 class="text-4xl font-bold text-black">{group.name}</h2>
 
-					<div class="my-4 grid h-fit w-full grid-cols-[repeat(auto-fill,minmax(150px,1fr))] justify-items-center gap-[clamp(1rem,2vw,2rem)]">
+					<div class="my-4 grid h-fit w-full grid-cols-[repeat(auto-fill,minmax(9.375rem,1fr))] justify-items-center gap-[clamp(1rem,2vw,2rem)]">
 						{group.members.map(data => (
-							<article class="my-4 flex h-fit w-full max-w-[150px] flex-col items-center">
+							<article class="my-4 flex h-fit w-full max-w-[9.375rem] flex-col items-center">
 								<Image
 									src={data.avatarImgUrl}
 									alt={"avatar"}
 									width={150}
 									height={150}
-									class="border-foreground h-[150px] w-[150px] flex-none cursor-pointer rounded-xl border-4 object-cover shadow-[4px_4px_0_2px_#60A7D5] transition-all duration-300 hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[2px_2px_0_2px_#60A7D5]"
+									class="border-foreground h-[9.375rem] w-[9.375rem] flex-none cursor-pointer rounded-xl border-4 object-cover shadow-[4px_4px_0_2px_#60A7D5] transition-all duration-300 hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[2px_2px_0_2px_#60A7D5]"
 									data-member-id={data.name}
 									data-member={JSON.stringify({ name: data.name, description: data.description, avatarLink: data.avatarLink, avatarImgUrl: data.avatarImgUrl })}
 								/>
-								<div class="hidden h-[150px] w-[150px]" id={`b-${data.name}`} />
+								<div class="hidden h-[9.375rem] w-[9.375rem]" id={`b-${data.name}`} />
 								<div class="mt-4 flex h-fit w-full items-center justify-between gap-2">
 									<h3 class="text-xl font-bold">{data.name}</h3>
 									<div class="bg-foreground flex h-fit w-fit items-center justify-center rounded-full px-2 py-0.5">

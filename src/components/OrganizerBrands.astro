@@ -42,7 +42,7 @@ const sections = await Promise.all(
 	{
 		sections.map(([tag, items]) => (
 			<section class="mx-4 mt-12 sm:mx-12 md:mx-24 md:mt-24 lg:mx-64 lg:mt-32">
-				<h1 class="mb-4 text-center text-3xl font-bold md:text-left md:text-4xl lg:text-[48px]">{tag}</h1>
+				<h1 class="mb-4 text-center text-3xl font-bold md:text-left md:text-4xl lg:text-[3rem]">{tag}</h1>
 				<div class="flex flex-wrap items-center justify-center gap-4 gap-y-6 sm:gap-6 md:justify-start lg:gap-8">
 					{items.map(org => (
 						<button type="button" class="org-card group focus-visible:ring-primary-blue/50 focus-visible:ring-2 focus-visible:outline-none">
