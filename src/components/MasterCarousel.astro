@@ -47,10 +47,10 @@ const trackMembers: DisplayMember[] = members.map((m, i) => ({
 		</div>
 	</div>
 
-	<div class="group mt-(--gap) flex w-full overflow-hidden">
+	<div class="group mt-(--gap) flex w-screen overflow-hidden" data-master-marquee-track>
 		{
 			[0, 1].map(trackIdx => (
-				<div class="marquee-track flex shrink-0 gap-6 pr-6 group-hover:[animation-play-state:paused]" aria-hidden={trackIdx === 1 ? "true" : undefined}>
+				<div class="marquee-track flex shrink-0 gap-6 pr-6 group-hover:[animation-play-state:paused]" data-marquee-group aria-hidden={trackIdx === 1 ? "true" : undefined}>
 					{trackMembers.map(member => (
 						<div class="member-card relative h-95 w-70 shrink-0 cursor-pointer rounded-[2.5rem] text-left" data-member-id={member._memberId}>
 							<div class="relative h-full w-full overflow-hidden rounded-[2.5rem] border-r-6 border-b-6" style={`border-color: var(--color-${member.accent})`}>
@@ -85,3 +85,31 @@ const trackMembers: DisplayMember[] = members.map((m, i) => ({
 		}
 	}
 </style>
+
+<script>
+	const masterMarqueeTrack = document.querySelector<HTMLElement>("[data-master-marquee-track]");
+
+	if (masterMarqueeTrack) {
+		const groups = Array.from(masterMarqueeTrack.querySelectorAll<HTMLElement>("[data-marquee-group]"));
+		const sourceItems = groups[0] ? Array.from(groups[0].children).map(item => item.cloneNode(true)) : [];
+
+		function fillMasterMarquee() {
+			if (!sourceItems.length) return;
+
+			const targetWidth = window.innerWidth * 1.25;
+			for (const group of groups) {
+				group.replaceChildren();
+
+				let index = 0;
+				const maxItems = sourceItems.length * 50;
+				while ((group.scrollWidth < targetWidth || index < sourceItems.length) && index < maxItems) {
+					group.append(sourceItems[index % sourceItems.length].cloneNode(true));
+					index += 1;
+				}
+			}
+		}
+
+		fillMasterMarquee();
+		window.addEventListener("resize", fillMasterMarquee);
+	}
+</script>

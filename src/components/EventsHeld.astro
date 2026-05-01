@@ -93,14 +93,15 @@ const colorClassMap: Record<ActivityColor, { bar: string; icon: string; ring: st
 		dot: "bg-dark-green"
 	}
 };
+const eventsHeldMarqueeText = "SITCON Camp Open Source Hackathon Community ";
 ---
 
 <section class="bg-background text-foreground relative isolate overflow-hidden px-4 pt-[clamp(7rem,12vw,11rem)] pb-[clamp(4rem,8vw,7rem)] sm:px-8 lg:px-16">
-	<div class="pointer-events-none absolute inset-x-0 top-32 -z-10 flex flex-col gap-4 overflow-hidden opacity-10" aria-hidden="true">
+	<div class="pointer-events-none absolute top-32 left-1/2 -z-10 flex w-screen -translate-x-1/2 flex-col gap-4 overflow-hidden opacity-10" aria-hidden="true">
 		{
 			Array.from({ length: 5 }, (_, i) => (
 				<div class="events-held-marquee text-[clamp(3rem,7vw,7rem)] leading-none font-extrabold whitespace-nowrap" style={`--offset: ${i * -8}rem`}>
-					SITCON Camp Open Source Hackathon Community&nbsp;
+					{eventsHeldMarqueeText.repeat(16)}
 				</div>
 			))
 		}

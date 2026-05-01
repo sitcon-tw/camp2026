@@ -18,7 +18,7 @@ const marqueeItems = Array.from({ length: brandMarquee.repeatItems }, (_, index)
 
 <section class="brand-marquee" aria-label={brandMarquee.ariaLabel}>
 	<div class="brand-marquee__viewport" aria-hidden="true">
-		<div class="brand-marquee__track">
+		<div class="brand-marquee__track" data-brand-marquee-track>
 			{
 				[0, 1].map(groupIndex => (
 					<div class="brand-marquee__group" data-marquee-group={groupIndex}>
@@ -91,3 +91,31 @@ const marqueeItems = Array.from({ length: brandMarquee.repeatItems }, (_, index)
 		}
 	}
 </style>
+
+<script>
+	const brandMarqueeTrack = document.querySelector<HTMLElement>("[data-brand-marquee-track]");
+
+	if (brandMarqueeTrack) {
+		const groups = Array.from(brandMarqueeTrack.querySelectorAll<HTMLElement>("[data-marquee-group]"));
+		const sourceItems = groups[0] ? Array.from(groups[0].children).map(item => item.cloneNode(true)) : [];
+
+		function fillBrandMarquee() {
+			if (!sourceItems.length) return;
+
+			const targetWidth = window.innerWidth * 1.25;
+			for (const group of groups) {
+				group.replaceChildren();
+
+				let index = 0;
+				const maxItems = sourceItems.length * 50;
+				while ((group.scrollWidth < targetWidth || index < sourceItems.length) && index < maxItems) {
+					group.append(sourceItems[index % sourceItems.length].cloneNode(true));
+					index += 1;
+				}
+			}
+		}
+
+		fillBrandMarquee();
+		window.addEventListener("resize", fillBrandMarquee);
+	}
+</script>
