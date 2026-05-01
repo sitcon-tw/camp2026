@@ -1,1 +1,131 @@
-<div>Student Comment</div>
+---
+import { Image } from "astro:assets";
+import MaterialSymbolsPlayCircleOutlineRounded from "~icons/material-symbols/play-circle-outline-rounded";
+
+import siteConfig from "@/data/site.json";
+
+const { studentComment } = siteConfig;
+---
+
+<div class="bg-background relative overflow-hidden">
+	<div class="flex flex-col p-4 sm:p-32 sm:pb-16">
+		<h2 class="text-center text-[3rem] leading-[133%] font-bold text-balance">聽聽往年學員怎麼說的</h2>
+		<!-- 固定留言 -->
+		<div class="relative py-8">
+			<!-- 背景跑馬燈 -->
+			<div class="pointer-events-none absolute inset-0 z-0 -mx-32 flex flex-col justify-around overflow-hidden opacity-15">
+				{
+					Array.from({ length: studentComment.bgMarquee.repeatRows }, (_, i) => (
+						<div
+							class="marquee-row w-max"
+							style={`
+          margin-left: ${(i % 3) * -8}rem;
+        `}
+						>
+							<span class="shrink-0 text-[3rem] leading-[100%] font-bold text-nowrap whitespace-nowrap select-none">{studentComment.bgMarquee.text.repeat(20)}&nbsp;</span>
+						</div>
+					))
+				}
+			</div>
+			<div class="relative z-10">
+				<div class="grid grid-cols-2 gap-1.5 md:gap-x-8 lg:grid-cols-3 lg:gap-x-16">
+					{
+						studentComment.comments.map(c => (
+							<div class="bg-foreground flex flex-col items-start rounded-4xl">
+								<div class:list={["flex h-19 items-center gap-4 self-stretch rounded-t-4xl p-4", `bg-${c.color}`]}>
+									<Image src="https://placehold.co/48x48" alt="Student's pfp" height="48" width="48" class="rounded-full" />
+									<p class="text-[1.5rem] leading-[100%] font-bold text-white">{c.name}</p>
+									<div />
+								</div>
+								<p class="text-background p-6 text-[1rem] leading-[133%]">{c.comment}</p>
+							</div>
+						))
+					}
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- 影片跑馬燈 -->
+	<div class="marquee-container mb-16 flex w-dvw overflow-hidden">
+		<div class="marquee-track flex w-max gap-4">
+			<div class="flex shrink-0 gap-4">
+				{
+					[0, 1].map(() =>
+						studentComment.video.map(v => (
+							<button
+								type="button"
+								class="video-card bg-foreground relative aspect-video w-md cursor-pointer rounded-4xl bg-cover bg-center"
+								style={`background-image: url('${v.cover}')`}
+								data-url={v.url}
+								aria-label={`播放 ${v.label} 影片`}
+							>
+								<div class="from-foreground flex h-full w-full items-center justify-center rounded-4xl bg-linear-to-t from-0% to-transparent to-30%">
+									<MaterialSymbolsPlayCircleOutlineRounded class="text-background text-2xl" />
+								</div>
+								<p class="text-background absolute bottom-3 left-0 w-full text-center text-4xl font-bold">{v.label}</p>
+							</button>
+						))
+					)
+				}
+			</div>
+		</div>
+	</div>
+
+	<!-- 學員訪談 YouTube 影片 popup -->
+	<dialog id="comment-dialog" class="m-auto w-full max-w-3xl rounded-4xl">
+		<div class="aspect-video w-full">
+			<iframe id="comment-iframe" class="h-full w-full rounded-4xl" title="YouTube video player" allow="autoplay; encrypted-media;" src="" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+		</div>
+	</dialog>
+</div>
+
+<style>
+	@keyframes marquee {
+		from {
+			transform: translateX(0);
+		}
+		to {
+			transform: translateX(-50%);
+		}
+	}
+
+	/* 影片跑馬燈 */
+	.marquee-track {
+		animation: marquee 60s linear infinite;
+	}
+
+	.marquee-container:hover .marquee-track {
+		animation-play-state: paused;
+	}
+
+	/* 背景文字跑馬燈 */
+	.marquee-row {
+		animation: marquee 50s linear infinite;
+	}
+</style>
+
+<script>
+	const dialog = document.getElementById("comment-dialog") as HTMLDialogElement;
+	const iframe = document.getElementById("comment-iframe") as HTMLIFrameElement;
+
+	document.querySelectorAll<HTMLElement>(".video-card").forEach(card => {
+		card.addEventListener("click", () => {
+			const url = card.dataset.url;
+			if (!url) return;
+			iframe.src = url;
+			dialog.showModal();
+		});
+	});
+
+	dialog.addEventListener("click", e => {
+		if (e.target === dialog) closeModal();
+	});
+
+	dialog.addEventListener("close", _ => {
+		iframe.src = "";
+	});
+
+	function closeModal() {
+		dialog.close();
+	}
+</script>

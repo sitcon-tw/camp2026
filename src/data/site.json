@@ -49,6 +49,74 @@
 			"finalPrefix": "那就來"
 		}
 	},
+	"studentComment": {
+		"comments": [
+			{
+				"name": "Student 1",
+				"comment": "我個人認為義大利麵就應該拌 42 號混泥土因為這個螺絲釘的長度很容易直接影響到挖掘機的扭矩",
+				"color": "blue"
+			},
+			{
+				"name": "Student 2",
+				"comment": "你往裡砸的時候一瞬間他就會產生大量的高能蛋白俗稱 UFO，會嚴重影響經濟的發展以至於對整個太平洋和充電器的核污染",
+				"color": "orange"
+			},
+			{
+				"name": "Student 3",
+				"comment": "再或者說透過這勾股定理很容易推斷出人工飼養的東條英機他是可以捕獲野生的三角函數",
+				"color": "green"
+			},
+			{
+				"name": "Student 4",
+				"comment": "所以說不管這秦始皇的切面是否具有放射性川普的 N 次方是否有沈澱物都不會影響到沃爾瑪跟維爾康在南極匯合",
+				"color": "dark-green"
+			},
+			{
+				"name": "Student 5",
+				"comment": "你往裡砸的時候一瞬間他就會產生大量的高能蛋白俗稱 UFO，會嚴重影響經濟的發展以至於對整個太平洋和充電器的核污染",
+				"color": "sky-blue"
+			},
+			{
+				"name": "Student 6",
+				"comment": "再或者說透過這勾股定理很容易推斷出人工飼養的東條英機他是可以捕獲野生的三角函數",
+				"color": "soft-blue"
+			}
+		],
+		"bgMarquee": {
+			"text": "Hello World ",
+			"repeatRows": 10
+		},
+		"video": [
+			{
+				"label": "2026 年會回顧",
+				"cover": "https://placehold.co/1920x1080",
+				"url": "https://www.youtube-nocookie.com/embed/jbofh3u8XrI?controls=0"
+			},
+			{
+				"label": "2026 年會開幕",
+				"cover": "https://placehold.co/1920x1080",
+				"url": "https://www.youtube-nocookie.com/embed/_gvPCsdmeNs?controls=0"
+			},
+			{
+				"label": "2026 年會閉幕",
+				"cover": "https://placehold.co/1920x1080",
+				"url": "https://www.youtube-nocookie.com/embed/xN-Tj83adDQ?controls=0"
+			},
+			{
+				"label": "2019 夏令營",
+				"cover": "https://placehold.co/1920x1080",
+				"url": "https://www.youtube-nocookie.com/embed/jbofh3u8XrI?controls=0"
+			},
+			{
+				"label": "2019 夏令營",
+				"cover": "https://placehold.co/1920x1080",
+				"url": "https://www.youtube-nocookie.com/embed/jbofh3u8XrI?controls=0"
+			},
+			{
+				"label": "2019 夏令營",
+				"cover": "https://placehold.co/1920x1080",
+				"url": "https://www.youtube-nocookie.com/embed/jbofh3u8XrI?controls=0"
+			},
 	"sitconData": {
 		"config": {
 			"scrollHeight": 600
