@@ -116,7 +116,9 @@
 				"label": "2019 夏令營",
 				"cover": "https://placehold.co/1920x1080",
 				"url": "https://www.youtube-nocookie.com/embed/jbofh3u8XrI?controls=0"
-			},
+			}
+		]
+	},
 	"sitconData": {
 		"config": {
 			"scrollHeight": 600
