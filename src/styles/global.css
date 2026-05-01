@@ -62,3 +62,11 @@
 		margin-inline: auto;
 	}
 }
+
+@layer utilities {
+	.site-container {
+		box-sizing: border-box;
+		width: min(calc(100% - var(--site-content-gutter) - var(--site-content-gutter)), var(--site-content-max));
+		margin-inline: auto;
+	}
+}
