@@ -8,6 +8,11 @@ bun.lockb
 .jetbrains
 .zed
 
+# local AI assistant workspaces
+ai/
+.claude/
+.codex/
+
 # build output
 dist/
 
