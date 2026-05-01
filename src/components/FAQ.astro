@@ -1,1 +1,69 @@
-<div>FAQ</div>
+---
+import { faqData } from "@/data/faq";
+import ChevronDown from "~icons/lucide/chevron-down";
+
+const allItems = faqData.flatMap(({ items }) => items);
+---
+
+<main class="bg-background flex flex-col items-center px-4 pt-[clamp(8rem,10vw,10rem)] pb-[clamp(4rem,8.47vw,8rem)] sm:px-6">
+	<h1 class="text-center text-[clamp(1.75rem,4.44vw,4rem)] leading-[150%] font-extrabold text-black">常見問題 FAQ</h1>
+
+	<div class="mt-[clamp(2.5rem,8.47vw,8rem)] flex w-full max-w-[clamp(20rem,60vw,56rem)] flex-col gap-4">
+		{
+			allItems.map(({ question, answer }) => (
+				<details class="faq-item w-full">
+					<summary class="faq-summary bg-soft-blue flex min-h-[48px] cursor-pointer items-center justify-between gap-3 rounded-xl px-3 py-2.5 text-[clamp(0.875rem,1.587vw,1.5rem)] leading-[150%] font-extrabold text-white transition-all duration-200 hover:brightness-95 active:scale-[0.99] sm:min-h-[68px] sm:rounded-2xl sm:px-4 sm:py-4 [&::-webkit-details-marker]:hidden">
+						<span>
+							<span class="text-white/70">Q: </span>
+							{question}
+						</span>
+						<ChevronDown class="faq-icon h-5 w-5 shrink-0 transition-transform duration-300" />
+					</summary>
+					<div class="faq-body overflow-hidden" style="height: 0">
+						<div class="bg-foreground mt-1.5 rounded-xl px-3 py-2.5 text-[clamp(0.875rem,1.2vw,1.125rem)] leading-[150%] font-normal text-white sm:mt-2 sm:rounded-2xl sm:px-5 sm:py-4">
+							<span class="font-extrabold text-white">A: </span>
+							{answer}
+						</div>
+					</div>
+				</details>
+			))
+		}
+	</div>
+</main>
+
+<script>
+	// FAQ accordion
+	document.querySelectorAll<HTMLDetailsElement>(".faq-item").forEach(details => {
+		const summary = details.querySelector("summary")!;
+		const body = details.querySelector<HTMLElement>(".faq-body")!;
+		const icon = details.querySelector<HTMLElement>(".faq-icon")!;
+		let animating = false;
+
+		summary.addEventListener("click", e => {
+			e.preventDefault();
+			if (animating) return;
+			animating = true;
+
+			const isOpen = details.open;
+
+			if (!isOpen) {
+				details.open = true;
+				body.style.height = "0";
+				const target = body.scrollHeight + "px";
+				icon.style.transform = "rotate(180deg)";
+				body.animate([{ height: "0px" }, { height: target }], { duration: 320, easing: "cubic-bezier(0.4,0,0.2,1)" }).onfinish = () => {
+					body.style.height = "auto";
+					animating = false;
+				};
+			} else {
+				body.style.height = body.scrollHeight + "px";
+				icon.style.transform = "rotate(0deg)";
+				body.animate([{ height: body.style.height }, { height: "0px" }], { duration: 280, easing: "cubic-bezier(0.4,0,0.2,1)" }).onfinish = () => {
+					body.style.height = "0";
+					details.open = false;
+					animating = false;
+				};
+			}
+		});
+	});
+</script>
