@@ -22,6 +22,20 @@
 }
 
 @layer base {
+	html {
+		min-height: 100%;
+		background-color: var(--color-background);
+	}
+
+	body {
+		min-height: 100vh;
+		min-height: 100svh;
+		margin: 0;
+		display: flex;
+		flex-direction: column;
+		background-color: var(--color-background);
+	}
+
 	html,
 	body,
 	button,
@@ -29,5 +43,9 @@
 	select,
 	textarea {
 		font-family: var(--font-sans);
+	}
+
+	body > footer {
+		margin-top: auto;
 	}
 }
