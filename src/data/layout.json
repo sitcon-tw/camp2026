@@ -171,60 +171,58 @@
 			"url": "https://sitcon.org",
 			"sameAs": "https://zh.wikipedia.org/wiki/學生計算機年會"
 		},
-		"offers": {
-			"offers": [
-				{
-					"@type": "Offer",
-					"name": "早鳥優惠",
-					"price": "1000",
-					"priceCurrency": "TWD",
-					"availability": "https://schema.org/InStock",
-					"validFrom": "2026-05-03",
-					"validThrough": "2026-05-31",
-					"url": "https://sitcon.kktix.cc/events/sitcon-camp2026"
-				},
-				{
-					"@type": "Offer",
-					"name": "個人報名",
-					"price": "1500",
-					"priceCurrency": "TWD",
-					"availability": "https://schema.org/InStock",
-					"validFrom": "2026-06-01",
-					"validThrough": "2026-06-30",
-					"url": "https://sitcon.kktix.cc/events/sitcon-camp2026"
-				},
-				{
-					"@type": "Offer",
-					"name": "二人團報",
-					"price": "1200",
-					"priceCurrency": "TWD",
-					"availability": "https://schema.org/InStock",
-					"validFrom": "2026-06-01",
-					"validThrough": "2026-06-30",
-					"url": "https://sitcon.kktix.cc/events/sitcon-camp2026"
-				},
-				{
-					"@type": "Offer",
-					"name": "三人團報",
-					"price": "1200",
-					"priceCurrency": "TWD",
-					"availability": "https://schema.org/InStock",
-					"validFrom": "2026-06-01",
-					"validThrough": "2026-06-30",
-					"url": "https://sitcon.kktix.cc/events/sitcon-camp2026"
-				},
-				{
-					"@type": "Offer",
-					"name": "四人團報",
-					"price": "1200",
-					"priceCurrency": "TWD",
-					"availability": "https://schema.org/InStock",
-					"validFrom": "2026-06-01",
-					"validThrough": "2026-06-30",
-					"url": "https://sitcon.kktix.cc/events/sitcon-camp2026"
-				}
-			]
-		},
+		"offers": [
+			{
+				"@type": "Offer",
+				"name": "早鳥優惠",
+				"price": "1000",
+				"priceCurrency": "TWD",
+				"availability": "https://schema.org/InStock",
+				"validFrom": "2026-05-03",
+				"validThrough": "2026-05-31",
+				"url": "https://sitcon.kktix.cc/events/sitcon-camp2026"
+			},
+			{
+				"@type": "Offer",
+				"name": "個人報名",
+				"price": "1500",
+				"priceCurrency": "TWD",
+				"availability": "https://schema.org/InStock",
+				"validFrom": "2026-06-01",
+				"validThrough": "2026-06-30",
+				"url": "https://sitcon.kktix.cc/events/sitcon-camp2026"
+			},
+			{
+				"@type": "Offer",
+				"name": "二人團報",
+				"price": "1200",
+				"priceCurrency": "TWD",
+				"availability": "https://schema.org/InStock",
+				"validFrom": "2026-06-01",
+				"validThrough": "2026-06-30",
+				"url": "https://sitcon.kktix.cc/events/sitcon-camp2026"
+			},
+			{
+				"@type": "Offer",
+				"name": "三人團報",
+				"price": "1200",
+				"priceCurrency": "TWD",
+				"availability": "https://schema.org/InStock",
+				"validFrom": "2026-06-01",
+				"validThrough": "2026-06-30",
+				"url": "https://sitcon.kktix.cc/events/sitcon-camp2026"
+			},
+			{
+				"@type": "Offer",
+				"name": "四人團報",
+				"price": "1200",
+				"priceCurrency": "TWD",
+				"availability": "https://schema.org/InStock",
+				"validFrom": "2026-06-01",
+				"validThrough": "2026-06-30",
+				"url": "https://sitcon.kktix.cc/events/sitcon-camp2026"
+			}
+		],
 		"audience": {
 			"@type": "EducationalAudience",
 			"educationalRole": "student"
