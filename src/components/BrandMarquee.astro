@@ -1,0 +1,121 @@
+---
+import SitconBrand from "@/assets/brand/SITCON.svg";
+import homeData from "@/data/home.json";
+
+const { brandMarquee } = homeData;
+const brandAssets: Record<string, typeof SitconBrand> = {
+	sitcon: SitconBrand
+};
+const brands = brandMarquee.brands.map(brand => ({
+	...brand,
+	src: brandAssets[brand.imageKey].src,
+	width: brandAssets[brand.imageKey].width,
+	height: brandAssets[brand.imageKey].height
+}));
+
+const marqueeItems = Array.from({ length: brandMarquee.repeatItems }, (_, index) => brands[index % brands.length]);
+---
+
+<section class="brand-marquee" aria-label={brandMarquee.ariaLabel}>
+	<div class="brand-marquee__viewport" aria-hidden="true">
+		<div class="brand-marquee__track" data-brand-marquee-track>
+			{
+				[0, 1].map(groupIndex => (
+					<div class="brand-marquee__group" data-marquee-group={groupIndex}>
+						{marqueeItems.map(brand => (
+							<img class="brand-marquee__logo" src={brand.src} width={brand.width} height={brand.height} alt={brand.alt} loading="lazy" decoding="async" />
+						))}
+					</div>
+				))
+			}
+		</div>
+	</div>
+</section>
+
+<style>
+	.brand-marquee {
+		position: relative;
+		isolation: isolate;
+		overflow: hidden;
+		background: var(--color-background);
+	}
+
+	.brand-marquee__viewport {
+		overflow: hidden;
+		padding-block: clamp(0.85rem, 1.5vw, 1.25rem);
+	}
+
+	.brand-marquee__track {
+		display: flex;
+		width: max-content;
+		animation: brand-marquee-scroll 30s linear infinite;
+		will-change: transform;
+	}
+
+	.brand-marquee__group {
+		display: flex;
+		align-items: center;
+		gap: clamp(2.2rem, 4.6vw, 4.8rem);
+		padding-inline: clamp(1.1rem, 2.3vw, 2.4rem);
+	}
+
+	.brand-marquee__logo {
+		display: block;
+		flex: 0 0 auto;
+		width: auto;
+		height: clamp(7rem, 12vw, 10rem);
+		object-fit: contain;
+	}
+
+	@keyframes brand-marquee-scroll {
+		to {
+			transform: translate3d(-50%, 0, 0);
+		}
+	}
+
+	@media (max-width: 52rem) {
+		.brand-marquee__group {
+			gap: 1.8rem;
+			padding-inline: 0.9rem;
+		}
+
+		.brand-marquee__logo {
+			height: clamp(5.2rem, 24vw, 7rem);
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.brand-marquee__track {
+			animation: none;
+			transform: none;
+		}
+	}
+</style>
+
+<script>
+	const brandMarqueeTrack = document.querySelector<HTMLElement>("[data-brand-marquee-track]");
+
+	if (brandMarqueeTrack) {
+		const groups = Array.from(brandMarqueeTrack.querySelectorAll<HTMLElement>("[data-marquee-group]"));
+		const sourceItems = groups[0] ? Array.from(groups[0].children).map(item => item.cloneNode(true)) : [];
+
+		function fillBrandMarquee() {
+			if (!sourceItems.length) return;
+
+			const targetWidth = window.innerWidth * 1.25;
+			for (const group of groups) {
+				group.replaceChildren();
+
+				let index = 0;
+				const maxItems = sourceItems.length * 50;
+				while ((group.scrollWidth < targetWidth || index < sourceItems.length) && index < maxItems) {
+					group.append(sourceItems[index % sourceItems.length].cloneNode(true));
+					index += 1;
+				}
+			}
+		}
+
+		fillBrandMarquee();
+		window.addEventListener("resize", fillBrandMarquee);
+	}
+</script>
