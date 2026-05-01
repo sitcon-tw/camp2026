@@ -4,60 +4,10 @@ import registrationPhoto from "@/assets/registration/registration-photo.png";
 import CalendarIcon from "~icons/ic/baseline-calendar-month";
 import TicketIcon from "~icons/ic/baseline-confirmation-number";
 import SchoolIcon from "~icons/ic/baseline-school";
+import { cards as cardData, pricingRows, noticeItems } from "@/data/registration";
 
-const cards = [
-	{
-		title: "活動日期",
-		main: "2026/07/21 – 07/25",
-		note: "共五天四夜",
-		icon: CalendarIcon
-	},
-	{
-		title: "晚鳥票報名日期",
-		main: "2026/06/01 – 06/30",
-		note: "逾期不候",
-		icon: TicketIcon,
-		iconClass: "rotate-[-12deg]"
-	},
-	{
-		title: "活動地點",
-		main: "台灣大學",
-		note: "詳細地點待公告",
-		icon: SchoolIcon
-	}
-];
-
-const noticeItems = [
-	[{ text: "第 5 人（含）起將以原價計費。" }],
-	[{ text: "提前一晚入住營隊 700 NTD/人" }],
-	[{ text: "若在 5/11（日）23:59 前報名即享有早鳥價，享有早鳥價者仍可享有團報優惠。" }],
-	[
-		{ text: "團體報名不保證全數錄取，團體報名凡錄取者（無論是否全數錄取）皆享有團報優惠價格，詳見" },
-		{
-			text: "《報名簡章》",
-			href: "https://drive.google.com/file/d/1nxt-lYWAMnsK-QbwbbeIV7lTi9hcimTw/view"
-		},
-		{ text: "。" }
-	],
-	[{ text: "本次夏令營預計招收學員 54 名，我們會針對報名資料做簡易審查，非先報先錄取。" }],
-	[{ text: "正取學員名單最晚將於 6/8（日）前公佈，屆時請關注 SITCON 相關社群媒體及 Email 信箱。" }],
-	[
-		{ text: "正取學員需完成報名費繳交，始完成報名程序；另設有補助名額，請詳閱" },
-		{
-			text: "《報名費用補助辦法》",
-			href: "https://drive.google.com/file/d/1g6OSBT0yZIpOjKk5tkzgFOv-mcpBrPLd/view"
-		},
-		{ text: "。" }
-	],
-	[
-		{ text: "關於退費事宜，請見" },
-		{
-			text: "《退費說明文件》",
-			href: "https://drive.google.com/file/d/1A193ekw7DtCgfMmxsICeT4gO2pWYGd4q/view"
-		},
-		{ text: "。" }
-	]
-];
+const iconMap = { calendar: CalendarIcon, ticket: TicketIcon, school: SchoolIcon };
+const cards = cardData.map(({ icon, ...rest }) => ({ ...rest, icon: iconMap[icon] }));
 ---
 
 <div class="overflow-hidden">
@@ -66,19 +16,19 @@ const noticeItems = [
 
 <section
 	class="bg-foreground px-[clamp(1.25rem,8.5vw,8rem)] pt-[var(--gap)] pb-[var(--gap)] text-white"
-	style="--row-h: clamp(48px, 5.4vw, 82px); --radius: clamp(28px, 4.2vw, 64px); --gap: clamp(24px, 4.2vw, 64px); --label-size: clamp(17px, 2.1vw, 32px); --heading-size: clamp(1.65rem, 3.25vw, 2.5rem)"
+	style="--row-h: clamp(52px, 5.4vw, 82px); --radius: clamp(28px, 4.2vw, 64px); --gap: clamp(32px, 4.2vw, 64px); --label-size: clamp(18px, 2.1vw, 32px); --heading-size: clamp(1.5rem, 3.25vw, 2.5rem)"
 >
 	<div class="bg-green flex w-fit items-center justify-center gap-[10px] p-2.5">
 		<span class="text-foreground leading-none font-bold" style="font-size: var(--heading-size)">報名資訊</span>
 	</div>
 
 	<!-- 三張資訊卡 -->
-	<div class="grid w-full grid-cols-1 md:grid-cols-3" style="margin-top: var(--gap); gap: var(--gap)">
+	<div class="grid w-full grid-cols-1 sm:grid-cols-2 md:grid-cols-3" style="margin-top: var(--gap); gap: var(--gap)">
 		{
 			cards.map(({ title, main, note, icon: Icon, iconClass = "" }) => (
-				<div class="bg-soft-blue relative mx-auto aspect-[375/260] w-full max-w-[24rem] min-w-0 overflow-hidden md:aspect-[375/318] md:max-w-none" style="border-radius: var(--radius) 0">
-					<span class="text-background absolute top-[15.7%] left-[8.4%] text-[clamp(1rem,1.45vw,1.25rem)] leading-none font-bold">{title}</span>
-					<span class="text-background absolute top-[28%] left-[8.4%] max-w-[78%] text-[clamp(1.25rem,2vw,1.75rem)] leading-[160%] font-bold">{main}</span>
+				<div class="bg-soft-blue relative mx-auto aspect-[375/240] w-full min-w-0 overflow-hidden sm:max-w-none md:aspect-[375/318]" style="border-radius: var(--radius) 0">
+					<span class="text-background absolute top-[15.7%] left-[8.4%] text-[clamp(1rem,1.6vw,1.4rem)] leading-none font-bold">{title}</span>
+					<span class="text-background absolute top-[28%] left-[8.4%] max-w-[78%] text-[clamp(1.35rem,2.4vw,2.1rem)] leading-[140%] font-bold whitespace-pre-line">{main}</span>
 					<Icon class={`text-background/30 absolute top-[46%] right-[-6%] h-auto w-[44%] md:top-[52%] md:right-auto md:left-[60%] md:w-[50%] ${iconClass}`} />
 					<span class="text-background absolute top-[77.4%] left-[8.4%] text-base leading-[160%] font-bold">{note}</span>
 				</div>
@@ -90,43 +40,7 @@ const noticeItems = [
 		<!-- 組合卡片：--row-h 統一控制，Object 1 = 5× row，其餘 1× row -->
 		<div class="flex w-full flex-col items-start lg:flex-[691]">
 			{
-				[
-					{
-						label: "早鳥優惠",
-						color: "text-orange",
-						price: "1000元/人",
-						tl: true,
-						br: false
-					},
-					{
-						label: "一人報名",
-						color: "text-primary-blue",
-						price: "1500元/人",
-						tl: false,
-						br: false
-					},
-					{
-						label: "兩人報名",
-						color: "text-soft-blue",
-						price: "1200元/人",
-						tl: false,
-						br: false
-					},
-					{
-						label: "三人報名",
-						color: "text-sky-blue",
-						price: "1000元/人",
-						tl: false,
-						br: false
-					},
-					{
-						label: "早鳥優惠",
-						color: "text-dark-green",
-						price: "800元/人",
-						tl: false,
-						br: true
-					}
-				].map(({ label, color, price, tl, br }) => (
+				pricingRows.map(({ label, color, price, tl, br }) => (
 					<div
 						class="bg-background grid w-full grid-cols-2 items-center border-y border-black px-[9.262%]"
 						style={`height: var(--row-h); ${tl ? "border-top-left-radius: var(--radius);" : ""}${br ? "border-bottom-right-radius: var(--radius);" : ""}`}
