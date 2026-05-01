@@ -57,7 +57,6 @@ const bgImages = Object.values(
 	import { animate } from "animejs";
 
 	type TimelineItem = {
-		progress: number;
 		value: number;
 		prefix: string;
 		suffix: string;
@@ -94,8 +93,10 @@ const bgImages = Object.values(
 			numberEl.textContent = numberFormat.format(Math.round(displayedValue));
 		};
 
+		const getItemProgress = (idx: number) => idx / Math.max(1, data.length - 1);
+
 		const getClosestProgressIdx = () =>
-			data.reduce((closestIdx, item, idx) => (Math.abs(item.progress - currentProgress) < Math.abs(data[closestIdx].progress - currentProgress) ? idx : closestIdx), 0);
+			data.reduce((closestIdx, _item, idx) => (Math.abs(getItemProgress(idx) - currentProgress) < Math.abs(getItemProgress(closestIdx) - currentProgress) ? idx : closestIdx), 0);
 
 		const isPinned = () => {
 			const rect = container.getBoundingClientRect();
@@ -107,7 +108,7 @@ const bgImages = Object.values(
 			const offsetTop = container.getBoundingClientRect().top + window.scrollY;
 
 			window.scrollTo({
-				top: offsetTop + data[idx].progress * scrollable,
+				top: offsetTop + getItemProgress(idx) * scrollable,
 				behavior: "smooth"
 			});
 		};
