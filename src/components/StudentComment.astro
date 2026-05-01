@@ -13,6 +13,8 @@ const commentColorClassMap: Record<string, string> = {
 	"sky-blue": "bg-sky-blue",
 	"soft-blue": "bg-soft-blue"
 };
+
+const studentImages = Object.values(import.meta.glob<{ default: ImageMetadata }>("../assets/comment/*.jpg", { eager: true }));
 ---
 
 <div class="bg-background relative overflow-hidden">
@@ -30,10 +32,10 @@ const commentColorClassMap: Record<string, string> = {
 			<div class="relative z-10">
 				<div class="grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-4 md:gap-x-8 md:gap-y-10 lg:grid-cols-3 lg:gap-x-16">
 					{
-						studentComment.comments.map(c => (
+						studentComment.comments.map((c, i) => (
 							<div class="bg-foreground flex flex-col items-start rounded-4xl">
 								<div class:list={["flex h-19 items-center gap-4 self-stretch rounded-t-4xl p-4", commentColorClassMap[c.color] ?? "bg-blue"]}>
-									<Image src={studentComment.avatarSrc} alt={studentComment.avatarAlt} height="48" width="48" class="rounded-full" />
+									<Image src={studentImages[i].default} alt={studentComment.avatarAlt} class="aspect-square h-full w-auto rounded-full" />
 									<p class="text-[1.5rem] leading-[100%] font-bold text-white">{c.name}</p>
 									<div />
 								</div>
