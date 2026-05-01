@@ -4,10 +4,25 @@ import registrationPhoto from "@/assets/registration/registration-photo.png";
 import CalendarIcon from "~icons/ic/baseline-calendar-month";
 import TicketIcon from "~icons/ic/baseline-confirmation-number";
 import SchoolIcon from "~icons/ic/baseline-school";
-import { cards as cardData, pricingRows, noticeItems } from "@/data/registration";
+import homeData from "@/data/home.json";
 
-const iconMap = { calendar: CalendarIcon, ticket: TicketIcon, school: SchoolIcon };
-const cards = cardData.map(({ icon, ...rest }) => ({ ...rest, icon: iconMap[icon] }));
+const { registration } = homeData;
+const iconMap = {
+	calendar: CalendarIcon,
+	ticket: TicketIcon,
+	school: SchoolIcon
+};
+const pricingColorClassMap: Record<string, string> = {
+	orange: "text-orange",
+	"primary-blue": "text-primary-blue",
+	"soft-blue": "text-soft-blue",
+	"sky-blue": "text-sky-blue",
+	"dark-green": "text-dark-green"
+};
+const cards = registration.infoCards.map(card => ({
+	...card,
+	icon: iconMap[card.iconKey as keyof typeof iconMap]
+}));
 ---
 
 <div class="overflow-hidden">
@@ -15,88 +30,91 @@ const cards = cardData.map(({ icon, ...rest }) => ({ ...rest, icon: iconMap[icon
 </div>
 
 <section
-	class="bg-foreground px-[clamp(1.25rem,8.5vw,8rem)] pt-[var(--gap)] pb-[var(--gap)] text-white"
-	style="--row-h: clamp(52px, 5.4vw, 82px); --radius: clamp(28px, 4.2vw, 64px); --gap: clamp(32px, 4.2vw, 64px); --label-size: clamp(18px, 2.1vw, 32px); --heading-size: clamp(1.5rem, 3.25vw, 2.5rem)"
+	id="registration-info"
+	class="bg-foreground pt-(--gap) pb-(--gap) text-white"
+	style="--row-h: clamp(3rem, 5.4vw, 5.125rem); --radius: clamp(1.75rem, 4.2vw, 4rem); --gap: clamp(1.5rem, 4.2vw, 4rem); --label-size: clamp(1.0625rem, 2.1vw, 2rem); --heading-size: clamp(1.65rem, 3.25vw, 2.5rem)"
 >
-	<div class="bg-green flex w-fit items-center justify-center gap-[10px] p-2.5">
-		<span class="text-foreground leading-none font-bold" style="font-size: var(--heading-size)">報名資訊</span>
-	</div>
+	<div class="site-container">
+		<div class="bg-green flex w-fit items-center justify-center gap-2.5 p-2.5">
+			<span class="text-foreground leading-none font-bold" style="font-size: var(--heading-size)">{registration.sectionTitle}</span>
+		</div>
 
-	<!-- 三張資訊卡 -->
-	<div class="grid w-full grid-cols-1 sm:grid-cols-2 md:grid-cols-3" style="margin-top: var(--gap); gap: var(--gap)">
-		{
-			cards.map(({ title, main, note, icon: Icon, iconClass = "" }) => (
-				<div class="bg-soft-blue relative mx-auto aspect-[375/240] w-full min-w-0 overflow-hidden sm:max-w-none md:aspect-[375/318]" style="border-radius: var(--radius) 0">
-					<span class="text-background absolute top-[15.7%] left-[8.4%] text-[clamp(1rem,1.6vw,1.4rem)] leading-none font-bold">{title}</span>
-					<span class="text-background absolute top-[28%] left-[8.4%] max-w-[78%] text-[clamp(1.35rem,2.4vw,2.1rem)] leading-[140%] font-bold whitespace-pre-line">{main}</span>
-					<Icon class={`text-background/30 absolute top-[46%] right-[-6%] h-auto w-[44%] md:top-[52%] md:right-auto md:left-[60%] md:w-[50%] ${iconClass}`} />
-					<span class="text-background absolute top-[77.4%] left-[8.4%] text-base leading-[160%] font-bold">{note}</span>
-				</div>
-			))
-		}
-	</div>
-
-	<div class="flex w-full flex-col items-start lg:flex-row" style="margin-top: var(--gap)">
-		<!-- 組合卡片：--row-h 統一控制，Object 1 = 5× row，其餘 1× row -->
-		<div class="flex w-full flex-col items-start lg:flex-[691]">
+		<!-- 三張資訊卡 -->
+		<div class="grid w-full grid-cols-1 md:grid-cols-3" style="margin-top: var(--gap); gap: var(--gap)">
 			{
-				pricingRows.map(({ label, color, price, tl, br }) => (
-					<div
-						class="bg-background grid w-full grid-cols-2 items-center border-y border-black px-[9.262%]"
-						style={`height: var(--row-h); ${tl ? "border-top-left-radius: var(--radius);" : ""}${br ? "border-bottom-right-radius: var(--radius);" : ""}`}
-					>
-						<span class={`text-center leading-[150%] font-extrabold ${color}`} style="font-size: var(--label-size)">
-							{label}
-						</span>
-						<span class="text-center leading-[150%] font-extrabold text-black" style="font-size: var(--label-size)">
-							{price}
-						</span>
+				cards.map(({ title, main, note, icon: Icon, iconClass = "" }) => (
+					<div class="bg-soft-blue relative mx-auto aspect-375/260 w-full max-w-96 min-w-0 overflow-hidden md:aspect-375/318 md:max-w-none" style="border-radius: var(--radius) 0">
+						<span class="text-background absolute top-[15.7%] left-[8.4%] text-[clamp(1rem,1.45vw,1.25rem)] leading-none font-bold">{title}</span>
+						<span class="text-background absolute top-[28%] left-[8.4%] max-w-[78%] text-[clamp(1.25rem,2vw,1.75rem)] leading-[160%] font-bold">{main}</span>
+						<Icon class={`text-background/30 absolute top-[46%] right-[-6%] h-auto w-[44%] md:top-[52%] md:right-auto md:left-[60%] md:w-[50%] ${iconClass}`} />
+						<span class="text-background absolute top-[77.4%] left-[8.4%] text-base leading-[160%] font-bold">{note}</span>
 					</div>
 				))
 			}
 		</div>
 
-		<div class="relative mt-[var(--gap)] aspect-[565/410] w-full overflow-hidden lg:mt-0 lg:flex-[565]">
-			<Image src={registrationPhoto} alt="SITCON Camp 活動照片" class="absolute top-[6.585%] left-[7.434%] aspect-[239/159] w-[85.133%] object-cover" loading="lazy" decoding="async" />
-			<a
-				href="#"
-				class="bg-green absolute bottom-[4.878%] left-[35.929%] flex h-[clamp(3rem,17.561%,4.5rem)] items-center justify-center rounded-2xl px-3 text-[clamp(1.125rem,2.25vw,2.125rem)] leading-[150%] font-extrabold text-white shadow-[clamp(4px,0.53vw,8px)_clamp(4px,0.53vw,8px)_0_0_#F69977]"
-			>
-				立即報名
-			</a>
+		<div class="flex w-full flex-col items-start lg:flex-row" style="margin-top: var(--gap)">
+			<!-- 組合卡片：--row-h 統一控制，Object 1 = 5× row，其餘 1× row -->
+			<div class="flex w-full flex-col items-start lg:flex-691">
+				{
+					registration.pricingRows.map(({ label, color, price, roundedStart, roundedEnd }) => (
+						<div
+							class="bg-background grid w-full grid-cols-2 items-center border-y border-black px-[9.262%]"
+							style={`height: var(--row-h); ${roundedStart ? "border-top-left-radius: var(--radius);" : ""}${roundedEnd ? "border-bottom-right-radius: var(--radius);" : ""}`}
+						>
+							<span class:list={["text-center leading-[150%] font-extrabold", pricingColorClassMap[color] ?? "text-orange"]} style="font-size: var(--label-size)">
+								{label}
+							</span>
+							<span class="text-center leading-[150%] font-extrabold text-black" style="font-size: var(--label-size)">
+								{price}
+							</span>
+						</div>
+					))
+				}
+			</div>
+
+			<div class="relative mt-(--gap) aspect-565/410 w-full overflow-hidden lg:mt-0 lg:flex-565">
+				<Image src={registrationPhoto} alt={registration.photoAlt} class="absolute top-[6.585%] left-[7.434%] aspect-239/159 w-[85.133%] object-cover" loading="lazy" decoding="async" />
+				<a
+					href={registration.cta.href}
+					class="bg-green absolute bottom-[4.878%] left-[35.929%] flex h-[clamp(3rem,17.561%,4.5rem)] items-center justify-center rounded-2xl px-3 text-[clamp(1.125rem,2.25vw,2.125rem)] leading-[150%] font-extrabold text-white shadow-[clamp(0.25rem,0.53vw,0.5rem)_clamp(0.25rem,0.53vw,0.5rem)_0_0_var(--color-orange)]"
+				>
+					{registration.cta.label}
+				</a>
+			</div>
 		</div>
-	</div>
 
-	<div class="bg-orange flex w-fit items-center justify-center gap-[10px] p-2.5" style="margin-top: var(--gap)">
-		<span class="text-foreground leading-none font-bold" style="font-size: var(--heading-size)">注意事項</span>
-	</div>
+		<div class="bg-orange flex w-fit items-center justify-center gap-2.5 p-2.5" style="margin-top: var(--gap)">
+			<span class="text-foreground leading-none font-bold" style="font-size: var(--heading-size)">{registration.noticeTitle}</span>
+		</div>
 
-	<ol class="mt-6 list-decimal space-y-1 pl-6 text-[clamp(1rem,1.25vw,1.125rem)] leading-[170%] font-bold text-white">
-		{
-			noticeItems.map(item => (
-				<li>
-					{item.map(part =>
-						"href" in part ? (
-							<a class="underline" href={part.href} target="_blank" rel="noreferrer">
-								{part.text}
-							</a>
-						) : (
-							part.text
-						)
-					)}
-				</li>
-			))
-		}
-	</ol>
+		<ol class="mt-6 list-decimal space-y-1 pl-6 text-[clamp(1rem,1.25vw,1.125rem)] leading-[170%] font-bold text-white">
+			{
+				registration.noticeItems.map(item => (
+					<li>
+						{item.map(part =>
+							"href" in part ? (
+								<a class="underline" href={part.href} target="_blank" rel="noreferrer">
+									{part.text}
+								</a>
+							) : (
+								part.text
+							)
+						)}
+					</li>
+				))
+			}
+		</ol>
+	</div>
 </section>
 
 <!-- 底部過渡：對角線斜切，上=foreground 下=background -->
 <div class="overflow-hidden">
 	<svg viewBox="0 0 1440 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" class="block w-full" aria-hidden="true">
 		<!-- 上方三角形：foreground -->
-		<polygon points="0,0 1440,0 0,80" fill="#24272e"></polygon>
+		<polygon points="0,0 1440,0 0,80" fill="var(--color-foreground)"></polygon>
 		<!-- 下方三角形：background -->
-		<polygon points="1440,0 1440,80 0,80" fill="#f9f5ef"></polygon>
+		<polygon points="1440,0 1440,80 0,80" fill="var(--color-background)"></polygon>
 	</svg>
 </div>
 
@@ -106,7 +124,7 @@ const cards = cardData.map(({ icon, ...rest }) => ({ ...rest, icon: iconMap[icon
 	const W = 1440,
 		H = 60;
 	const COUNT = 8;
-	const COLOR = "#24272e";
+	const COLOR = getComputedStyle(document.documentElement).getPropertyValue("--color-foreground").trim();
 
 	function rand(min: number, max: number) {
 		return Math.random() * (max - min) + min;
