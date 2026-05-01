@@ -16,7 +16,7 @@ const bgImages = Object.values(
 
 <div data-scroll-counter style={`height: ${sitconTimeline.config.scrollHeight}vh`} class="relative">
 	<div
-		class="bg-background sticky top-0 grid h-screen grid-cols-[minmax(0,1fr)_clamp(18rem,34vw,42rem)_minmax(0,1fr)] items-center gap-8 overflow-hidden max-lg:grid-cols-[1fr] max-lg:grid-rows-[auto_auto_auto] max-lg:justify-items-center max-lg:gap-6"
+		class="bg-background sticky top-0 grid h-screen grid-cols-[minmax(0,1fr)_clamp(24rem,42vw,42rem)_minmax(0,1fr)] items-center gap-8 overflow-hidden max-lg:grid-cols-[1fr] max-lg:grid-rows-[auto_auto_auto] max-lg:justify-items-center max-lg:gap-6"
 		style="padding-inline: var(--site-content-gutter)"
 	>
 		<!-- 背景圖片層 -->
@@ -31,22 +31,26 @@ const bgImages = Object.values(
 		</div>
 
 		<!-- 左側文字 -->
-		<div class="relative z-5 text-right max-lg:text-center">
-			<span data-prefix class="text-foreground text-[2rem] leading-none font-bold whitespace-nowrap lg:text-[4rem] xl:text-[5rem]">{first.prefix}</span>
+		<div class="relative z-5 min-w-0 text-right max-lg:text-center">
+			<span data-prefix class="text-foreground text-[2.65rem] leading-[0.95] font-bold whitespace-nowrap max-sm:text-[2.2rem] lg:text-[3rem] xl:text-[4rem]">
+				{first.prefix}
+			</span>
 		</div>
 
 		<!-- 中央數字 -->
 		<div class="relative z-5 flex w-full min-w-0 flex-col items-center gap-2">
 			<div class="pointer-events-none absolute top-1/2 left-1/2 -z-1 h-[calc(100%+3rem)] w-px -translate-x-1/2 -translate-y-1/2"></div>
-			<div data-number class="text-orange w-full text-center text-[6rem] leading-none font-bold tracking-[-0.03em] tabular-nums max-sm:text-[4.5rem] lg:text-[8rem] xl:text-[9rem]">
+			<div data-number class="text-orange w-full text-center text-[6rem] leading-none font-bold tracking-[-0.03em] tabular-nums max-sm:text-[4.5rem] lg:text-[7rem] xl:text-[9rem]">
 				{first.value.toLocaleString()}
 			</div>
 			<div class="my-0.5 h-1 w-full [background:linear-gradient(90deg,var(--color-transparent),var(--color-orange),var(--color-transparent))]"></div>
 		</div>
 
 		<!-- 右側文字 -->
-		<div class="relative z-5 text-left max-lg:text-center">
-			<span data-suffix class="text-foreground text-[2rem] leading-none font-bold whitespace-nowrap lg:text-[4rem] xl:text-[5rem]">{first.suffix}</span>
+		<div class="relative z-5 min-w-0 text-left max-lg:text-center">
+			<span data-suffix class="text-foreground text-[2.65rem] leading-[0.95] font-bold whitespace-nowrap max-sm:text-[2.2rem] lg:text-[3rem] xl:text-[4rem]">
+				{first.suffix}
+			</span>
 		</div>
 	</div>
 
