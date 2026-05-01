@@ -1,19 +1,22 @@
 ---
 import SitconBrand from "@/assets/brand/SITCON.svg";
+import homeData from "@/data/home.json";
 
-const brands = [
-	{
-		src: SitconBrand.src,
-		width: SitconBrand.width,
-		height: SitconBrand.height,
-		alt: "SITCON"
-	}
-];
+const { brandMarquee } = homeData;
+const brandAssets: Record<string, typeof SitconBrand> = {
+	sitcon: SitconBrand
+};
+const brands = brandMarquee.brands.map(brand => ({
+	...brand,
+	src: brandAssets[brand.imageKey].src,
+	width: brandAssets[brand.imageKey].width,
+	height: brandAssets[brand.imageKey].height
+}));
 
-const marqueeItems = Array.from({ length: 6 }, (_, index) => brands[index % brands.length]);
+const marqueeItems = Array.from({ length: brandMarquee.repeatItems }, (_, index) => brands[index % brands.length]);
 ---
 
-<section class="brand-marquee" aria-label="合作品牌：SITCON">
+<section class="brand-marquee" aria-label={brandMarquee.ariaLabel}>
 	<div class="brand-marquee__viewport" aria-hidden="true">
 		<div class="brand-marquee__track">
 			{

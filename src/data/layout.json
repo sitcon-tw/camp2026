@@ -1,0 +1,132 @@
+{
+	"document": {
+		"lang": "zh-Hant",
+		"gtmId": "GTM-NKHHNVV"
+	},
+	"header": {
+		"ariaLabel": "SITCON Camp 2026",
+		"brand": {
+			"href": "/",
+			"ariaLabel": "SITCON Camp 2026 首頁",
+			"logoAlt": "SITCON Camp 2026"
+		},
+		"navAriaLabel": "主要導覽",
+		"navItems": [
+			{
+				"label": "報名資訊",
+				"href": "/#registration-info"
+			},
+			{
+				"label": "主線課程",
+				"href": "/course/"
+			},
+			{
+				"label": "課程活動",
+				"href": "/#course-events"
+			},
+			{
+				"label": "籌備團隊",
+				"href": "/about/"
+			},
+			{
+				"label": "FAQ",
+				"href": "/#faq"
+			}
+		],
+		"cta": {
+			"label": "立即報名",
+			"href": "/#registration-info"
+		},
+		"mobileMenu": {
+			"openLabel": "開啟主要導覽",
+			"closeLabel": "關閉主要導覽"
+		}
+	},
+	"footer": {
+		"sections": [
+			{
+				"title": "聯絡我們",
+				"variant": "green",
+				"type": "contact",
+				"label": "聯絡窗口",
+				"links": [
+					{
+						"label": "ask@sitcon.camp",
+						"href": "mailto:ask@sitcon.camp"
+					}
+				]
+			},
+			{
+				"title": "SITCON 活動",
+				"variant": "blue",
+				"type": "links",
+				"links": [
+					{
+						"label": "SITCON 年會",
+						"href": "https://sitcon.org/"
+					},
+					{
+						"label": "SITCON Hour of Code",
+						"href": "https://sitcon.org/hoc"
+					},
+					{
+						"label": "SITCON Camp",
+						"href": "https://sitcon.org/2026/"
+					},
+					{
+						"label": "SITCON Hackathon",
+						"href": "https://hackathon.sitcon.org/"
+					}
+				]
+			},
+			{
+				"title": "歷年官網",
+				"variant": "purple",
+				"type": "archive",
+				"links": [
+					{ "label": "2025", "href": "https://sitcon.org/2025" },
+					{ "label": "2024", "href": "https://sitcon.org/2024" },
+					{ "label": "2023", "href": "https://sitcon.org/2023" },
+					{ "label": "2022", "href": "https://sitcon.org/2022" },
+					{ "label": "2021", "href": "https://sitcon.org/2021" },
+					{ "label": "2020", "href": "https://sitcon.org/2020" },
+					{ "label": "2019", "href": "https://sitcon.org/2019" },
+					{ "label": "2018", "href": "https://sitcon.org/2018" },
+					{ "label": "2017", "href": "https://sitcon.org/2017" }
+				]
+			},
+			{
+				"title": "社群媒體",
+				"variant": "orange",
+				"type": "social",
+				"links": [
+					{
+						"label": "Instagram",
+						"href": "https://www.instagram.com/sitcon.tw",
+						"icon": "instagram"
+					},
+					{
+						"label": "Facebook",
+						"href": "https://www.facebook.com/SITCONtw",
+						"icon": "facebook"
+					},
+					{
+						"label": "YouTube",
+						"href": "https://www.youtube.com/@SITCONtw",
+						"icon": "youtube"
+					},
+					{
+						"label": "Flickr",
+						"href": "https://www.flickr.com/photos/sitcon/",
+						"icon": "flickr"
+					},
+					{
+						"label": "Telegram",
+						"href": "https://t.me/SITCONgeneral",
+						"icon": "telegram"
+					}
+				]
+			}
+		]
+	}
+}

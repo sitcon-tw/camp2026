@@ -1,0 +1,368 @@
+{
+	"hero": {
+		"title": "SITCON Camp 2026",
+		"subtitle": "陽明交通大學 7/8 - 7/12",
+		"intro": {
+			"ariaLabel": "SITCON Camp 2026 介紹",
+			"questionPrefix": "想要學",
+			"questionSuffix": "？",
+			"topics": ["資訊安全", "人工智慧", "軟體工程"],
+			"finalPrefix": "那就來"
+		},
+		"photoWallColumns": [
+			{
+				"className": "hero-photo-wall__column--one",
+				"duration": 38000,
+				"offset": 10000,
+				"items": [
+					{ "imageIndex": 0, "classes": ["hero-photo-wall__tile--large"] },
+					{ "imageIndex": 5, "classes": [] },
+					{ "imageIndex": 10, "classes": ["hero-photo-wall__tile--tall"] },
+					{ "imageIndex": 3, "classes": [] }
+				]
+			},
+			{
+				"className": "hero-photo-wall__column--two",
+				"duration": 47000,
+				"offset": 22000,
+				"items": [
+					{ "imageIndex": 1, "classes": [] },
+					{ "imageIndex": 6, "classes": ["hero-photo-wall__tile--tall"] },
+					{ "imageIndex": 11, "classes": [] },
+					{ "imageIndex": 4, "classes": ["hero-photo-wall__tile--large"] }
+				]
+			},
+			{
+				"className": "hero-photo-wall__column--three",
+				"duration": 41000,
+				"offset": 16000,
+				"items": [
+					{ "imageIndex": 2, "classes": ["hero-photo-wall__tile--tall"] },
+					{ "imageIndex": 7, "classes": [] },
+					{ "imageIndex": 0, "classes": ["hero-photo-wall__tile--large"] },
+					{ "imageIndex": 9, "classes": [] }
+				]
+			},
+			{
+				"className": "hero-photo-wall__column--four",
+				"duration": 53000,
+				"offset": 28000,
+				"items": [
+					{ "imageIndex": 3, "classes": [] },
+					{ "imageIndex": 8, "classes": ["hero-photo-wall__tile--large"] },
+					{ "imageIndex": 1, "classes": [] },
+					{ "imageIndex": 10, "classes": ["hero-photo-wall__tile--tall"] }
+				]
+			},
+			{
+				"className": "hero-photo-wall__column--five",
+				"duration": 44000,
+				"offset": 7000,
+				"items": [
+					{ "imageIndex": 4, "classes": ["hero-photo-wall__tile--large"] },
+					{ "imageIndex": 9, "classes": [] },
+					{ "imageIndex": 2, "classes": ["hero-photo-wall__tile--tall"] },
+					{ "imageIndex": 11, "classes": [] }
+				]
+			}
+		]
+	},
+	"brandMarquee": {
+		"ariaLabel": "合作品牌：SITCON",
+		"repeatItems": 6,
+		"brands": [
+			{
+				"imageKey": "sitcon",
+				"alt": "SITCON"
+			}
+		]
+	},
+	"masterClassSection": {
+		"eyebrow": "Master Class",
+		"title": "三大實戰主題，由強者講師帶路",
+		"lead": "每堂 Master Class 都由具備實務經驗的講師帶領，課程會從真實場景出發，把技術判斷、工作流程與專案思維拆成可以帶走的方法。",
+		"deckAriaLabel": "Master Class 課程卡片"
+	},
+	"masterClasses": [
+		{
+			"title": "軟體工程",
+			"kicker": "Software Engineering / 軟體工程",
+			"instructor": "待公布講師 A",
+			"achievement": "曾主導高流量服務從 0 到 1 的架構演進",
+			"role": "大型服務架構 / 開源專案實戰講師",
+			"imageIndex": 1,
+			"imagePosition": "50% 42%",
+			"accent": "green",
+			"summary": "從需求拆解、版本控管到可維護架構，把真實產品開發會遇到的取捨帶進課堂。",
+			"profile": ["曾參與高流量服務架構設計", "長期維護開源專案與工程流程", "擅長把工程決策轉成可操作方法"],
+			"outcome": "你會帶走一套能放進團隊協作的開發節奏，理解怎麼讓程式碼在多人專案裡持續演進。"
+		},
+		{
+			"title": "資訊安全",
+			"kicker": "Cybersecurity / 資訊安全",
+			"instructor": "待公布講師 B",
+			"achievement": "曾在攻防實戰中協助團隊找出關鍵風險",
+			"role": "攻防演練 / 資安事件應變講師",
+			"imageIndex": 7,
+			"imagePosition": "48% 44%",
+			"accent": "blue",
+			"summary": "用攻防視角理解漏洞、權限與防禦設計，不只看工具，也看判斷與證據鏈。",
+			"profile": ["具備資安競賽與實務稽核經驗", "熟悉 Web、系統與雲端安全風險", "能把攻擊流程轉譯成防禦策略"],
+			"outcome": "你會學會如何從威脅模型出發，判斷風險、驗證漏洞，並提出能落地的修補方向。"
+		},
+		{
+			"title": "人工智慧",
+			"kicker": "Artificial Intelligence / 人工智慧",
+			"instructor": "待公布講師 C",
+			"achievement": "曾把 AI 原型落地成可被真實使用的產品流程",
+			"role": "機器學習 / 生成式 AI 應用講師",
+			"imageIndex": 10,
+			"imagePosition": "52% 40%",
+			"accent": "orange",
+			"summary": "從模型能力、資料品質到應用設計，理解 AI 專案不是只會呼叫 API，而是能做出可靠系統。",
+			"profile": ["曾落地資料驅動與 AI 應用專案", "熟悉模型評估、提示設計與產品整合", "關注 AI 工具鏈與真實使用情境"],
+			"outcome": "你會建立 AI 應用的工程觀：知道什麼問題適合 AI、如何驗證效果，以及怎麼把結果接進產品。"
+		}
+	],
+	"masterCarousel": {
+		"accentPalette": ["green", "primary-blue", "blue", "soft-blue", "sky-blue", "orange"],
+		"members": [
+			{
+				"id": "1",
+				"name": "Alice Chen",
+				"role": "前端工程師",
+				"imgKey": "hackathon",
+				"bio": "專注 Svelte 5 與動效設計，熱愛開源。"
+			},
+			{
+				"id": "2",
+				"name": "Bob Lin",
+				"role": "後端工程師",
+				"imgKey": "camp",
+				"bio": "擅長 Bun runtime 與 PostgreSQL 效能調優。"
+			},
+			{
+				"id": "3",
+				"name": "Carol Wu",
+				"role": "UI/UX 設計師",
+				"imgKey": "groups",
+				"bio": "從 0→1 設計系統，Figma 魔法師。"
+			},
+			{
+				"id": "4",
+				"name": "David Huang",
+				"role": "DevOps 工程師",
+				"imgKey": "edu",
+				"bio": "Docker、CI/CD 流水線，讓部署無痛。"
+			}
+		]
+	},
+	"aboutSitconCamp": {
+		"title": "SITCON，13 年來全東亞最大的學生資訊社群",
+		"description": "我個人認為義大利麵就應該拌 42 號混凝土，因為這個螺絲釘的長度很容易直接影響到挖掘機的扭矩。我個人認為義大利麵就應該拌 42 號混凝土，因為這個螺絲釘的長度很容易直接影響到挖掘機的扭矩。我個人認為義大利麵就應該拌 42 號混凝土，因為這個螺絲釘的長度很容易直接影響到挖掘機的扭矩。",
+		"stats": [
+			{
+				"type": "single",
+				"value": "10000",
+				"label": "名參與者",
+				"img": "groups"
+			},
+			{
+				"type": "single",
+				"value": "500",
+				"label": "名學生講者",
+				"img": "edu"
+			},
+			{
+				"type": "split",
+				"items": [
+					{ "value": "500", "label": "場聚會和講座" },
+					{ "value": "10", "label": "場夏令營" }
+				],
+				"img": "hackathon"
+			},
+			{
+				"type": "single",
+				"prefix": "扶持近",
+				"value": "1400",
+				"label": "名熱愛資訊的志工",
+				"img": "camp"
+			}
+		],
+		"learnMore": {
+			"label": "了解更多",
+			"href": "2026/about"
+		}
+	},
+	"studentComment": {
+		"sectionTitle": "聽聽往年學員怎麼說的",
+		"avatarSrc": "https://placehold.co/48x48",
+		"avatarAlt": "Student's pfp",
+		"comments": [
+			{
+				"name": "Student 1",
+				"comment": "我個人認為義大利麵就應該拌 42 號混泥土因為這個螺絲釘的長度很容易直接影響到挖掘機的扭矩",
+				"color": "blue"
+			},
+			{
+				"name": "Student 2",
+				"comment": "你往裡砸的時候一瞬間他就會產生大量的高能蛋白俗稱 UFO，會嚴重影響經濟的發展以至於對整個太平洋和充電器的核污染",
+				"color": "orange"
+			},
+			{
+				"name": "Student 3",
+				"comment": "再或者說透過這勾股定理很容易推斷出人工飼養的東條英機他是可以捕獲野生的三角函數",
+				"color": "green"
+			},
+			{
+				"name": "Student 4",
+				"comment": "所以說不管這秦始皇的切面是否具有放射性川普的 N 次方是否有沈澱物都不會影響到沃爾瑪跟維爾康在南極匯合",
+				"color": "dark-green"
+			},
+			{
+				"name": "Student 5",
+				"comment": "你往裡砸的時候一瞬間他就會產生大量的高能蛋白俗稱 UFO，會嚴重影響經濟的發展以至於對整個太平洋和充電器的核污染",
+				"color": "sky-blue"
+			},
+			{
+				"name": "Student 6",
+				"comment": "再或者說透過這勾股定理很容易推斷出人工飼養的東條英機他是可以捕獲野生的三角函數",
+				"color": "soft-blue"
+			}
+		],
+		"bgMarquee": {
+			"text": "Hello World ",
+			"repeatRows": 10
+		},
+		"video": [
+			{
+				"label": "2026 年會回顧",
+				"cover": "https://placehold.co/1920x1080",
+				"url": "https://www.youtube-nocookie.com/embed/jbofh3u8XrI?controls=0"
+			},
+			{
+				"label": "2026 年會開幕",
+				"cover": "https://placehold.co/1920x1080",
+				"url": "https://www.youtube-nocookie.com/embed/_gvPCsdmeNs?controls=0"
+			},
+			{
+				"label": "2026 年會閉幕",
+				"cover": "https://placehold.co/1920x1080",
+				"url": "https://www.youtube-nocookie.com/embed/xN-Tj83adDQ?controls=0"
+			},
+			{
+				"label": "2019 夏令營",
+				"cover": "https://placehold.co/1920x1080",
+				"url": "https://www.youtube-nocookie.com/embed/jbofh3u8XrI?controls=0"
+			},
+			{
+				"label": "2019 夏令營",
+				"cover": "https://placehold.co/1920x1080",
+				"url": "https://www.youtube-nocookie.com/embed/jbofh3u8XrI?controls=0"
+			},
+			{
+				"label": "2019 夏令營",
+				"cover": "https://placehold.co/1920x1080",
+				"url": "https://www.youtube-nocookie.com/embed/jbofh3u8XrI?controls=0"
+			}
+		]
+	},
+	"registration": {
+		"sectionTitle": "報名資訊",
+		"photoAlt": "SITCON Camp 活動照片",
+		"cta": {
+			"label": "立即報名",
+			"href": "#"
+		},
+		"noticeTitle": "注意事項",
+		"infoCards": [
+			{
+				"title": "活動日期",
+				"main": "2026/07/21 – 07/25",
+				"note": "共五天四夜",
+				"iconKey": "calendar"
+			},
+			{
+				"title": "晚鳥票報名日期",
+				"main": "2026/06/01 – 06/30",
+				"note": "逾期不候",
+				"iconKey": "ticket",
+				"iconClass": "rotate-[-12deg]"
+			},
+			{
+				"title": "活動地點",
+				"main": "台灣大學",
+				"note": "詳細地點待公告",
+				"iconKey": "school"
+			}
+		],
+		"pricingRows": [
+			{
+				"label": "早鳥優惠",
+				"color": "orange",
+				"price": "1000元/人",
+				"roundedStart": true,
+				"roundedEnd": false
+			},
+			{
+				"label": "一人報名",
+				"color": "primary-blue",
+				"price": "1500元/人",
+				"roundedStart": false,
+				"roundedEnd": false
+			},
+			{
+				"label": "兩人報名",
+				"color": "soft-blue",
+				"price": "1200元/人",
+				"roundedStart": false,
+				"roundedEnd": false
+			},
+			{
+				"label": "三人報名",
+				"color": "sky-blue",
+				"price": "1000元/人",
+				"roundedStart": false,
+				"roundedEnd": false
+			},
+			{
+				"label": "早鳥優惠",
+				"color": "dark-green",
+				"price": "800元/人",
+				"roundedStart": false,
+				"roundedEnd": true
+			}
+		],
+		"noticeItems": [
+			[{ "text": "第 5 人（含）起將以原價計費。" }],
+			[{ "text": "提前一晚入住營隊 700 NTD/人" }],
+			[{ "text": "若在 5/11（日）23:59 前報名即享有早鳥價，享有早鳥價者仍可享有團報優惠。" }],
+			[
+				{ "text": "團體報名不保證全數錄取，團體報名凡錄取者（無論是否全數錄取）皆享有團報優惠價格，詳見" },
+				{
+					"text": "《報名簡章》",
+					"href": "https://drive.google.com/file/d/1nxt-lYWAMnsK-QbwbbeIV7lTi9hcimTw/view"
+				},
+				{ "text": "。" }
+			],
+			[{ "text": "本次夏令營預計招收學員 54 名，我們會針對報名資料做簡易審查，非先報先錄取。" }],
+			[{ "text": "正取學員名單最晚將於 6/8（日）前公佈，屆時請關注 SITCON 相關社群媒體及 Email 信箱。" }],
+			[
+				{ "text": "正取學員需完成報名費繳交，始完成報名程序；另設有補助名額，請詳閱" },
+				{
+					"text": "《報名費用補助辦法》",
+					"href": "https://drive.google.com/file/d/1g6OSBT0yZIpOjKk5tkzgFOv-mcpBrPLd/view"
+				},
+				{ "text": "。" }
+			],
+			[
+				{ "text": "關於退費事宜，請見" },
+				{
+					"text": "《退費說明文件》",
+					"href": "https://drive.google.com/file/d/1A193ekw7DtCgfMmxsICeT4gO2pWYGd4q/view"
+				},
+				{ "text": "。" }
+			]
+		]
+	}
+}

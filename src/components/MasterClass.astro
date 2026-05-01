@@ -1,6 +1,8 @@
 ---
 import type { ImageMetadata } from "astro";
-import masterClasses from "@/data/masterClasses.json";
+import homeData from "@/data/home.json";
+
+const { masterClassSection, masterClasses } = homeData;
 
 const masterImages = Object.entries(
 	import.meta.glob<{ default: ImageMetadata }>("../assets/hero/wall/*.jpg", {
@@ -14,13 +16,13 @@ const masterImages = Object.entries(
 <section class="master-class" aria-labelledby="master-class-title" data-master-class>
 	<div class="master-class__sticky">
 		<div class="master-class__intro" data-master-intro>
-			<p class="master-class__eyebrow">Master Class</p>
-			<h2 id="master-class-title" class="master-class__title">三大實戰主題，由強者講師帶路</h2>
-			<p class="master-class__lead">每堂 Master Class 都由具備實務經驗的講師帶領，課程會從真實場景出發，把技術判斷、工作流程與專案思維拆成可以帶走的方法。</p>
+			<p class="master-class__eyebrow">{masterClassSection.eyebrow}</p>
+			<h2 id="master-class-title" class="master-class__title">{masterClassSection.title}</h2>
+			<p class="master-class__lead">{masterClassSection.lead}</p>
 		</div>
 
 		<div class="master-class__stage" data-master-stage>
-			<div class="master-class__deck" aria-label="Master Class 課程卡片" data-master-deck>
+			<div class="master-class__deck" aria-label={masterClassSection.deckAriaLabel} data-master-deck>
 				{
 					masterClasses.map((masterClass, index) => {
 						const image = masterImages[masterClass.imageIndex % masterImages.length];

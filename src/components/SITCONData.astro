@@ -1,10 +1,10 @@
 ---
-import siteContent from "@/data/site.json";
+import aboutData from "@/data/about.json";
 import { Image } from "astro:assets";
 
-const { sitconData } = siteContent;
+const { sitconTimeline } = aboutData;
 
-const data = sitconData.datas;
+const data = sitconTimeline.items;
 const first = data[0];
 
 const bgImages = Object.values(
@@ -14,7 +14,7 @@ const bgImages = Object.values(
 );
 ---
 
-<div data-scroll-counter style={`height: ${sitconData.config.scrollHeight}vh`} class="relative">
+<div data-scroll-counter style={`height: ${sitconTimeline.config.scrollHeight}vh`} class="relative">
 	<div
 		class="bg-background sticky top-0 grid h-screen grid-cols-[1fr_auto_1fr] items-center gap-8 overflow-hidden px-[5vw] max-sm:grid-cols-[1fr] max-sm:grid-rows-[auto_auto_auto] max-sm:justify-items-center max-sm:gap-6 max-sm:px-6"
 	>

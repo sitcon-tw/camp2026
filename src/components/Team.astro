@@ -1,127 +1,11 @@
 ﻿---
 import { Image } from "astro:assets";
 import LucideX from "~icons/lucide/x";
+import aboutData from "@/data/about.json";
 
-const example_data = {
-	開發組: [
-		{
-			Name: "王大明",
-			Description: "系統架構師，熱衷於分散式系統設計與效能調優。",
-			Job: "組長",
-			AvatarImgUrl: "https://i.pravatar.cc/150?img=3",
-			AvatarLink: "https://example.com/wangdaming"
-		},
-		{
-			Name: "吳佳玲",
-			Description: "前端工程師，擅長動畫效果與響應式設計。",
-			Job: "副組長",
-			AvatarImgUrl: "https://i.pravatar.cc/150?img=44",
-			AvatarLink: "https://example.com/wujaling"
-		},
-		{
-			Name: "黃俊傑",
-			Description: "後端工程師，專注於 API 設計與微服務架構。",
-			Job: "組員",
-			AvatarImgUrl: "https://i.pravatar.cc/150?img=15",
-			AvatarLink: "https://example.com/huangjunjie"
-		},
-		{
-			Name: "鄭雅婷",
-			Description: "DevOps 工程師，負責雲端部署與監控基礎設施。",
-			Job: "精靈",
-			AvatarImgUrl: "https://i.pravatar.cc/150?img=49",
-			AvatarLink: "https://example.com/zhengyating"
-		},
-		{
-			Name: "蔡佳霖",
-			Description: "資安工程師，專注於滲透測試與漏洞分析。",
-			Job: "組長",
-			AvatarImgUrl: "https://i.pravatar.cc/150?img=21",
-			AvatarLink: "https://example.com/caijialin"
-		},
-		{
-			Name: "謝文志",
-			Description: "行動應用開發者，熟悉 iOS 與 Android 跨平台開發。",
-			Job: "副組長",
-			AvatarImgUrl: "https://i.pravatar.cc/150?img=33",
-			AvatarLink: "https://example.com/xiewenzhi"
-		},
-		{
-			Name: "周怡君",
-			Description: "資料工程師，擅長 ETL 流程設計與大數據分析。",
-			Job: "組員",
-			AvatarImgUrl: "https://i.pravatar.cc/150?img=56",
-			AvatarLink: "https://example.com/zhouyijun"
-		},
-		{
-			Name: "楊建宏",
-			Description: "嵌入式系統工程師，熱衷於硬體軟體整合開發。",
-			Job: "精靈",
-			AvatarImgUrl: "https://i.pravatar.cc/150?img=7",
-			AvatarLink: "https://example.com/yangjanhong"
-		},
-		{
-			Name: "何雅雯",
-			Description: "機器學習工程師，專注於自然語言處理與模型訓練。",
-			Job: "精靈",
-			AvatarImgUrl: "https://i.pravatar.cc/150?img=62",
-			AvatarLink: "https://example.com/heyawen"
-		},
-		{
-			Name: "蘇俊宏",
-			Description: "網路工程師，擅長網路拓撲規劃與流量優化。",
-			Job: "精靈",
-			AvatarImgUrl: "https://i.pravatar.cc/150?img=18",
-			AvatarLink: "https://example.com/sujunhong"
-		},
-		{
-			Name: "賴佳妮",
-			Description: "測試工程師，專精自動化測試框架與品質保證流程。",
-			Job: "精靈",
-			AvatarImgUrl: "https://i.pravatar.cc/150?img=39",
-			AvatarLink: "https://example.com/laijiani"
-		},
-		{
-			Name: "江志偉",
-			Description: "遊戲開發者，熱衷於即時渲染與物理引擎整合。",
-			Job: "精靈",
-			AvatarImgUrl: "https://i.pravatar.cc/150?img=11",
-			AvatarLink: "https://example.com/jiangzhiwei"
-		},
-		{
-			Name: "李小華",
-			Description: "區塊鏈開發者，專注於智能合約與去中心化應用。",
-			Job: "精靈",
-			AvatarImgUrl: "https://i.pravatar.cc/150?img=64",
-			AvatarLink: "https://example.com/lixiaohua"
-		}
-	],
-	行銷組: [
-		{
-			Name: "林思穎",
-			Description: "業務開發經理，擅長建立合作夥伴關係與談判策略。",
-			Job: "業務",
-			AvatarImgUrl: "https://i.pravatar.cc/150?img=43",
-			AvatarLink: "https://example.com/linsiying"
-		},
-		{
-			Name: "陳宜蓁",
-			Description: "品牌行銷專員，負責社群經營與內容策略規劃。",
-			Job: "行銷",
-			AvatarImgUrl: "https://i.pravatar.cc/150?img=58",
-			AvatarLink: "https://example.com/chenyizhen"
-		},
-		{
-			Name: "洪冠宇",
-			Description: "企業客戶顧問，專注於解決方案銷售與客戶成功管理。",
-			Job: "業務",
-			AvatarImgUrl: "https://i.pravatar.cc/150?img=22",
-			AvatarLink: "https://example.com/somethingthatcoolandverylong"
-		}
-	]
-};
-
-const team = Object.keys(example_data) as (keyof typeof example_data)[];
+const { team: teamContent } = aboutData;
+const teamGroups = teamContent.groups;
+const { modal } = teamContent;
 ---
 
 <script>
@@ -143,19 +27,19 @@ const team = Object.keys(example_data) as (keyof typeof example_data)[];
 
 			//Setting content first so card height is correct before measuring layout-avatar position ( CLaude Fix )
 			const member = JSON.parse(el.dataset.member ?? "{}");
-			nameEle.textContent = member.Name;
-			desEle.textContent = member.Description;
-			linkEle.href = member.AvatarLink;
-			linkEle.textContent = member.AvatarLink;
+			nameEle.textContent = member.name;
+			desEle.textContent = member.description;
+			linkEle.href = member.avatarLink;
+			linkEle.textContent = member.avatarLink;
 			if (linkEle.scrollWidth > linkEle.offsetWidth) {
-				let text = member.AvatarLink as string;
+				let text = member.avatarLink as string;
 				while (text.length > 0) {
 					text = text.slice(0, -3);
 					linkEle.textContent = text + "...";
 					if (linkEle.scrollWidth <= linkEle.offsetWidth) break;
 				}
 			}
-			avatarEle.src = member.AvatarImgUrl;
+			avatarEle.src = member.avatarImgUrl;
 
 			//Instant set styling
 			const newAvatarRect = avatarEle.getBoundingClientRect();
@@ -234,18 +118,18 @@ const team = Object.keys(example_data) as (keyof typeof example_data)[];
 		<div class="bg-background relative mt-24 h-fit w-full overflow-hidden rounded-4xl p-8 md:max-w-5xl md:p-16 lg:h-98 lg:p-24">
 			<section class="row flex h-full w-full flex-col justify-start gap-4 md:flex-row md:gap-12">
 				<Image
-					src="https://i.pravatar.cc/300?img=12"
-					alt={"avatar"}
+					src={modal.defaultAvatarUrl}
+					alt={modal.avatarAlt}
 					width={200}
 					height={200}
 					class="border-foreground mx-auto h-[150px] w-[150px] cursor-pointer rounded-xl border-4 hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[2px_2px_0_2px_#60A7D5] md:h-[200px] md:w-[200px]"
 					id="layout-avatar"
 				/>
 				<div class="flex h-full w-full min-w-0 flex-col justify-between">
-					<h1 class="mx-auto text-5xl font-bold md:mx-0 md:text-6xl" id="layout-name">PLACEHOLDER</h1>
-					<p class="text-foreground my-4 text-xl font-bold" id="layout-des">PLACEHOLDER</p>
-					<a class="text-blue mt-auto block truncate text-lg font-bold underline underline-offset-3" id="layout-link" href="https://example.com/longdragon" target="_blank" rel="noopener noreferrer">
-						PLACEHOLDER
+					<h1 class="mx-auto text-5xl font-bold md:mx-0 md:text-6xl" id="layout-name">{modal.namePlaceholder}</h1>
+					<p class="text-foreground my-4 text-xl font-bold" id="layout-des">{modal.descriptionPlaceholder}</p>
+					<a class="text-blue mt-auto block truncate text-lg font-bold underline underline-offset-3" id="layout-link" href={modal.linkHref} target="_blank" rel="noopener noreferrer">
+						{modal.linkPlaceholder}
 					</a>
 				</div>
 			</section>
@@ -254,34 +138,34 @@ const team = Object.keys(example_data) as (keyof typeof example_data)[];
 			</div>
 		</div>
 		<div class="text-foreground visible mt-4 flex h-16 w-full cursor-pointer items-center justify-center rounded-full bg-red-400 font-bold md:hidden" id="layout-cancel-sm">
-			<p class="text-3xl font-bold">Close</p>
+			<p class="text-3xl font-bold">{modal.closeLabel}</p>
 		</div>
 	</div>
 
 	<section>
-		<h1 class="bg-green h-fit w-fit p-3 text-5xl font-bold text-black">團隊成員</h1>
+		<h1 class="bg-green h-fit w-fit p-3 text-5xl font-bold text-black">{teamContent.title}</h1>
 		{
-			team.map(t => (
+			teamGroups.map(group => (
 				<section class="my-4 mt-12 lg:mt-16">
-					<h2 class="text-4xl font-bold text-black">{t}</h2>
+					<h2 class="text-4xl font-bold text-black">{group.name}</h2>
 
 					<div class="my-4 grid h-fit w-full grid-cols-[repeat(auto-fill,minmax(150px,1fr))] justify-items-center gap-[clamp(1rem,2vw,2rem)]">
-						{example_data[t].map(data => (
+						{group.members.map(data => (
 							<article class="my-4 flex h-fit w-full max-w-[150px] flex-col items-center">
 								<Image
-									src={data.AvatarImgUrl}
+									src={data.avatarImgUrl}
 									alt={"avatar"}
 									width={150}
 									height={150}
 									class="border-foreground h-[150px] w-[150px] flex-none cursor-pointer rounded-xl border-4 object-cover shadow-[4px_4px_0_2px_#60A7D5] transition-all duration-300 hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[2px_2px_0_2px_#60A7D5]"
-									data-member-id={data.Name}
-									data-member={JSON.stringify({ Name: data.Name, Description: data.Description, AvatarLink: data.AvatarLink, AvatarImgUrl: data.AvatarImgUrl })}
+									data-member-id={data.name}
+									data-member={JSON.stringify({ name: data.name, description: data.description, avatarLink: data.avatarLink, avatarImgUrl: data.avatarImgUrl })}
 								/>
-								<div class="hidden h-[150px] w-[150px]" id={`b-${data.Name}`} />
+								<div class="hidden h-[150px] w-[150px]" id={`b-${data.name}`} />
 								<div class="mt-4 flex h-fit w-full items-center justify-between gap-2">
-									<h3 class="text-xl font-bold">{data.Name}</h3>
+									<h3 class="text-xl font-bold">{data.name}</h3>
 									<div class="bg-foreground flex h-fit w-fit items-center justify-center rounded-full px-2 py-0.5">
-										<p class="text-sm text-white">#{data.Job}</p>
+										<p class="text-sm text-white">#{data.job}</p>
 									</div>
 								</div>
 							</article>

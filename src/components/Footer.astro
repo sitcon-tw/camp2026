@@ -4,6 +4,17 @@ import Facebook from "~icons/mdi/facebook";
 import Youtube from "~icons/mdi/youtube";
 import Flickr from "~icons/mdi/flickr";
 import Telegram from "~icons/mdi/telegram";
+import layoutData from "@/data/layout.json";
+
+const { footer } = layoutData;
+const iconMap = {
+	instagram: Instagram,
+	facebook: Facebook,
+	youtube: Youtube,
+	flickr: Flickr,
+	telegram: Telegram
+};
+type FooterIcon = keyof typeof iconMap;
 ---
 
 <footer class="bg-background relative flex w-full flex-col overflow-hidden font-sans">
@@ -48,67 +59,63 @@ import Telegram from "~icons/mdi/telegram";
 		</div>
 
 		<div class="relative z-10 mx-auto -mt-6 grid max-w-6xl grid-cols-2 gap-6 px-4 sm:-mt-10 sm:gap-12 sm:px-6 md:px-12 lg:grid-cols-4">
-			<div class="flex flex-col">
-				<h1 class="label-base label-green" style="display: flex; padding: 8px; justify-content: center; align-items: center; gap: 10px;">聯絡我們</h1>
-				<div class="mb-5">
-					<p class="mb-1 text-sm font-bold text-gray-400">聯絡窗口</p>
-					<a href="mailto:ask@sitcon.camp" class="link-base link-hover-green">ask@sitcon.camp</a>
-				</div>
-			</div>
+			{
+				footer.sections.map(section => (
+					<div class="flex flex-col">
+						<h1 class:list={["label-base", `label-${section.variant}`]} style="display: flex; padding: 8px; justify-content: center; align-items: center; gap: 10px;">
+							{section.title}
+						</h1>
 
-			<div class="flex flex-col">
-				<h1 class="label-base label-blue" style="display: flex; padding: 8px; justify-content: center; align-items: center; gap: 10px;">SITCON 活動</h1>
-				<ul class="space-y-4 text-sm font-bold text-white">
-					<li>
-						<a href="https://sitcon.org/" class="link-base link-hover-blue">SITCON 年會</a>
-					</li>
-					<li>
-						<a href="https://sitcon.org/hoc" class="link-base link-hover-blue">SITCON Hour of Code</a>
-					</li>
-					<li>
-						<a href="https://sitcon.org/2026/" class="link-base link-hover-blue">SITCON Camp</a>
-					</li>
-					<li>
-						<a href="https://hackathon.sitcon.org/" class="link-base link-hover-blue">SITCON Hackathon</a>
-					</li>
-				</ul>
-			</div>
+						{section.type === "contact" && (
+							<div class="mb-5">
+								{section.label && <p class="mb-1 text-sm font-bold text-gray-400">{section.label}</p>}
+								{section.links.map(link => (
+									<a href={link.href} class:list={["link-base", `link-hover-${section.variant}`]}>
+										{link.label}
+									</a>
+								))}
+							</div>
+						)}
 
-			<div class="flex flex-col">
-				<h1 class="label-base label-purple" style="display: flex; padding: 8px; justify-content: center; align-items: center; gap: 10px;">歷年官網</h1>
-				<div class="grid w-max grid-cols-3 gap-x-6 gap-y-4 text-sm font-bold text-white">
-					<a href="https://sitcon.org/2025" class="link-hover-purple">2025</a>
-					<a href="https://sitcon.org/2024" class="link-hover-purple">2024</a>
-					<a href="https://sitcon.org/2023" class="link-hover-purple">2023</a>
-					<a href="https://sitcon.org/2022" class="link-hover-purple">2022</a>
-					<a href="https://sitcon.org/2021" class="link-hover-purple">2021</a>
-					<a href="https://sitcon.org/2020" class="link-hover-purple">2020</a>
-					<a href="https://sitcon.org/2019" class="link-hover-purple">2019</a>
-					<a href="https://sitcon.org/2018" class="link-hover-purple">2018</a>
-					<a href="https://sitcon.org/2017" class="link-hover-purple">2017</a>
-				</div>
-			</div>
+						{section.type === "links" && (
+							<ul class="space-y-4 text-sm font-bold text-white">
+								{section.links.map(link => (
+									<li>
+										<a href={link.href} class:list={["link-base", `link-hover-${section.variant}`]}>
+											{link.label}
+										</a>
+									</li>
+								))}
+							</ul>
+						)}
 
-			<div class="flex flex-col">
-				<h1 class="label-base label-orange" style="display: flex; padding: 8px; justify-content: center; align-items: center; gap: 10px;">社群媒體</h1>
-				<div class="flex items-center gap-4 text-white">
-					<a href="https://www.instagram.com/sitcon.tw" class="icon-link link-hover-orange" aria-label="Instagram">
-						<Instagram class="h-6 w-6" />
-					</a>
-					<a href="https://www.facebook.com/SITCONtw" class="icon-link link-hover-orange" aria-label="Facebook">
-						<Facebook class="h-6 w-6" />
-					</a>
-					<a href="https://www.youtube.com/@SITCONtw" class="icon-link link-hover-orange" aria-label="YouTube">
-						<Youtube class="h-6 w-6" />
-					</a>
-					<a href="https://www.flickr.com/photos/sitcon/" class="icon-link link-hover-orange" aria-label="Flickr">
-						<Flickr class="h-6 w-6" />
-					</a>
-					<a href="https://t.me/SITCONgeneral" class="icon-link link-hover-orange" aria-label="Telegram">
-						<Telegram class="h-6 w-6" />
-					</a>
-				</div>
-			</div>
+						{section.type === "archive" && (
+							<div class="grid w-max grid-cols-3 gap-x-6 gap-y-4 text-sm font-bold text-white">
+								{section.links.map(link => (
+									<a href={link.href} class:list={[`link-hover-${section.variant}`]}>
+										{link.label}
+									</a>
+								))}
+							</div>
+						)}
+
+						{section.type === "social" && (
+							<div class="flex items-center gap-4 text-white">
+								{section.links.map(link => {
+									const iconKey = "icon" in link ? link.icon : undefined;
+									const Icon = iconKey ? iconMap[iconKey as FooterIcon] : undefined;
+
+									return Icon ? (
+										<a href={link.href} class:list={["icon-link", `link-hover-${section.variant}`]} aria-label={link.label}>
+											<Icon class="h-6 w-6" />
+										</a>
+									) : null;
+								})}
+							</div>
+						)}
+					</div>
+				))
+			}
 		</div>
 	</div>
 </footer>
