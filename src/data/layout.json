@@ -139,5 +139,95 @@
 				]
 			}
 		]
+	},
+	"eventLD": {
+		"@context": "https://schema.org",
+		"@type": "EducationEvent",
+		"name": "SITCON 夏令營 2026",
+		"description": "SITCON 夏令營是由學生自發籌辦的資訊科技夏令營，提供高中生深入學習與交流的機會。",
+		"startDate": "2026-07-08",
+		"endDate": "2026-07-12",
+		"eventStatus": "https://schema.org/EventScheduled",
+		"eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+		"inLanguage": "zh-TW",
+		"typicalAgeRange": "15-18",
+		"keywords": "資訊科技, 學生, 夏令營, 台灣, SITCON",
+		"image": ["https://sitcon.camp/2026/favicon.svg"],
+		"url": "https://sitcon.camp/2026/",
+		"location": {
+			"@type": "Place",
+			"name": "國立陽明交通大學光復校區",
+			"address": {
+				"@type": "PostalAddress",
+				"streetAddress": "大學路1001號",
+				"addressLocality": "新竹市",
+				"addressRegion": "新竹市",
+				"addressCountry": "TW"
+			}
+		},
+		"organizer": {
+			"@type": "Organization",
+			"name": "SITCON 學生計算機年會",
+			"url": "https://sitcon.org",
+			"sameAs": "https://zh.wikipedia.org/wiki/學生計算機年會"
+		},
+		"offers": {
+			"offers": [
+				{
+					"@type": "Offer",
+					"name": "早鳥優惠",
+					"price": "1000",
+					"priceCurrency": "TWD",
+					"availability": "https://schema.org/InStock",
+					"validFrom": "2026-05-03",
+					"validThrough": "2026-05-31",
+					"url": "https://sitcon.camp/2026/registration"
+				},
+				{
+					"@type": "Offer",
+					"name": "個人報名",
+					"price": "1500",
+					"priceCurrency": "TWD",
+					"availability": "https://schema.org/InStock",
+					"validFrom": "2026-05-01",
+					"validThrough": "2026-06-30",
+					"url": "https://sitcon.camp/2026/registration"
+				},
+				{
+					"@type": "Offer",
+					"name": "二人團報",
+					"price": "1200",
+					"priceCurrency": "TWD",
+					"availability": "https://schema.org/InStock",
+					"validFrom": "2026-05-01",
+					"validThrough": "2026-06-30",
+					"url": "https://sitcon.camp/2026/registration"
+				},
+				{
+					"@type": "Offer",
+					"name": "三人團報",
+					"price": "1200",
+					"priceCurrency": "TWD",
+					"availability": "https://schema.org/InStock",
+					"validFrom": "2026-05-01",
+					"validThrough": "2026-06-30",
+					"url": "https://sitcon.camp/2026/registration"
+				},
+				{
+					"@type": "Offer",
+					"name": "四人團報",
+					"price": "1200",
+					"priceCurrency": "TWD",
+					"availability": "https://schema.org/InStock",
+					"validFrom": "2026-05-01",
+					"validThrough": "2026-06-30",
+					"url": "https://sitcon.camp/2026/registration"
+				}
+			]
+		},
+		"audience": {
+			"@type": "EducationalAudience",
+			"educationalRole": "student"
+		}
 	}
 }
