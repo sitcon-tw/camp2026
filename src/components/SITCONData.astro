@@ -90,6 +90,7 @@ const bgImages = Object.values(
 		let scrollFrame = 0;
 		let isTransitioning = false;
 		let touchStartY = 0;
+		const TOUCH_THRESHOLD = 30;
 		let numberAnimation: ReturnType<typeof animate> | undefined;
 		let textAnimation: ReturnType<typeof animate> | undefined;
 
@@ -245,7 +246,9 @@ const bgImages = Object.values(
 
 		const onTouchEnd = (event: TouchEvent) => {
 			const touchEndY = event.changedTouches[0]?.clientY ?? touchStartY;
-			requestStep(touchStartY - touchEndY);
+			const deltaY = touchStartY - touchEndY;
+			if (Math.abs(deltaY) < TOUCH_THRESHOLD) return;
+			requestStep(deltaY);
 		};
 
 		window.addEventListener("scroll", requestScrollUpdate, { passive: true });
