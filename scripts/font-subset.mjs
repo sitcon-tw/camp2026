@@ -3,8 +3,7 @@ import { readdir, readFile, writeFile } from "node:fs/promises";
 import { createRequire } from "node:module";
 import { basename, extname, join } from "node:path";
 
-const require = createRequire(import.meta.url);
-const subsetFont = require("subset-font");
+const subsetFont = createRequire(import.meta.url)("subset-font");
 
 // Config
 const DIST_DIR = "./dist";
