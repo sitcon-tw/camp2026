@@ -1,1 +1,106 @@
-<div>About SITCON Camp</div>
+---
+import type { ImageMetadata } from "astro";
+import { Image } from "astro:assets";
+
+import imgGroups from "@/assets/pics/groups.webp";
+import imgEdu from "@/assets/pics/edu.webp";
+import imgHackathon from "@/assets/pics/hackathon.webp";
+import imgCamp from "@/assets/pics/camp.webp";
+
+import rawStats from "@/data/stats.json";
+
+type StatImg = "groups" | "edu" | "hackathon" | "camp";
+
+type StatSingle = {
+	type: "single";
+	value: string;
+	label: string;
+	img: StatImg;
+	prefix?: string;
+};
+
+type StatSplit = {
+	type: "split";
+	items: { value: string; label: string }[];
+	img: StatImg;
+};
+
+type Stat = StatSingle | StatSplit;
+
+const imgMap: Record<StatImg, ImageMetadata> = {
+	groups: imgGroups,
+	edu: imgEdu,
+	hackathon: imgHackathon,
+	camp: imgCamp
+};
+
+const stats = rawStats as Stat[];
+---
+
+<section class="section-cream">
+	<div class="mx-auto flex max-w-7xl flex-col items-center">
+		<header class="mb-16 text-center">
+			<h2 class="mb-8 text-4xl font-bold tracking-tight text-black min-[530px]:text-5xl">SITCON，13 年來全東亞最大的學生資訊社群</h2>
+			<p class="text-foreground/70 mx-auto max-w-4xl text-lg leading-relaxed min-[530px]:text-xl">
+				我個人認為義大利麵就應該拌 42 號混凝土，因為這個螺絲釘的長度很容易直接影響到挖掘機的扭矩。我個人認為義大利麵就應該拌 42
+				號混凝土，因為這個螺絲釘的長度很容易直接影響到挖掘機的扭矩。我個人認為義大利麵就應該拌 42 號混凝土，因為這個螺絲釘的長度很容易直接影響到挖掘機的扭矩。
+			</p>
+		</header>
+
+		<div class="mb-8 grid w-full grid-cols-1 gap-4 min-[530px]:grid-cols-2 min-[530px]:gap-6 min-[1124px]:grid-cols-4 min-[1124px]:gap-6">
+			{
+				stats.map(stat => (
+					<div class="card-stat @container">
+						<Image
+							src={imgMap[stat.img]}
+							alt={stat.type === "single" ? stat.label || "社群數據" : "社群數據"}
+							class="absolute inset-0 h-full w-full object-cover object-[50%_0%] opacity-70"
+							loading="lazy"
+							decoding="async"
+						/>
+						<div class="pointer-events-none absolute inset-0 bg-linear-to-t from-black/90 to-transparent to-60%" />
+
+						<div class="absolute bottom-0 left-0 flex h-full w-full items-end justify-center px-[4cqi] pb-[10cqi] text-white">
+							{stat.type === "single" ? (
+								<div class="flex flex-col items-center text-center">
+									{stat.prefix && <span class="mb-[1cqi] text-[4cqi] leading-none font-medium">{stat.prefix}</span>}
+									<strong class="mb-[1.5cqi] font-mono text-[clamp(1.5rem,22cqi,5rem)] leading-none font-black tracking-tighter">{stat.value}</strong>
+									<span class="text-[clamp(0.625rem,5.5cqi,1.25rem)] leading-none font-bold tracking-wide">{stat.label}</span>
+								</div>
+							) : (
+								<div class="flex items-end gap-[6cqi]">
+									{stat.items?.map(item => (
+										<div class="flex flex-col items-center text-center">
+											<strong class="mb-[1.5cqi] font-mono text-[clamp(1.25rem,16cqi,3.5rem)] leading-none font-black tracking-tighter">{item.value}</strong>
+											<span class="text-[clamp(0.5rem,4.5cqi,1rem)] leading-none font-bold tracking-wide">{item.label}</span>
+										</div>
+									))}
+								</div>
+							)}
+						</div>
+					</div>
+				))
+			}
+		</div>
+
+		<a class="btn-green" href="2026/about" target="_blank" rel="noopener noreferrer">
+			了解更多
+			<span class="i-carbon-chevron-right text-xl"></span>
+		</a>
+	</div>
+</section>
+
+<style>
+	@reference "../styles/global.css";
+
+	.section-cream {
+		@apply bg-background w-full px-4 py-8 font-sans min-[530px]:px-12 min-[530px]:py-16;
+	}
+	.card-stat {
+		@apply bg-foreground relative aspect-375/181 w-full overflow-hidden rounded-2xl shadow-sm min-[530px]:aspect-23/12 min-[530px]:max-h-60 min-[530px]:rounded-3xl min-[1124px]:aspect-15/23 min-[1124px]:max-h-none;
+		container-type: inline-size;
+	}
+	.btn-green {
+		@apply bg-green flex cursor-pointer items-center gap-2 rounded-xl px-10 py-3 text-lg font-bold text-black shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg active:scale-95;
+	}
+</style>

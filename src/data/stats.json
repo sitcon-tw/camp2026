@@ -1,0 +1,29 @@
+[
+	{
+		"type": "single",
+		"value": "10000",
+		"label": "名參與者",
+		"img": "groups"
+	},
+	{
+		"type": "single",
+		"value": "500",
+		"label": "名學生講者",
+		"img": "edu"
+	},
+	{
+		"type": "split",
+		"items": [
+			{ "value": "500", "label": "場聚會和講座" },
+			{ "value": "10", "label": "場夏令營" }
+		],
+		"img": "hackathon"
+	},
+	{
+		"type": "single",
+		"prefix": "扶持近",
+		"value": "1400",
+		"label": "名熱愛資訊的志工",
+		"img": "camp"
+	}
+]

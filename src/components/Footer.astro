@@ -1,1 +1,167 @@
-<div>Footer</div>
+---
+import Instagram from "~icons/mdi/instagram";
+import Facebook from "~icons/mdi/facebook";
+import Youtube from "~icons/mdi/youtube";
+import Flickr from "~icons/mdi/flickr";
+import Telegram from "~icons/mdi/telegram";
+---
+
+<footer class="bg-background relative flex w-full flex-col overflow-hidden font-sans">
+	<div class="footer-bg aspect-25/2 w-full" style="clip-path: polygon(0 0, 100% 100%, 0 100%);"></div>
+	<div class="footer-bg -mt-px h-10 w-full sm:h-14"></div>
+	<div class="footer-bg relative -mt-px w-full pb-12 sm:pb-20">
+		<div class="pointer-events-none absolute inset-x-0 bottom-0 z-0 hidden items-end justify-center gap-2.5 overflow-hidden opacity-[0.04] select-none sm:flex">
+			<svg overflow-visible width="247" height="293" viewBox="0 0 247 293" fill="none" xmlns="http://www.w3.org/2000/svg" class="h-auto w-3/4 max-w-75">
+				<path
+					d="M192.693 93.0161C188.252 54.34 163.924 35.3886 118.937 35.3886C79.3554 35.3886 54.0621 51.4392 54.0621 75.8052C54.0621 96.3036 69.5084 108.487 107.352 116.609L155.428 126.471C190.569 134.013 208.139 141.168 222.427 153.351C237.873 166.307 246.369 185.259 246.369 207.111C246.369 260.097 201.188 292.778 129.17 292.778C52.3244 292.778 6.17852 255.843 0 188.546H44.022C48.4628 233.024 79.5485 257.776 130.521 257.776C173.192 257.776 203.312 238.052 203.312 209.818C203.312 188.74 187.286 175.01 156.201 167.854L89.7816 152.964C35.7196 140.781 11.1986 118.156 11.1986 80.253C11.1986 31.1343 54.2551 0 122.219 0C190.183 0 226.481 29.7806 235.749 92.8227H192.693V93.0161Z"
+					fill="#77B55A"
+				>
+				</path>
+			</svg>
+			<svg overflow-visible width="43" height="281" viewBox="0 0 43 281" fill="none" xmlns="http://www.w3.org/2000/svg" class="h-auto w-[12%] max-w-15">
+				<path d="M42.0912 280.209H0V0H42.0912V280.209Z" fill="#77B55A"></path>
+			</svg>
+			<svg overflow-visible width="227" height="281" viewBox="0 0 227 281" fill="none" xmlns="http://www.w3.org/2000/svg" class="h-auto w-[65%] max-w-70">
+				<path d="M134.383 280.209H92.2917V34.8085H0V0H226.674V34.8085H134.383V280.209Z" fill="#77B55A"></path>
+			</svg>
+			<svg overflow-visible width="265" height="293" viewBox="0 0 265 293" fill="none" xmlns="http://www.w3.org/2000/svg" class="h-auto w-3/4 max-w-[320px]">
+				<path
+					d="M217.793 94.1764C208.911 57.2406 179.177 35.0019 138.438 35.0019C81.6723 35.0019 44.4081 78.7059 44.4081 144.649C44.4081 212.332 81.6723 257.97 137.086 257.97C183.232 257.97 215.283 228.576 221.847 179.844H264.518C261.042 207.497 254.285 225.288 239.225 245.013C214.897 276.921 180.722 292.972 136.314 292.972C92.2917 292.972 57.3444 276.921 32.4373 245.013C11.1986 217.747 0 183.712 0 145.422C0 60.1414 57.1513 0 138.438 0C201.381 0 246.175 33.6482 259.112 90.3087L217.793 94.1764Z"
+					fill="#77B55A"
+				>
+				</path>
+			</svg>
+			<svg overflow-visible width="297" height="296" viewBox="0 0 297 296" fill="none" xmlns="http://www.w3.org/2000/svg" class="h-auto w-[85%] max-w-87.5">
+				<path
+					d="M148.284 0C66.4191 0 0 66.3296 0 147.936C0 229.736 66.4191 295.872 148.284 295.872C230.15 295.872 296.569 229.543 296.569 147.936C296.376 66.3296 230.15 0 148.284 0ZM208.718 208.464L148.091 166.888L87.4647 208.464L129.17 147.936L87.4647 87.4081L148.091 128.985L208.718 87.4081L167.013 147.936L208.718 208.464Z"
+					fill="#77B55A"
+				>
+				</path>
+			</svg>
+			<svg overflow-visible width="234" height="281" viewBox="0 0 234 281" fill="none" xmlns="http://www.w3.org/2000/svg" class="h-auto w-2/3 max-w-70">
+				<path
+					d="M190.376 280.209L69.3152 103.459C54.6412 81.6067 45.7597 67.6832 38.6158 55.1135C39.5812 67.6832 39.9672 94.1764 39.9672 108.1V280.402H0V0H43.0565L159.29 170.562C170.295 186.612 185.549 211.752 194.43 228.576C193.465 213.106 193.079 195.895 193.079 175.976V1.74044H233.046V280.209H190.376Z"
+					fill="#77B55A"
+				>
+				</path>
+			</svg>
+		</div>
+
+		<div class="relative z-10 mx-auto -mt-6 grid max-w-6xl grid-cols-2 gap-6 px-4 sm:-mt-10 sm:gap-12 sm:px-6 md:px-12 lg:grid-cols-4">
+			<div class="flex flex-col">
+				<h1 class="label-base label-green" style="display: flex; padding: 8px; justify-content: center; align-items: center; gap: 10px;">聯絡我們</h1>
+				<div class="mb-5">
+					<p class="mb-1 text-sm font-bold text-gray-400">聯絡窗口</p>
+					<a href="mailto:ask@sitcon.camp" class="link-base link-hover-green">ask@sitcon.camp</a>
+				</div>
+			</div>
+
+			<div class="flex flex-col">
+				<h1 class="label-base label-blue" style="display: flex; padding: 8px; justify-content: center; align-items: center; gap: 10px;">SITCON 活動</h1>
+				<ul class="space-y-4 text-sm font-bold text-white">
+					<li>
+						<a href="https://sitcon.org/" class="link-base link-hover-blue">SITCON 年會</a>
+					</li>
+					<li>
+						<a href="https://sitcon.org/hoc" class="link-base link-hover-blue">SITCON Hour of Code</a>
+					</li>
+					<li>
+						<a href="https://sitcon.org/2026/" class="link-base link-hover-blue">SITCON Camp</a>
+					</li>
+					<li>
+						<a href="https://hackathon.sitcon.org/" class="link-base link-hover-blue">SITCON Hackathon</a>
+					</li>
+				</ul>
+			</div>
+
+			<div class="flex flex-col">
+				<h1 class="label-base label-purple" style="display: flex; padding: 8px; justify-content: center; align-items: center; gap: 10px;">歷年官網</h1>
+				<div class="grid w-max grid-cols-3 gap-x-6 gap-y-4 text-sm font-bold text-white">
+					<a href="https://sitcon.org/2025" class="link-hover-purple">2025</a>
+					<a href="https://sitcon.org/2024" class="link-hover-purple">2024</a>
+					<a href="https://sitcon.org/2023" class="link-hover-purple">2023</a>
+					<a href="https://sitcon.org/2022" class="link-hover-purple">2022</a>
+					<a href="https://sitcon.org/2021" class="link-hover-purple">2021</a>
+					<a href="https://sitcon.org/2020" class="link-hover-purple">2020</a>
+					<a href="https://sitcon.org/2019" class="link-hover-purple">2019</a>
+					<a href="https://sitcon.org/2018" class="link-hover-purple">2018</a>
+					<a href="https://sitcon.org/2017" class="link-hover-purple">2017</a>
+				</div>
+			</div>
+
+			<div class="flex flex-col">
+				<h1 class="label-base label-orange" style="display: flex; padding: 8px; justify-content: center; align-items: center; gap: 10px;">社群媒體</h1>
+				<div class="flex items-center gap-4 text-white">
+					<a href="https://www.instagram.com/sitcon.tw" class="icon-link link-hover-orange" aria-label="Instagram">
+						<Instagram class="h-6 w-6" />
+					</a>
+					<a href="https://www.facebook.com/SITCONtw" class="icon-link link-hover-orange" aria-label="Facebook">
+						<Facebook class="h-6 w-6" />
+					</a>
+					<a href="https://www.youtube.com/@SITCONtw" class="icon-link link-hover-orange" aria-label="YouTube">
+						<Youtube class="h-6 w-6" />
+					</a>
+					<a href="https://www.flickr.com/photos/sitcon/" class="icon-link link-hover-orange" aria-label="Flickr">
+						<Flickr class="h-6 w-6" />
+					</a>
+					<a href="https://t.me/SITCONgeneral" class="icon-link link-hover-orange" aria-label="Telegram">
+						<Telegram class="h-6 w-6" />
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</footer>
+
+<style>
+	@reference "../styles/global.css";
+
+	.footer-bg {
+		background-color: var(--color-foreground);
+	}
+
+	.label-base {
+		@apply mb-6 inline-block w-max px-3 py-1 text-sm font-bold tracking-widest;
+		color: var(--color-foreground);
+	}
+
+	.label-green {
+		background-color: var(--color-green);
+	}
+
+	.label-blue {
+		background-color: var(--color-blue);
+	}
+
+	.label-purple {
+		background-color: var(--color-sky-blue);
+	}
+
+	.label-orange {
+		background-color: var(--color-orange);
+	}
+
+	.link-base {
+		@apply font-medium text-white transition-colors;
+	}
+
+	.link-hover-green:hover {
+		color: var(--color-green);
+	}
+
+	.link-hover-blue:hover {
+		color: var(--color-blue);
+	}
+
+	.link-hover-purple:hover {
+		color: var(--color-sky-blue);
+	}
+
+	.link-hover-orange:hover {
+		color: var(--color-orange);
+	}
+
+	.icon-link {
+		@apply h-6 w-6 transition-colors;
+	}
+</style>

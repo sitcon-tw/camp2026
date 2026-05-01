@@ -1,0 +1,76 @@
+---
+import { Image } from "astro:assets";
+import rawMembers from "@/data/members.json";
+import hackathon from "@/assets/pics/hackathon.webp";
+import camp from "@/assets/pics/camp.webp";
+import groups from "@/assets/pics/groups.webp";
+import edu from "@/assets/pics/edu.webp";
+
+// maps image key → astro ImageMetadata
+const imageMap: Record<string, ImageMetadata> = {
+	hackathon,
+	camp,
+	groups,
+	edu
+};
+
+interface Member {
+	id: string;
+	name: string;
+	role: string;
+	imgKey: string;
+	bio: string;
+}
+
+const members = rawMembers as unknown as Member[];
+
+// card border accent palette — one random color per card
+const accentPalette = ["green", "primary-blue", "blue", "soft-blue", "sky-blue", "orange"] as const;
+type Accent = (typeof accentPalette)[number];
+
+type DisplayMember = Member & { _memberId: string; accent: Accent };
+const cardAccents: Accent[] = members.map(() => accentPalette[Math.floor(Math.random() * accentPalette.length)]);
+const trackMembers: DisplayMember[] = members.map((m, i) => ({
+	...m,
+	_memberId: m.id,
+	accent: cardAccents[i]
+}));
+---
+
+<div class="bg-background group flex w-full overflow-hidden py-8">
+	{
+		[0, 1].map(trackIdx => (
+			<div class="marquee-track flex shrink-0 gap-6 pr-6 group-hover:[animation-play-state:paused]" aria-hidden={trackIdx === 1 ? "true" : undefined}>
+				{trackMembers.map(member => (
+					<div class="member-card relative h-95 w-70 shrink-0 cursor-pointer rounded-[2.5rem] text-left" data-member-id={member._memberId}>
+						<div class="relative h-full w-full overflow-hidden rounded-[2.5rem] border-r-6 border-b-6" style={`border-color: var(--color-${member.accent})`}>
+							<Image src={imageMap[member.imgKey]} alt={member.name} class="h-full w-full object-cover" loading="eager" decoding="async" width={280} height={380} format="webp" />
+
+							<div class="pointer-events-none absolute inset-x-0 bottom-0 z-0 h-3/5 bg-linear-to-t from-black/90 via-black/50 to-transparent" />
+
+							<div class="absolute inset-x-0 bottom-0 z-10 cursor-text p-6 text-white select-text">
+								<h3 class="text-3xl font-bold tracking-widest">{member.name}</h3>
+								<p class="mt-2 text-lg font-medium text-white/90">{member.role}</p>
+							</div>
+						</div>
+					</div>
+				))}
+			</div>
+		))
+	}
+</div>
+
+<style>
+	.marquee-track {
+		animation: marquee 20s linear infinite;
+		will-change: transform;
+	}
+	@keyframes marquee {
+		from {
+			transform: translateX(0);
+		}
+		to {
+			transform: translateX(-100%);
+		}
+	}
+</style>
