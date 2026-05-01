@@ -16,7 +16,8 @@ const bgImages = Object.values(
 
 <div data-scroll-counter style={`height: ${sitconTimeline.config.scrollHeight}vh`} class="relative">
 	<div
-		class="bg-background sticky top-0 grid h-screen grid-cols-[1fr_auto_1fr] items-center gap-8 overflow-hidden px-[5vw] max-sm:grid-cols-[1fr] max-sm:grid-rows-[auto_auto_auto] max-sm:justify-items-center max-sm:gap-6 max-sm:px-6"
+		class="bg-background sticky top-0 grid h-screen grid-cols-[1fr_auto_1fr] items-center gap-8 overflow-hidden max-sm:grid-cols-[1fr] max-sm:grid-rows-[auto_auto_auto] max-sm:justify-items-center max-sm:gap-6"
+		style="padding-inline: var(--site-content-gutter)"
 	>
 		<!-- 背景圖片層 -->
 		<div class="pointer-events-none absolute inset-0 z-0">

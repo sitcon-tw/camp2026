@@ -15,60 +15,62 @@ const masterImages = Object.entries(
 
 <section id="master-class" class="master-class" aria-labelledby="master-class-title" data-master-class>
 	<div class="master-class__sticky">
-		<div class="master-class__intro" data-master-intro>
-			<p class="master-class__eyebrow">{masterClassSection.eyebrow}</p>
-			<h2 id="master-class-title" class="master-class__title">{masterClassSection.title}</h2>
-			<p class="master-class__lead">{masterClassSection.lead}</p>
-		</div>
-
-		<div class="master-class__stage" data-master-stage>
-			<div class="master-class__deck" aria-label={masterClassSection.deckAriaLabel} data-master-deck>
-				{
-					masterClasses.map((masterClass, index) => {
-						const image = masterImages[masterClass.imageIndex % masterImages.length];
-
-						return (
-							<article class:list={["master-card", `master-card--${masterClass.accent}`]} data-master-card data-master-index={index}>
-								<figure class="master-card__media">
-									<img
-										class="master-card__image"
-										src={image.src}
-										width={image.width}
-										height={image.height}
-										alt={`${masterClass.title} ${masterClass.instructor} 講師照片佔位`}
-										loading="lazy"
-										decoding="async"
-										style={`object-position: ${masterClass.imagePosition}`}
-									/>
-								</figure>
-								<div class="master-card__body">
-									<p class="master-card__kicker">{masterClass.kicker}</p>
-									<h3 class="master-card__title">{masterClass.instructor}</h3>
-									<p class="master-card__achievement">{masterClass.achievement}</p>
-									<ul class="master-card__profile" aria-label={`${masterClass.title} 講師履歷亮點`}>
-										<li>{masterClass.role}</li>
-										{masterClass.profile.map(item => (
-											<li>{item}</li>
-										))}
-									</ul>
-								</div>
-							</article>
-						);
-					})
-				}
+		<div class="master-class__content site-container" data-master-content>
+			<div class="master-class__intro" data-master-intro>
+				<p class="master-class__eyebrow">{masterClassSection.eyebrow}</p>
+				<h2 id="master-class-title" class="master-class__title">{masterClassSection.title}</h2>
+				<p class="master-class__lead">{masterClassSection.lead}</p>
 			</div>
 
-			<div class="master-class__details" aria-live="polite">
-				{
-					masterClasses.map((masterClass, index) => (
-						<article class="master-detail" data-master-detail data-master-index={index}>
-							<p class="master-detail__count">0{index + 1} / 03</p>
-							<h3 class="master-detail__title">{masterClass.title}</h3>
-							<p class="master-detail__summary">{masterClass.summary}</p>
-							<p class="master-detail__outcome">{masterClass.outcome}</p>
-						</article>
-					))
-				}
+			<div class="master-class__stage" data-master-stage>
+				<div class="master-class__deck" aria-label={masterClassSection.deckAriaLabel} data-master-deck>
+					{
+						masterClasses.map((masterClass, index) => {
+							const image = masterImages[masterClass.imageIndex % masterImages.length];
+
+							return (
+								<article class:list={["master-card", `master-card--${masterClass.accent}`]} data-master-card data-master-index={index}>
+									<figure class="master-card__media">
+										<img
+											class="master-card__image"
+											src={image.src}
+											width={image.width}
+											height={image.height}
+											alt={`${masterClass.title} ${masterClass.instructor} 講師照片佔位`}
+											loading="lazy"
+											decoding="async"
+											style={`object-position: ${masterClass.imagePosition}`}
+										/>
+									</figure>
+									<div class="master-card__body">
+										<p class="master-card__kicker">{masterClass.kicker}</p>
+										<h3 class="master-card__title">{masterClass.instructor}</h3>
+										<p class="master-card__achievement">{masterClass.achievement}</p>
+										<ul class="master-card__profile" aria-label={`${masterClass.title} 講師履歷亮點`}>
+											<li>{masterClass.role}</li>
+											{masterClass.profile.map(item => (
+												<li>{item}</li>
+											))}
+										</ul>
+									</div>
+								</article>
+							);
+						})
+					}
+				</div>
+
+				<div class="master-class__details" aria-live="polite">
+					{
+						masterClasses.map((masterClass, index) => (
+							<article class="master-detail" data-master-detail data-master-index={index}>
+								<p class="master-detail__count">0{index + 1} / 03</p>
+								<h3 class="master-detail__title">{masterClass.title}</h3>
+								<p class="master-detail__summary">{masterClass.summary}</p>
+								<p class="master-detail__outcome">{masterClass.outcome}</p>
+							</article>
+						))
+					}
+				</div>
 			</div>
 		</div>
 	</div>
@@ -89,6 +91,7 @@ const masterImages = Object.entries(
 	import { animate, onScroll, stagger } from "animejs";
 
 	const section = document.querySelector<HTMLElement>("[data-master-class]");
+	const content = section?.querySelector<HTMLElement>("[data-master-content]");
 	const intro = section?.querySelector<HTMLElement>("[data-master-intro]");
 	const deck = section?.querySelector<HTMLElement>("[data-master-deck]");
 	const cards = section ? Array.from(section.querySelectorAll<HTMLElement>("[data-master-card]")) : [];
@@ -198,8 +201,9 @@ const masterImages = Object.entries(
 		const revealStarted = easeOutCubic(clamp((progress - 0.48) / 0.08));
 		const activeIndex = Math.min(cards.length - 1, Math.max(0, Math.floor(revealProgress * cards.length)));
 		const deckLeft = deck?.getBoundingClientRect().left ?? 0;
+		const contentLeft = content?.getBoundingClientRect().left;
 		const viewportWidth = window.innerWidth;
-		const sideInset = clamp(viewportWidth * 0.08, 80, 144);
+		const sideInset = contentLeft ?? clamp(viewportWidth * 0.08, 80, 144);
 
 		intro?.classList.toggle("master-class__intro--compact", progress > 0.28);
 
@@ -330,13 +334,17 @@ const masterImages = Object.entries(
 		position: sticky;
 		inset-block-start: 0;
 		display: grid;
-		grid-template-rows: auto auto;
 		align-content: center;
-		gap: clamp(0.95rem, 1.7vw, 1.45rem);
 		box-sizing: border-box;
 		min-height: 100svh;
-		padding: var(--master-header-offset) clamp(1rem, 3.5vw, 3.25rem) clamp(1.2rem, 3vw, 2.4rem);
+		padding-block: var(--master-header-offset) clamp(1.2rem, 3vw, 2.4rem);
 		overflow: hidden;
+	}
+
+	.master-class__content {
+		display: grid;
+		grid-template-rows: auto auto;
+		gap: clamp(0.95rem, 1.7vw, 1.45rem);
 	}
 
 	.master-class__intro {
@@ -524,8 +532,8 @@ const masterImages = Object.entries(
 	.master-class__details {
 		position: absolute;
 		inset-block: 0;
-		inset-inline-start: 47vw;
-		inset-inline-end: clamp(1.25rem, 4vw, 5rem);
+		inset-inline-start: min(47%, 38rem);
+		inset-inline-end: 0;
 		z-index: 30;
 		box-sizing: border-box;
 		display: grid;
@@ -584,10 +592,6 @@ const masterImages = Object.entries(
 	}
 
 	@media (max-width: 72rem) {
-		.master-class__sticky {
-			padding-inline: clamp(1rem, 2.4vw, 2rem);
-		}
-
 		.master-class__deck {
 			gap: 0.85rem;
 		}
@@ -609,10 +613,13 @@ const masterImages = Object.entries(
 		.master-class__sticky {
 			position: relative;
 			display: grid;
-			gap: 2rem;
 			min-height: auto;
-			padding: clamp(4.5rem, 16vw, 6rem) 1rem clamp(3rem, 12vw, 5rem);
+			padding-block: clamp(4.5rem, 16vw, 6rem) clamp(3rem, 12vw, 5rem);
 			overflow: visible;
+		}
+
+		.master-class__content {
+			gap: 2rem;
 		}
 
 		.master-class__intro,

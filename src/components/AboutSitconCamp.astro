@@ -39,7 +39,7 @@ const stats = aboutSitconCamp.stats as Stat[];
 ---
 
 <section class="section-cream">
-	<div class="mx-auto flex max-w-7xl flex-col items-center">
+	<div class="site-container flex flex-col items-center">
 		<header class="mb-16 text-center">
 			<h2 class="mb-8 text-4xl font-bold tracking-tight text-black min-[33.125rem]:text-5xl">{aboutSitconCamp.title}</h2>
 			<p class="text-foreground/70 mx-auto max-w-4xl text-lg leading-relaxed min-[33.125rem]:text-xl">{aboutSitconCamp.description}</p>
@@ -92,7 +92,7 @@ const stats = aboutSitconCamp.stats as Stat[];
 	@reference "../styles/global.css";
 
 	.section-cream {
-		@apply bg-background w-full px-4 py-8 font-sans min-[33.125rem]:px-12 min-[33.125rem]:py-16;
+		@apply bg-background w-full py-8 font-sans min-[33.125rem]:py-16;
 	}
 	.card-stat {
 		@apply bg-foreground relative aspect-375/181 w-full overflow-hidden rounded-2xl shadow-sm min-[33.125rem]:aspect-23/12 min-[33.125rem]:max-h-60 min-[33.125rem]:rounded-3xl min-[70.25rem]:aspect-15/23 min-[70.25rem]:max-h-none;

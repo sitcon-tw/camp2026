@@ -22,6 +22,11 @@
 }
 
 @layer base {
+	:root {
+		--site-content-max: 80rem;
+		--site-content-gutter: clamp(1rem, 4vw, 4rem);
+	}
+
 	html {
 		min-height: 100%;
 		background-color: var(--color-background);
@@ -47,5 +52,13 @@
 
 	body > footer {
 		margin-top: auto;
+	}
+}
+
+@layer utilities {
+	.site-container {
+		box-sizing: border-box;
+		width: min(calc(100% - var(--site-content-gutter) - var(--site-content-gutter)), var(--site-content-max));
+		margin-inline: auto;
 	}
 }

@@ -39,34 +39,36 @@ const sections = await Promise.all(
 ---
 
 <div class="bg-background py-20">
-	{
-		sections.map(([tag, items]) => (
-			<section class="mx-4 mt-12 sm:mx-12 md:mx-24 md:mt-24 lg:mx-64 lg:mt-32">
-				<h1 class="mb-4 text-center text-3xl font-bold md:text-left md:text-4xl lg:text-[3rem]">{tag}</h1>
-				<div class="flex flex-wrap items-center justify-center gap-4 gap-y-6 sm:gap-6 md:justify-start lg:gap-8">
-					{items.map(org => {
-						const logo = org.meta ? (
-							<Image src={org.meta} alt={org.name} class="h-20 w-auto object-contain md:h-28 lg:h-32" />
-						) : (
-							<img src={org.iconPath} alt={org.name} class="h-20 w-auto object-contain md:h-28 lg:h-32" />
-						);
+	<div class="site-container">
+		{
+			sections.map(([tag, items]) => (
+				<section class="mt-12 first:mt-0 md:mt-24 lg:mt-32">
+					<h1 class="mb-4 text-center text-3xl font-bold md:text-left md:text-4xl lg:text-[3rem]">{tag}</h1>
+					<div class="flex flex-wrap items-center justify-center gap-4 gap-y-6 sm:gap-6 md:justify-start lg:gap-8">
+						{items.map(org => {
+							const logo = org.meta ? (
+								<Image src={org.meta} alt={org.name} class="h-20 w-auto object-contain md:h-28 lg:h-32" />
+							) : (
+								<img src={org.iconPath} alt={org.name} class="h-20 w-auto object-contain md:h-28 lg:h-32" />
+							);
 
-						return org.url ? (
-							<a
-								href={org.url}
-								target="_blank"
-								rel="noopener noreferrer"
-								class="org-card group focus-visible:ring-primary-blue/50 focus-visible:ring-2 focus-visible:outline-none"
-								aria-label={`前往 ${org.name}`}
-							>
-								{logo}
-							</a>
-						) : (
-							<div class="org-card group">{logo}</div>
-						);
-					})}
-				</div>
-			</section>
-		))
-	}
+							return org.url ? (
+								<a
+									href={org.url}
+									target="_blank"
+									rel="noopener noreferrer"
+									class="org-card group focus-visible:ring-primary-blue/50 focus-visible:ring-2 focus-visible:outline-none"
+									aria-label={`前往 ${org.name}`}
+								>
+									{logo}
+								</a>
+							) : (
+								<div class="org-card group">{logo}</div>
+							);
+						})}
+					</div>
+				</section>
+			))
+		}
+	</div>
 </div>

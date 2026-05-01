@@ -122,7 +122,7 @@ const { modal } = teamContent;
 	});
 </script>
 
-<div id="team" class="bg-background h-fit w-full px-4 pt-[clamp(8rem,10vw,9rem)] pb-12 md:px-20 lg:px-32">
+<div id="team" class="bg-background h-fit w-full pt-[clamp(8rem,10vw,9rem)] pb-12">
 	<div class="fixed inset-0 -z-10 flex h-full w-full flex-col items-start justify-center bg-black/30 px-8 opacity-0 transition-all duration-300 md:items-center" id="overlay">
 		<div class="bg-background relative mt-24 h-fit w-full overflow-hidden rounded-4xl p-8 md:max-w-5xl md:p-16 lg:h-98 lg:p-24">
 			<section class="row flex h-full w-full flex-col justify-start gap-4 md:flex-row md:gap-12">
@@ -151,12 +151,13 @@ const { modal } = teamContent;
 		</div>
 	</div>
 
-	<section>
+	<section class="site-container">
 		<h1 class="bg-green h-fit w-fit p-3 text-5xl font-bold text-black">{teamContent.title}</h1>
 		{
 			teamGroups.map(group => (
 				<section class="my-4 mt-12 lg:mt-16">
 					<h2 class="text-4xl font-bold text-black">{group.name}</h2>
+					{group.description && <p class="text-foreground/70 mt-3 max-w-3xl text-lg leading-[1.7] font-bold">{group.description}</p>}
 
 					<div class="my-4 grid h-fit w-full grid-cols-[repeat(auto-fill,minmax(9.375rem,1fr))] justify-items-center gap-[clamp(1rem,2vw,2rem)]">
 						{group.members.map(data => (
