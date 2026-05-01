@@ -1,1 +1,180 @@
-<div>SITCON Data</div>
+---
+import siteContent from "@/data/site.json";
+import { Image } from "astro:assets";
+
+const { sitconData } = siteContent;
+
+const data = sitconData.datas;
+const first = data[0];
+
+const bgImages = Object.values(
+	import.meta.glob<{ default: ImageMetadata }>("../assets/about/data/*.jpg", {
+		eager: true
+	})
+);
+---
+
+<div data-scroll-counter style={`height: ${sitconData.config.scrollHeight}vh`} class="relative">
+	<div
+		class="bg-background sticky top-0 grid h-screen grid-cols-[1fr_auto_1fr] items-center gap-8 overflow-hidden px-[5vw] max-sm:grid-cols-[1fr] max-sm:grid-rows-[auto_auto_auto] max-sm:justify-items-center max-sm:gap-6 max-sm:px-6"
+	>
+		<!-- 背景圖片層 -->
+		<div class="pointer-events-none absolute inset-0 z-0">
+			{
+				bgImages.map((image, i) => (
+					<Image data-bg-image src={image.default} alt="" class={`absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ${i === 0 ? "opacity-100" : "opacity-0"}`} />
+				))
+			}
+			<div class="bg-background/50 absolute inset-0"></div>
+		</div>
+
+		<!-- 進度條 -->
+		<div class="bg-background absolute top-0 right-0 left-0 z-10 h-0.5">
+			<div data-progress-fill class="from-sky-blue to-blue h-full w-0 bg-linear-to-r transition-[width] duration-50 ease-linear"></div>
+		</div>
+
+		<!-- 左側文字 -->
+		<div class="relative z-5 text-right max-sm:text-center">
+			<span data-prefix class="text-foreground text-[2rem] leading-none font-bold whitespace-nowrap lg:text-[4rem] xl:text-[5rem]">{first.prefix}</span>
+		</div>
+
+		<!-- 中央數字 -->
+		<div class="relative z-5 flex min-w-72 flex-col items-center gap-2">
+			<div class="pointer-events-none absolute top-1/2 left-1/2 -z-1 h-[calc(100%+3rem)] w-px -translate-x-1/2 -translate-y-1/2"></div>
+			<div data-number class="text-orange text-[6rem] leading-none font-bold tracking-[-0.03em] tabular-nums max-sm:text-[4.5rem] lg:text-[8rem] xl:text-[9rem]">
+				{first.value.toLocaleString()}
+			</div>
+			<div class="my-0.5 h-1 w-full [background:linear-gradient(90deg,transparent,var(--color-orange),transparent)]"></div>
+		</div>
+
+		<!-- 右側文字 -->
+		<div class="relative z-5 text-left max-sm:text-center">
+			<span data-suffix class="text-foreground text-[2rem] leading-none font-bold whitespace-nowrap lg:text-[4rem] xl:text-[5rem]">{first.suffix}</span>
+		</div>
+	</div>
+</div>
+
+<script define:vars={{ data }} is:inline>
+	function lerp(a, b, t) {
+		return a + (b - a) * t;
+	}
+
+	function getState(progress) {
+		if (progress <= data[0].progress) return { ...data[0], activeIdx: 0 };
+		const last = data.length - 1;
+		if (progress >= data[last].progress) return { ...data[last], activeIdx: last };
+
+		const nextIdx = data.findIndex(k => k.progress >= progress);
+		const prevIdx = nextIdx - 1;
+		const prev = data[prevIdx];
+		const next = data[nextIdx];
+		const t = (progress - prev.progress) / (next.progress - prev.progress);
+
+		return {
+			value: lerp(prev.value, next.value, t),
+			activeIdx: t > 0.5 ? nextIdx : prevIdx
+		};
+	}
+
+	document.querySelectorAll("[data-scroll-counter]").forEach(container => {
+		const progressFill = container.querySelector("[data-progress-fill]");
+		const numberEl = container.querySelector("[data-number]");
+		const prefixEl = container.querySelector("[data-prefix]");
+		const suffixEl = container.querySelector("[data-suffix]");
+		const bgImages = container.querySelectorAll("[data-bg-image]");
+
+		let targetValue = 0;
+		let displayedValue = 0;
+		let currentProgress = 0;
+		let activeIdx = 0;
+		let snapTimer = null;
+		let lastScrollY = window.scrollY;
+		let scrollDir = 1;
+		let isSnapping = false;
+
+		function scrollToNode(idx) {
+			const clamped = Math.max(0, Math.min(data.length - 1, idx));
+			const scrollable = container.offsetHeight - window.innerHeight;
+			const offsetTop = container.getBoundingClientRect().top + window.scrollY;
+			isSnapping = true;
+			window.scrollTo({ top: offsetTop + data[clamped].progress * scrollable, behavior: "smooth" });
+			clearTimeout(snapTimer);
+			snapTimer = setTimeout(() => {
+				isSnapping = false;
+			}, 700);
+		}
+
+		function snapIdxByDirection() {
+			if (scrollDir > 0) {
+				const idx = data.findIndex(k => k.progress >= currentProgress);
+				return idx === -1 ? data.length - 1 : idx;
+			} else {
+				let idx = 0;
+				for (let i = data.length - 1; i >= 0; i--) {
+					if (data[i].progress <= currentProgress) {
+						idx = i;
+						break;
+					}
+				}
+				return idx;
+			}
+		}
+
+		function slideToIdx(idx) {
+			if (activeIdx === idx) return;
+			activeIdx = idx;
+			prefixEl.textContent = data[idx].prefix;
+			suffixEl.textContent = data[idx].suffix;
+			bgImages.forEach((img, i) => {
+				img.style.opacity = i === idx ? "1" : "0";
+			});
+		}
+
+		function onScroll() {
+			scrollDir = window.scrollY >= lastScrollY ? 1 : -1;
+			lastScrollY = window.scrollY;
+
+			const rect = container.getBoundingClientRect();
+			const scrollable = container.offsetHeight - window.innerHeight;
+			currentProgress = Math.max(0, Math.min(1, -rect.top / scrollable));
+
+			const state = getState(currentProgress);
+			targetValue = Math.round(state.value);
+			progressFill.style.width = currentProgress * 100 + "%";
+
+			const isActive = rect.top <= 0 && rect.bottom >= window.innerHeight;
+			if (isActive && !isSnapping) {
+				clearTimeout(snapTimer);
+				snapTimer = setTimeout(() => scrollToNode(snapIdxByDirection()), 150);
+			}
+		}
+
+		function tick() {
+			requestAnimationFrame(tick);
+
+			if (displayedValue !== targetValue) {
+				const diff = targetValue - displayedValue;
+				const step = Math.sign(diff) * Math.max(1, Math.floor(Math.abs(diff) * 0.12));
+				displayedValue += step;
+				if (diff > 0 && displayedValue > targetValue) displayedValue = targetValue;
+				if (diff < 0 && displayedValue < targetValue) displayedValue = targetValue;
+				numberEl.textContent = displayedValue.toLocaleString();
+			}
+
+			let closestIdx = 0;
+			let minDist = Infinity;
+			data.forEach((d, i) => {
+				const dist = Math.abs(d.value - displayedValue);
+				if (dist < minDist) {
+					minDist = dist;
+					closestIdx = i;
+				}
+			});
+			slideToIdx(closestIdx);
+		}
+
+		window.addEventListener("scroll", onScroll, { passive: true });
+		onScroll();
+		tick();
+	});
+</script>
