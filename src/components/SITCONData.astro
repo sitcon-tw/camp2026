@@ -16,166 +16,247 @@ const bgImages = Object.values(
 
 <div data-scroll-counter style={`height: ${sitconTimeline.config.scrollHeight}vh`} class="relative">
 	<div
-		class="bg-background sticky top-0 grid h-screen grid-cols-[1fr_auto_1fr] items-center gap-8 overflow-hidden max-sm:grid-cols-[1fr] max-sm:grid-rows-[auto_auto_auto] max-sm:justify-items-center max-sm:gap-6"
+		class="bg-background sticky top-0 grid h-screen grid-cols-[minmax(0,1fr)_clamp(24rem,42vw,42rem)_minmax(0,1fr)] items-center gap-8 overflow-hidden max-lg:grid-cols-[1fr] max-lg:grid-rows-[auto_auto_auto] max-lg:justify-items-center max-lg:gap-6"
 		style="padding-inline: var(--site-content-gutter)"
 	>
 		<!-- 背景圖片層 -->
 		<div class="pointer-events-none absolute inset-0 z-0">
-			{
-				bgImages.map((image, i) => (
-					<Image data-bg-image src={image.default} alt="" class={`absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ${i === 0 ? "opacity-100" : "opacity-0"}`} />
-				))
-			}
+			{bgImages.map((image, i) => <Image data-bg-image src={image.default} alt="" class={`absolute inset-0 h-full w-full object-cover opacity-0 ${i === 0 ? "opacity-100" : ""}`} />)}
 			<div class="bg-background/50 absolute inset-0"></div>
 		</div>
 
 		<!-- 進度條 -->
 		<div class="bg-background absolute top-0 right-0 left-0 z-10 h-0.5">
-			<div data-progress-fill class="from-sky-blue to-blue h-full w-0 bg-linear-to-r transition-[width] duration-50 ease-linear"></div>
+			<div data-progress-fill class="from-sky-blue to-blue h-full w-full origin-left scale-x-0 bg-linear-to-r"></div>
 		</div>
 
 		<!-- 左側文字 -->
-		<div class="relative z-5 text-right max-sm:text-center">
-			<span data-prefix class="text-foreground text-[2rem] leading-none font-bold whitespace-nowrap lg:text-[4rem] xl:text-[5rem]">{first.prefix}</span>
+		<div class="relative z-5 min-w-0 text-right max-lg:text-center">
+			<span data-prefix class="text-foreground text-[2.65rem] leading-[0.95] font-bold whitespace-nowrap max-sm:text-[2.2rem] lg:text-[3rem] xl:text-[4rem]">
+				{first.prefix}
+			</span>
 		</div>
 
 		<!-- 中央數字 -->
-		<div class="relative z-5 flex min-w-72 flex-col items-center gap-2">
+		<div class="relative z-5 flex w-full min-w-0 flex-col items-center gap-2">
 			<div class="pointer-events-none absolute top-1/2 left-1/2 -z-1 h-[calc(100%+3rem)] w-px -translate-x-1/2 -translate-y-1/2"></div>
-			<div data-number class="text-orange text-[6rem] leading-none font-bold tracking-[-0.03em] tabular-nums max-sm:text-[4.5rem] lg:text-[8rem] xl:text-[9rem]">
+			<div data-number class="text-orange w-full text-center text-[6rem] leading-none font-bold tracking-[-0.03em] tabular-nums max-sm:text-[4.5rem] lg:text-[7rem] xl:text-[9rem]">
 				{first.value.toLocaleString()}
 			</div>
 			<div class="my-0.5 h-1 w-full [background:linear-gradient(90deg,var(--color-transparent),var(--color-orange),var(--color-transparent))]"></div>
 		</div>
 
 		<!-- 右側文字 -->
-		<div class="relative z-5 text-left max-sm:text-center">
-			<span data-suffix class="text-foreground text-[2rem] leading-none font-bold whitespace-nowrap lg:text-[4rem] xl:text-[5rem]">{first.suffix}</span>
+		<div class="relative z-5 min-w-0 text-left max-lg:text-center">
+			<span data-suffix class="text-foreground text-[2.65rem] leading-[0.95] font-bold whitespace-nowrap max-sm:text-[2.2rem] lg:text-[3rem] xl:text-[4rem]">
+				{first.suffix}
+			</span>
 		</div>
 	</div>
+
+	<script is:inline type="application/json" data-scroll-counter-json set:html={JSON.stringify(data)} />
 </div>
 
-<script define:vars={{ data }} is:inline>
-	function lerp(a, b, t) {
-		return a + (b - a) * t;
-	}
+<script>
+	import { animate } from "animejs";
 
-	function getState(progress) {
-		if (progress <= data[0].progress) return { ...data[0], activeIdx: 0 };
-		const last = data.length - 1;
-		if (progress >= data[last].progress) return { ...data[last], activeIdx: last };
+	type TimelineItem = {
+		value: number;
+		prefix: string;
+		suffix: string;
+	};
 
-		const nextIdx = data.findIndex(k => k.progress >= progress);
-		const prevIdx = nextIdx - 1;
-		const prev = data[prevIdx];
-		const next = data[nextIdx];
-		const t = (progress - prev.progress) / (next.progress - prev.progress);
+	const numberFormat = new Intl.NumberFormat("en-US");
 
-		return {
-			value: lerp(prev.value, next.value, t),
-			activeIdx: t > 0.5 ? nextIdx : prevIdx
-		};
-	}
+	const clamp = (value: number, min = 0, max = 1) => Math.min(Math.max(value, min), max);
 
-	document.querySelectorAll("[data-scroll-counter]").forEach(container => {
-		const progressFill = container.querySelector("[data-progress-fill]");
-		const numberEl = container.querySelector("[data-number]");
-		const prefixEl = container.querySelector("[data-prefix]");
-		const suffixEl = container.querySelector("[data-suffix]");
-		const bgImages = container.querySelectorAll("[data-bg-image]");
+	document.querySelectorAll<HTMLElement>("[data-scroll-counter]").forEach(container => {
+		const dataScript = container.querySelector<HTMLScriptElement>("[data-scroll-counter-json]");
+		const data = dataScript ? (JSON.parse(dataScript.textContent || "[]") as TimelineItem[]) : [];
+		const progressFill = container.querySelector<HTMLElement>("[data-progress-fill]");
+		const numberEl = container.querySelector<HTMLElement>("[data-number]");
+		const prefixEl = container.querySelector<HTMLElement>("[data-prefix]");
+		const suffixEl = container.querySelector<HTMLElement>("[data-suffix]");
+		const bgImages = Array.from(container.querySelectorAll<HTMLElement>("[data-bg-image]"));
 
-		let targetValue = 0;
-		let displayedValue = 0;
+		if (!progressFill || !numberEl || !prefixEl || !suffixEl || data.length === 0) {
+			return;
+		}
+
+		let displayedValue = data[0].value;
 		let currentProgress = 0;
 		let activeIdx = 0;
-		let snapTimer = null;
-		let lastScrollY = window.scrollY;
-		let scrollDir = 1;
-		let isSnapping = false;
+		let transitionTimer = 0;
+		let scrollFrame = 0;
+		let isTransitioning = false;
+		let touchStartY = 0;
+		const TOUCH_THRESHOLD = 30;
+		let numberAnimation: ReturnType<typeof animate> | undefined;
+		let textAnimation: ReturnType<typeof animate> | undefined;
 
-		function scrollToNode(idx) {
-			const clamped = Math.max(0, Math.min(data.length - 1, idx));
-			const scrollable = container.offsetHeight - window.innerHeight;
+		const renderNumber = () => {
+			numberEl.textContent = numberFormat.format(Math.round(displayedValue));
+		};
+
+		const getItemProgress = (idx: number) => idx / Math.max(1, data.length - 1);
+
+		const getClosestProgressIdx = () =>
+			data.reduce((closestIdx, _item, idx) => (Math.abs(getItemProgress(idx) - currentProgress) < Math.abs(getItemProgress(closestIdx) - currentProgress) ? idx : closestIdx), 0);
+
+		const isPinned = () => {
+			const rect = container.getBoundingClientRect();
+			return rect.top <= 0 && rect.bottom >= window.innerHeight;
+		};
+
+		const scrollToIdx = (idx: number) => {
+			const scrollable = Math.max(1, container.offsetHeight - window.innerHeight);
 			const offsetTop = container.getBoundingClientRect().top + window.scrollY;
-			isSnapping = true;
-			window.scrollTo({ top: offsetTop + data[clamped].progress * scrollable, behavior: "smooth" });
-			clearTimeout(snapTimer);
-			snapTimer = setTimeout(() => {
-				isSnapping = false;
-			}, 700);
-		}
 
-		function snapIdxByDirection() {
-			if (scrollDir > 0) {
-				const idx = data.findIndex(k => k.progress >= currentProgress);
-				return idx === -1 ? data.length - 1 : idx;
-			} else {
-				let idx = 0;
-				for (let i = data.length - 1; i >= 0; i--) {
-					if (data[i].progress <= currentProgress) {
-						idx = i;
-						break;
+			window.scrollTo({
+				top: offsetTop + getItemProgress(idx) * scrollable,
+				behavior: "smooth"
+			});
+		};
+
+		const slideToIdx = (idx: number) => {
+			if (activeIdx === idx) {
+				return;
+			}
+
+			activeIdx = idx;
+			textAnimation?.cancel();
+
+			textAnimation = animate([prefixEl, suffixEl], {
+				opacity: [1, 0, 1],
+				y: [0, -12, 0],
+				duration: 360,
+				ease: "out(3)",
+				onUpdate: animation => {
+					if (animation.progress >= 0.48 && prefixEl.textContent !== data[idx].prefix) {
+						prefixEl.textContent = data[idx].prefix;
+						suffixEl.textContent = data[idx].suffix;
 					}
 				}
-				return idx;
-			}
-		}
-
-		function slideToIdx(idx) {
-			if (activeIdx === idx) return;
-			activeIdx = idx;
-			prefixEl.textContent = data[idx].prefix;
-			suffixEl.textContent = data[idx].suffix;
-			bgImages.forEach((img, i) => {
-				img.style.opacity = i === idx ? "1" : "0";
 			});
-		}
 
-		function onScroll() {
-			scrollDir = window.scrollY >= lastScrollY ? 1 : -1;
-			lastScrollY = window.scrollY;
+			bgImages.forEach((image, i) => {
+				animate(image, {
+					opacity: i === idx ? 1 : 0,
+					duration: 700,
+					ease: "out(3)"
+				});
+			});
+		};
 
-			const rect = container.getBoundingClientRect();
-			const scrollable = container.offsetHeight - window.innerHeight;
-			currentProgress = Math.max(0, Math.min(1, -rect.top / scrollable));
+		const goToIdx = (idx: number) => {
+			const clamped = Math.max(0, Math.min(data.length - 1, idx));
 
-			const state = getState(currentProgress);
-			targetValue = Math.round(state.value);
-			progressFill.style.width = currentProgress * 100 + "%";
-
-			const isActive = rect.top <= 0 && rect.bottom >= window.innerHeight;
-			if (isActive && !isSnapping) {
-				clearTimeout(snapTimer);
-				snapTimer = setTimeout(() => scrollToNode(snapIdxByDirection()), 150);
-			}
-		}
-
-		function tick() {
-			requestAnimationFrame(tick);
-
-			if (displayedValue !== targetValue) {
-				const diff = targetValue - displayedValue;
-				const step = Math.sign(diff) * Math.max(1, Math.floor(Math.abs(diff) * 0.12));
-				displayedValue += step;
-				if (diff > 0 && displayedValue > targetValue) displayedValue = targetValue;
-				if (diff < 0 && displayedValue < targetValue) displayedValue = targetValue;
-				numberEl.textContent = displayedValue.toLocaleString();
+			if (clamped === activeIdx || isTransitioning) {
+				return false;
 			}
 
-			let closestIdx = 0;
-			let minDist = Infinity;
-			data.forEach((d, i) => {
-				const dist = Math.abs(d.value - displayedValue);
-				if (dist < minDist) {
-					minDist = dist;
-					closestIdx = i;
+			const fromValue = displayedValue;
+			const toValue = data[clamped].value;
+			const counter = { value: fromValue };
+
+			isTransitioning = true;
+			window.clearTimeout(transitionTimer);
+			numberAnimation?.cancel();
+
+			numberAnimation = animate(counter, {
+				value: toValue,
+				duration: 720,
+				ease: "out(3)",
+				onUpdate: () => {
+					displayedValue = counter.value;
+					renderNumber();
+				},
+				onComplete: () => {
+					displayedValue = toValue;
+					renderNumber();
 				}
 			});
-			slideToIdx(closestIdx);
-		}
 
-		window.addEventListener("scroll", onScroll, { passive: true });
+			slideToIdx(clamped);
+			scrollToIdx(clamped);
+
+			transitionTimer = window.setTimeout(() => {
+				displayedValue = toValue;
+				renderNumber();
+				isTransitioning = false;
+			}, 800);
+
+			return true;
+		};
+
+		const requestStep = (direction: number) => {
+			if (!direction || isTransitioning || !isPinned()) {
+				return false;
+			}
+
+			const targetIdx = activeIdx + Math.sign(direction);
+			if (targetIdx < 0 || targetIdx >= data.length) {
+				return false;
+			}
+
+			return goToIdx(targetIdx);
+		};
+
+		const onScroll = () => {
+			scrollFrame = 0;
+
+			const rect = container.getBoundingClientRect();
+			const scrollable = Math.max(1, container.offsetHeight - window.innerHeight);
+			currentProgress = clamp(-rect.top / scrollable);
+
+			progressFill.style.transform = `scaleX(${currentProgress})`;
+
+			if (!isTransitioning) {
+				const closestIdx = getClosestProgressIdx();
+				if (closestIdx !== activeIdx) {
+					displayedValue = data[closestIdx].value;
+					renderNumber();
+					slideToIdx(closestIdx);
+				}
+			}
+		};
+
+		const requestScrollUpdate = () => {
+			if (scrollFrame) {
+				return;
+			}
+
+			scrollFrame = window.requestAnimationFrame(onScroll);
+		};
+
+		const onWheel = (event: WheelEvent) => {
+			if (isTransitioning && isPinned()) {
+				event.preventDefault();
+				return;
+			}
+
+			if (requestStep(event.deltaY)) {
+				event.preventDefault();
+			}
+		};
+
+		const onTouchStart = (event: TouchEvent) => {
+			touchStartY = event.touches[0]?.clientY ?? 0;
+		};
+
+		const onTouchEnd = (event: TouchEvent) => {
+			const touchEndY = event.changedTouches[0]?.clientY ?? touchStartY;
+			const deltaY = touchStartY - touchEndY;
+			if (Math.abs(deltaY) < TOUCH_THRESHOLD) return;
+			requestStep(deltaY);
+		};
+
+		window.addEventListener("scroll", requestScrollUpdate, { passive: true });
+		window.addEventListener("resize", requestScrollUpdate, { passive: true });
+		window.addEventListener("wheel", onWheel, { passive: false });
+		window.addEventListener("touchstart", onTouchStart, { passive: true });
+		window.addEventListener("touchend", onTouchEnd, { passive: true });
+		renderNumber();
 		onScroll();
-		tick();
 	});
 </script>
