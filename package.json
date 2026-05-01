@@ -28,7 +28,6 @@
 		"@astrojs/check": "^0.9.8",
 		"@iconify-json/ic": "^1.2.4",
 		"@iconify-json/lucide": "^1.2.104",
-		"@iconify-json/simple-icons": "^1.2.80",
 		"@iconify/json": "^2.2.467",
 		"prettier": "3.8.2",
 		"prettier-plugin-astro": "0.14.1",
