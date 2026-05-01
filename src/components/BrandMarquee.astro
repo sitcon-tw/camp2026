@@ -1,0 +1,90 @@
+---
+import SitconBrand from "@/assets/brand/SITCON.svg";
+
+const brands = [
+	{
+		src: SitconBrand.src,
+		width: SitconBrand.width,
+		height: SitconBrand.height,
+		alt: "SITCON"
+	}
+];
+
+const marqueeItems = Array.from({ length: 6 }, (_, index) => brands[index % brands.length]);
+---
+
+<section class="brand-marquee" aria-label="合作品牌：SITCON">
+	<div class="brand-marquee__viewport" aria-hidden="true">
+		<div class="brand-marquee__track">
+			{
+				[0, 1].map(groupIndex => (
+					<div class="brand-marquee__group" data-marquee-group={groupIndex}>
+						{marqueeItems.map(brand => (
+							<img class="brand-marquee__logo" src={brand.src} width={brand.width} height={brand.height} alt={brand.alt} loading="lazy" decoding="async" />
+						))}
+					</div>
+				))
+			}
+		</div>
+	</div>
+</section>
+
+<style>
+	.brand-marquee {
+		position: relative;
+		isolation: isolate;
+		overflow: hidden;
+		background: var(--color-background);
+	}
+
+	.brand-marquee__viewport {
+		overflow: hidden;
+		padding-block: clamp(0.85rem, 1.5vw, 1.25rem);
+	}
+
+	.brand-marquee__track {
+		display: flex;
+		width: max-content;
+		animation: brand-marquee-scroll 30s linear infinite;
+		will-change: transform;
+	}
+
+	.brand-marquee__group {
+		display: flex;
+		align-items: center;
+		gap: clamp(2.2rem, 4.6vw, 4.8rem);
+		padding-inline: clamp(1.1rem, 2.3vw, 2.4rem);
+	}
+
+	.brand-marquee__logo {
+		display: block;
+		flex: 0 0 auto;
+		width: auto;
+		height: clamp(7rem, 12vw, 10rem);
+		object-fit: contain;
+	}
+
+	@keyframes brand-marquee-scroll {
+		to {
+			transform: translate3d(-50%, 0, 0);
+		}
+	}
+
+	@media (max-width: 52rem) {
+		.brand-marquee__group {
+			gap: 1.8rem;
+			padding-inline: 0.9rem;
+		}
+
+		.brand-marquee__logo {
+			height: clamp(5.2rem, 24vw, 7rem);
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.brand-marquee__track {
+			animation: none;
+			transform: none;
+		}
+	}
+</style>
