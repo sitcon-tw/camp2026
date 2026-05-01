@@ -47,7 +47,6 @@ const masterImages = Object.entries(
 										<h3 class="master-card__title">{masterClass.instructor}</h3>
 										<p class="master-card__achievement">{masterClass.achievement}</p>
 										<ul class="master-card__profile" aria-label={`${masterClass.title} 講師履歷亮點`}>
-											<li>{masterClass.role}</li>
 											{masterClass.profile.map(item => (
 												<li>{item}</li>
 											))}
@@ -65,7 +64,11 @@ const masterImages = Object.entries(
 							<article class="master-detail" data-master-detail data-master-index={index}>
 								<p class="master-detail__count">0{index + 1} / 03</p>
 								<h3 class="master-detail__title">{masterClass.title}</h3>
-								<p class="master-detail__summary">{masterClass.summary}</p>
+								<p class="master-detail__summary">
+									{masterClass.summary.map(line => (
+										<span>{line}</span>
+									))}
+								</p>
 								<p class="master-detail__outcome">{masterClass.outcome}</p>
 							</article>
 						))
@@ -569,17 +572,21 @@ const masterImages = Object.entries(
 
 	.master-detail__title {
 		color: var(--color-green);
-		font-size: clamp(2.65rem, 6.1vw, 5.25rem);
+		font-size: clamp(1.35rem, 2.1vw, 1.85rem);
 		font-weight: 800;
-		line-height: 0.9;
+		line-height: 1.1;
 		letter-spacing: 0;
 	}
 
 	.master-detail__summary {
-		font-size: clamp(1.15rem, 2vw, 1.65rem);
+		font-size: clamp(1.55rem, 2.8vw, 2.35rem);
 		font-weight: 800;
-		line-height: 1.4;
+		line-height: 1.28;
 		letter-spacing: 0;
+	}
+
+	.master-detail__summary span {
+		display: block;
 	}
 
 	.master-detail__outcome {
@@ -690,11 +697,11 @@ const masterImages = Object.entries(
 		}
 
 		.master-detail__title {
-			font-size: clamp(2rem, 10vw, 3.2rem);
+			font-size: clamp(1.18rem, 5vw, 1.55rem);
 		}
 
 		.master-detail__summary {
-			font-size: clamp(1.08rem, 5vw, 1.35rem);
+			font-size: clamp(1.28rem, 5.8vw, 1.75rem);
 		}
 
 		.master-detail__outcome {
