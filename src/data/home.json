@@ -78,9 +78,9 @@
 		]
 	},
 	"masterClassSection": {
-		"eyebrow": "Master Class",
+		"eyebrow": "主線課程",
 		"title": "三大實戰主題，由強者講師帶路",
-		"lead": "每堂 Master Class 都由具備實務經驗的講師帶領，課程會從真實場景出發，把技術判斷、工作流程與專案思維拆成可以帶走的方法。",
+		"lead": "由具備千萬流量與國際大獎經歷的導師親自操刀，將業界真實的技術決策，濃縮成無可取代的實戰武器",
 		"deckAriaLabel": "Master Class 課程卡片"
 	},
 	"masterClasses": [
@@ -89,7 +89,7 @@
 			"kicker": "Software Engineering / 軟體工程",
 			"instructor": "Denny 黃一晉",
 			"achievement": "SITCON 學生計算機年會共同發起人",
-			"imageIndex": 1,
+			"imageKey": "denny-huang",
 			"imagePosition": "50% 42%",
 			"accent": "green",
 			"summary": ["拒絕脆弱的 Vibe Code：", "只會用 AI 寫程式，", "註定成為科技業的第一波淘汰名單"],
@@ -101,16 +101,11 @@
 			"kicker": "Cybersecurity / 資訊安全",
 			"instructor": "Jasper 尤理衡",
 			"achievement": "國立陽明交通大學資工所碩士",
-			"imageIndex": 7,
+			"imageKey": "jasper-yu",
 			"imagePosition": "48% 44%",
 			"accent": "blue",
 			"summary": ["防禦即是未來的競爭力", "不懂資安，在數位時代如同「裸奔」"],
-			"profile": [
-				"現為全職資安工程師",
-				"曾代表台灣奪下「技能界奧林匹克」WorldSkills 國際技能競賽資安職類銅牌",
-				"數度征戰全球駭客終極殿堂 DEF CON CTF 總決賽，斬獲世界前三",
-				"擁有無數頂尖資安競賽冠軍經驗"
-			],
+			"profile": ["現為全職資安工程師", "曾代表台灣奪下「技能界奧林匹克」國際技能競賽銅牌", "數度征戰全球駭客終極殿堂 DEF CON CTF 總決賽，斬獲世界前三", "擁有無數頂尖資安競賽冠軍經驗"],
 			"outcome": "在萬物連網與 AI 武器化的時代，網路攻擊的門檻已降至史上最低。如果沒有資訊安全作為防護網，辛苦打造的任何數位創新，終究只是駭客眼中的待宰羔羊。資安早已不是少數專家的特權，而是每一個數位原住民必修的「生存技能」。這堂課將引導學員跳脫天真的開發者框架，直接切換到世界級駭客的逆向思考模式。透過剖析供應鏈攻擊、網路基礎設施漏洞等真實世界的嚴峻風險，學員將學會如何在看似完美的系統中找出致命的脆弱點。這不僅是一堂防駭技術課，更是一場高強度的邏輯與危機處理訓練：唯有知道系統如何被摧毀，才能學會打造堅不可摧的未來防線。"
 		},
 		{
@@ -118,7 +113,7 @@
 			"kicker": "Artificial Intelligence / 人工智慧",
 			"instructor": "Ak 郭慕天",
 			"achievement": "陽明交通大學資工系，高中即發表兩篇論文",
-			"imageIndex": 10,
+			"imageKey": "ak-kuo",
 			"imagePosition": "52% 40%",
 			"accent": "orange",
 			"summary": ["AI 不是魔法：", "你是「被 AI 淘汰的人」，", "還是「掌控 AI 的人」？"],
@@ -130,7 +125,7 @@
 			"kicker": "Artificial Intelligence / 人工智慧",
 			"instructor": "Harry 張祺煒",
 			"achievement": "臺灣大學資工系特殊選才榜首錄取",
-			"imageIndex": 10,
+			"imageKey": "harry-chang",
 			"imagePosition": "52% 40%",
 			"accent": "orange",
 			"summary": ["AI 不是魔法：", "你是「被 AI 淘汰的人」，", "還是「掌控 AI 的人」？"],
