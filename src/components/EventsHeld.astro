@@ -1,8 +1,6 @@
 ---
 import type { ImageMetadata } from "astro";
 import { Image } from "astro:assets";
-import ArrowUpRight from "~icons/lucide/arrow-up-right";
-import CalendarDays from "~icons/lucide/calendar-days";
 import Coffee from "~icons/lucide/coffee";
 import CodeXml from "~icons/lucide/code-xml";
 import Network from "~icons/lucide/network";
@@ -23,7 +21,6 @@ type EventsHeldContent = {
 	eyebrow: string;
 	title: string;
 	lead: string;
-	sourceLabel: string;
 	stats: {
 		value: string;
 		label: string;
@@ -36,11 +33,6 @@ type EventsHeldContent = {
 		imageKey: ActivityImage;
 		iconKey: ActivityIcon;
 		color: ActivityColor;
-	}[];
-	pastYears: {
-		year: string;
-		label: string;
-		href: string;
 	}[];
 };
 
@@ -93,30 +85,15 @@ const colorClassMap: Record<ActivityColor, { bar: string; icon: string; ring: st
 		dot: "bg-dark-green"
 	}
 };
-const eventsHeldMarqueeText = "SITCON Camp Open Source Hackathon Community ";
 ---
 
 <section class="bg-background text-foreground relative isolate overflow-hidden px-4 pt-[clamp(7rem,12vw,11rem)] pb-[clamp(4rem,8vw,7rem)] sm:px-8 lg:px-16">
-	<div class="pointer-events-none absolute top-32 left-1/2 -z-10 flex w-screen -translate-x-1/2 flex-col gap-4 overflow-hidden opacity-10" aria-hidden="true">
-		{
-			Array.from({ length: 5 }, (_, i) => (
-				<div class="events-held-marquee text-[clamp(3rem,7vw,7rem)] leading-none font-extrabold whitespace-nowrap" style={`--offset: ${i * -8}rem`}>
-					{eventsHeldMarqueeText.repeat(16)}
-				</div>
-			))
-		}
-	</div>
-
 	<div class="mx-auto max-w-7xl">
 		<div class="grid gap-8 lg:grid-cols-[minmax(0,1.05fr)_minmax(21rem,0.95fr)] lg:items-end">
 			<header class="max-w-3xl">
 				<p class="bg-green mb-5 w-fit px-3 py-2 text-[clamp(1rem,1.7vw,1.5rem)] leading-none font-extrabold text-black">{eventsHeld.eyebrow}</p>
 				<h1 class="text-[clamp(2.5rem,6vw,5.75rem)] leading-[0.95] font-extrabold text-balance text-black">{eventsHeld.title}</h1>
 				<p class="text-foreground/80 mt-6 text-[clamp(1.0625rem,1.55vw,1.35rem)] leading-[1.75] font-bold">{eventsHeld.lead}</p>
-				<p class="text-foreground/50 mt-5 flex items-center gap-2 text-sm leading-none font-bold">
-					<CalendarDays class="h-4 w-4" aria-hidden="true" />
-					{eventsHeld.sourceLabel}
-				</p>
 			</header>
 
 			<div class="grid gap-3 sm:grid-cols-3 lg:grid-cols-1">
@@ -175,58 +152,5 @@ const eventsHeldMarqueeText = "SITCON Camp Open Source Hackathon Community ";
 				})
 			}
 		</div>
-
-		<section class="ring-foreground/10 mt-[clamp(2rem,5vw,4rem)] overflow-hidden rounded-[2rem_0_2rem_0] bg-white/70 p-5 ring-2 sm:p-7">
-			<div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-				<div>
-					<h2 class="text-2xl leading-tight font-extrabold text-black sm:text-3xl">歷年 Camp 官網</h2>
-					<p class="text-foreground/65 mt-2 text-base leading-relaxed font-bold">從首屆夏令營到第 10 屆，保留每一年不同主題與課程樣貌。</p>
-				</div>
-				<div class="flex flex-wrap gap-2">
-					{
-						eventsHeld.pastYears.map(year => (
-							<a
-								href={year.href}
-								target="_blank"
-								rel="noopener noreferrer"
-								class="group bg-foreground text-background hover:bg-soft-blue hover:text-foreground focus-visible:ring-primary-blue inline-flex min-h-11 items-center gap-2 rounded-full px-4 text-sm font-extrabold transition-colors focus-visible:ring-2 focus-visible:outline-none"
-								aria-label={`${year.year} ${year.label} 官網`}
-							>
-								<span>{year.year}</span>
-								<span class="text-background/60 group-hover:text-foreground/70 hidden max-w-36 truncate sm:inline">{year.label}</span>
-								<ArrowUpRight class="h-4 w-4" aria-hidden="true" />
-							</a>
-						))
-					}
-				</div>
-			</div>
-		</section>
 	</div>
 </section>
-
-<style>
-	.events-held-marquee {
-		margin-left: var(--offset);
-		animation: events-held-marquee 48s linear infinite;
-	}
-
-	.events-held-marquee:nth-child(even) {
-		animation-direction: reverse;
-	}
-
-	@keyframes events-held-marquee {
-		from {
-			transform: translateX(0);
-		}
-
-		to {
-			transform: translateX(-50%);
-		}
-	}
-
-	@media (prefers-reduced-motion: reduce) {
-		.events-held-marquee {
-			animation: none;
-		}
-	}
-</style>

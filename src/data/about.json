@@ -3,7 +3,6 @@
 		"eyebrow": "Past Events",
 		"title": "我們做過的事",
 		"lead": "SITCON 是由學生組成、投身資訊教育與推廣開源精神的社群；SITCON Camp 自 2014 年起，把主線課程、黑客松、社群闖關、視界咖啡館與開源精神帶進同一個夏天，讓學生在實作與交流中找到自己的資訊路線。",
-		"sourceLabel": "依 SITCON 2026 與歷年 Camp 官網整理",
 		"stats": [
 			{
 				"value": "第 10 屆",
@@ -62,17 +61,6 @@
 				"iconKey": "sparkles",
 				"color": "dark-green"
 			}
-		],
-		"pastYears": [
-			{ "year": "2025", "label": "404 Not Found", "href": "https://sitcon.camp/2025/" },
-			{ "year": "2024", "label": "小火慢燉", "href": "https://sitcon.camp/2024/" },
-			{ "year": "2023", "label": "開源文明，源力擴張", "href": "https://sitcon.camp/2023/" },
-			{ "year": "2021", "label": "線上艦艇號", "href": "https://sitcon.camp/2021/" },
-			{ "year": "2019", "label": "浸身資訊流", "href": "https://sitcon.camp/2019/" },
-			{ "year": "2017", "label": "歷年官網", "href": "https://sitcon.camp/2017/" },
-			{ "year": "2016", "label": "歷年官網", "href": "https://sitcon.camp/2016/" },
-			{ "year": "2015", "label": "歷年官網", "href": "https://sitcon.camp/2015/" },
-			{ "year": "2014", "label": "首屆夏令營", "href": "https://sitcon.camp/2014/" }
 		]
 	},
 	"sitconTimeline": {

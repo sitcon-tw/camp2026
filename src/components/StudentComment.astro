@@ -21,7 +21,11 @@ const commentColorClassMap: Record<string, string> = {
 		<!-- 固定留言 -->
 		<div class="relative py-8">
 			<!-- 背景跑馬燈 -->
-			<div class="pointer-events-none absolute inset-y-0 left-1/2 z-0 flex w-screen -translate-x-1/2 flex-col justify-between overflow-hidden opacity-15" data-student-bg-marquee data-marquee-text={studentComment.bgMarquee.text}>
+			<div
+				class="pointer-events-none absolute inset-y-0 left-1/2 z-0 flex w-screen -translate-x-1/2 flex-col justify-between overflow-hidden opacity-15"
+				data-student-bg-marquee
+				data-marquee-text={studentComment.bgMarquee.text}
+			>
 			</div>
 			<div class="relative z-10">
 				<div class="grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-4 md:gap-x-8 md:gap-y-10 lg:grid-cols-3 lg:gap-x-16">
