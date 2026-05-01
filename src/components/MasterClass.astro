@@ -14,6 +14,12 @@ const masterImages = Object.entries(
 	.map(([, image]) => image.default);
 
 const getMasterImage = (masterClass: MasterClassItem) => masterImages[masterClass.imageIndex % masterImages.length];
+const getMasterDetailKey = (masterClass: MasterClassItem) => JSON.stringify([masterClass.title, masterClass.summary, masterClass.outcome]);
+const masterClassDetails = masterClasses.map((masterClass, index) => ({
+	masterClass,
+	index,
+	isDuplicate: masterClasses.findIndex(item => getMasterDetailKey(item) === getMasterDetailKey(masterClass)) !== index
+}));
 ---
 
 <section id="master-class" class="master-class" aria-labelledby="master-class-title" data-master-class>
@@ -72,8 +78,12 @@ const getMasterImage = (masterClass: MasterClassItem) => masterImages[masterClas
 
 				<div class="master-class__details" aria-live="polite">
 					{
-						masterClasses.map((masterClass, index) => (
-							<article class:list={["master-detail", `master-detail--${masterClass.accent}`]} data-master-detail data-master-index={index}>
+						masterClassDetails.map(({ masterClass, index, isDuplicate }) => (
+							<article
+								class:list={["master-detail", `master-detail--${masterClass.accent}`, isDuplicate && "master-detail--mobile-duplicate"]}
+								data-master-detail
+								data-master-index={index}
+							>
 								<h3 class="master-detail__title">{masterClass.title}</h3>
 								<p class="master-detail__summary">
 									{masterClass.summary.map(line => (
@@ -519,7 +529,10 @@ const getMasterImage = (masterClass: MasterClassItem) => masterImages[masterClas
 		font-weight: 800;
 		line-height: 1.35;
 		letter-spacing: 0;
+		overflow: hidden;
+		text-overflow: ellipsis;
 		text-wrap: pretty;
+		white-space: nowrap;
 		word-break: keep-all;
 	}
 
@@ -559,6 +572,12 @@ const getMasterImage = (masterClass: MasterClassItem) => masterImages[masterClas
 
 	.master-card--active .master-card__achievement {
 		font-size: clamp(1rem, 1.18vw, 1.2rem);
+		overflow: visible;
+		overflow-wrap: normal;
+		text-overflow: clip;
+		white-space: normal;
+		word-break: keep-all;
+		word-break: auto-phrase;
 	}
 
 	.master-card--active .master-card__profile {
@@ -782,6 +801,10 @@ const getMasterImage = (masterClass: MasterClassItem) => masterImages[masterClas
 			border-block-start: 0.16rem solid var(--color-foreground);
 			opacity: 1;
 			transform: none;
+		}
+
+		.master-detail--mobile-duplicate {
+			display: none;
 		}
 
 		.master-detail__title {
