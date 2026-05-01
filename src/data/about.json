@@ -1,6 +1,79 @@
 {
 	"eventsHeld": {
-		"title": "EventsHeld"
+		"eyebrow": "Past Events",
+		"title": "我們做過的事",
+		"lead": "SITCON 是由學生組成、投身資訊教育與推廣開源精神的社群；SITCON Camp 自 2014 年起，把主線課程、黑客松、社群闖關、視界咖啡館與開源精神帶進同一個夏天，讓學生在實作與交流中找到自己的資訊路線。",
+		"sourceLabel": "依 SITCON 2026 與歷年 Camp 官網整理",
+		"stats": [
+			{
+				"value": "第 10 屆",
+				"label": "SITCON Camp 2026",
+				"note": "從 2014 年一路走到現在"
+			},
+			{
+				"value": "五天四夜",
+				"label": "沉浸式營隊",
+				"note": "課程、實作、交流與生活一起發生"
+			},
+			{
+				"value": "10 場",
+				"label": "夏令營累積",
+				"note": "由學生社群持續籌辦與傳承"
+			}
+		],
+		"activities": [
+			{
+				"title": "主線課程",
+				"kicker": "Core Curriculum",
+				"description": "由講師與助教帶領，從程式語言、網路概念、專案工具到實作任務，讓學員把知識轉成可以運作的作品。",
+				"imageKey": "camp",
+				"iconKey": "code",
+				"color": "soft-blue"
+			},
+			{
+				"title": "黑客松",
+				"kicker": "Hackathon",
+				"description": "在有限時間內發想、分工、實作與發表，練習把問題拆解成專案，也把團隊的想法變成成果。",
+				"imageKey": "hackathon",
+				"iconKey": "rocket",
+				"color": "orange"
+			},
+			{
+				"title": "社群闖關",
+				"kicker": "Community Challenge",
+				"description": "透過互動任務、攤位與闖關，認識不同資訊社群的文化、運作方式與開源協作精神。",
+				"imageKey": "groups",
+				"iconKey": "network",
+				"color": "green"
+			},
+			{
+				"title": "視界咖啡館",
+				"kicker": "Vision Cafe",
+				"description": "把傳統座談會改成近距離對話，讓學員能直接向業界與社群前輩提問，交換對未來路線的想法。",
+				"imageKey": "edu",
+				"iconKey": "coffee",
+				"color": "sky-blue"
+			},
+			{
+				"title": "開源精神與社群",
+				"kicker": "Open Source",
+				"description": "透過短講、社群博覽會與交流活動，理解 Open Source 不只是程式碼，也是共同學習與回饋的方式。",
+				"imageKey": "groups",
+				"iconKey": "sparkles",
+				"color": "dark-green"
+			}
+		],
+		"pastYears": [
+			{ "year": "2025", "label": "404 Not Found", "href": "https://sitcon.camp/2025/" },
+			{ "year": "2024", "label": "小火慢燉", "href": "https://sitcon.camp/2024/" },
+			{ "year": "2023", "label": "開源文明，源力擴張", "href": "https://sitcon.camp/2023/" },
+			{ "year": "2021", "label": "線上艦艇號", "href": "https://sitcon.camp/2021/" },
+			{ "year": "2019", "label": "浸身資訊流", "href": "https://sitcon.camp/2019/" },
+			{ "year": "2017", "label": "歷年官網", "href": "https://sitcon.camp/2017/" },
+			{ "year": "2016", "label": "歷年官網", "href": "https://sitcon.camp/2016/" },
+			{ "year": "2015", "label": "歷年官網", "href": "https://sitcon.camp/2015/" },
+			{ "year": "2014", "label": "首屆夏令營", "href": "https://sitcon.camp/2014/" }
+		]
 	},
 	"sitconTimeline": {
 		"config": {
