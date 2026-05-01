@@ -2,6 +2,7 @@
 package-lock.json
 yarn.lock
 bun.lock
+pnpm-lock.yaml
 
 # Keep your editor settings out of version control
 .vscode
