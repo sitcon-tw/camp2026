@@ -1,1 +1,143 @@
-<div>Footer</div>
+---
+import Instagram from "~icons/simple-icons/instagram";
+import Threads from "~icons/simple-icons/threads";
+import Facebook from "~icons/simple-icons/facebook";
+import Youtube from "~icons/simple-icons/youtube";
+import Flickr from "~icons/simple-icons/flickr";
+import Telegram from "~icons/simple-icons/telegram";
+import layoutData from "@/data/layout.json";
+
+import SitconLogo from "../assets/footer/sitcon.svg";
+
+const { footer } = layoutData;
+const iconMap = {
+	instagram: Instagram,
+	threads: Threads,
+	facebook: Facebook,
+	youtube: Youtube,
+	flickr: Flickr,
+	telegram: Telegram
+};
+type FooterIcon = keyof typeof iconMap;
+---
+
+<footer class="bg-background relative flex w-full flex-col overflow-hidden font-sans">
+	<div class="footer-bg aspect-25/2 w-full" style="clip-path: polygon(0 0, 100% 100%, 0 100%);"></div>
+	<div class="footer-bg -mt-px h-10 w-full sm:h-14"></div>
+	<div class="footer-bg relative -mt-px w-full pb-12 sm:pb-20">
+		<div class="pointer-events-none absolute inset-x-0 bottom-0 z-0 hidden items-end justify-center overflow-hidden opacity-[0.04] select-none sm:flex">
+			<SitconLogo class="h-auto w-full max-w-340" />
+		</div>
+
+		<div class="relative z-10 mx-auto -mt-6 grid max-w-6xl grid-cols-2 gap-6 px-4 sm:-mt-10 sm:gap-12 sm:px-6 md:px-12 lg:grid-cols-4">
+			{
+				footer.sections.map(section => (
+					<div class="flex flex-col">
+						<h1 class:list={["label-base", `label-${section.variant}`]}>{section.title}</h1>
+
+						{section.type === "contact" && (
+							<div class="mb-5">
+								{section.label && <p class="text-muted mb-1 text-sm font-bold">{section.label}</p>}
+								{section.links.map(link => (
+									<a href={link.href} class:list={["link-base", `link-hover-${section.variant}`]}>
+										{link.label}
+									</a>
+								))}
+							</div>
+						)}
+
+						{section.type === "links" && (
+							<ul class="space-y-4 text-sm font-bold text-white">
+								{section.links.map(link => (
+									<li>
+										<a href={link.href} class:list={["link-base", `link-hover-${section.variant}`]}>
+											{link.label}
+										</a>
+									</li>
+								))}
+							</ul>
+						)}
+
+						{section.type === "archive" && (
+							<div class="grid w-max grid-cols-3 gap-x-6 gap-y-4 text-sm font-bold text-white">
+								{section.links.map(link => (
+									<a href={link.href} class:list={[`link-hover-${section.variant}`]}>
+										{link.label}
+									</a>
+								))}
+							</div>
+						)}
+
+						{section.type === "social" && (
+							<div class="flex flex-wrap items-center gap-4 text-white">
+								{section.links.map(link => {
+									const iconKey = "icon" in link ? link.icon : undefined;
+									const Icon = iconKey ? iconMap[iconKey as FooterIcon] : undefined;
+
+									return Icon ? (
+										<a href={link.href} class:list={["icon-link", `link-hover-${section.variant}`]} aria-label={link.label}>
+											<Icon class="h-6 w-6" />
+										</a>
+									) : null;
+								})}
+							</div>
+						)}
+					</div>
+				))
+			}
+		</div>
+	</div>
+</footer>
+
+<style>
+	@reference "../styles/global.css";
+
+	.footer-bg {
+		background-color: var(--color-foreground);
+	}
+
+	.label-base {
+		@apply mb-6 flex w-max items-center justify-center gap-2 px-3 py-0.5 text-sm font-bold tracking-widest;
+		color: var(--color-foreground);
+	}
+
+	.label-green {
+		background-color: var(--color-green);
+	}
+
+	.label-blue {
+		background-color: var(--color-blue);
+	}
+
+	.label-purple {
+		background-color: var(--color-sky-blue);
+	}
+
+	.label-orange {
+		background-color: var(--color-orange);
+	}
+
+	.link-base {
+		@apply font-medium text-white transition-colors;
+	}
+
+	.link-hover-green:hover {
+		color: var(--color-green);
+	}
+
+	.link-hover-blue:hover {
+		color: var(--color-blue);
+	}
+
+	.link-hover-purple:hover {
+		color: var(--color-sky-blue);
+	}
+
+	.link-hover-orange:hover {
+		color: var(--color-orange);
+	}
+
+	.icon-link {
+		@apply h-6 w-6 transition-colors;
+	}
+</style>

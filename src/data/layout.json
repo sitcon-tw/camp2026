@@ -1,0 +1,223 @@
+{
+	"document": {
+		"lang": "zh-Hant-TW",
+		"gtmId": "GTM-NKHHNVV",
+		"siteName": "SITCON 夏令營 2026",
+		"description": "五天四夜資訊營隊，透過課程與實作帶領對資訊有熱忱的學生探索軟體工程、AI 與資訊安全。"
+	},
+	"header": {
+		"ariaLabel": "SITCON Camp 2026",
+		"brand": {
+			"href": "/2026/",
+			"ariaLabel": "SITCON Camp 2026 首頁",
+			"logoAlt": "SITCON Camp 2026"
+		},
+		"navAriaLabel": "主要導覽",
+		"navItems": [
+			{
+				"label": "報名資訊",
+				"href": "/2026/#registration-info"
+			},
+			{
+				"label": "主線課程",
+				"href": "/2026/#master-class"
+			},
+			{
+				"label": "關於",
+				"href": "/2026/about/"
+			},
+			{
+				"label": "籌備團隊",
+				"href": "/2026/team/"
+			}
+		],
+		"cta": {
+			"label": "立即報名",
+			"href": "/2026/#registration-info"
+		},
+		"mobileMenu": {
+			"openLabel": "開啟主要導覽",
+			"closeLabel": "關閉主要導覽"
+		}
+	},
+	"footer": {
+		"sections": [
+			{
+				"title": "聯絡我們",
+				"variant": "green",
+				"type": "contact",
+				"label": "聯絡窗口",
+				"links": [
+					{
+						"label": "ask@sitcon.camp",
+						"href": "mailto:ask@sitcon.camp"
+					}
+				]
+			},
+			{
+				"title": "SITCON 活動",
+				"variant": "blue",
+				"type": "links",
+				"links": [
+					{
+						"label": "SITCON 年會",
+						"href": "https://sitcon.org/"
+					},
+					{
+						"label": "SITCON Hour of Code",
+						"href": "https://sitcon.org/hoc"
+					},
+					{
+						"label": "SITCON Camp",
+						"href": "https://sitcon.camp/2026/"
+					},
+					{
+						"label": "SITCON Hackathon",
+						"href": "https://hackathon.sitcon.org/"
+					}
+				]
+			},
+			{
+				"title": "歷年官網",
+				"variant": "purple",
+				"type": "archive",
+				"links": [
+					{ "label": "2025", "href": "https://sitcon.org/2025" },
+					{ "label": "2024", "href": "https://sitcon.org/2024" },
+					{ "label": "2023", "href": "https://sitcon.org/2023" },
+					{ "label": "2022", "href": "https://sitcon.org/2022" },
+					{ "label": "2021", "href": "https://sitcon.org/2021" },
+					{ "label": "2020", "href": "https://sitcon.org/2020" },
+					{ "label": "2019", "href": "https://sitcon.org/2019" },
+					{ "label": "2018", "href": "https://sitcon.org/2018" },
+					{ "label": "2017", "href": "https://sitcon.org/2017" }
+				]
+			},
+			{
+				"title": "社群媒體",
+				"variant": "orange",
+				"type": "social",
+				"links": [
+					{
+						"label": "Instagram",
+						"href": "https://sitcon.org/ig",
+						"icon": "instagram"
+					},
+					{
+						"label": "Threads",
+						"href": "https://sitcon.org/threads",
+						"icon": "threads"
+					},
+					{
+						"label": "Facebook",
+						"href": "https://sitcon.org/fb",
+						"icon": "facebook"
+					},
+					{
+						"label": "Youtube",
+						"href": "https://sitcon.org/youtube",
+						"icon": "youtube"
+					},
+					{
+						"label": "Flickr",
+						"href": "https://sitcon.org/flickr",
+						"icon": "flickr"
+					},
+					{
+						"label": "Telegram",
+						"href": "https://sitcon.org/telegram",
+						"icon": "telegram"
+					}
+				]
+			}
+		]
+	},
+	"eventLD": {
+		"@context": "https://schema.org",
+		"@type": "EducationEvent",
+		"name": "SITCON 夏令營 2026",
+		"description": "SITCON 夏令營是由學生自發籌辦的資訊科技夏令營，提供高中生深入學習與交流的機會。",
+		"startDate": "2026-07-08",
+		"endDate": "2026-07-12",
+		"eventStatus": "https://schema.org/EventScheduled",
+		"eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+		"inLanguage": "zh-TW",
+		"typicalAgeRange": "15-18",
+		"keywords": "資訊科技, 學生, 夏令營, 台灣, SITCON",
+		"image": ["https://sitcon.camp/2026/favicon.svg"],
+		"url": "https://sitcon.camp/2026/",
+		"location": {
+			"@type": "Place",
+			"name": "國立陽明交通大學光復校區",
+			"address": {
+				"@type": "PostalAddress",
+				"streetAddress": "大學路1001號",
+				"addressLocality": "新竹市",
+				"addressRegion": "新竹市",
+				"addressCountry": "TW"
+			}
+		},
+		"organizer": {
+			"@type": "Organization",
+			"name": "SITCON 學生計算機年會",
+			"url": "https://sitcon.org",
+			"sameAs": "https://zh.wikipedia.org/wiki/學生計算機年會"
+		},
+		"offers": [
+			{
+				"@type": "Offer",
+				"name": "早鳥優惠",
+				"price": "8900",
+				"priceCurrency": "TWD",
+				"availability": "https://schema.org/InStock",
+				"validFrom": "2026-05-03",
+				"validThrough": "2026-05-17",
+				"url": "http://i.sitcon.org/reg-camp2026"
+			},
+			{
+				"@type": "Offer",
+				"name": "個人報名",
+				"price": "9900",
+				"priceCurrency": "TWD",
+				"availability": "https://schema.org/InStock",
+				"validFrom": "2026-05-18",
+				"validThrough": "2026-05-31",
+				"url": "http://i.sitcon.org/reg-camp2026"
+			},
+			{
+				"@type": "Offer",
+				"name": "二人團報",
+				"price": "9400",
+				"priceCurrency": "TWD",
+				"availability": "https://schema.org/InStock",
+				"validFrom": "2026-05-18",
+				"validThrough": "2026-05-31",
+				"url": "http://i.sitcon.org/reg-camp2026"
+			},
+			{
+				"@type": "Offer",
+				"name": "三人團報",
+				"price": "9100",
+				"priceCurrency": "TWD",
+				"availability": "https://schema.org/InStock",
+				"validFrom": "2026-05-18",
+				"validThrough": "2026-05-31",
+				"url": "http://i.sitcon.org/reg-camp2026"
+			},
+			{
+				"@type": "Offer",
+				"name": "四人團報",
+				"price": "8800",
+				"priceCurrency": "TWD",
+				"availability": "https://schema.org/InStock",
+				"validFrom": "2026-05-18",
+				"validThrough": "2026-05-31",
+				"url": "http://i.sitcon.org/reg-camp2026"
+			}
+		],
+		"audience": {
+			"@type": "EducationalAudience",
+			"educationalRole": "student"
+		}
+	}
+}

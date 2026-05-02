@@ -4,9 +4,12 @@ import SITCONData from "@/components/SITCONData.astro";
 import Team from "@/components/Team.astro";
 import OrganizerBrands from "@/components/OrganizerBrands.astro";
 import Layout from "@/layouts/Layout.astro";
+import pageData from "@/data/about.json";
+
+const { pageMeta } = pageData;
 ---
 
-<Layout>
+<Layout title={pageMeta.title} description={pageMeta.description} ogImage={pageMeta.ogImage}>
 	<EventsHeld />
 	<SITCONData />
 	<Team />

@@ -1,0 +1,11 @@
+---
+import Team from "@/components/Team.astro";
+import Layout from "@/layouts/Layout.astro";
+import pageData from "@/data/team.json";
+
+const { pageMeta } = pageData;
+---
+
+<Layout title={pageMeta.title} description={pageMeta.description} ogImage={pageMeta.ogImage}>
+	<Team />
+</Layout>
