@@ -1,6 +1,7 @@
 ---
 import { Image } from "astro:assets";
 import MaterialSymbolsPlayCircleOutlineRounded from "~icons/material-symbols/play-circle-outline-rounded";
+import MarkdownIt from "markdown-it";
 
 import homeData from "@/data/home.json";
 
@@ -15,6 +16,8 @@ const commentColorClassMap: Record<string, string> = {
 };
 
 const studentImages = Object.values(import.meta.glob<{ default: ImageMetadata }>("../assets/comment/student/*.{jpg,png}", { eager: true }));
+
+const mdRenderer = new MarkdownIt();
 ---
 
 <div class="bg-background relative overflow-hidden">
@@ -33,14 +36,23 @@ const studentImages = Object.values(import.meta.glob<{ default: ImageMetadata }>
 				<div class="grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-4 md:gap-x-8 md:gap-y-10 lg:grid-cols-3 lg:gap-x-16">
 					{
 						studentComment.comments.map((c, i) => (
-							<div class="bg-foreground flex flex-col items-start rounded-4xl">
+							<button
+								type="button"
+								class="bg-foreground flex cursor-pointer flex-col items-start rounded-4xl transition-transform hover:-translate-y-1"
+								aria-label={`查看 ${c.name} 的完整學員回饋`}
+								data-student-comment-card
+								data-student-name={c.name}
+								data-student-comment={c.comment}
+								data-student-full-comment={c.fullComment}
+								data-student-color-class={commentColorClassMap[c.color] ?? "bg-blue"}
+							>
 								<div class:list={["flex h-19 items-center gap-4 self-stretch rounded-t-4xl p-4", commentColorClassMap[c.color] ?? "bg-blue"]}>
 									<Image src={studentImages[i].default} alt={studentComment.avatarAlt} class="aspect-square h-full w-auto rounded-full" />
 									<p class="text-[1.5rem] leading-[100%] font-bold text-white">{c.name}</p>
 									<div />
 								</div>
 								<p class="text-background p-6 text-[1rem] leading-[133%]">{c.comment}</p>
-							</div>
+							</button>
 						))
 					}
 				</div>
@@ -77,7 +89,17 @@ const studentImages = Object.values(import.meta.glob<{ default: ImageMetadata }>
 	<dialog id="comment-dialog" class="m-auto w-full max-w-3xl rounded-4xl">
 		<div class="aspect-video w-full">
 			<iframe id="comment-iframe" class="h-full w-full rounded-4xl" title="YouTube video player" allow="autoplay; encrypted-media;" src="" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+			<p></p>
 		</div>
+	</dialog>
+
+	<!-- 學員留言 popup -->
+	<dialog id="student-comment-dialog" class="bg-foreground text-background m-auto w-[calc(100%-2rem)] max-w-2xl rounded-4xl p-0 backdrop:bg-black/50">
+		<div id="student-comment-dialog-header" class="bg-blue flex items-center justify-between rounded-t-4xl p-5">
+			<h3 id="student-comment-dialog-name" class="text-2xl leading-[100%] font-bold text-white"></h3>
+			<button type="button" class="grid size-10 place-items-center rounded-full text-3xl leading-none text-white hover:bg-white/15" data-student-comment-close aria-label="關閉完整學員回饋">×</button>
+		</div>
+		<p id="student-comment-dialog-text" class="p-6 text-lg leading-[160%]" set:html="" />
 	</dialog>
 </div>
 
@@ -118,6 +140,10 @@ const studentImages = Object.values(import.meta.glob<{ default: ImageMetadata }>
 <script>
 	const dialog = document.getElementById("comment-dialog") as HTMLDialogElement;
 	const iframe = document.getElementById("comment-iframe") as HTMLIFrameElement;
+	const studentCommentDialog = document.getElementById("student-comment-dialog") as HTMLDialogElement;
+	const studentCommentDialogHeader = document.getElementById("student-comment-dialog-header");
+	const studentCommentDialogName = document.getElementById("student-comment-dialog-name");
+	const studentCommentDialogText = document.getElementById("student-comment-dialog-text");
 	const bgMarquee = document.querySelector<HTMLElement>("[data-student-bg-marquee]");
 	const videoMarqueeTrack = document.querySelector<HTMLElement>("[data-video-marquee-track]");
 	const videoMarqueeContainer = document.querySelector<HTMLElement>("[data-video-marquee-container]");
@@ -192,8 +218,30 @@ const studentImages = Object.values(import.meta.glob<{ default: ImageMetadata }>
 		dialog.showModal();
 	});
 
+	document.addEventListener("click", e => {
+		if (!(e.target instanceof Element)) return;
+
+		const card = e.target.closest<HTMLElement>("[data-student-comment-card]");
+		if (!card) return;
+
+		if (studentCommentDialogName) studentCommentDialogName.textContent = card.dataset.studentName ?? "";
+		if (studentCommentDialogText) studentCommentDialogText.textContent = card.dataset.studentFullComment ?? "";
+		if (studentCommentDialogHeader) {
+			studentCommentDialogHeader.className = `flex items-center justify-between rounded-t-4xl p-5 ${card.dataset.studentColorClass ?? "bg-blue"}`;
+		}
+		studentCommentDialog.showModal();
+	});
+
 	dialog.addEventListener("click", e => {
 		if (e.target === dialog) closeModal();
+	});
+
+	studentCommentDialog.addEventListener("click", e => {
+		if (e.target === studentCommentDialog) studentCommentDialog.close();
+	});
+
+	studentCommentDialog.querySelector("[data-student-comment-close]")?.addEventListener("click", () => {
+		studentCommentDialog.close();
 	});
 
 	dialog.addEventListener("close", _ => {
