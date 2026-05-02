@@ -303,6 +303,10 @@
 			"label": "立即報名",
 			"href": "/2026/#registration-info"
 		},
+		"ctaBrochure": {
+			"label": "報名簡章",
+			"href": "https://drive.google.com/file/d/1nxt-lYWAMnsK-QbwbbeIV7lTi9hcimTw/view"
+		},
 		"noticeTitle": "注意事項",
 		"infoCards": [
 			{
