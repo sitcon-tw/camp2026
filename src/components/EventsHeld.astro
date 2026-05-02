@@ -1,1 +1,156 @@
-<div>EventsHeld</div>
+---
+import type { ImageMetadata } from "astro";
+import { Image } from "astro:assets";
+import Coffee from "~icons/lucide/coffee";
+import CodeXml from "~icons/lucide/code-xml";
+import Network from "~icons/lucide/network";
+import Rocket from "~icons/lucide/rocket";
+import Sparkles from "~icons/lucide/sparkles";
+
+import imgCamp from "@/assets/pics/camp.webp";
+import imgEdu from "@/assets/pics/edu.webp";
+import imgGroups from "@/assets/pics/groups.webp";
+import imgHackathon from "@/assets/pics/hackathon.webp";
+import aboutData from "@/data/about.json";
+
+type ActivityColor = "soft-blue" | "orange" | "green" | "sky-blue" | "dark-green";
+type ActivityIcon = "code" | "coffee" | "network" | "rocket" | "sparkles";
+type ActivityImage = "camp" | "edu" | "groups" | "hackathon";
+
+type EventsHeldContent = {
+	eyebrow: string;
+	title: string;
+	lead: string;
+	stats: {
+		value: string;
+		label: string;
+		note: string;
+	}[];
+	activities: {
+		title: string;
+		kicker: string;
+		description: string;
+		imageKey: ActivityImage;
+		iconKey: ActivityIcon;
+		color: ActivityColor;
+	}[];
+};
+
+const eventsHeld = aboutData.eventsHeld as EventsHeldContent;
+
+const imageMap: Record<ActivityImage, ImageMetadata> = {
+	camp: imgCamp,
+	edu: imgEdu,
+	groups: imgGroups,
+	hackathon: imgHackathon
+};
+
+const iconMap = {
+	code: CodeXml,
+	coffee: Coffee,
+	network: Network,
+	rocket: Rocket,
+	sparkles: Sparkles
+};
+
+const colorClassMap: Record<ActivityColor, { bar: string; icon: string; ring: string; dot: string }> = {
+	"soft-blue": {
+		bar: "bg-soft-blue",
+		icon: "bg-soft-blue text-foreground",
+		ring: "ring-soft-blue",
+		dot: "bg-soft-blue"
+	},
+	orange: {
+		bar: "bg-orange",
+		icon: "bg-orange text-foreground",
+		ring: "ring-orange",
+		dot: "bg-orange"
+	},
+	green: {
+		bar: "bg-green",
+		icon: "bg-green text-foreground",
+		ring: "ring-green",
+		dot: "bg-green"
+	},
+	"sky-blue": {
+		bar: "bg-sky-blue",
+		icon: "bg-sky-blue text-foreground",
+		ring: "ring-sky-blue",
+		dot: "bg-sky-blue"
+	},
+	"dark-green": {
+		bar: "bg-dark-green",
+		icon: "bg-dark-green text-background",
+		ring: "ring-dark-green",
+		dot: "bg-dark-green"
+	}
+};
+---
+
+<section class="bg-background text-foreground relative isolate overflow-hidden pt-[clamp(7rem,12vw,11rem)] pb-[clamp(4rem,8vw,7rem)]">
+	<div class="site-container">
+		<div class="grid gap-8 lg:grid-cols-[minmax(0,1.05fr)_minmax(21rem,0.95fr)] lg:items-end">
+			<header class="max-w-3xl">
+				<p class="bg-green mb-5 w-fit px-3 py-2 text-[clamp(1rem,1.7vw,1.5rem)] leading-none font-extrabold text-black">{eventsHeld.eyebrow}</p>
+				<h1 class="text-[clamp(2.5rem,6vw,5.75rem)] leading-[0.95] font-extrabold text-balance text-black">{eventsHeld.title}</h1>
+				<p class="text-foreground/80 mt-6 text-[clamp(1.0625rem,1.55vw,1.35rem)] leading-[1.75] font-bold">{eventsHeld.lead}</p>
+			</header>
+
+			<div class="grid gap-3 sm:grid-cols-3 lg:grid-cols-1">
+				{
+					eventsHeld.stats.map((stat, i) => (
+						<article class="bg-foreground text-background grid min-h-32 grid-cols-[auto_1fr] items-center gap-4 overflow-hidden rounded-[2rem_0_2rem_0] p-5 shadow-[0.35rem_0.35rem_0_0_var(--color-soft-blue)] sm:grid-cols-1 sm:items-start lg:grid-cols-[auto_1fr]">
+							<div class:list={["text-foreground grid h-14 w-14 place-items-center rounded-full text-xl font-extrabold", i === 0 ? "bg-orange" : i === 1 ? "bg-green" : "bg-soft-blue"]}>{i + 1}</div>
+							<div>
+								<strong class="block text-[clamp(1.65rem,3vw,2.35rem)] leading-none font-extrabold">{stat.value}</strong>
+								<span class="mt-2 block text-lg leading-tight font-extrabold">{stat.label}</span>
+								<p class="text-background/70 mt-2 text-sm leading-relaxed font-bold">{stat.note}</p>
+							</div>
+						</article>
+					))
+				}
+			</div>
+		</div>
+
+		<div class="mt-[clamp(2rem,5vw,4rem)] grid gap-5 md:grid-cols-2 xl:grid-cols-5">
+			{
+				eventsHeld.activities.map((activity, i) => {
+					const Icon = iconMap[activity.iconKey];
+					const color = colorClassMap[activity.color];
+
+					return (
+						<article
+							class:list={[
+								"group bg-foreground text-background relative flex min-h-96 flex-col overflow-hidden rounded-[1.75rem_0_1.75rem_0] ring-4 transition-transform duration-300 hover:-translate-y-1 md:min-h-108 xl:min-h-136",
+								color.ring
+							]}
+						>
+							<div class:list={["h-4 w-full", color.bar]} />
+							<div class="relative h-44 overflow-hidden md:h-52 xl:h-48">
+								<Image
+									src={imageMap[activity.imageKey]}
+									alt={activity.title}
+									class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+									loading={i < 2 ? "eager" : "lazy"}
+									decoding="async"
+								/>
+								<div class="from-foreground via-foreground/10 absolute inset-0 bg-linear-to-t to-transparent" />
+								<div class:list={["absolute top-4 left-4 grid h-12 w-12 place-items-center rounded-full", color.icon]}>
+									<Icon class="h-6 w-6" aria-hidden="true" />
+								</div>
+							</div>
+							<div class="flex flex-1 flex-col p-5">
+								<p class="text-background/55 mb-2 text-sm leading-none font-extrabold tracking-normal">{activity.kicker}</p>
+								<h2 class="text-background text-[clamp(1.6rem,2.2vw,2.2rem)] leading-tight font-extrabold">{activity.title}</h2>
+								<p class="text-background/78 mt-4 text-base leading-[1.65] font-bold">{activity.description}</p>
+								<div class="mt-auto pt-6">
+									<span class:list={["inline-flex h-3 w-16 rounded-full", color.dot]} aria-hidden="true" />
+								</div>
+							</div>
+						</article>
+					);
+				})
+			}
+		</div>
+	</div>
+</section>

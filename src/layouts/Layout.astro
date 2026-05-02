@@ -23,10 +23,10 @@ const seoData = {
 ---
 
 <!doctype html>
-<html lang="zh-Hant">
+<html lang={pageDocument.lang}>
 	<head>
 		<!-- Google Tag Manager -->
-		<script is:inline>
+		<script define:vars={{ gtmId: pageDocument.gtmId }} is:inline>
 			(function (w, d, s, l, i) {
 				w[l] = w[l] || [];
 				w[l].push({
@@ -39,7 +39,7 @@ const seoData = {
 				j.async = true;
 				j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
 				f.parentNode.insertBefore(j, f);
-			})(window, document, "script", "dataLayer", "GTM-NKHHNVV");
+			})(window, document, "script", "dataLayer", gtmId);
 		</script>
 		<!-- End Google Tag Manager -->
 
@@ -71,7 +71,7 @@ const seoData = {
 	<body>
 		<!-- Google Tag Manager (noscript) -->
 		<noscript>
-			<iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NKHHNVV" height="0" width="0" style="display:none;visibility:hidden"></iframe>
+			<iframe src={`https://www.googletagmanager.com/ns.html?id=${pageDocument.gtmId}`} height="0" width="0" style="display:none;visibility:hidden"></iframe>
 		</noscript>
 		<!-- End Google Tag Manager (noscript) -->
 		<Header />

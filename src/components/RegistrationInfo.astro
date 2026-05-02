@@ -1,1 +1,152 @@
-<div>Registration info</div>
+---
+import { Image } from "astro:assets";
+import registrationPhoto from "@/assets/registration/registration-photo.png";
+import CalendarIcon from "~icons/ic/baseline-calendar-month";
+import TicketIcon from "~icons/ic/baseline-confirmation-number";
+import SchoolIcon from "~icons/ic/baseline-school";
+import homeData from "@/data/home.json";
+
+const { registration } = homeData;
+const iconMap = {
+	calendar: CalendarIcon,
+	ticket: TicketIcon,
+	school: SchoolIcon
+};
+const pricingColorClassMap: Record<string, string> = {
+	orange: "text-orange",
+	"primary-blue": "text-primary-blue",
+	"soft-blue": "text-soft-blue",
+	"sky-blue": "text-sky-blue",
+	"dark-green": "text-dark-green"
+};
+const cards = registration.infoCards.map(card => ({
+	...card,
+	icon: iconMap[card.iconKey as keyof typeof iconMap]
+}));
+---
+
+<div class="overflow-hidden">
+	<svg id="reg-transition" viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" class="block w-full" aria-hidden="true"></svg>
+</div>
+
+<section
+	id="registration-info"
+	class="bg-foreground pt-(--gap) pb-(--gap) text-white"
+	style="--row-h: clamp(3rem, 5.4vw, 5.125rem); --radius: clamp(1.75rem, 4.2vw, 4rem); --gap: clamp(1.5rem, 4.2vw, 4rem); --label-size: clamp(1.0625rem, 2.1vw, 2rem); --heading-size: clamp(1.65rem, 3.25vw, 2.5rem)"
+>
+	<div class="site-container">
+		<div class="bg-green flex w-fit items-center justify-center gap-2.5 p-2.5">
+			<span class="text-foreground leading-none font-bold" style="font-size: var(--heading-size)">{registration.sectionTitle}</span>
+		</div>
+
+		<!-- 三張資訊卡 -->
+		<div class="grid w-full grid-cols-1 md:grid-cols-3" style="margin-top: var(--gap); gap: var(--gap)">
+			{
+				cards.map(({ title, main, note, icon: Icon, iconClass = "" }) => (
+					<div class="bg-soft-blue relative mx-auto aspect-375/260 w-full max-w-96 min-w-0 overflow-hidden md:aspect-375/318 md:max-w-none" style="border-radius: var(--radius) 0">
+						<span class="text-background absolute top-[15.7%] left-[8.4%] text-[clamp(1rem,1.45vw,1.25rem)] leading-none font-bold">{title}</span>
+						<span class="text-background absolute top-[28%] left-[8.4%] max-w-[78%] text-[clamp(1.25rem,2vw,1.75rem)] leading-[160%] font-bold">{main}</span>
+						<Icon class={`text-background/30 absolute top-[46%] right-[-6%] h-auto w-[44%] md:top-[52%] md:right-auto md:left-[60%] md:w-[50%] ${iconClass}`} />
+						<span class="text-background absolute top-[77.4%] left-[8.4%] text-base leading-[160%] font-bold">{note}</span>
+					</div>
+				))
+			}
+		</div>
+
+		<div class="flex w-full flex-col items-start lg:flex-row" style="margin-top: var(--gap)">
+			<div class="flex w-full flex-col items-start lg:flex-691">
+				{
+					registration.pricingRows.map(({ label, color, price, roundedStart, roundedEnd }) => (
+						<div
+							class="bg-background grid w-full grid-cols-2 items-center border-y border-black px-[9.262%]"
+							style={`height: var(--row-h); ${roundedStart ? "border-top-left-radius: var(--radius);" : ""}${roundedEnd ? "border-bottom-right-radius: var(--radius);" : ""}`}
+						>
+							<span class:list={["text-center leading-[150%] font-extrabold", pricingColorClassMap[color] ?? "text-orange"]} style="font-size: var(--label-size)">
+								{label}
+							</span>
+							<span class="text-center leading-[150%] font-extrabold text-black" style="font-size: var(--label-size)">
+								{price}
+							</span>
+						</div>
+					))
+				}
+			</div>
+
+			<div class="relative mt-(--gap) aspect-565/410 w-full overflow-hidden lg:mt-0 lg:flex-565">
+				<Image src={registrationPhoto} alt={registration.photoAlt} class="absolute top-[6.585%] left-[7.434%] aspect-239/159 w-[85.133%] object-cover" loading="lazy" decoding="async" />
+				<a
+					href={registration.cta.href}
+					class="bg-green absolute bottom-[4.878%] left-[35.929%] flex h-[clamp(3rem,17.561%,4.5rem)] items-center justify-center rounded-2xl px-3 text-[clamp(1.125rem,2.25vw,2.125rem)] leading-[150%] font-extrabold text-white shadow-[clamp(0.25rem,0.53vw,0.5rem)_clamp(0.25rem,0.53vw,0.5rem)_0_0_var(--color-orange)]"
+				>
+					{registration.cta.label}
+				</a>
+			</div>
+		</div>
+
+		<div class="bg-orange flex w-fit items-center justify-center gap-2.5 p-2.5" style="margin-top: var(--gap)">
+			<span class="text-foreground leading-none font-bold" style="font-size: var(--heading-size)">{registration.noticeTitle}</span>
+		</div>
+
+		<ol class="mt-6 list-decimal space-y-1 pl-6 text-[clamp(1rem,1.25vw,1.125rem)] leading-[170%] font-bold text-white">
+			{
+				registration.noticeItems.map(item => (
+					<li>
+						{item.map(part =>
+							"href" in part ? (
+								<a class="underline" href={part.href} target="_blank" rel="noreferrer">
+									{part.text}
+								</a>
+							) : (
+								part.text
+							)
+						)}
+					</li>
+				))
+			}
+		</ol>
+	</div>
+</section>
+
+<!-- 底部過渡：對角線斜切，上=foreground 下=background -->
+<div class="overflow-hidden">
+	<svg viewBox="0 0 1440 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" class="block w-full" aria-hidden="true">
+		<!-- 上方三角形：foreground -->
+		<polygon points="0,0 1440,0 0,80" fill="var(--color-foreground)"></polygon>
+		<!-- 下方三角形：background -->
+		<polygon points="1440,0 1440,80 0,80" fill="var(--color-background)"></polygon>
+	</svg>
+</div>
+
+<script>
+	const svg = document.getElementById("reg-transition")!;
+	const ns = "http://www.w3.org/2000/svg";
+	const W = 1440,
+		H = 60;
+	const COUNT = 8;
+	const COLOR = getComputedStyle(document.documentElement).getPropertyValue("--color-foreground").trim();
+
+	function rand(min: number, max: number) {
+		return Math.random() * (max - min) + min;
+	}
+
+	// 底部矩形確保無縫銜接
+	const rect = document.createElementNS(ns, "rect");
+	rect.setAttribute("x", "0");
+	rect.setAttribute("y", String(H * 0.75));
+	rect.setAttribute("width", String(W));
+	rect.setAttribute("height", String(H));
+	rect.setAttribute("fill", COLOR);
+	svg.appendChild(rect);
+
+	// 隨機橢圓，分 slot 確保分佈均勻
+	const slotW = W / COUNT;
+	for (let i = 0; i < COUNT; i++) {
+		const el = document.createElementNS(ns, "ellipse");
+		el.setAttribute("cx", String(slotW * i + rand(slotW * 0.1, slotW * 0.9)));
+		el.setAttribute("cy", String(H));
+		el.setAttribute("rx", String(rand(140, 230)));
+		el.setAttribute("ry", String(rand(30, 50)));
+		el.setAttribute("fill", COLOR);
+		svg.appendChild(el);
+	}
+</script>

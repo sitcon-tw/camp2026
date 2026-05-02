@@ -1,1 +1,74 @@
-<div>Organizer Brands</div>
+---
+import { Image } from "astro:assets";
+import aboutData from "@/data/about.json";
+
+type Org = {
+	name: string;
+	role?: string;
+	description?: string;
+	iconPath: string;
+	url?: string;
+};
+
+const isOrg = (v: unknown): v is Org => {
+	if (typeof v !== "object" || v === null) return false;
+	const r = v as Record<string, unknown>;
+	return typeof r.name === "string" && typeof r.iconPath === "string";
+};
+
+const sponsorGlob = import.meta.glob<{ default: ImageMetadata }>("../assets/sponsors/*", { eager: true });
+
+function getMeta(iconPath: string): ImageMetadata | undefined {
+	const file = iconPath.split("/").pop();
+	return sponsorGlob[`../assets/sponsors/${file}`]?.default;
+}
+
+type ResolvedOrg = Org & { meta?: ImageMetadata };
+
+async function resolve(org: Org): Promise<ResolvedOrg> {
+	const meta = getMeta(org.iconPath);
+	return { ...org, meta };
+}
+
+const sections = await Promise.all(
+	aboutData.organizerBrands.sections
+		.map(({ tag, items }): [string, Org[]] => [tag, (items as unknown[]).filter(isOrg)])
+		.filter(([, list]) => list.length > 0)
+		.map(async ([tag, items]) => [tag, await Promise.all(items.map(resolve))] as [string, ResolvedOrg[]])
+);
+---
+
+<div class="bg-background py-20">
+	<div class="site-container">
+		{
+			sections.map(([tag, items]) => (
+				<section class="mt-12 first:mt-0 md:mt-24 lg:mt-32">
+					<h1 class="mb-4 text-center text-3xl font-bold md:text-left md:text-4xl lg:text-[3rem]">{tag}</h1>
+					<div class="flex flex-wrap items-center justify-center gap-4 gap-y-6 sm:gap-6 md:justify-start lg:gap-8">
+						{items.map(org => {
+							const logo = org.meta ? (
+								<Image src={org.meta} alt={org.name} class="h-20 w-auto object-contain md:h-28 lg:h-32" />
+							) : (
+								<img src={org.iconPath} alt={org.name} class="h-20 w-auto object-contain md:h-28 lg:h-32" />
+							);
+
+							return org.url ? (
+								<a
+									href={org.url}
+									target="_blank"
+									rel="noopener noreferrer"
+									class="org-card group focus-visible:ring-primary-blue/50 focus-visible:ring-2 focus-visible:outline-none"
+									aria-label={`前往 ${org.name}`}
+								>
+									{logo}
+								</a>
+							) : (
+								<div class="org-card group">{logo}</div>
+							);
+						})}
+					</div>
+				</section>
+			))
+		}
+	</div>
+</div>

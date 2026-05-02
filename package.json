@@ -22,6 +22,7 @@
 		"astro": "^6.1.5",
 		"astro-favicons": "^3.1.6",
 		"gsap": "^3.14.2",
+		"prettier-plugin-tailwindcss": "^0.7.2",
 		"sharp": "^0.34.5",
 		"tailwindcss": "^4.2.2"
 	},
@@ -35,6 +36,7 @@
 		"prettier-plugin-organize-imports": "^4.3.0",
 		"prettier-plugin-packagejson": "^3.0.2",
 		"prettier-plugin-tailwindcss": "^0.7.2",
+		"subset-font": "^2.5.0",
 		"typescript": "^5.9.3",
 		"unplugin-icons": "^23.0.1"
 	},

@@ -1,8 +1,8 @@
 ---
 import type { ImageMetadata } from "astro";
-import siteContent from "@/data/site.json";
+import homeData from "@/data/home.json";
 
-const { hero } = siteContent;
+const { hero } = homeData;
 const heroIntro = hero.intro;
 const topics = heroIntro.topics;
 const heroWallImages = Object.entries(
@@ -12,63 +12,7 @@ const heroWallImages = Object.entries(
 )
 	.sort(([firstPath], [secondPath]) => firstPath.localeCompare(secondPath))
 	.map(([, image]) => image.default);
-const heroPhotoWallColumns = [
-	{
-		className: "hero-photo-wall__column--one",
-		duration: 38000,
-		offset: 10000,
-		items: [
-			{ imageIndex: 0, classes: ["hero-photo-wall__tile--large"] },
-			{ imageIndex: 5, classes: [] },
-			{ imageIndex: 10, classes: ["hero-photo-wall__tile--tall"] },
-			{ imageIndex: 3, classes: [] }
-		]
-	},
-	{
-		className: "hero-photo-wall__column--two",
-		duration: 47000,
-		offset: 22000,
-		items: [
-			{ imageIndex: 1, classes: [] },
-			{ imageIndex: 6, classes: ["hero-photo-wall__tile--tall"] },
-			{ imageIndex: 11, classes: [] },
-			{ imageIndex: 4, classes: ["hero-photo-wall__tile--large"] }
-		]
-	},
-	{
-		className: "hero-photo-wall__column--three",
-		duration: 41000,
-		offset: 16000,
-		items: [
-			{ imageIndex: 2, classes: ["hero-photo-wall__tile--tall"] },
-			{ imageIndex: 7, classes: [] },
-			{ imageIndex: 0, classes: ["hero-photo-wall__tile--large"] },
-			{ imageIndex: 9, classes: [] }
-		]
-	},
-	{
-		className: "hero-photo-wall__column--four",
-		duration: 53000,
-		offset: 28000,
-		items: [
-			{ imageIndex: 3, classes: [] },
-			{ imageIndex: 8, classes: ["hero-photo-wall__tile--large"] },
-			{ imageIndex: 1, classes: [] },
-			{ imageIndex: 10, classes: ["hero-photo-wall__tile--tall"] }
-		]
-	},
-	{
-		className: "hero-photo-wall__column--five",
-		duration: 44000,
-		offset: 7000,
-		items: [
-			{ imageIndex: 4, classes: ["hero-photo-wall__tile--large"] },
-			{ imageIndex: 9, classes: [] },
-			{ imageIndex: 2, classes: ["hero-photo-wall__tile--tall"] },
-			{ imageIndex: 11, classes: [] }
-		]
-	}
-];
+const heroPhotoWallColumns = hero.photoWallColumns;
 ---
 
 <section class="hero-page" aria-labelledby="hero-page-title">
@@ -623,7 +567,7 @@ const heroPhotoWallColumns = [
 	.hero-intro__stage {
 		position: relative;
 		z-index: 1;
-		width: min(calc(100vw - 2rem), 1100px);
+		width: min(calc(100vw - 2rem), 68.75rem);
 		text-align: center;
 	}
 
@@ -669,7 +613,7 @@ const heroPhotoWallColumns = [
 		display: flex;
 		flex-direction: column;
 		height: 100%;
-		transform: translateY(0px);
+		transform: translateY(0);
 		will-change: transform;
 	}
 
