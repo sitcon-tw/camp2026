@@ -224,38 +224,38 @@
 		"avatarAlt": "Student's pfp",
 		"comments": [
 			{
-				"name": "Student 1",
-				"comment": "我個人認為義大利麵就應該拌 42 號混泥土因為這個螺絲釘的長度很容易直接影響到挖掘機的扭矩",
+				"name": "邦邦邦邦",
+				"comment": "原本我比較熟悉競程，這次在 Camp 看見許多專案實作，也讓我開始對「做專案」產生興趣。從黑客松、闖關活動到視界咖啡館，我接觸到很多新的技術與想法，也更理解專案可以來自生活中的需求與觀察。",
 				"image": "student-01.jpg",
 				"color": "blue"
 			},
 			{
-				"name": "Student 2",
-				"comment": "你往裡砸的時候一瞬間他就會產生大量的高能蛋白俗稱 UFO，會嚴重影響經濟的發展以至於對整個太平洋和充電器的核污染",
+				"name": "Ad0ra",
+				"comment": "原本以為營隊只是交朋友、玩遊戲，但 SITCON Camp 真的能學到很多東西。課程中隊輔和工作人員會主動關心學員是否理解，遇到不懂的地方也能即時詢問。這裡也讓我遇到許多志同道合的朋友，第一次感受到大家一起為同一個目標努力的氛圍。",
 				"image": "student-02.jpg",
 				"color": "orange"
 			},
 			{
-				"name": "Student 3",
-				"comment": "再或者說透過這勾股定理很容易推斷出人工飼養的東條英機他是可以捕獲野生的三角函數",
+				"name": "David",
+				"comment": "視界咖啡館讓我有機會和不同領域的講者交流，從政府資訊推動到資安實務，都讓我看到資訊領域不只有課堂上的知識，也有許多真實世界中的應用與討論。",
 				"image": "student-03.jpg",
 				"color": "green"
 			},
 			{
-				"name": "Student 4",
-				"comment": "所以說不管這秦始皇的切面是否具有放射性川普的 N 次方是否有沈澱物都不會影響到沃爾瑪跟維爾康在南極匯合所以說不管這秦始皇的切面是否具有放射性川普的 N 次方是否有沈澱物都不會影響到沃爾瑪跟維爾康在南極匯合",
+				"name": "陳宥彣",
+				"comment": "雖然營隊很充實、也很累，但我玩得非常開心。學員之間原本完全不認識，卻相處得很愉快；隊輔也很認真教學，即使面對初學者也不會不耐煩，讓我在陌生環境中仍然很有歸屬感。這次營隊讓我學到很多，如果可以的話，明年還會想再參加。",
 				"image": "student-04.jpg",
 				"color": "dark-green"
 			},
 			{
-				"name": "Student 5",
-				"comment": "你往裡砸的時候一瞬間他就會產生大量的高能蛋白俗稱 UFO，會嚴重影響經濟的發展以至於對整個太平洋和充電器的核污染",
+				"name": "張惠媗",
+				"comment": "這是我第一個真正參與的營隊。第一次參與黑客松時，我很喜歡大家一起提出想法、討論方向到最後發表的過程。能聽見不同人的觀點，也發現很多自己沒想過的切入點，是很有趣的經驗。",
 				"image": "student-05.jpg",
 				"color": "sky-blue"
 			},
 			{
-				"name": "Student 6",
-				"comment": "再或者說透過這勾股定理很容易推斷出人工飼養的東條英機他是可以捕獲野生的三角函數",
+				"name": "葉子琳",
+				"comment": "第一次體驗黑客松，和不同背景的夥伴一起合作完成專案，最後做出成果時很有成就感。隊輔也很細心，會主動詢問有沒有聽不懂、是否跟得上進度，課程中也學到了許多以前沒接觸過的內容。",
 				"image": "student-06.jpg",
 				"color": "soft-blue"
 			}
@@ -265,34 +265,24 @@
 		},
 		"video": [
 			{
-				"label": "2026 年會回顧",
-				"cover": "https://placehold.co/1920x1080",
-				"url": "https://www.youtube-nocookie.com/embed/jbofh3u8XrI?controls=0"
+				"label": "SITCON Camp 2019",
+				"cover": "/2026/src/assets/comment/video/video-2019.jpg",
+				"url": "https://www.youtube-nocookie.com/embed/oAtiOrpj6DQ?controls=0"
 			},
 			{
-				"label": "2026 年會開幕",
-				"cover": "https://placehold.co/1920x1080",
-				"url": "https://www.youtube-nocookie.com/embed/_gvPCsdmeNs?controls=0"
+				"label": "SITCON Camp 2023 專訪",
+				"cover": "/2026/src/assets/comment/video/video-2023.jpg",
+				"url": "https://www.youtube-nocookie.com/embed/22tBfn5gaAc?controls=0"
 			},
 			{
-				"label": "2026 年會閉幕",
-				"cover": "https://placehold.co/1920x1080",
-				"url": "https://www.youtube-nocookie.com/embed/xN-Tj83adDQ?controls=0"
+				"label": "SITCON Camp 2024",
+				"cover": "/2026/src/assets/comment/video/video-2024.jpg",
+				"url": "https://www.youtube-nocookie.com/embed/oAtiOrpj6DQ?controls=0"
 			},
 			{
-				"label": "2019 夏令營",
-				"cover": "https://placehold.co/1920x1080",
-				"url": "https://www.youtube-nocookie.com/embed/jbofh3u8XrI?controls=0"
-			},
-			{
-				"label": "2019 夏令營",
-				"cover": "https://placehold.co/1920x1080",
-				"url": "https://www.youtube-nocookie.com/embed/jbofh3u8XrI?controls=0"
-			},
-			{
-				"label": "2019 夏令營",
-				"cover": "https://placehold.co/1920x1080",
-				"url": "https://www.youtube-nocookie.com/embed/jbofh3u8XrI?controls=0"
+				"label": "SITCON Camp 2025",
+				"cover": "/2026/src/assets/comment/video/video-2025.jpg",
+				"url": "https://www.youtube-nocookie.com/embed/CansA62TYXY?controls=0"
 			}
 		]
 	},

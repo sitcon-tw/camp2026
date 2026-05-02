@@ -14,7 +14,7 @@ const commentColorClassMap: Record<string, string> = {
 	"soft-blue": "bg-soft-blue"
 };
 
-const studentImages = Object.values(import.meta.glob<{ default: ImageMetadata }>("../assets/comment/*.jpg", { eager: true }));
+const studentImages = Object.values(import.meta.glob<{ default: ImageMetadata }>("../assets/comment/student/*.{jpg,png}", { eager: true }));
 ---
 
 <div class="bg-background relative overflow-hidden">
@@ -64,7 +64,7 @@ const studentImages = Object.values(import.meta.glob<{ default: ImageMetadata }>
 								<div class="from-foreground flex h-full w-full items-center justify-center rounded-4xl bg-linear-to-t from-0% to-transparent to-30%">
 									<MaterialSymbolsPlayCircleOutlineRounded class="text-background text-2xl" />
 								</div>
-								<p class="text-background absolute bottom-3 left-0 w-full text-center text-4xl font-bold">{v.label}</p>
+								<p class="text-background absolute bottom-3 left-0 w-full text-center text-3xl font-bold">{v.label}</p>
 							</button>
 						))}
 					</div>
