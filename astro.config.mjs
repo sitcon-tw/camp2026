@@ -4,6 +4,10 @@ import Icons from "unplugin-icons/vite";
 
 import tailwindcss from "@tailwindcss/vite";
 
+import sitemap from "@astrojs/sitemap";
+
+import favicons from "astro-favicons";
+
 const base = "/2026";
 
 // https://astro.build/config
@@ -44,6 +48,7 @@ export default defineConfig({
 			}
 		}
 	],
+
 	vite: {
 		plugins: [
 			tailwindcss(),
@@ -51,5 +56,12 @@ export default defineConfig({
 				compiler: "astro"
 			})
 		]
-	}
+	},
+
+	integrations: [
+		sitemap({
+			lastmod: new Date()
+		}),
+		favicons()
+	]
 });
