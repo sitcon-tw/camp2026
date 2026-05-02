@@ -47,7 +47,13 @@ const trackMembers: DisplayMember[] = members.map((m, i) => ({
 		</div>
 	</div>
 
-	<div class="master-marquee-viewport mt-(--gap) flex w-screen overflow-x-auto overflow-y-hidden overscroll-x-contain" data-master-marquee-viewport>
+	<div
+		class="master-marquee-viewport mt-(--gap) flex w-screen overflow-x-auto overflow-y-hidden overscroll-x-contain focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-current"
+		data-master-marquee-viewport
+		role="region"
+		aria-label={masterCarousel.sectionTitle}
+		tabindex="0"
+	>
 		<div class="flex w-max" data-master-marquee-track>
 			{
 				[0, 1, 2].map(trackIdx => (
