@@ -7,12 +7,7 @@ import Flickr from "~icons/simple-icons/flickr";
 import Telegram from "~icons/simple-icons/telegram";
 import layoutData from "@/data/layout.json";
 
-import S from "../assets/footer/s.svg";
-import I from "../assets/footer/i.svg";
-import T from "../assets/footer/t.svg";
-import C from "../assets/footer/c.svg";
-import O from "../assets/footer/o.svg";
-import N from "../assets/footer/n.svg";
+import SitconLogo from "../assets/footer/sitcon.svg";
 
 const { footer } = layoutData;
 const iconMap = {
@@ -30,13 +25,8 @@ type FooterIcon = keyof typeof iconMap;
 	<div class="footer-bg aspect-25/2 w-full" style="clip-path: polygon(0 0, 100% 100%, 0 100%);"></div>
 	<div class="footer-bg -mt-px h-10 w-full sm:h-14"></div>
 	<div class="footer-bg relative -mt-px w-full pb-12 sm:pb-20">
-		<div class="pointer-events-none absolute inset-x-0 bottom-0 z-0 hidden items-end justify-center gap-2.5 overflow-hidden opacity-[0.04] select-none sm:flex">
-			<S class="h-auto w-3/4 max-w-75" />
-			<I class="h-auto w-[12%] max-w-15" />
-			<T class="h-auto w-[65%] max-w-70" />
-			<C class="h-auto w-3/4 max-w-[320px]" />
-			<O class="h-auto w-[85%] max-w-87.5" />
-			<N class="h-auto w-2/3 max-w-70" />
+		<div class="pointer-events-none absolute inset-x-0 bottom-0 z-0 hidden items-end justify-center overflow-hidden opacity-[0.04] select-none sm:flex">
+			<SitconLogo class="h-auto w-full max-w-340" />
 		</div>
 
 		<div class="relative z-10 mx-auto -mt-6 grid max-w-6xl grid-cols-2 gap-6 px-4 sm:-mt-10 sm:gap-12 sm:px-6 md:px-12 lg:grid-cols-4">
