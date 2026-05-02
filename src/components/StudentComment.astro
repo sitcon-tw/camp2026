@@ -36,9 +36,7 @@ const comments = studentComment.comments.map(c => ({
 			{studentComment.sectionTitle}
 		</h2>
 
-		<!-- 固定留言 -->
 		<div class="relative py-8">
-			<!-- 背景跑馬燈 -->
 			<div
 				class="pointer-events-none absolute inset-y-0 left-1/2 z-0 flex w-screen -translate-x-1/2 flex-col justify-between overflow-hidden opacity-15"
 				data-student-bg-marquee
@@ -76,7 +74,6 @@ const comments = studentComment.comments.map(c => ({
 		</div>
 	</div>
 
-	<!-- 影片跑馬燈 -->
 	<div class="marquee-container mb-16 flex w-screen overflow-hidden" data-video-marquee-container>
 		<div class="marquee-track flex w-max" data-video-marquee-track>
 			{
@@ -103,7 +100,6 @@ const comments = studentComment.comments.map(c => ({
 		</div>
 	</div>
 
-	<!-- YouTube popup -->
 	<dialog id="comment-dialog" class="m-auto w-full max-w-3xl rounded-4xl">
 		<div class="aspect-video w-full">
 			<iframe
@@ -119,7 +115,6 @@ const comments = studentComment.comments.map(c => ({
 		</div>
 	</dialog>
 
-	<!-- 學員留言 popup -->
 	<dialog id="student-comment-dialog" class="bg-foreground text-background m-auto w-[calc(100%-2rem)] max-w-2xl rounded-4xl p-0 backdrop:bg-black/50">
 		<div id="student-comment-dialog-header" class="bg-blue flex items-center justify-between rounded-t-4xl p-5">
 			<h3 id="student-comment-dialog-name" class="text-2xl leading-[100%] font-bold text-white"></h3>
@@ -207,23 +202,23 @@ const comments = studentComment.comments.map(c => ({
 </style>
 
 <script>
-	const dialog = document.getElementById("comment-dialog");
+	const dialog = document.getElementById("comment-dialog") as HTMLDialogElement | null;
 
-	const iframe = document.getElementById("comment-iframe");
+	const iframe = document.getElementById("comment-iframe") as HTMLIFrameElement | null;
 
-	const studentCommentDialog = document.getElementById("student-comment-dialog");
+	const studentCommentDialog = document.getElementById("student-comment-dialog") as HTMLDialogElement | null;
 
-	const studentCommentDialogHeader = document.getElementById("student-comment-dialog-header");
+	const studentCommentDialogHeader = document.getElementById("student-comment-dialog-header") as HTMLDivElement | null;
 
-	const studentCommentDialogName = document.getElementById("student-comment-dialog-name");
+	const studentCommentDialogName = document.getElementById("student-comment-dialog-name") as HTMLHeadingElement | null;
 
-	const studentCommentDialogText = document.getElementById("student-comment-dialog-text");
+	const studentCommentDialogText = document.getElementById("student-comment-dialog-text") as HTMLDivElement | null;
 
-	const bgMarquee = document.querySelector("[data-student-bg-marquee]");
+	const bgMarquee = document.querySelector("[data-student-bg-marquee]") as HTMLDivElement | null;
 
-	const videoMarqueeTrack = document.querySelector("[data-video-marquee-track]");
+	const videoMarqueeTrack = document.querySelector("[data-video-marquee-track]") as HTMLDivElement | null;
 
-	const videoMarqueeContainer = document.querySelector("[data-video-marquee-container]");
+	const videoMarqueeContainer = document.querySelector("[data-video-marquee-container]") as HTMLDivElement | null;
 
 	function renderBgMarqueeRows() {
 		if (!bgMarquee) return;
@@ -310,25 +305,23 @@ const comments = studentComment.comments.map(c => ({
 	videoMarqueeContainer?.addEventListener("click", e => {
 		if (!(e.target instanceof Element)) return;
 
-		const card = e.target.closest(".video-card");
+		const card = e.target.closest(".video-card") as HTMLElement | null;
 
 		if (!card || !videoMarqueeContainer.contains(card)) return;
 
 		const url = card.dataset.url;
 
-		if (!url || !(iframe instanceof HTMLIFrameElement)) return;
+		if (!url || !iframe) return;
 
 		iframe.src = url;
 
-		if (dialog instanceof HTMLDialogElement && typeof dialog.showModal === "function") {
-			dialog.showModal();
-		}
+		dialog?.showModal();
 	});
 
 	document.addEventListener("click", e => {
 		if (!(e.target instanceof Element)) return;
 
-		const card = e.target.closest("[data-student-comment-card]");
+		const card = e.target.closest("[data-student-comment-card]") as HTMLElement | null;
 
 		if (!card) return;
 
@@ -344,9 +337,7 @@ const comments = studentComment.comments.map(c => ({
 			studentCommentDialogHeader.className = `flex items-center justify-between rounded-t-4xl p-5 ${card.dataset.studentColorClass ?? "bg-blue"}`;
 		}
 
-		if (studentCommentDialog instanceof HTMLDialogElement && typeof studentCommentDialog.showModal === "function") {
-			studentCommentDialog.showModal();
-		}
+		studentCommentDialog?.showModal();
 	});
 
 	dialog?.addEventListener("click", e => {
@@ -366,7 +357,7 @@ const comments = studentComment.comments.map(c => ({
 	});
 
 	dialog?.addEventListener("close", () => {
-		if (iframe instanceof HTMLIFrameElement) {
+		if (iframe) {
 			iframe.src = "";
 		}
 	});
