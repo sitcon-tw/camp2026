@@ -15,7 +15,7 @@ const { title, description, ogImage } = Astro.props;
 const { document: pageDocument } = layoutData;
 
 const seoData = {
-	title: title ? `${title} - ${pageDocument.siteName}` : pageDocument.siteName,
+	title: title ?? pageDocument.siteName,
 	description: description ?? pageDocument.description,
 	canonicalURL: new URL(Astro.url.pathname, Astro.site),
 	ogImage: ogImage ?? "/2026/src/assets/ogImg/og-img-home.jpg"
