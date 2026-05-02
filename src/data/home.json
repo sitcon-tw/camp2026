@@ -86,7 +86,7 @@
 	"masterClasses": [
 		{
 			"title": "軟體工程",
-			"kicker": "Software Engineering / 軟體工程",
+			"kicker": "軟體工程",
 			"instructor": "Denny 黃一晉",
 			"achievement": "SITCON 學生計算機年會共同發起人",
 			"imageKey": "denny-huang",
@@ -98,7 +98,7 @@
 		},
 		{
 			"title": "資訊安全",
-			"kicker": "Cybersecurity / 資訊安全",
+			"kicker": "資訊安全",
 			"instructor": "Jasper 尤理衡",
 			"achievement": "曾獲國際技能競賽銅牌",
 			"imageKey": "jasper-yu",
@@ -110,7 +110,7 @@
 		},
 		{
 			"title": "人工智慧",
-			"kicker": "Artificial Intelligence / 人工智慧",
+			"kicker": "人工智慧",
 			"instructor": "Ak 郭慕天",
 			"achievement": "陽明交通大學資工系，高中即發表兩篇論文",
 			"imageKey": "ak-kuo",
@@ -122,7 +122,7 @@
 		},
 		{
 			"title": "人工智慧",
-			"kicker": "Artificial Intelligence / 人工智慧",
+			"kicker": "人工智慧",
 			"instructor": "Harry 張祺煒",
 			"achievement": "臺灣大學資工系特殊選才榜首錄取",
 			"imageKey": "harry-chang",

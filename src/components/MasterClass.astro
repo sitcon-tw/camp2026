@@ -130,7 +130,7 @@ const masterClassDetails = masterClasses.map((masterClass, index) => ({
 	const deck = section?.querySelector<HTMLElement>("[data-master-deck]");
 	const cards = section ? Array.from(section.querySelectorAll<HTMLElement>("[data-master-card]")) : [];
 	const details = section ? Array.from(section.querySelectorAll<HTMLElement>("[data-master-detail]")) : [];
-	const desktopQuery = window.matchMedia("(min-width: 52.001rem)");
+	const desktopQuery = window.matchMedia("(min-width: 72.001rem) and (min-height: 44.001rem)");
 	const reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
 
 	let observer: ReturnType<typeof onScroll> | undefined;
@@ -354,7 +354,7 @@ const masterClassDetails = masterClasses.map((masterClass, index) => ({
 	.master-class {
 		position: relative;
 		min-height: 420svh;
-		--master-header-offset: clamp(5.2rem, 7.2vw, 6.75rem);
+		--master-header-offset: clamp(5.8rem, 7.4vw, 7.8rem);
 		background: var(--color-background);
 		color: var(--color-foreground);
 		isolation: isolate;
@@ -374,7 +374,7 @@ const masterClassDetails = masterClasses.map((masterClass, index) => ({
 	.master-class__content {
 		display: grid;
 		grid-template-rows: auto auto;
-		gap: clamp(0.95rem, 1.7vw, 1.45rem);
+		gap: clamp(1.25rem, 2vw, 2rem);
 	}
 
 	.master-class__intro {
@@ -427,6 +427,7 @@ const masterClassDetails = masterClasses.map((masterClass, index) => ({
 		position: relative;
 		z-index: 2;
 		display: grid;
+		align-items: stretch;
 		grid-template-columns: repeat(4, minmax(0, 1fr));
 		gap: clamp(0.65rem, 1.15vw, 1rem);
 		width: min(100%, 96rem);
@@ -437,7 +438,8 @@ const masterClassDetails = masterClasses.map((masterClass, index) => ({
 		--master-accent: var(--color-green);
 		position: relative;
 		display: grid;
-		grid-template-rows: minmax(12rem, 1fr) auto;
+		grid-template-rows: auto 1fr;
+		align-self: stretch;
 		justify-self: start;
 		width: 100%;
 		min-width: 0;
@@ -462,18 +464,18 @@ const masterClassDetails = masterClasses.map((masterClass, index) => ({
 	}
 
 	.master-card--active {
-		width: clamp(28rem, 33vw, 38rem);
+		width: clamp(26rem, 31vw, 34rem);
 		box-shadow: 0.75rem 0.75rem 0 var(--master-accent);
 	}
 
 	.master-card--active .master-card__media {
-		aspect-ratio: 5 / 4;
+		aspect-ratio: 4 / 3;
 	}
 
 	.master-card__media {
 		position: relative;
 		aspect-ratio: 3 / 4;
-		min-height: clamp(12rem, 27svh, 20rem);
+		min-height: clamp(12rem, 24svh, 18rem);
 		margin: 0;
 		overflow: hidden;
 		background: var(--color-soft-blue);
@@ -503,6 +505,7 @@ const masterClassDetails = masterClasses.map((masterClass, index) => ({
 
 	.master-card__body {
 		display: grid;
+		align-content: start;
 		gap: 0.34rem;
 		padding: clamp(0.72rem, 1vw, 0.95rem);
 		transition:
@@ -518,12 +521,15 @@ const masterClassDetails = masterClasses.map((masterClass, index) => ({
 
 	.master-card__kicker {
 		color: var(--master-accent);
-		font-size: clamp(0.78rem, 0.9vw, 0.98rem);
+		font-size: clamp(1.7rem, 2.55vw, 2.75rem);
 		font-weight: 800;
-		line-height: 1.05;
+		line-height: 1;
 		letter-spacing: 0;
 		text-transform: uppercase;
 		text-wrap: balance;
+		transition:
+			font-size 360ms cubic-bezier(0.22, 1, 0.36, 1),
+			line-height 360ms cubic-bezier(0.22, 1, 0.36, 1);
 	}
 
 	.master-card__kicker span {
@@ -534,12 +540,16 @@ const masterClassDetails = masterClasses.map((masterClass, index) => ({
 	.master-card__title {
 		margin: 0;
 		padding-block: clamp(0.08rem, 0.3vw, 0.22rem);
-		font-size: clamp(1.28rem, 1.95vw, 2.08rem);
+		font-size: clamp(1.02rem, 1.22vw, 1.32rem);
 		font-weight: 800;
-		line-height: 1;
+		line-height: 1.05;
 		letter-spacing: 0;
 		text-wrap: balance;
 		word-break: keep-all;
+		transition:
+			font-size 360ms cubic-bezier(0.22, 1, 0.36, 1),
+			line-height 360ms cubic-bezier(0.22, 1, 0.36, 1),
+			padding 360ms cubic-bezier(0.22, 1, 0.36, 1);
 	}
 
 	.master-card__achievement {
@@ -583,10 +593,12 @@ const masterClassDetails = masterClasses.map((masterClass, index) => ({
 
 	.master-card--active .master-card__kicker {
 		font-size: clamp(0.95rem, 1vw, 1.1rem);
+		line-height: 1.05;
 	}
 
 	.master-card--active .master-card__title {
 		font-size: clamp(1.72rem, 2.3vw, 2.45rem);
+		line-height: 1;
 	}
 
 	.master-card--active .master-card__achievement {
@@ -628,7 +640,7 @@ const masterClassDetails = masterClasses.map((masterClass, index) => ({
 	.master-class__details {
 		position: absolute;
 		inset-block: 0;
-		inset-inline-start: min(47%, 38rem);
+		inset-inline-start: clamp(30rem, 52%, 42rem);
 		inset-inline-end: 0;
 		z-index: 30;
 		box-sizing: border-box;
@@ -691,7 +703,67 @@ const masterClassDetails = masterClasses.map((masterClass, index) => ({
 		letter-spacing: 0;
 	}
 
+	@media (max-width: 72rem), (max-height: 44rem) {
+		.master-class {
+			min-height: auto;
+		}
+
+		.master-class__sticky {
+			position: relative;
+			display: grid;
+			min-height: auto;
+			padding-block: var(--master-header-offset) clamp(3rem, 8vw, 5rem);
+			overflow: visible;
+		}
+
+		.master-class__content {
+			gap: clamp(1.75rem, 4vw, 2.5rem);
+		}
+
+		.master-class__intro {
+			max-width: none;
+			transform: none;
+		}
+
+		.master-class__stage {
+			display: grid;
+			gap: clamp(1.5rem, 3vw, 2rem);
+		}
+
+		.master-class__details {
+			position: relative;
+			inset: auto;
+			display: grid;
+			gap: 1rem;
+			width: 100%;
+			pointer-events: auto;
+		}
+
+		.master-detail {
+			position: relative;
+			grid-area: auto;
+			gap: 0.75rem;
+			max-width: none;
+			padding-block: 1.1rem;
+			border-block-start: 0.16rem solid var(--color-foreground);
+			opacity: 1;
+			transform: none;
+		}
+
+		.master-detail--mobile-duplicate {
+			display: none;
+		}
+	}
+
 	@media (max-width: 72rem) {
+		.master-class__title {
+			font-size: clamp(2rem, 7.2vw, 4rem);
+		}
+
+		.master-class__lead {
+			font-size: clamp(1rem, 2.2vw, 1.18rem);
+		}
+
 		.master-class__deck {
 			grid-template-columns: repeat(2, minmax(0, 1fr));
 			gap: 0.85rem;
@@ -704,15 +776,15 @@ const masterClassDetails = masterClasses.map((masterClass, index) => ({
 		}
 
 		.master-card__media {
-			min-height: clamp(13rem, 28svh, 20rem);
+			min-height: clamp(13rem, 32vw, 22rem);
 		}
 
 		.master-card__kicker {
-			font-size: 0.92rem;
+			font-size: clamp(1.75rem, 4.7vw, 3rem);
 		}
 
 		.master-card__title {
-			font-size: clamp(1.45rem, 3.6vw, 2.2rem);
+			font-size: clamp(1.08rem, 2.4vw, 1.42rem);
 		}
 
 		.master-card--active .master-card__body {
@@ -737,19 +809,23 @@ const masterClassDetails = masterClasses.map((masterClass, index) => ({
 		.master-card__profile li {
 			font-size: 0.94rem;
 		}
+
+		.master-detail__title {
+			font-size: clamp(1.18rem, 3vw, 1.55rem);
+		}
+
+		.master-detail__summary {
+			font-size: clamp(1.3rem, 4vw, 2rem);
+		}
+
+		.master-detail__outcome {
+			font-size: clamp(0.98rem, 2vw, 1.08rem);
+		}
 	}
 
 	@media (max-width: 52rem) {
-		.master-class {
-			min-height: auto;
-		}
-
 		.master-class__sticky {
-			position: relative;
-			display: grid;
-			min-height: auto;
 			padding-block: clamp(4.5rem, 16vw, 6rem) clamp(3rem, 12vw, 5rem);
-			overflow: visible;
 		}
 
 		.master-class__content {
@@ -758,7 +834,6 @@ const masterClassDetails = masterClasses.map((masterClass, index) => ({
 
 		.master-class__intro {
 			max-width: none;
-			transform: none;
 		}
 
 		.master-class__title {
@@ -770,7 +845,6 @@ const masterClassDetails = masterClasses.map((masterClass, index) => ({
 		}
 
 		.master-class__stage {
-			display: grid;
 			gap: 1.5rem;
 		}
 
@@ -795,35 +869,12 @@ const masterClassDetails = masterClasses.map((masterClass, index) => ({
 		}
 
 		.master-card__title {
-			font-size: clamp(1.65rem, 8vw, 2.6rem);
+			font-size: clamp(1.12rem, 4.2vw, 1.45rem);
 		}
 
 		.master-card__achievement,
 		.master-card__profile li {
 			font-size: 0.98rem;
-		}
-
-		.master-class__details {
-			position: relative;
-			inset: auto;
-			display: grid;
-			gap: 1rem;
-			width: 100%;
-			pointer-events: auto;
-		}
-
-		.master-detail {
-			position: relative;
-			grid-area: auto;
-			gap: 0.75rem;
-			padding-block: 1.1rem;
-			border-block-start: 0.16rem solid var(--color-foreground);
-			opacity: 1;
-			transform: none;
-		}
-
-		.master-detail--mobile-duplicate {
-			display: none;
 		}
 
 		.master-detail__title {
