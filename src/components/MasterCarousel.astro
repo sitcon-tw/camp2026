@@ -47,51 +47,75 @@ const trackMembers: DisplayMember[] = members.map((m, i) => ({
 		</div>
 	</div>
 
-	<div class="group mt-(--gap) flex w-screen overflow-hidden" data-master-marquee-track>
-		{
-			[0, 1].map(trackIdx => (
-				<div class="marquee-track flex shrink-0 gap-6 pr-6 group-hover:[animation-play-state:paused]" data-marquee-group aria-hidden={trackIdx === 1 ? "true" : undefined}>
-					{trackMembers.map(member => (
-						<div class="member-card relative h-95 w-70 shrink-0 cursor-pointer rounded-[2.5rem] text-left" data-member-id={member._memberId}>
-							<div class="relative h-full w-full overflow-hidden rounded-[2.5rem] border-r-6 border-b-6" style={`border-color: var(--color-${member.accent})`}>
-								<Image src={imageMap[member.imgKey]} alt={member.name} class="h-full w-full object-cover" loading="eager" decoding="async" width={280} height={380} format="webp" />
+	<div class="master-marquee-viewport mt-(--gap) flex w-screen overflow-x-auto overflow-y-hidden overscroll-x-contain" data-master-marquee-viewport>
+		<div class="flex w-max" data-master-marquee-track>
+			{
+				[0, 1, 2].map(trackIdx => (
+					<div class="flex shrink-0 gap-6 pr-6" data-marquee-group aria-hidden={trackIdx > 0 ? "true" : undefined}>
+						{trackMembers.map(member => (
+							<div class="member-card relative h-95 w-70 shrink-0 cursor-pointer rounded-[2.5rem] text-left" data-member-id={member._memberId}>
+								<div class="relative h-full w-full overflow-hidden rounded-[2.5rem] border-r-6 border-b-6" style={`border-color: var(--color-${member.accent})`}>
+									<Image src={imageMap[member.imgKey]} alt={member.name} class="h-full w-full object-cover" loading="eager" decoding="async" width={280} height={380} format="webp" />
 
-								<div class="pointer-events-none absolute inset-x-0 bottom-0 z-0 h-3/5 bg-linear-to-t from-black/90 via-black/50 to-transparent" />
+									<div class="pointer-events-none absolute inset-x-0 bottom-0 z-0 h-3/5 bg-linear-to-t from-black/90 via-black/50 to-transparent" />
 
-								<div class="absolute inset-x-0 bottom-0 z-10 cursor-text p-6 text-white select-text">
-									<h3 class="text-3xl font-bold tracking-widest">{member.name}</h3>
-									<p class="mt-2 text-lg font-medium text-white/90">{member.role}</p>
+									<div class="absolute inset-x-0 bottom-0 z-10 cursor-text p-6 text-white select-text">
+										<h3 class="text-3xl font-bold tracking-widest">{member.name}</h3>
+										<p class="mt-2 text-lg font-medium text-white/90">{member.role}</p>
+									</div>
 								</div>
 							</div>
-						</div>
-					))}
-				</div>
-			))
-		}
+						))}
+					</div>
+				))
+			}
+		</div>
 	</div>
 </section>
 
 <style>
-	.marquee-track {
-		animation: marquee 20s linear infinite;
-		will-change: transform;
+	.master-marquee-viewport {
+		scrollbar-width: none;
+		-webkit-overflow-scrolling: touch;
 	}
-	@keyframes marquee {
-		from {
-			transform: translateX(0);
-		}
-		to {
-			transform: translateX(-100%);
-		}
+
+	.master-marquee-viewport::-webkit-scrollbar {
+		display: none;
 	}
 </style>
 
 <script>
+	const masterMarqueeViewport = document.querySelector<HTMLElement>("[data-master-marquee-viewport]");
 	const masterMarqueeTrack = document.querySelector<HTMLElement>("[data-master-marquee-track]");
 
-	if (masterMarqueeTrack) {
+	if (masterMarqueeViewport && masterMarqueeTrack) {
+		const viewport = masterMarqueeViewport;
 		const groups = Array.from(masterMarqueeTrack.querySelectorAll<HTMLElement>("[data-marquee-group]"));
 		const sourceItems = groups[0] ? Array.from(groups[0].children).map(item => item.cloneNode(true)) : [];
+		const marqueeDuration = 20_000;
+		let groupWidth = 0;
+		let isHovered = false;
+		let isFocused = false;
+		let isPointerDown = false;
+		let lastFrameTime = 0;
+		let didSetInitialScroll = false;
+
+		function shouldPauseMarquee() {
+			return isHovered || isFocused || isPointerDown;
+		}
+
+		function normalizeMasterScroll() {
+			if (!groupWidth) return;
+
+			const lowerBound = groupWidth * 0.5;
+			const upperBound = groupWidth * 1.5;
+
+			if (viewport.scrollLeft < lowerBound) {
+				viewport.scrollLeft += groupWidth;
+			} else if (viewport.scrollLeft >= upperBound) {
+				viewport.scrollLeft -= groupWidth;
+			}
+		}
 
 		function fillMasterMarquee() {
 			if (!sourceItems.length) return;
@@ -107,9 +131,60 @@ const trackMembers: DisplayMember[] = members.map((m, i) => ({
 					index += 1;
 				}
 			}
+
+			groupWidth = groups[0]?.scrollWidth ?? 0;
+			if (!didSetInitialScroll && groupWidth) {
+				viewport.scrollLeft = groupWidth;
+				didSetInitialScroll = true;
+			} else {
+				normalizeMasterScroll();
+			}
+		}
+
+		function animateMasterMarquee(timestamp: number) {
+			if (!lastFrameTime) {
+				lastFrameTime = timestamp;
+			}
+
+			const elapsed = timestamp - lastFrameTime;
+			lastFrameTime = timestamp;
+
+			if (!shouldPauseMarquee() && groupWidth) {
+				viewport.scrollLeft += (groupWidth / marqueeDuration) * elapsed;
+				normalizeMasterScroll();
+			}
+
+			requestAnimationFrame(animateMasterMarquee);
 		}
 
 		fillMasterMarquee();
 		window.addEventListener("resize", fillMasterMarquee);
+		viewport.addEventListener("scroll", normalizeMasterScroll, { passive: true });
+		viewport.addEventListener("pointerenter", () => {
+			isHovered = true;
+		});
+		viewport.addEventListener("pointerleave", () => {
+			isHovered = false;
+			isPointerDown = false;
+			lastFrameTime = 0;
+		});
+		viewport.addEventListener("pointerdown", () => {
+			isPointerDown = true;
+		});
+		window.addEventListener("pointerup", () => {
+			isPointerDown = false;
+			lastFrameTime = 0;
+		});
+		viewport.addEventListener("focusin", () => {
+			isFocused = true;
+		});
+		viewport.addEventListener("focusout", () => {
+			isFocused = false;
+			lastFrameTime = 0;
+		});
+		document.addEventListener("visibilitychange", () => {
+			lastFrameTime = 0;
+		});
+		requestAnimationFrame(animateMasterMarquee);
 	}
 </script>
