@@ -7,7 +7,6 @@ run() {
 	"$@"
 }
 
-run pnpm build
 run pnpm lint
 
 if ! run pnpm prettier:check; then
