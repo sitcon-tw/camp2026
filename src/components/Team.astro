@@ -151,7 +151,7 @@ const avatarImages = import.meta.glob<{ default: ImageMetadata }>("../assets/abo
 				/>
 				<div class="flex h-full w-full min-w-0 flex-col justify-between">
 					<h1 class="mx-auto text-3xl font-bold md:mx-0 md:text-6xl" id="layout-name">{modal.namePlaceholder}</h1>
-					<p class="text-foreground my-4 text-xl font-bold" id="layout-des">{modal.descriptionPlaceholder}</p>
+					<p class="text-foreground my-4 text-lg font-bold" id="layout-des">{modal.descriptionPlaceholder}</p>
 					<a class="text-blue mt-auto block truncate text-lg font-bold underline underline-offset-3" id="layout-link" target="_blank" rel="noopener noreferrer" hidden>
 						{modal.linkPlaceholder}
 					</a>
@@ -182,7 +182,7 @@ const avatarImages = import.meta.glob<{ default: ImageMetadata }>("../assets/abo
 									alt={"avatar"}
 									width={150}
 									height={150}
-									class="bg-background border-foreground h-37.5 w-37.5 flex-none cursor-pointer rounded-xl border-4 object-cover shadow-[4px_4px_0_2px_var(--color-soft-blue)] transition-all duration-300 hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[2px_2px_0_2px_var(--color-soft-blue)]"
+									class={`bg-background border-foreground h-37.5 w-37.5 flex-none cursor-pointer rounded-xl border-4 object-cover transition-all duration-300 hover:translate-x-0.5 hover:translate-y-0.5 ${data.description || data.avatarLink ? "shadow-[4px_4px_0_2px_var(--color-sky-400)] hover:shadow-[2px_2px_0_2px_var(--color-sky-400)]" : "shadow-[4px_4px_0_2px_var(--color-soft-blue)] hover:shadow-[2px_2px_0_2px_var(--color-soft-blue)]"}`}
 									data-member-id={`${group.name}-${data.name}`}
 									data-member={JSON.stringify({ name: data.name, description: data.description, avatarLink: data.avatarLink })}
 								/>

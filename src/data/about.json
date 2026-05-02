@@ -73,10 +73,26 @@
 			"scrollHeight": 600
 		},
 		"items": [
-			{ "value": 0, "prefix": "SITCON", "suffix": "一切的起點" },
-			{ "value": 500, "prefix": "舉辦超過", "suffix": "聚會和議程" },
-			{ "value": 1400, "prefix": "熱愛資訊的", "suffix": "志工團隊" },
-			{ "value": 14000, "prefix": "總計", "suffix": "年會參與者" }
+			{
+				"value": 0,
+				"prefix": "SITCON",
+				"suffix": "一切的起點"
+			},
+			{
+				"value": 500,
+				"prefix": "舉辦超過",
+				"suffix": "聚會和議程"
+			},
+			{
+				"value": 1400,
+				"prefix": "熱愛資訊的",
+				"suffix": "志工團隊"
+			},
+			{
+				"value": 14000,
+				"prefix": "總計",
+				"suffix": "年會參與者"
+			}
 		]
 	},
 	"team": {
@@ -117,10 +133,10 @@
 				"members": [
 					{
 						"name": "Ya",
-						"description": "",
+						"description": "嗨嗨這裡是 Ya，很像 E 人的大 I，佔領過行政編輯行銷隊輔剪輯的 SITCON 多棲仔 :D",
 						"job": "組長",
 						"avatarPath": "/assets/about/teams/3dc682683048afd1630ae4329b7269a2dc9fa301480a8abe6e974893eba6683d.jpg",
-						"avatarLink": ""
+						"avatarLink": "https://www.instagram.com/yu._yao/"
 					}
 				]
 			},
@@ -185,10 +201,10 @@
 					},
 					{
 						"name": "Yoru",
-						"description": "",
+						"description": "哈囉，我是 Yoru，一個喜歡做各種神奇的東西的開發組組長，有興趣歡迎來找我聊聊~",
 						"job": "組員",
 						"avatarPath": "/assets/about/teams/e788f68c58bd3317f3bca684b193c6f1b1051cba2ee2011b9dd4f7765c2d8625.jpg",
-						"avatarLink": ""
+						"avatarLink": "https://yorukot.me"
 					},
 					{
 						"name": "Each",
@@ -219,10 +235,10 @@
 				"members": [
 					{
 						"name": "阿公",
-						"description": "",
+						"description": "早安你好~",
 						"job": "組長",
 						"avatarPath": "/assets/about/teams/196e64709935c454b821b5de526e48cf790dbd78a0606642405a35ae592e63d2.jpg",
-						"avatarLink": ""
+						"avatarLink": "https://agong.tech"
 					},
 					{
 						"name": "伊藤蒼太",
@@ -233,17 +249,17 @@
 					},
 					{
 						"name": "Tzufu",
-						"description": "",
+						"description": "一人做事，一人當；當當做事，當當當。",
 						"job": "組員",
 						"avatarPath": "/assets/about/teams/db13a6b8e8a12427222b5fc73a35b66d9953b852840e7505046f9440dceca605.jpg",
-						"avatarLink": ""
+						"avatarLink": "https://tzufu.me"
 					},
 					{
 						"name": "橘子",
-						"description": "",
+						"description": "希望可以拿到教師證的特教系大四\n科教所小精靈也是 SITCON 前一屆編輯組長兼行銷組員，正在各個地方遊蕩",
 						"job": "組員",
 						"avatarPath": "/assets/about/teams/7530f6a8eba83a44b8ae2d798e23608ab86546f1dba25f57ee1b39381e8eb836.jpg",
-						"avatarLink": ""
+						"avatarLink": "https://www.instagram.com/yuuu____1103?igsh=anhyM3J2a3F4bXYz"
 					}
 				]
 			},
@@ -371,10 +387,10 @@
 					},
 					{
 						"name": "CC",
-						"description": "",
+						"description": "大家好我是CC～",
 						"job": "組員",
 						"avatarPath": "/assets/about/teams/64b45b524792de6ffbbb95cf11ad13ce4a2ad631940e2502f898b358b652e75f.jpg",
-						"avatarLink": ""
+						"avatarLink": "https://www.linkedin.com/in/ching-tzu-li-874871287?utm_source=share_via&utm_content=profile&utm_medium=member_ios"
 					},
 					{
 						"name": "家誠",
@@ -388,7 +404,7 @@
 						"description": "",
 						"job": "組員",
 						"avatarPath": "/assets/about/teams/c1b1e27dc2b353d5fc7f3bd014ede3558dd0b113e558356692e5dac40e888634.jpg",
-						"avatarLink": ""
+						"avatarLink": "https://candytangsys.github.io/blog/"
 					},
 					{
 						"name": "狐狸",
@@ -447,10 +463,10 @@
 					},
 					{
 						"name": "Ya",
-						"description": "",
+						"description": "嗨嗨這裡是 Ya，很像 E 人的大 I，佔領過行政編輯行銷隊輔剪輯的 SITCON 多棲仔 :D",
 						"job": "組員",
 						"avatarPath": "/assets/about/teams/3dc682683048afd1630ae4329b7269a2dc9fa301480a8abe6e974893eba6683d.jpg",
-						"avatarLink": ""
+						"avatarLink": "https://www.instagram.com/yu._yao/"
 					},
 					{
 						"name": "Wolf Yuan",
@@ -461,10 +477,10 @@
 					},
 					{
 						"name": "橘子",
-						"description": "",
+						"description": "希望可以拿到教師證的特教系大四\n科教所小精靈也是 SITCON 前一屆編輯組長兼行銷組員，正在各個地方遊蕩",
 						"job": "組員",
 						"avatarPath": "/assets/about/teams/7530f6a8eba83a44b8ae2d798e23608ab86546f1dba25f57ee1b39381e8eb836.jpg",
-						"avatarLink": ""
+						"avatarLink": "https://www.instagram.com/yuuu____1103?igsh=anhyM3J2a3F4bXYz"
 					},
 					{
 						"name": "阿六",
@@ -475,7 +491,7 @@
 					},
 					{
 						"name": "嵩嵩",
-						"description": "",
+						"description": "怎麽把鐵離子變成三個亞鐵離子？\n—\n—\n微分",
 						"job": "組員",
 						"avatarPath": "/assets/about/teams/f9d9b023468920c16358788bc763d22002d0110dfa8e47bd86dde10b88e7d2c6.jpg",
 						"avatarLink": ""
@@ -503,10 +519,10 @@
 					},
 					{
 						"name": "CC",
-						"description": "",
+						"description": "大家好我是CC～",
 						"job": "組員",
 						"avatarPath": "/assets/about/teams/0e7a7cf040ccd845cd72d8d5f8b29526ee76a8e5a3246166ef0902b6e8dd1fc0.jpg",
-						"avatarLink": ""
+						"avatarLink": "https://www.linkedin.com/in/ching-tzu-li-874871287?utm_source=share_via&utm_content=profile&utm_medium=member_ios"
 					}
 				]
 			},
@@ -529,17 +545,17 @@
 				"members": [
 					{
 						"name": "Yoru",
-						"description": "",
+						"description": "哈囉，我是 Yoru，一個喜歡做各種神奇的東西的開發組組長，有興趣歡迎來找我聊聊~",
 						"job": "組長",
 						"avatarPath": "/assets/about/teams/e788f68c58bd3317f3bca684b193c6f1b1051cba2ee2011b9dd4f7765c2d8625.jpg",
-						"avatarLink": ""
+						"avatarLink": "https://yorukot.me"
 					},
 					{
 						"name": "noeFly",
-						"description": "",
+						"description": "咩！我是 noeFly，請多指教！",
 						"job": "組員",
 						"avatarPath": "/assets/about/teams/ce980bf25df377bae777ce6c0512b33a0beeff8c9d410053b7db14b56f14b88c.jpg",
-						"avatarLink": ""
+						"avatarLink": "https://noefly.cc"
 					},
 					{
 						"name": "Kaiyasi",
@@ -550,17 +566,17 @@
 					},
 					{
 						"name": "tonicatowo",
-						"description": "",
+						"description": "我來自臺灣，是一名自學開發超過五年的高中生，曾經兼任嘉義高中資訊研究社 116th 的教學 。我把自己定位成業餘的 Website Designer 與 Fullstack Developer，喜歡從設計到部署一路把東西做出來 。",
 						"job": "組員",
 						"avatarPath": "/assets/about/teams/c2817b4c1049cc759eb7a453bc8f50466c22742b123d11d165ca07b2a80347c0.jpg",
-						"avatarLink": ""
+						"avatarLink": "https://tonicatowo.xyz/"
 					},
 					{
 						"name": "白龍",
-						"description": "",
+						"description": "嗨，我是白龍，我喜歡研究網路和伺服器架設等相關技術。很榮幸能加入這次 SITCON 開發組，講個小知識，這個 Team Section 是我做的喔",
 						"job": "組員",
 						"avatarPath": "/assets/about/teams/8ed5daf641164b6e5a3044e8fa2cfe06c6c42747bc20571cd48844b8767b2ac3.jpg",
-						"avatarLink": ""
+						"avatarLink": "https://whitedragon.life"
 					}
 				]
 			},
