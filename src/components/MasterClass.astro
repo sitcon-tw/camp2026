@@ -1,5 +1,6 @@
 ---
 import type { ImageMetadata } from "astro";
+import { Image } from "astro:assets";
 import homeData from "@/data/home.json";
 
 const { masterClassSection, masterClasses } = homeData;
@@ -7,7 +8,7 @@ type MasterClassItem = (typeof masterClasses)[number];
 
 const masterImages = Object.fromEntries(
 	Object.entries(
-		import.meta.glob<{ default: ImageMetadata }>("../assets/master-class-speakers/*.webp", {
+		import.meta.glob<{ default: ImageMetadata }>("../assets/master-class-speakers/*.{avif,jpeg,jpg,png,webp}", {
 			eager: true
 		})
 	).map(([path, image]) => {
@@ -55,14 +56,13 @@ const masterClassDetails = masterClasses.map((masterClass, index) => ({
 							return (
 								<article class:list={["master-card", `master-card--${masterClass.accent}`]} data-master-card data-master-index={index}>
 									<figure class="master-card__media">
-										<img
+										<Image
+											src={image}
+											alt={`${masterClass.title} ${masterClass.instructor} 講師照片`}
 											class="master-card__image"
-											src={image.src}
-											width={image.width}
-											height={image.height}
-											alt={`${masterClass.title} ${masterClass.instructor} 講師照片佔位`}
 											loading="lazy"
 											decoding="async"
+											format="webp"
 											style={`object-position: ${masterClass.imagePosition}`}
 										/>
 									</figure>
