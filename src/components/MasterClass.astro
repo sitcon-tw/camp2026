@@ -131,7 +131,6 @@ const masterClassDetails = masterClasses.map((masterClass, index) => ({
 	const cards = section ? Array.from(section.querySelectorAll<HTMLElement>("[data-master-card]")) : [];
 	const details = section ? Array.from(section.querySelectorAll<HTMLElement>("[data-master-detail]")) : [];
 	const desktopQuery = window.matchMedia("(min-width: 72.001rem) and (min-height: 44.001rem)");
-	const reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
 
 	let observer: ReturnType<typeof onScroll> | undefined;
 	let mobileRevealObserver: IntersectionObserver | undefined;
@@ -172,10 +171,6 @@ const masterClassDetails = masterClasses.map((masterClass, index) => ({
 
 	const revealMobile = () => {
 		resetInlineStyles();
-
-		if (reducedMotionQuery.matches) {
-			return;
-		}
 
 		const revealTargets = [intro, ...cards, ...details].filter(Boolean) as HTMLElement[];
 		revealTargets.forEach(target => {
@@ -298,10 +293,6 @@ const masterClassDetails = masterClasses.map((masterClass, index) => ({
 
 		resetInlineStyles();
 
-		if (reducedMotionQuery.matches) {
-			return;
-		}
-
 		details.forEach(detail => {
 			detail.style.opacity = "0";
 			detail.style.pointerEvents = "none";
@@ -346,7 +337,6 @@ const masterClassDetails = masterClasses.map((masterClass, index) => ({
 
 	setup();
 	desktopQuery.addEventListener("change", requestSetup);
-	reducedMotionQuery.addEventListener("change", requestSetup);
 	window.addEventListener("resize", requestSetup, { passive: true });
 </script>
 
@@ -890,44 +880,4 @@ const masterClassDetails = masterClasses.map((masterClass, index) => ({
 		}
 	}
 
-	@media (prefers-reduced-motion: reduce) {
-		.master-class {
-			min-height: auto;
-		}
-
-		.master-class__sticky {
-			position: relative;
-			min-height: auto;
-			overflow: visible;
-		}
-
-		.master-class__intro,
-		.master-card,
-		.master-detail {
-			transition: none;
-			transform: none !important;
-			opacity: 1 !important;
-		}
-
-		.master-class__stage {
-			gap: 2rem;
-		}
-
-		.master-class__details {
-			position: relative;
-			inset: auto;
-			display: grid;
-			gap: 1.2rem;
-			width: min(100%, 72rem);
-			margin-inline: auto;
-			pointer-events: auto;
-		}
-
-		.master-detail {
-			position: relative;
-			grid-area: auto;
-			padding-block-start: 1rem;
-			border-block-start: 0.16rem solid var(--color-foreground);
-		}
-	}
 </style>
