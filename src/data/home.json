@@ -18,7 +18,10 @@
 					{ "imageIndex": 0, "classes": ["hero-photo-wall__tile--large"] },
 					{ "imageIndex": 5, "classes": [] },
 					{ "imageIndex": 10, "classes": ["hero-photo-wall__tile--tall"] },
-					{ "imageIndex": 3, "classes": [] }
+					{ "imageIndex": 15, "classes": [] },
+					{ "imageIndex": 20, "classes": ["hero-photo-wall__tile--large"] },
+					{ "imageIndex": 25, "classes": [] },
+					{ "imageIndex": 30, "classes": ["hero-photo-wall__tile--tall"] }
 				]
 			},
 			{
@@ -29,7 +32,10 @@
 					{ "imageIndex": 1, "classes": [] },
 					{ "imageIndex": 6, "classes": ["hero-photo-wall__tile--tall"] },
 					{ "imageIndex": 11, "classes": [] },
-					{ "imageIndex": 4, "classes": ["hero-photo-wall__tile--large"] }
+					{ "imageIndex": 16, "classes": ["hero-photo-wall__tile--large"] },
+					{ "imageIndex": 21, "classes": [] },
+					{ "imageIndex": 26, "classes": ["hero-photo-wall__tile--tall"] },
+					{ "imageIndex": 31, "classes": [] }
 				]
 			},
 			{
@@ -39,8 +45,11 @@
 				"items": [
 					{ "imageIndex": 2, "classes": ["hero-photo-wall__tile--tall"] },
 					{ "imageIndex": 7, "classes": [] },
-					{ "imageIndex": 0, "classes": ["hero-photo-wall__tile--large"] },
-					{ "imageIndex": 9, "classes": [] }
+					{ "imageIndex": 12, "classes": ["hero-photo-wall__tile--large"] },
+					{ "imageIndex": 17, "classes": [] },
+					{ "imageIndex": 22, "classes": ["hero-photo-wall__tile--tall"] },
+					{ "imageIndex": 27, "classes": [] },
+					{ "imageIndex": 32, "classes": ["hero-photo-wall__tile--large"] }
 				]
 			},
 			{
@@ -50,8 +59,11 @@
 				"items": [
 					{ "imageIndex": 3, "classes": [] },
 					{ "imageIndex": 8, "classes": ["hero-photo-wall__tile--large"] },
-					{ "imageIndex": 1, "classes": [] },
-					{ "imageIndex": 10, "classes": ["hero-photo-wall__tile--tall"] }
+					{ "imageIndex": 13, "classes": [] },
+					{ "imageIndex": 18, "classes": ["hero-photo-wall__tile--tall"] },
+					{ "imageIndex": 23, "classes": [] },
+					{ "imageIndex": 28, "classes": ["hero-photo-wall__tile--large"] },
+					{ "imageIndex": 33, "classes": [] }
 				]
 			},
 			{
@@ -61,8 +73,11 @@
 				"items": [
 					{ "imageIndex": 4, "classes": ["hero-photo-wall__tile--large"] },
 					{ "imageIndex": 9, "classes": [] },
-					{ "imageIndex": 2, "classes": ["hero-photo-wall__tile--tall"] },
-					{ "imageIndex": 11, "classes": [] }
+					{ "imageIndex": 14, "classes": ["hero-photo-wall__tile--tall"] },
+					{ "imageIndex": 19, "classes": [] },
+					{ "imageIndex": 24, "classes": ["hero-photo-wall__tile--large"] },
+					{ "imageIndex": 29, "classes": [] },
+					{ "imageIndex": 34, "classes": ["hero-photo-wall__tile--tall"] }
 				]
 			}
 		]

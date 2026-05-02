@@ -3,6 +3,7 @@ import type { ImageMetadata } from "astro";
 import homeData from "@/data/home.json";
 
 const { masterClassSection, masterClasses } = homeData;
+
 type MasterClassItem = (typeof masterClasses)[number];
 
 const masterImages = Object.fromEntries(
