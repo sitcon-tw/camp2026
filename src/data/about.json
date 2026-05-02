@@ -3,7 +3,6 @@
 		"eyebrow": "Past Events",
 		"title": "我們做過的事",
 		"lead": "SITCON 是由學生組成、投身資訊教育與推廣開源精神的社群；SITCON Camp 自 2014 年起，把主線課程、黑客松、社群闖關、視界咖啡館與開源精神帶進同一個夏天，讓學生在實作與交流中找到自己的資訊路線。",
-		"sourceLabel": "依 SITCON 2026 與歷年 Camp 官網整理",
 		"stats": [
 			{
 				"value": "第 10 屆",
@@ -62,17 +61,6 @@
 				"iconKey": "sparkles",
 				"color": "dark-green"
 			}
-		],
-		"pastYears": [
-			{ "year": "2025", "label": "404 Not Found", "href": "https://sitcon.camp/2025/" },
-			{ "year": "2024", "label": "小火慢燉", "href": "https://sitcon.camp/2024/" },
-			{ "year": "2023", "label": "開源文明，源力擴張", "href": "https://sitcon.camp/2023/" },
-			{ "year": "2021", "label": "線上艦艇號", "href": "https://sitcon.camp/2021/" },
-			{ "year": "2019", "label": "浸身資訊流", "href": "https://sitcon.camp/2019/" },
-			{ "year": "2017", "label": "歷年官網", "href": "https://sitcon.camp/2017/" },
-			{ "year": "2016", "label": "歷年官網", "href": "https://sitcon.camp/2016/" },
-			{ "year": "2015", "label": "歷年官網", "href": "https://sitcon.camp/2015/" },
-			{ "year": "2014", "label": "首屆夏令營", "href": "https://sitcon.camp/2014/" }
 		]
 	},
 	"sitconTimeline": {
@@ -80,10 +68,10 @@
 			"scrollHeight": 600
 		},
 		"items": [
-			{ "progress": 0, "value": 0, "prefix": "SITCON", "suffix": "一切的起點" },
-			{ "progress": 0.3, "value": 400, "prefix": "寬頻", "suffix": "元年" },
-			{ "progress": 0.7, "value": 1600, "prefix": "行動", "suffix": "爆發" },
-			{ "progress": 1.0, "value": 2100, "prefix": "全民", "suffix": "上網" }
+			{ "value": 0, "prefix": "SITCON", "suffix": "一切的起點" },
+			{ "value": 500, "prefix": "舉辦超過", "suffix": "聚會和議程" },
+			{ "value": 1400, "prefix": "熱愛資訊的", "suffix": "志工團隊" },
+			{ "value": 14000, "prefix": "總計", "suffix": "年會參與者" }
 		]
 	},
 	"team": {
@@ -100,6 +88,7 @@
 		"groups": [
 			{
 				"name": "開發組",
+				"description": "負責網站、系統工具與活動期間的技術支援，讓營隊的線上流程與現場體驗穩定運作。",
 				"members": [
 					{
 						"name": "王大明",
@@ -196,6 +185,7 @@
 			},
 			{
 				"name": "行銷組",
+				"description": "負責對外溝通、品牌呈現與社群內容，讓更多學生認識 SITCON Camp 的精神與活動資訊。",
 				"members": [
 					{
 						"name": "林思穎",

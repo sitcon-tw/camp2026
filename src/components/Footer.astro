@@ -1,10 +1,9 @@
 ---
-import Instagram from "~icons/simple-icons/instagram";
-import Threads from "~icons/simple-icons/threads";
-import Facebook from "~icons/simple-icons/facebook";
-import Youtube from "~icons/simple-icons/youtube";
-import Flickr from "~icons/simple-icons/flickr";
-import Telegram from "~icons/simple-icons/telegram";
+import Instagram from "~icons/mdi/instagram";
+import Facebook from "~icons/mdi/facebook";
+import Youtube from "~icons/mdi/youtube";
+import Flickr from "~icons/mdi/flickr";
+import Telegram from "~icons/mdi/telegram";
 import layoutData from "@/data/layout.json";
 
 import SitconLogo from "../assets/footer/sitcon.svg";
@@ -12,7 +11,6 @@ import SitconLogo from "../assets/footer/sitcon.svg";
 const { footer } = layoutData;
 const iconMap = {
 	instagram: Instagram,
-	threads: Threads,
 	facebook: Facebook,
 	youtube: Youtube,
 	flickr: Flickr,
@@ -29,7 +27,7 @@ type FooterIcon = keyof typeof iconMap;
 			<SitconLogo class="h-auto w-full max-w-340" />
 		</div>
 
-		<div class="relative z-10 mx-auto -mt-6 grid max-w-6xl grid-cols-2 gap-6 px-4 sm:-mt-10 sm:gap-12 sm:px-6 md:px-12 lg:grid-cols-4">
+		<div class="site-container relative z-10 -mt-6 grid grid-cols-2 gap-6 sm:-mt-10 sm:gap-12 lg:grid-cols-4">
 			{
 				footer.sections.map(section => (
 					<div class="flex flex-col">
@@ -37,7 +35,7 @@ type FooterIcon = keyof typeof iconMap;
 
 						{section.type === "contact" && (
 							<div class="mb-5">
-								{section.label && <p class="text-muted mb-1 text-sm font-bold">{section.label}</p>}
+								{section.label && <p class="mb-1 text-sm font-bold text-gray-400">{section.label}</p>}
 								{section.links.map(link => (
 									<a href={link.href} class:list={["link-base", `link-hover-${section.variant}`]}>
 										{link.label}
@@ -69,7 +67,7 @@ type FooterIcon = keyof typeof iconMap;
 						)}
 
 						{section.type === "social" && (
-							<div class="flex flex-wrap items-center gap-4 text-white">
+							<div class="flex items-center gap-4 text-white">
 								{section.links.map(link => {
 									const iconKey = "icon" in link ? link.icon : undefined;
 									const Icon = iconKey ? iconMap[iconKey as FooterIcon] : undefined;

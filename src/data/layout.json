@@ -18,19 +18,15 @@
 			},
 			{
 				"label": "主線課程",
-				"href": "/2026/course/"
+				"href": "/2026/#master-class"
 			},
 			{
-				"label": "課程活動",
-				"href": "/2026/course/#course-events"
-			},
-			{
-				"label": "籌備團隊",
+				"label": "關於",
 				"href": "/2026/about/"
 			},
 			{
-				"label": "FAQ",
-				"href": "/2026/faq/#faq"
+				"label": "籌備團隊",
+				"href": "/2026/team/"
 			}
 		],
 		"cta": {
