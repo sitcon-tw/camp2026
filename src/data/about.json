@@ -68,10 +68,10 @@
 			"scrollHeight": 600
 		},
 		"items": [
-			{ "progress": 0, "value": 0, "prefix": "SITCON", "suffix": "一切的起點" },
-			{ "progress": 0.3, "value": 400, "prefix": "寬頻", "suffix": "元年" },
-			{ "progress": 0.7, "value": 1600, "prefix": "行動", "suffix": "爆發" },
-			{ "progress": 1.0, "value": 2100, "prefix": "全民", "suffix": "上網" }
+			{ "value": 0, "prefix": "SITCON", "suffix": "一切的起點" },
+			{ "value": 500, "prefix": "舉辦超過", "suffix": "聚會和議程" },
+			{ "value": 1400, "prefix": "熱愛資訊的", "suffix": "志工團隊" },
+			{ "value": 14000, "prefix": "總計", "suffix": "年會參與者" }
 		]
 	},
 	"team": {

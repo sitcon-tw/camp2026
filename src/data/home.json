@@ -94,7 +94,7 @@
 			"accent": "green",
 			"summary": ["拒絕脆弱的 Vibe Code：", "只會用 AI 寫程式，", "註定成為科技業的第一波淘汰名單"],
 			"profile": ["2025 IT Matter Awards 開源社群貢獻獎得主", "Google 開發者社群核心組織者", "曾任知名遊戲公司資料分析團隊主管"],
-			"outcome": "用 AI 寫程式不值得沾沾自喜，憑直覺拼湊出的「Vibe Code」往往是不堪一擊的數位災難。能讓程式動起來只是最低門檻，懂規劃架構才是無可取代的價值。本課程將讓學員經歷真實淬鍊：看著混亂專案崩潰，再運用業界「軟體工程」思維重新收斂，從單純的「程式碼拼湊者」蛻變為具備宏觀視野的「軟體架構師」。"
+			"outcome": "用 AI 寫程式不值得沾沾自喜，憑直覺拼湊出的 Vibe Code 往往是不堪一擊的數位災難。能讓程式動起來只是最低門檻，懂規劃架構才是無可取代的價值。本課程將讓學員經歷真實淬鍊：看著混亂專案崩潰，再運用業界「軟體工程」思維重新收斂，從單純的「程式碼拼湊者」蛻變為具備宏觀視野的「軟體架構師」。"
 		},
 		{
 			"title": "資訊安全",
@@ -206,37 +206,42 @@
 	},
 	"studentComment": {
 		"sectionTitle": "聽聽往年學員怎麼說的",
-		"avatarSrc": "https://placehold.co/48x48",
 		"avatarAlt": "Student's pfp",
 		"comments": [
 			{
 				"name": "Student 1",
 				"comment": "我個人認為義大利麵就應該拌 42 號混泥土因為這個螺絲釘的長度很容易直接影響到挖掘機的扭矩",
+				"image": "student-01.jpg",
 				"color": "blue"
 			},
 			{
 				"name": "Student 2",
 				"comment": "你往裡砸的時候一瞬間他就會產生大量的高能蛋白俗稱 UFO，會嚴重影響經濟的發展以至於對整個太平洋和充電器的核污染",
+				"image": "student-02.jpg",
 				"color": "orange"
 			},
 			{
 				"name": "Student 3",
 				"comment": "再或者說透過這勾股定理很容易推斷出人工飼養的東條英機他是可以捕獲野生的三角函數",
+				"image": "student-03.jpg",
 				"color": "green"
 			},
 			{
 				"name": "Student 4",
 				"comment": "所以說不管這秦始皇的切面是否具有放射性川普的 N 次方是否有沈澱物都不會影響到沃爾瑪跟維爾康在南極匯合所以說不管這秦始皇的切面是否具有放射性川普的 N 次方是否有沈澱物都不會影響到沃爾瑪跟維爾康在南極匯合",
+				"image": "student-04.jpg",
 				"color": "dark-green"
 			},
 			{
 				"name": "Student 5",
 				"comment": "你往裡砸的時候一瞬間他就會產生大量的高能蛋白俗稱 UFO，會嚴重影響經濟的發展以至於對整個太平洋和充電器的核污染",
+				"image": "student-05.jpg",
 				"color": "sky-blue"
 			},
 			{
 				"name": "Student 6",
 				"comment": "再或者說透過這勾股定理很容易推斷出人工飼養的東條英機他是可以捕獲野生的三角函數",
+				"image": "student-06.jpg",
 				"color": "soft-blue"
 			}
 		],
