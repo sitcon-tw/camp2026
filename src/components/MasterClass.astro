@@ -5,7 +5,7 @@ import homeData from "@/data/home.json";
 const { masterClassSection, masterClasses } = homeData;
 
 const masterImages = Object.entries(
-	import.meta.glob<{ default: ImageMetadata }>("../assets/hero/wall/*.jpg", {
+	import.meta.glob<{ default: ImageMetadata }>("../assets/hero/wall/*.webp", {
 		eager: true
 	})
 )

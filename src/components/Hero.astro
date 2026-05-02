@@ -6,7 +6,7 @@ const { hero } = homeData;
 const heroIntro = hero.intro;
 const topics = heroIntro.topics;
 const heroWallImages = Object.entries(
-	import.meta.glob<{ default: ImageMetadata }>("../assets/hero/wall/*.jpg", {
+	import.meta.glob<{ default: ImageMetadata }>("../assets/hero/wall/*.webp", {
 		eager: true
 	})
 )
