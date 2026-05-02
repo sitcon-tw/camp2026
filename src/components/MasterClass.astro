@@ -745,6 +745,79 @@ const masterClassDetails = masterClasses.map((masterClass, index) => ({
 		}
 	}
 
+	@media (min-width: 72.001rem) and (min-height: 44.001rem) and (max-height: 48rem) {
+		.master-class__sticky {
+			padding-block: clamp(6.1rem, 12svh, 6.4rem) clamp(1rem, 2svh, 1.5rem);
+		}
+
+		.master-class__content {
+			gap: clamp(0.85rem, 1.75svh, 1.2rem);
+		}
+
+		.master-class__intro {
+			gap: 0.42rem;
+		}
+
+		.master-class__title {
+			font-size: clamp(2rem, 4.1vw, 3.55rem);
+			line-height: 0.95;
+		}
+
+		.master-class__lead {
+			font-size: clamp(0.92rem, 1.12vw, 1.02rem);
+			line-height: 1.38;
+		}
+
+		.master-class__deck {
+			gap: 0.72rem;
+		}
+
+		.master-card {
+			box-shadow: 0.42rem 0.42rem 0 var(--color-foreground);
+		}
+
+		.master-card--active {
+			width: clamp(24rem, 29vw, 31rem);
+		}
+
+		.master-card__media,
+		.master-card--active .master-card__media {
+			aspect-ratio: 4 / 3;
+			min-height: 0;
+		}
+
+		.master-card__body,
+		.master-card--active .master-card__body {
+			gap: 0.24rem;
+			padding: 0.66rem;
+		}
+
+		.master-card__kicker,
+		.master-card--active .master-card__kicker {
+			font-size: clamp(1.24rem, 1.9vw, 1.9rem);
+			line-height: 0.98;
+		}
+
+		.master-card__title,
+		.master-card--active .master-card__title {
+			padding-block: 0.05rem;
+			font-size: clamp(0.92rem, 1.04vw, 1.12rem);
+			line-height: 1;
+		}
+
+		.master-card__achievement,
+		.master-card__profile li,
+		.master-card--active .master-card__achievement,
+		.master-card--active .master-card__profile li {
+			font-size: clamp(0.75rem, 0.82vw, 0.86rem);
+			line-height: 1.25;
+		}
+
+		.master-card__profile {
+			gap: 0.18rem;
+		}
+	}
+
 	@media (max-width: 72rem) {
 		.master-class__title {
 			font-size: clamp(2rem, 7.2vw, 4rem);
