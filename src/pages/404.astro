@@ -1,0 +1,316 @@
+---
+import type { ImageMetadata } from "astro";
+import Layout from "@/layouts/Layout.astro";
+import ArrowLeft from "~icons/lucide/arrow-left";
+import Home from "~icons/lucide/home";
+import Radar from "~icons/lucide/radar";
+import Sparkles from "~icons/lucide/sparkles";
+
+import wall01 from "@/assets/hero-wall/hero-wall-01.webp";
+import wall07 from "@/assets/hero-wall/hero-wall-07.webp";
+import wall18 from "@/assets/hero-wall/hero-wall-18.webp";
+import wall28 from "@/assets/hero-wall/hero-wall-28.webp";
+
+const pageTitle = "404 - 頁面不存在 | SITCON Camp 2026";
+const pageDescription = "這個頁面暫時找不到，可能是網址輸入錯誤，或頁面已經移動。";
+
+const photos: ImageMetadata[] = [wall01, wall07, wall18, wall28];
+---
+
+<Layout title={pageTitle} description={pageDescription} noindex>
+	<section
+		class="not-found bg-background text-foreground relative isolate overflow-hidden pt-40 pb-20 min-[37.5rem]:pt-48 sm:pt-52 sm:pb-24 md:pt-56 lg:pt-64 lg:pb-32"
+		aria-labelledby="not-found-title"
+	>
+		<div class="site-container grid gap-10 md:gap-12 lg:grid-cols-[minmax(0,0.95fr)_minmax(21rem,0.75fr)] lg:items-center lg:gap-16 xl:gap-20">
+			<div class="grid gap-5 sm:gap-6 lg:gap-7">
+				<p class="bg-green text-foreground w-fit px-3 py-2 text-base leading-none font-extrabold sm:text-lg lg:text-xl">HTTP 404</p>
+				<h1 id="not-found-title" class="text-foreground max-w-[7.2em] text-5xl leading-[0.95] font-extrabold text-balance sm:text-6xl md:text-7xl lg:max-w-[8.8em] lg:text-8xl xl:text-[7rem]">
+					這個頁面迷路了
+				</h1>
+				<p class="text-foreground/80 max-w-2xl text-lg leading-[1.7] font-bold sm:text-xl lg:text-[1.45rem]">我們在營隊地圖裡找不到這個座標。你可以回到首頁，或沿著線索重新搜尋正確的路徑。</p>
+
+				<nav class="grid gap-3 sm:flex sm:flex-wrap" aria-label="頁面導覽">
+					<a class="not-found-button bg-soft-blue text-foreground" href="/2026/">
+						<Home class="h-5 w-5 sm:h-6 sm:w-6" />
+						<span>回到首頁</span>
+					</a>
+					<a class="not-found-button bg-foreground text-background" href="/2026/about/">
+						<ArrowLeft class="h-5 w-5 sm:h-6 sm:w-6" />
+						<span>看看營隊</span>
+					</a>
+				</nav>
+			</div>
+
+			<div
+				class="not-found-scene relative mx-auto min-h-[25rem] w-full max-w-[34rem] sm:min-h-[28rem] md:min-h-[30rem] lg:min-h-[34rem] lg:max-w-none lg:translate-y-6 xl:min-h-[38rem] xl:translate-y-8"
+				aria-label="遺失封包追蹤器"
+			>
+				<div class="not-found-photo-stack absolute inset-0 grid grid-cols-6 grid-rows-6 gap-2 sm:gap-3 lg:gap-4" aria-hidden="true">
+					{
+						photos.map((photo, index) => (
+							<figure class:list={["not-found-photo", `not-found-photo--${index + 1}`]}>
+								<img src={photo.src} width={photo.width} height={photo.height} alt="" loading="eager" decoding="async" />
+							</figure>
+						))
+					}
+				</div>
+
+				<div
+					class="not-found-trace bg-foreground text-background border-green absolute top-1/2 left-1/2 grid w-[min(19rem,88vw)] -translate-x-1/2 -translate-y-1/2 rotate-1 gap-3 rounded-2xl border-[0.18rem] p-4 sm:w-[22rem]"
+					data-trace-panel
+				>
+					<!-- Trace hint: 在這個面板加上 data-route="check-in"，再按一次 Trace。 -->
+					<div class="text-background/75 flex items-center gap-2 text-sm font-extrabold sm:text-base">
+						<span class="bg-green block size-3 rounded-full" aria-hidden="true"></span>
+						<span>lost-packet.trace</span>
+					</div>
+					<p class="text-green text-[6rem] leading-[0.82] font-extrabold tracking-normal sm:text-[7.5rem] lg:text-[9rem]" aria-hidden="true">404</p>
+					<p class="min-h-13 text-base leading-[1.45] font-bold sm:text-lg" data-trace-status aria-live="polite" aria-atomic="true">路徑查詢中：/undefined/camp</p>
+					<button
+						class="bg-green text-foreground hover:bg-soft-blue focus-visible:outline-primary-blue flex min-h-12 w-fit cursor-pointer items-center justify-center gap-2 rounded-xl px-4 py-2 font-extrabold transition-all hover:-translate-y-0.5 focus-visible:outline-3 focus-visible:outline-offset-3 active:scale-95"
+						type="button"
+						data-trace-button
+						aria-label="追蹤遺失封包"
+					>
+						<Radar class="h-5 w-5 sm:h-6 sm:w-6" />
+						<span>Trace</span>
+					</button>
+					<p class="not-found-egg text-orange flex items-center gap-2 text-base leading-snug font-extrabold" data-trace-egg hidden>
+						<Sparkles class="h-5 w-5 sm:h-6 sm:w-6" />
+						<span data-trace-egg-label>報到處：/2026/check-in</span>
+					</p>
+				</div>
+			</div>
+		</div>
+	</section>
+</Layout>
+
+<script>
+	const tracePanel = document.querySelector<HTMLElement>("[data-trace-panel]");
+	const traceButton = document.querySelector<HTMLButtonElement>("[data-trace-button]");
+	const traceStatus = document.querySelector<HTMLElement>("[data-trace-status]");
+	const traceEgg = document.querySelector<HTMLElement>("[data-trace-egg]");
+	const traceEggLabel = document.querySelector<HTMLElement>("[data-trace-egg-label]");
+	const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+	const konamiKeys = ["ArrowUp", "ArrowUp", "ArrowDown", "ArrowDown", "ArrowLeft", "ArrowRight", "ArrowLeft", "ArrowRight", "b", "a"];
+	const traceMessages = ["TTL expired near 主線任務", "封包掉進活動照片牆", "DNS 說它也不確定", "備用路線正在蓋章"];
+
+	let traceCount = 0;
+	let konamiIndex = 0;
+	let eggUnlocked = false;
+	let sourceEggUnlocked = false;
+
+	const launchPackets = () => {
+		if (!tracePanel || prefersReducedMotion) {
+			return;
+		}
+
+		const colors = ["var(--color-green)", "var(--color-soft-blue)", "var(--color-orange)", "var(--color-primary-blue)"];
+
+		for (let index = 0; index < 18; index += 1) {
+			const packet = document.createElement("span");
+			packet.className = "not-found-packet";
+			packet.style.setProperty("--packet-color", colors[index % colors.length]);
+			packet.style.setProperty("--packet-x", `${(index % 6) * 18 - 44}px`);
+			packet.style.setProperty("--packet-y", `${Math.floor(index / 6) * -18 - 42}px`);
+			tracePanel.append(packet);
+			packet.addEventListener("animationend", () => packet.remove(), { once: true });
+		}
+	};
+
+	const unlockEgg = (source = "default") => {
+		const isSourceEgg = source === "source";
+
+		if (isSourceEgg && sourceEggUnlocked) {
+			launchPackets();
+			return;
+		}
+
+		if (!isSourceEgg && eggUnlocked) {
+			launchPackets();
+			return;
+		}
+
+		if (isSourceEgg) {
+			sourceEggUnlocked = true;
+		} else {
+			eggUnlocked = true;
+		}
+
+		tracePanel?.classList.add("is-egg-unlocked");
+
+		if (traceStatus) {
+			traceStatus.textContent = isSourceEgg ? "Trace OK：報到資料已補齊" : "HTTP 418：請先到報到處確認路線";
+		}
+
+		if (traceEggLabel) {
+			traceEggLabel.textContent = isSourceEgg ? "通行證已蓋章" : "報到處：/2026/check-in";
+		}
+
+		if (traceEgg) {
+			traceEgg.hidden = false;
+		}
+
+		launchPackets();
+	};
+
+	traceButton?.addEventListener("click", () => {
+		if (tracePanel?.dataset.route === "check-in") {
+			unlockEgg("source");
+			return;
+		}
+
+		if (eggUnlocked) {
+			launchPackets();
+			return;
+		}
+
+		traceCount += 1;
+
+		if (traceStatus) {
+			traceStatus.textContent = traceMessages[(traceCount - 1) % traceMessages.length] ?? traceMessages[0];
+		}
+
+		if (traceCount >= traceMessages.length) {
+			unlockEgg();
+		}
+	});
+
+	window.addEventListener("keydown", event => {
+		const key = event.key.length === 1 ? event.key.toLowerCase() : event.key;
+
+		if (key === konamiKeys[konamiIndex]) {
+			konamiIndex += 1;
+
+			if (konamiIndex === konamiKeys.length) {
+				unlockEgg();
+				konamiIndex = 0;
+			}
+
+			return;
+		}
+
+		konamiIndex = key === konamiKeys[0] ? 1 : 0;
+	});
+</script>
+
+<style>
+	@reference "../styles/global.css";
+
+	.not-found {
+		background: var(--color-background);
+	}
+
+	.not-found::before {
+		position: absolute;
+		inset-inline: 0;
+		inset-block-start: 0;
+		z-index: -1;
+		height: 9rem;
+		background: var(--color-foreground);
+		clip-path: polygon(0 0, 100% 0, 100% 42%, 0 100%);
+		content: "";
+	}
+
+	.not-found-button {
+		@apply border-foreground focus-visible:outline-primary-blue inline-flex min-h-13 items-center justify-center gap-2 rounded-xl border-[0.15rem] px-5 py-3 text-lg leading-none font-extrabold no-underline transition-all hover:-translate-y-0.5 focus-visible:outline-3 focus-visible:outline-offset-3 active:scale-95 sm:min-h-14 sm:text-xl;
+	}
+
+	.not-found-photo-stack {
+		transform: rotate(-1deg);
+	}
+
+	.not-found-photo {
+		margin: 0;
+		overflow: hidden;
+		background: var(--color-foreground);
+		box-shadow: 0 1rem 2rem color-mix(in srgb, var(--color-foreground) 18%, transparent);
+	}
+
+	.not-found-photo img {
+		display: block;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+
+	.not-found-photo--1 {
+		grid-area: 1 / 1 / 4 / 4;
+	}
+
+	.not-found-photo--2 {
+		grid-area: 1 / 4 / 3 / 7;
+	}
+
+	.not-found-photo--3 {
+		grid-area: 4 / 1 / 7 / 3;
+	}
+
+	.not-found-photo--4 {
+		grid-area: 3 / 3 / 7 / 7;
+	}
+
+	.not-found-trace.is-egg-unlocked {
+		border-color: var(--color-orange);
+	}
+
+	.not-found-trace {
+		box-shadow: 0 1.25rem 2.5rem color-mix(in srgb, var(--color-foreground) 24%, transparent);
+	}
+
+	.not-found-egg[hidden] {
+		display: none;
+	}
+
+	:global(.not-found-packet) {
+		position: absolute;
+		inset-inline-start: 50%;
+		inset-block-start: 50%;
+		z-index: 3;
+		width: 0.55rem;
+		aspect-ratio: 1;
+		background: var(--packet-color);
+		border-radius: 0.1rem;
+		pointer-events: none;
+		animation: not-found-packet-pop 780ms ease-out forwards;
+	}
+
+	@keyframes not-found-packet-pop {
+		from {
+			opacity: 1;
+			transform: translate(-50%, -50%) scale(0.6);
+		}
+
+		to {
+			opacity: 0;
+			transform: translate(calc(-50% + var(--packet-x)), calc(-50% + var(--packet-y))) scale(1.4);
+		}
+	}
+
+	@media (min-width: 40rem) {
+		.not-found::before {
+			height: 12rem;
+		}
+	}
+
+	@media (min-width: 64rem) {
+		.not-found::before {
+			height: 16rem;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.not-found-button,
+		.not-found-trace button {
+			transition: none;
+		}
+
+		.not-found-button:hover,
+		.not-found-button:focus-visible,
+		.not-found-trace button:hover,
+		.not-found-trace button:focus-visible {
+			transform: none;
+		}
+	}
+</style>
