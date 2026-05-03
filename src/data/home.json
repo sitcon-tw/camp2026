@@ -303,6 +303,13 @@
 				"bio": "特殊選才錄取成大資工"
 			},
 			{
+				"id": "yorukot",
+				"name": "Yorukot",
+				"role": "國際知名開源專案作者",
+				"imgKey": "feature-member-yoru",
+				"bio": "國際知名開源專案作者"
+			},
+			{
 				"id": "airo",
 				"name": "艾洛",
 				"role": "清華大學資工所",
