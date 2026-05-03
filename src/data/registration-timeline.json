@@ -1,27 +1,27 @@
 {
 	"items": [
 		{
-			"date": "5/1",
+			"date": "05/03 – 05/17\n23:59",
 			"label": "早鳥報名",
 			"iconKey": "sparkles"
 		},
 		{
-			"date": "5/5",
-			"label": "開始報名",
+			"date": "05/18 – 05/31\n23:59",
+			"label": "一般報名",
 			"iconKey": "rocket"
 		},
 		{
-			"date": "5/9",
-			"label": "截止報名",
+			"date": "05/24",
+			"label": "第一波錄取公布",
 			"iconKey": "alarm"
 		},
 		{
-			"date": "5/10",
-			"label": "公告報名結果",
+			"date": "06/04",
+			"label": "最終錄取名單公布",
 			"iconKey": "campaign"
 		},
 		{
-			"date": "7/6 – 7/19",
+			"date": "07/08 – 07/12",
 			"label": "營期",
 			"iconKey": "coffee"
 		}

@@ -83,12 +83,24 @@
 		]
 	},
 	"brandMarquee": {
-		"ariaLabel": "合作品牌：SITCON",
-		"repeatItems": 6,
+		"ariaLabel": "主辦、協辦與特別感謝單位：SITCON、開放文化基金會、陽明交通大學資訊工程系、Google for Developers",
+		"repeatItems": 8,
 		"brands": [
 			{
 				"imageKey": "sitcon",
 				"alt": "SITCON"
+			},
+			{
+				"imageKey": "ocf",
+				"alt": "開放文化基金會"
+			},
+			{
+				"imageKey": "nctucs",
+				"alt": "陽明交通大學資訊工程系"
+			},
+			{
+				"imageKey": "googleForDevelopers",
+				"alt": "Google for Developers"
 			}
 		]
 	},
@@ -153,65 +165,147 @@
 		"accentPalette": ["green", "primary-blue", "blue", "soft-blue", "sky-blue", "orange"],
 		"members": [
 			{
-				"id": "1",
-				"name": "Alice Chen",
-				"role": "前端工程師",
-				"imgKey": "hackathon",
-				"bio": "專注 Svelte 5 與動效設計，熱愛開源。"
+				"id": "yda",
+				"name": "教育部青發署",
+				"role": "青志獎獲獎",
+				"imgKey": "青志獎",
+				"bio": "青志獎獲獎"
 			},
 			{
-				"id": "2",
-				"name": "Bob Lin",
-				"role": "後端工程師",
-				"imgKey": "camp",
-				"bio": "擅長 Bun runtime 與 PostgreSQL 效能調優。"
+				"id": "harry",
+				"name": "Harry",
+				"role": "特殊選才錄取台大資工",
+				"imgKey": "Harry",
+				"bio": "特殊選才錄取台大資工"
 			},
 			{
-				"id": "3",
-				"name": "Carol Wu",
-				"role": "UI/UX 設計師",
-				"imgKey": "groups",
-				"bio": "從 0→1 設計系統，Figma 魔法師。"
+				"id": "ak",
+				"name": "Ak",
+				"role": "特殊選才錄取交大資工",
+				"imgKey": "Ak",
+				"bio": "特殊選才錄取交大資工"
 			},
 			{
-				"id": "4",
-				"name": "David Huang",
-				"role": "DevOps 工程師",
-				"imgKey": "edu",
-				"bio": "Docker、CI/CD 流水線，讓部署無痛。"
+				"id": "wolf",
+				"name": "Wolf",
+				"role": "特殊選才錄取成大資工",
+				"imgKey": "Wolf",
+				"bio": "特殊選才錄取成大資工"
+			},
+			{
+				"id": "airo",
+				"name": "艾洛",
+				"role": "清華大學資工所",
+				"imgKey": "艾洛",
+				"bio": "清華大學資工所"
+			},
+			{
+				"id": "seagull",
+				"name": "海鷗",
+				"role": "交大資工",
+				"imgKey": "海鷗",
+				"bio": "交大資工"
+			},
+			{
+				"id": "ascii-base64",
+				"name": "AsciiBase64",
+				"role": "交大資工",
+				"imgKey": "AsciiBase64",
+				"bio": "交大資工"
+			},
+			{
+				"id": "steak",
+				"name": "牛排",
+				"role": "交大資工",
+				"imgKey": "牛排",
+				"bio": "交大資工"
+			},
+			{
+				"id": "arnoldsky",
+				"name": "Arnoldsky",
+				"role": "臺科大資工所",
+				"imgKey": "Arnoldsky",
+				"bio": "臺科大資工所"
+			},
+			{
+				"id": "kang-o",
+				"name": "康喔",
+				"role": "臺科大資工所",
+				"imgKey": "康喔",
+				"bio": "臺科大資工所"
+			},
+			{
+				"id": "lime",
+				"name": "萊姆",
+				"role": "臺科大資工",
+				"imgKey": "萊姆",
+				"bio": "臺科大資工"
+			},
+			{
+				"id": "shrimp",
+				"name": "草蝦",
+				"role": "中央電機",
+				"imgKey": "草蝦",
+				"bio": "中央電機"
+			},
+			{
+				"id": "77",
+				"name": "77",
+				"role": "中山跨域學程",
+				"imgKey": "77",
+				"bio": "中山跨域學程"
+			},
+			{
+				"id": "fearnot",
+				"name": "Fearnot",
+				"role": "特殊選才錄取中央資工",
+				"imgKey": "Fearnot",
+				"bio": "特殊選才錄取中央資工"
+			},
+			{
+				"id": "kaiyasi",
+				"name": "Kaiyasi",
+				"role": "特殊選才錄取中興應數",
+				"imgKey": "Kaiyasi",
+				"bio": "特殊選才錄取中興應數"
+			},
+			{
+				"id": "each",
+				"name": "Each",
+				"role": "特殊選才錄取中興應數",
+				"imgKey": "Each",
+				"bio": "特殊選才錄取中興應數"
 			}
 		]
 	},
 	"aboutSitconCamp": {
-		"title": "SITCON，13 年來全東亞最大的學生資訊社群",
-		"description": "我個人認為義大利麵就應該拌 42 號混凝土，因為這個螺絲釘的長度很容易直接影響到挖掘機的扭矩。我個人認為義大利麵就應該拌 42 號混凝土，因為這個螺絲釘的長度很容易直接影響到挖掘機的扭矩。我個人認為義大利麵就應該拌 42 號混凝土，因為這個螺絲釘的長度很容易直接影響到挖掘機的扭矩。",
+		"title": "介紹 SITCON 或 Camp",
+		"description": "來自全台資訊社群的學生，共同打造的資訊夏令營\n\nSITCON 是由全台學生自主發起的資訊社群，長期推動學生資訊教育、技術交流與開源精神。\n\nSITCON Camp 延續這樣的精神，為對資訊有熱忱的學生打造五天四夜營隊，透過課程、實作與同儕交流，陪伴學員探索資訊領域的下一步。",
 		"stats": [
 			{
 				"type": "single",
-				"value": "10000",
-				"label": "名參與者",
-				"img": "groups"
+				"value": "第十屆",
+				"label": "夏令營",
+				"img": "aboutCamp1"
+			},
+			{
+				"type": "single",
+				"value": "5天4夜",
+				"label": "課程、實作與交流",
+				"img": "aboutCamp2"
 			},
 			{
 				"type": "single",
 				"value": "500",
-				"label": "名學生講者",
-				"img": "edu"
-			},
-			{
-				"type": "split",
-				"items": [
-					{ "value": "500", "label": "場聚會和講座" },
-					{ "value": "10", "label": "場夏令營" }
-				],
-				"img": "hackathon"
+				"label": "場聚會和講座",
+				"img": "aboutCamp3"
 			},
 			{
 				"type": "single",
 				"prefix": "扶持近",
-				"value": "1400",
-				"label": "名熱愛資訊的志工",
-				"img": "camp"
+				"value": "500",
+				"label": "名熱愛資訊的學員",
+				"img": "aboutCamp4"
 			}
 		],
 		"learnMore": {
@@ -267,7 +361,7 @@
 			}
 		],
 		"bgMarquee": {
-			"text": "Hello World "
+			"text": "探索方向 五天四夜 學員回饋 一起學習 學員心聲 有人陪伴 不怕跟不上 遇見夥伴 一起成長 從做中學 做出成果 收穫滿滿 看見下一步 不同想法 彼此啟發 "
 		},
 		"video": [
 			{
@@ -297,102 +391,59 @@
 		"photoAlt": "SITCON Camp 活動照片",
 		"cta": {
 			"label": "立即報名",
-			"href": "/2026/#registration-info"
+			"href": "http://i.sitcon.org/reg-camp2026"
 		},
 		"ctaBrochure": {
 			"label": "報名簡章",
 			"href": "https://drive.google.com/file/d/1nxt-lYWAMnsK-QbwbbeIV7lTi9hcimTw/view"
 		},
 		"noticeTitle": "注意事項",
-		"infoCards": [
-			{
-				"title": "活動日期",
-				"main": "2026/07/21 – 07/25",
-				"note": "共五天四夜",
-				"iconKey": "calendar"
-			},
-			{
-				"title": "晚鳥票報名日期",
-				"main": "2026/06/01 – 06/30",
-				"note": "逾期不候",
-				"iconKey": "ticket",
-				"iconClass": "rotate-[-12deg]"
-			},
-			{
-				"title": "活動地點",
-				"main": "台灣大學",
-				"note": "詳細地點待公告",
-				"iconKey": "school"
-			}
-		],
+		"eventInfo": {
+			"venueLabel": "活動地點",
+			"venueName": "國立陽明交通大學",
+			"venueDetail": "光復校區 · 新竹市東區大學路 1001 號",
+			"dateLabel": "營期",
+			"dateRange": "2026/07/08 – 07/12",
+			"dateNote": "共五天四夜"
+		},
 		"pricingRows": [
 			{
-				"label": "早鳥優惠",
+				"label": "早鳥票",
 				"color": "orange",
-				"price": "1000元/人",
+				"price": "8900 元/人",
 				"roundedStart": true,
 				"roundedEnd": false
 			},
 			{
-				"label": "一人報名",
+				"label": "個人報名",
 				"color": "primary-blue",
-				"price": "1500元/人",
+				"price": "9900 元/人",
 				"roundedStart": false,
 				"roundedEnd": false
 			},
 			{
-				"label": "兩人報名",
+				"label": "2 人同行",
 				"color": "soft-blue",
-				"price": "1200元/人",
+				"price": "9400 元/人",
 				"roundedStart": false,
 				"roundedEnd": false
 			},
 			{
-				"label": "三人報名",
+				"label": "3 人同行",
 				"color": "sky-blue",
-				"price": "1000元/人",
+				"price": "9100 元/人",
 				"roundedStart": false,
 				"roundedEnd": false
 			},
 			{
-				"label": "早鳥優惠",
+				"label": "4 人同行",
 				"color": "dark-green",
-				"price": "800元/人",
+				"price": "8800 元/人",
 				"roundedStart": false,
 				"roundedEnd": true
 			}
 		],
-		"noticeItems": [
-			[{ "text": "第 5 人（含）起將以原價計費。" }],
-			[{ "text": "提前一晚入住營隊 700 NTD/人" }],
-			[{ "text": "若在 5/11（日）23:59 前報名即享有早鳥價，享有早鳥價者仍可享有團報優惠。" }],
-			[
-				{ "text": "團體報名不保證全數錄取，團體報名凡錄取者（無論是否全數錄取）皆享有團報優惠價格，詳見" },
-				{
-					"text": "《報名簡章》",
-					"href": "https://drive.google.com/file/d/1nxt-lYWAMnsK-QbwbbeIV7lTi9hcimTw/view"
-				},
-				{ "text": "。" }
-			],
-			[{ "text": "本次夏令營預計招收學員 54 名，我們會針對報名資料做簡易審查，非先報先錄取。" }],
-			[{ "text": "正取學員名單最晚將於 6/8（日）前公佈，屆時請關注 SITCON 相關社群媒體及 Email 信箱。" }],
-			[
-				{ "text": "正取學員需完成報名費繳交，始完成報名程序；另設有補助名額，請詳閱" },
-				{
-					"text": "《報名費用補助辦法》",
-					"href": "https://drive.google.com/file/d/1g6OSBT0yZIpOjKk5tkzgFOv-mcpBrPLd/view"
-				},
-				{ "text": "。" }
-			],
-			[
-				{ "text": "關於退費事宜，請見" },
-				{
-					"text": "《退費說明文件》",
-					"href": "https://drive.google.com/file/d/1A193ekw7DtCgfMmxsICeT4gO2pWYGd4q/view"
-				},
-				{ "text": "。" }
-			]
-		]
+		"noticeMarkdown": "1. 第 5 人（含）起將以原價計費。\n2. 提前一晚入住營隊 800 元/人。\n3. 若在 5/17（日）23:59 前報名即享有早鳥價，享有早鳥價者仍可享有團報優惠。\n4. 團體報名不保證全數錄取，團體報名凡錄取者（無論是否全數錄取）皆享有團報優惠價格，詳見[《報名簡章》](https://drive.google.com/file/d/1nxt-lYWAMnsK-QbwbbeIV7lTi9hcimTw/view)。\n5. 本次夏令營預計招收學員 60 名，我們會針對報名資料做簡易審查，先報先審。\n6. 正取學員名單最晚將於 6/4（四）前公佈，屆時請關注 SITCON 相關社群媒體及 Email 信箱。\n7. 正取學員需完成報名費繳交，始完成報名程序；另設有補助名額，請詳閱[《報名費用補助辦法》](https://drive.google.com/file/d/1iITmqkfEe6PSXmqeqQMg8cnRg_cbVtgB/view?usp=sharing)。\n8. 關於退費事宜，請見[《退費說明文件》](https://drive.google.com/file/d/1oNsvMLOAJzgJ8GaDm51vKtUIpWNq2poa/view?usp=sharing)。"
 	},
 	"faq": {
 		"title": "常見問題 FAQ",
@@ -400,24 +451,16 @@
 		"answerPrefix": "A: ",
 		"items": [
 			{
-				"question": "如何報名 SITCON Camp 2026？",
-				"answer": "請至官網報名頁面填寫報名表單，詳細流程請參考《報名簡章》。"
+				"question": "需要自己帶電腦嗎？",
+				"answer": "教室內會提供上課所需的電腦設備，大家可以依照自己的使用習慣與需求決定是否攜帶個人電腦，如果用自己的設備比較順手，也歡迎帶來喔！"
 			},
 			{
-				"question": "報名資格有哪些限制？",
-				"answer": "請參考官方公告。"
+				"question": "營期間會提供餐食跟住宿嗎？",
+				"answer": "會的！營期間將全程提供餐食，並讓大家住宿於交大宿舍，讓大家可以專心參與課程與活動，不用擔心吃飯住宿問題。"
 			},
 			{
-				"question": "報名費用是多少？",
-				"answer": "依報名方式不同，費用有所差異，詳情請見報名資訊頁面。"
-			},
-			{
-				"question": "活動地點在哪裡？",
-				"answer": "活動地點為台灣大學，詳細地點待公告。"
-			},
-			{
-				"question": "活動時間是什麼時候？",
-				"answer": "活動時間為 2026 年 7 月 21 日至 7 月 25 日，共五天四夜。"
+				"question": "如果我還有其他問題該怎麼辦？",
+				"answer": "不論是報名資料誤植、填寫錯誤，或是在流程上遇到任何問題，都歡迎來信至 ask@sitcon.camp 詢問，我們將會協助您處理！"
 			}
 		]
 	}

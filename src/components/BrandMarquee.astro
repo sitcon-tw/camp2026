@@ -1,10 +1,16 @@
 ---
 import SitconBrand from "@/assets/brand/SITCON.svg";
+import GoogleForDevelopersBrand from "@/assets/sponsors/google-for-developer.svg";
+import NctuCsBrand from "@/assets/sponsors/nctucs.png";
+import OcfBrand from "@/assets/sponsors/ocf.DsnHfLaA_27BfWa.webp";
 import homeData from "@/data/home.json";
 
 const { brandMarquee } = homeData;
-const brandAssets: Record<string, typeof SitconBrand> = {
-	sitcon: SitconBrand
+const brandAssets: Record<string, ImageMetadata> = {
+	sitcon: SitconBrand,
+	ocf: OcfBrand,
+	nctucs: NctuCsBrand,
+	googleForDevelopers: GoogleForDevelopersBrand
 };
 const brands = brandMarquee.brands.map(brand => ({
 	...brand,
@@ -23,7 +29,7 @@ const marqueeItems = Array.from({ length: brandMarquee.repeatItems }, (_, index)
 				[0, 1].map(groupIndex => (
 					<div class="brand-marquee__group" data-marquee-group={groupIndex}>
 						{marqueeItems.map(brand => (
-							<img class="brand-marquee__logo" src={brand.src} width={brand.width} height={brand.height} alt={brand.alt} loading="lazy" decoding="async" />
+							<img class="brand-marquee__logo" data-brand-key={brand.imageKey} src={brand.src} width={brand.width} height={brand.height} alt={brand.alt} loading="lazy" decoding="async" />
 						))}
 					</div>
 				))
@@ -67,6 +73,10 @@ const marqueeItems = Array.from({ length: brandMarquee.repeatItems }, (_, index)
 		object-fit: contain;
 	}
 
+	.brand-marquee__logo[data-brand-key="googleForDevelopers"] {
+		height: clamp(4.2rem, 7vw, 6rem);
+	}
+
 	@keyframes brand-marquee-scroll {
 		to {
 			transform: translate3d(-50%, 0, 0);
@@ -81,6 +91,10 @@ const marqueeItems = Array.from({ length: brandMarquee.repeatItems }, (_, index)
 
 		.brand-marquee__logo {
 			height: clamp(5.2rem, 24vw, 7rem);
+		}
+
+		.brand-marquee__logo[data-brand-key="googleForDevelopers"] {
+			height: clamp(3.6rem, 16vw, 4.8rem);
 		}
 	}
 

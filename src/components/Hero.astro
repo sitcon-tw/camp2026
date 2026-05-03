@@ -47,6 +47,12 @@ const heroPhotoWallColumns = hero.photoWallColumns;
 	</div>
 </section>
 
+<script is:inline>
+	if (window.location.hash.length > 1) {
+		document.documentElement.classList.add("hero-intro-skip");
+	}
+</script>
+
 <section data-hero-intro aria-label={heroIntro.ariaLabel}>
 	<span class="hero-intro__curtain hero-intro__curtain--top" data-hero-intro-curtain-top></span>
 	<span class="hero-intro__curtain hero-intro__curtain--bottom" data-hero-intro-curtain-bottom></span>
@@ -102,14 +108,14 @@ const heroPhotoWallColumns = hero.photoWallColumns;
 	const topicViewport = intro?.querySelector<HTMLElement>(".hero-intro__topic-viewport");
 	const topicTrack = intro?.querySelector<HTMLElement>("[data-hero-intro-topic-track]");
 	const topics = intro ? Array.from(intro.querySelectorAll<HTMLElement>("[data-hero-intro-topic]")) : [];
-	const shouldSkipIntro = window.scrollY > 0;
+	const shouldSkipIntro = window.scrollY > 0 || window.location.hash.length > 1;
 	const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 	let photoWallStarted = false;
 	let introFinished = false;
 	let heroTitleRevealed = false;
 	let heroSubtitleRevealed = false;
 
-	if (heroTitleLabel) {
+	if (heroTitleLabel && !shouldSkipIntro) {
 		heroTitleLabel.style.visibility = "hidden";
 	}
 
@@ -527,6 +533,16 @@ const heroPhotoWallColumns = hero.photoWallColumns;
 
 	:global(html.hero-intro-lock) [data-hero-page-title-label] {
 		visibility: hidden;
+	}
+
+	:global(html.hero-intro-skip) [data-hero-intro] {
+		display: none;
+	}
+
+	:global(html.hero-intro-skip) [data-hero-page-title-label],
+	:global(html.hero-intro-skip) [data-hero-page-subtitle] {
+		visibility: visible;
+		transform: none;
 	}
 
 	[data-hero-intro] {

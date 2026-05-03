@@ -64,7 +64,8 @@ const { header } = layoutData;
 		};
 		const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 		const heroIntro = document.querySelector<HTMLElement>("[data-hero-intro]");
-		const shouldWaitForHeroIntro = document.documentElement.classList.contains("hero-intro-lock") || Boolean(heroIntro && !heroIntro.hidden);
+		const isAnchorNavigation = window.location.hash.length > 1;
+		const shouldWaitForHeroIntro = !isAnchorNavigation && (document.documentElement.classList.contains("hero-intro-lock") || Boolean(heroIntro && !heroIntro.hidden));
 
 		if (prefersReducedMotion) {
 			revealHeader();

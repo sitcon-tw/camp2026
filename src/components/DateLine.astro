@@ -53,9 +53,9 @@ const items = timelineData.items.map(item => ({
 					</div>
 					<div class="bg-soft-blue/40" style="width:0.125rem;height:var(--stem)" />
 					<div class="bg-soft-blue relative z-10 rounded-full" style="width:var(--marker);height:var(--marker)" />
-					<div class="mt-3 flex flex-col gap-1">
-						<span class="text-background text-[clamp(0.875rem,1.3vw,1.125rem)] leading-none font-bold opacity-60">{date}</span>
-						<span class="text-background text-[clamp(1.125rem,1.8vw,1.5rem)] leading-snug font-extrabold">{label}</span>
+					<div class="mt-3 flex max-w-[10rem] flex-col gap-1">
+						<span class="text-background text-[clamp(0.8125rem,1.05vw,1rem)] leading-tight font-bold whitespace-pre-line opacity-60">{date}</span>
+						<span class="text-background text-[clamp(1rem,1.45vw,1.35rem)] leading-snug font-extrabold">{label}</span>
 					</div>
 				</li>
 			))
@@ -75,7 +75,7 @@ const items = timelineData.items.map(item => ({
 							<Icon class="h-[55%] w-[55%]" />
 						</div>
 						<div class="flex flex-col gap-1.5">
-							<span class="text-background text-sm leading-none font-bold opacity-60">{date}</span>
+							<span class="text-background text-sm leading-tight font-bold whitespace-pre-line opacity-60">{date}</span>
 							<span class="text-background leading-snug font-extrabold" style="font-size:clamp(1.125rem,5.5vw,1.5rem)">
 								{label}
 							</span>

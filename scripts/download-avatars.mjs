@@ -31,17 +31,16 @@ await Promise.all(
 );
 
 const teamSection = aboutData.team.groups;
-const teamDescription = await fetch("https://sitcon-camp-api-tw-fury-2.nightfury.tw/api/teams").then(res => res.json());
 
 for (const team of teamSection) {
 	const workers = teams.filter(d => d.group === team.name);
 
 	team.members = workers.map(w => ({
 		name: w.name,
-		description: teamDescription.find(t => t.name === w.name)?.description || aboutData.team.modal.descriptionPlaceholder,
+		description: aboutData.team.modal.descriptionPlaceholder,
 		job: w.role,
 		avatarPath: `/assets/about/teams/${w.id}.jpg`,
-		avatarLink: teamDescription.find(t => t.name === w.name)?.link || ""
+		avatarLink: ""
 	}));
 }
 

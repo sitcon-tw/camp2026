@@ -17,10 +17,11 @@ const isOrg = (v: unknown): v is Org => {
 };
 
 const sponsorGlob = import.meta.glob<{ default: ImageMetadata }>("../assets/sponsors/*", { eager: true });
+const brandGlob = import.meta.glob<{ default: ImageMetadata }>("../assets/brand/*", { eager: true });
 
 function getMeta(iconPath: string): ImageMetadata | undefined {
 	const file = iconPath.split("/").pop();
-	return sponsorGlob[`../assets/sponsors/${file}`]?.default;
+	return sponsorGlob[`../assets/sponsors/${file}`]?.default ?? brandGlob[`../assets/brand/${file}`]?.default;
 }
 
 type ResolvedOrg = Org & { meta?: ImageMetadata };
@@ -46,10 +47,11 @@ const sections = await Promise.all(
 					<h1 class="mb-4 text-center text-3xl font-bold md:text-left md:text-4xl lg:text-[3rem]">{tag}</h1>
 					<div class="flex flex-wrap items-center justify-center gap-4 gap-y-6 sm:gap-6 md:justify-start lg:gap-8">
 						{items.map(org => {
+							const logoClass = org.name === "Google for Developers" ? "h-12 w-auto object-contain md:h-16 lg:h-20" : "h-20 w-auto object-contain md:h-28 lg:h-32";
 							const logo = org.meta ? (
-								<Image src={org.meta} alt={org.name} class="h-20 w-auto object-contain md:h-28 lg:h-32" />
+								<Image src={org.meta} alt={org.name} class={logoClass} />
 							) : (
-								<img src={org.iconPath} alt={org.name} class="h-20 w-auto object-contain md:h-28 lg:h-32" />
+								<img src={org.iconPath} alt={org.name} class={logoClass} />
 							);
 
 							return org.url ? (

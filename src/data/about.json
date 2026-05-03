@@ -5,24 +5,24 @@
 		"ogImage": "/2026/src/assets/ogImg/og.png"
 	},
 	"eventsHeld": {
-		"eyebrow": "Past Events",
+		"eyebrow": "關於我們",
 		"title": "我們做過的事",
-		"lead": "SITCON 是由學生組成、投身資訊教育與推廣開源精神的社群；SITCON Camp 自 2014 年起，把主線課程、黑客松、社群闖關、視界咖啡館與開源精神帶進同一個夏天，讓學生在實作與交流中找到自己的資訊路線。",
+		"lead": "SITCON Camp 是由學生資訊社群籌辦的五天四夜資訊夏令營。SITCON 自 2012 年起由學生自主發起，長期推動學生資訊教育、技術交流與開源精神。\n\n延續這樣的精神，SITCON Camp 自 2014 年起持續舉辦，至今邁入第十屆，陪伴近 500 名熱愛資訊的學員透過課程、實作與同儕交流，探索資訊領域的下一步。",
 		"stats": [
 			{
-				"value": "第 10 屆",
-				"label": "SITCON Camp 2026",
+				"value": "第十屆",
+				"label": "SITCON Camp",
 				"note": "從 2014 年一路走到現在"
 			},
 			{
-				"value": "五天四夜",
-				"label": "沉浸式營隊",
-				"note": "課程、實作、交流與生活一起發生"
+				"value": "近 500 名",
+				"label": "歷屆學員參與",
+				"note": "在營隊中認識技術、同儕與自己的方向"
 			},
 			{
-				"value": "10 場",
-				"label": "夏令營累積",
-				"note": "由學生社群持續籌辦與傳承"
+				"value": "五天四夜",
+				"label": "沉浸式資訊營隊",
+				"note": "課程、實作、交流與生活一起發生"
 			}
 		],
 		"activities": [
@@ -615,51 +615,41 @@
 				"tag": "主辦",
 				"items": [
 					{
-						"name": "SITCON 學生計算機年會",
+						"name": "SITCON",
 						"role": "主辦單位",
-						"description": "SITCON 學生計算機年會是一個由學生主辦的資訊科技研討會，致力於推廣資訊科技教育並提供學生交流平台。",
-						"iconPath": "/sponsors/SITCON.svg",
+						"description": "SITCON 是由學生自發組成的資訊社群，長期推動資訊教育、技術交流與開源精神。",
+						"iconPath": "/brand/SITCON.svg",
 						"url": "https://sitcon.org"
 					},
 					{
-						"name": "中央研究院資訊科學研究所",
-						"role": "主辦單位",
-						"description": "中央研究院資訊科學研究所從事前瞻資訊科技研究，培育頂尖資訊科研人才。",
-						"iconPath": "/sponsors/iis.webp",
-						"url": "https://www.iis.sinica.edu.tw"
-					},
-					{
-						"name": "財團法人開放文化基金會",
+						"name": "開放文化基金會",
 						"role": "主辦單位",
 						"description": "開放文化基金會致力於推動開放文化、開放原始碼及自由軟體運動。",
-						"iconPath": "/sponsors/ocf.webp",
+						"iconPath": "/sponsors/ocf.DsnHfLaA_27BfWa.webp",
 						"url": "https://ocf.tw"
 					}
 				]
 			},
 			{
-				"tag": "黃金贊助",
+				"tag": "協辦",
 				"items": [
 					{
-						"name": "LINE 台灣",
-						"role": "黃金贊助",
-						"description": "LINE Taiwan 提供即時通訊、行動支付等多元服務，致力於打造智慧生活。",
-						"iconPath": "/sponsors/line.webp",
-						"url": "https://linecorp.com"
-					},
+						"name": "陽明交通大學資訊工程系",
+						"role": "協辦單位",
+						"description": "陽明交通大學資訊工程系協助本次營隊辦理。",
+						"iconPath": "/sponsors/nctucs.png"
+					}
+				]
+			},
+			{
+				"tag": "特別感謝",
+				"items": [
 					{
-						"name": "台灣積體電路製造股份有限公司",
-						"role": "黃金贊助",
-						"description": "台積電是全球領先的半導體製造公司，推動尖端科技發展。",
-						"iconPath": "/sponsors/tsmc.svg",
-						"url": "https://tsmc.com"
-					},
-					{
-						"name": "AMD",
-						"role": "黃金贊助",
-						"description": "AMD 提供高效能運算與圖形處理器，引領高效能運算時代。",
-						"iconPath": "/sponsors/amd.svg",
-						"url": "https://www.amd.com/en.html"
+						"name": "Google for Developers",
+						"role": "特別感謝",
+						"description": "Google for Developers 支持開發者社群與技術學習。",
+						"iconPath": "/sponsors/google-for-developer.svg",
+						"url": "https://developers.google.com"
 					}
 				]
 			}

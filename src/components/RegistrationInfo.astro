@@ -1,18 +1,14 @@
 ---
 import { Image } from "astro:assets";
 import registrationPhoto from "@/assets/registration/registration-photo.png";
-import CalendarIcon from "~icons/ic/baseline-calendar-month";
-import TicketIcon from "~icons/ic/baseline-confirmation-number";
-import SchoolIcon from "~icons/ic/baseline-school";
+import CalendarDaysIcon from "~icons/lucide/calendar-days";
+import MapPinIcon from "~icons/lucide/map-pin";
+import MarkdownIt from "markdown-it";
 import homeData from "@/data/home.json";
 import DateLine from "@/components/DateLine.astro";
 
 const { registration } = homeData;
-const iconMap = {
-	calendar: CalendarIcon,
-	ticket: TicketIcon,
-	school: SchoolIcon
-};
+const { eventInfo } = registration;
 const pricingColorClassMap: Record<string, string> = {
 	orange: "text-orange",
 	"primary-blue": "text-primary-blue",
@@ -20,10 +16,14 @@ const pricingColorClassMap: Record<string, string> = {
 	"sky-blue": "text-sky-blue",
 	"dark-green": "text-dark-green"
 };
-const cards = registration.infoCards.map(card => ({
-	...card,
-	icon: iconMap[card.iconKey as keyof typeof iconMap]
-}));
+
+const mdRenderer = new MarkdownIt({
+	html: false,
+	linkify: true,
+	breaks: true
+});
+
+const renderedNotice = mdRenderer.render(registration.noticeMarkdown);
 ---
 
 <div class="overflow-hidden">
@@ -40,18 +40,32 @@ const cards = registration.infoCards.map(card => ({
 			<span class="text-foreground leading-none font-bold" style="font-size: var(--heading-size)">{registration.sectionTitle}</span>
 		</div>
 
-		<!-- 三張資訊卡 -->
-		<div class="grid w-full grid-cols-1 md:grid-cols-3" style="margin-top: var(--gap); gap: var(--gap)">
-			{
-				cards.map(({ title, main, note, icon: Icon, iconClass = "" }) => (
-					<div class="bg-soft-blue relative mx-auto aspect-375/260 w-full max-w-96 min-w-0 overflow-hidden md:aspect-375/318 md:max-w-none" style="border-radius: var(--radius) 0">
-						<span class="text-background absolute top-[15.7%] left-[8.4%] text-[clamp(1rem,1.45vw,1.25rem)] leading-none font-bold">{title}</span>
-						<span class="text-background absolute top-[28%] left-[8.4%] max-w-[78%] text-[clamp(1.25rem,2vw,1.75rem)] leading-[160%] font-bold">{main}</span>
-						<Icon class={`text-background/30 absolute top-[46%] right-[-6%] h-auto w-[44%] md:top-[52%] md:right-auto md:left-[60%] md:w-[50%] ${iconClass}`} />
-						<span class="text-background absolute top-[77.4%] left-[8.4%] text-base leading-[160%] font-bold">{note}</span>
+		<div class="bg-soft-blue text-background relative grid w-full overflow-hidden lg:grid-cols-[minmax(0,1fr)_minmax(18rem,0.48fr)]" style="margin-top: var(--gap); border-radius: var(--radius) 0">
+			<MapPinIcon class="text-background/15 pointer-events-none absolute -right-8 -bottom-14 h-auto w-[clamp(10rem,24vw,18rem)] rotate-[-10deg]" aria-hidden="true" />
+
+			<div class="relative z-10 flex flex-col gap-4 p-[clamp(1.25rem,4vw,3.5rem)]">
+				<span class="text-[clamp(0.875rem,1.35vw,1.125rem)] leading-none font-bold opacity-70">{eventInfo.venueLabel}</span>
+				<div class="flex flex-col gap-4 sm:flex-row sm:items-center">
+					<span class="bg-background text-soft-blue flex size-[clamp(3.25rem,6vw,5rem)] shrink-0 items-center justify-center rounded-full">
+						<MapPinIcon class="h-[52%] w-[52%]" aria-hidden="true" />
+					</span>
+					<div class="flex min-w-0 flex-col gap-2">
+						<h3 class="text-[clamp(1.75rem,4vw,3.5rem)] leading-[120%] font-extrabold">{eventInfo.venueName}</h3>
+						<p class="text-background/80 text-[clamp(1rem,1.7vw,1.35rem)] leading-[150%] font-bold">{eventInfo.venueDetail}</p>
 					</div>
-				))
-			}
+				</div>
+			</div>
+
+			<div class="bg-background text-foreground border-foreground/25 relative z-10 flex flex-col justify-center border-t-4 p-[clamp(1.25rem,3vw,2.25rem)] lg:border-t-0 lg:border-l-4">
+				<div class="flex items-center gap-3">
+					<span class="bg-green flex size-[clamp(2.75rem,4.5vw,3.75rem)] shrink-0 items-center justify-center rounded-full">
+						<CalendarDaysIcon class="text-foreground h-[54%] w-[54%]" aria-hidden="true" />
+					</span>
+					<span class="text-foreground/60 text-[clamp(0.875rem,1.35vw,1.125rem)] leading-none font-bold">{eventInfo.dateLabel}</span>
+				</div>
+				<strong class="mt-5 text-[clamp(1.5rem,3vw,2.5rem)] leading-[120%] font-extrabold">{eventInfo.dateRange}</strong>
+				<span class="text-foreground/70 mt-2 text-[clamp(1rem,1.5vw,1.25rem)] leading-[150%] font-bold">{eventInfo.dateNote}</span>
+			</div>
 		</div>
 
 		<DateLine variant="c" />
@@ -77,18 +91,18 @@ const cards = registration.infoCards.map(card => ({
 
 			<div class="relative mt-(--gap) aspect-565/410 w-full overflow-hidden lg:mt-0 lg:flex-565">
 				<Image src={registrationPhoto} alt={registration.photoAlt} class="absolute top-[6.585%] left-[7.434%] aspect-239/159 w-[85.133%] object-cover" loading="lazy" decoding="async" />
-				<div class="absolute right-[8%] bottom-[4.878%] left-[8%] flex justify-center gap-3">
+				<div class="absolute right-[4%] bottom-[4.878%] left-[4%] flex justify-center gap-2 sm:right-[8%] sm:left-[8%] sm:gap-3">
 					<a
 						href={registration.ctaBrochure.href}
 						target="_blank"
 						rel="noreferrer"
-						class="bg-background text-foreground flex h-[clamp(2.75rem,17.561%,4.5rem)] items-center justify-center rounded-2xl px-4 text-[clamp(1rem,2.25vw,2.125rem)] leading-[150%] font-extrabold shadow-[clamp(0.25rem,0.53vw,0.5rem)_clamp(0.25rem,0.53vw,0.5rem)_0_0_var(--color-orange)]"
+						class="bg-background text-foreground flex h-[clamp(3.5rem,15vw,4.5rem)] w-[min(44vw,13rem)] items-center justify-center rounded-2xl px-3 text-[clamp(1.125rem,5.3vw,2.125rem)] leading-[150%] font-extrabold whitespace-nowrap shadow-[clamp(0.25rem,0.53vw,0.5rem)_clamp(0.25rem,0.53vw,0.5rem)_0_0_var(--color-orange)] sm:w-auto sm:px-4"
 					>
 						{registration.ctaBrochure.label}
 					</a>
 					<a
 						href={registration.cta.href}
-						class="bg-green flex h-[clamp(2.75rem,17.561%,4.5rem)] items-center justify-center rounded-2xl px-4 text-[clamp(1rem,2.25vw,2.125rem)] leading-[150%] font-extrabold text-white shadow-[clamp(0.25rem,0.53vw,0.5rem)_clamp(0.25rem,0.53vw,0.5rem)_0_0_var(--color-orange)]"
+						class="bg-green flex h-[clamp(3.5rem,15vw,4.5rem)] w-[min(44vw,13rem)] items-center justify-center rounded-2xl px-3 text-[clamp(1.125rem,5.3vw,2.125rem)] leading-[150%] font-extrabold whitespace-nowrap text-white shadow-[clamp(0.25rem,0.53vw,0.5rem)_clamp(0.25rem,0.53vw,0.5rem)_0_0_var(--color-orange)] sm:w-auto sm:px-4"
 					>
 						{registration.cta.label}
 					</a>
@@ -100,23 +114,7 @@ const cards = registration.infoCards.map(card => ({
 			<span class="text-foreground leading-none font-bold" style="font-size: var(--heading-size)">{registration.noticeTitle}</span>
 		</div>
 
-		<ol class="mt-6 list-decimal space-y-1 pl-6 text-[clamp(1rem,1.25vw,1.125rem)] leading-[170%] font-bold text-white">
-			{
-				registration.noticeItems.map(item => (
-					<li>
-						{item.map(part =>
-							"href" in part ? (
-								<a class="underline" href={part.href} target="_blank" rel="noreferrer">
-									{part.text}
-								</a>
-							) : (
-								part.text
-							)
-						)}
-					</li>
-				))
-			}
-		</ol>
+		<div class="mt-6 text-[clamp(1rem,1.25vw,1.125rem)] leading-[170%] font-bold text-white [&_a]:underline [&_ol]:list-decimal [&_ol]:space-y-1 [&_ol]:pl-6" set:html={renderedNotice} />
 	</div>
 </section>
 
