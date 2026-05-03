@@ -1,34 +1,67 @@
 // @ts-check
-import { defineConfig } from "astro/config";
+import { defineConfig, fontProviders } from "astro/config";
+import Icons from "unplugin-icons/vite";
 
 import tailwindcss from "@tailwindcss/vite";
 
-import favicons from "astro-favicons";
+import sitemap from "@astrojs/sitemap";
 
-import partytown from "@astrojs/partytown";
+import favicons from "astro-favicons";
 
 const base = "/2026";
 
 // https://astro.build/config
 export default defineConfig({
-  site: "https://sitcon.camp",
-  base,
+	site: "https://sitcon.camp",
+	base,
 
-  vite: {
-    plugins: [tailwindcss()],
-  },
+	fonts: [
+		{
+			provider: fontProviders.local(),
+			name: "LINE Seed TW",
+			cssVariable: "--font-line-seed-tw",
+			weights: [250, 400, 700, 800],
+			styles: ["normal"],
+			options: {
+				variants: [
+					{
+						weight: 250,
+						style: "normal",
+						src: ["./src/assets/fonts/LINESeedTW_OTF_Th.woff2"]
+					},
+					{
+						weight: 400,
+						style: "normal",
+						src: ["./src/assets/fonts/LINESeedTW_OTF_Rg.woff2"]
+					},
+					{
+						weight: 700,
+						style: "normal",
+						src: ["./src/assets/fonts/LINESeedTW_OTF_Bd.woff2"]
+					},
+					{
+						weight: 800,
+						style: "normal",
+						src: ["./src/assets/fonts/LINESeedTW_OTF_Eb.woff2"]
+					}
+				]
+			}
+		}
+	],
 
-  integrations: [
-    favicons({
-      name: "SITCON Camp 2026",
-      short_name: "SITCON Camp",
-      output: {
-        images: true,
-        files: true,
-        html: true,
-        assetsPrefix: base,
-      },
-    }),
-    partytown(),
-  ],
+	vite: {
+		plugins: [
+			tailwindcss(),
+			Icons({
+				compiler: "astro"
+			})
+		]
+	},
+
+	integrations: [
+		sitemap({
+			lastmod: new Date()
+		}),
+		favicons()
+	]
 });

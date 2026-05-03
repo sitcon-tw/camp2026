@@ -1,0 +1,29 @@
+{
+	"items": [
+		{
+			"date": "05/17\n23:59",
+			"label": "早鳥截止",
+			"iconKey": "sparkles"
+		},
+		{
+			"date": "05/31\n23:59",
+			"label": "一般報名截止",
+			"iconKey": "rocket"
+		},
+		{
+			"date": "05/24",
+			"label": "第一波錄取公布",
+			"iconKey": "alarm"
+		},
+		{
+			"date": "06/04",
+			"label": "最終錄取名單公布",
+			"iconKey": "campaign"
+		},
+		{
+			"date": "07/08 – 07/12",
+			"label": "營期",
+			"iconKey": "coffee"
+		}
+	]
+}

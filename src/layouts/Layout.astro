@@ -1,170 +1,143 @@
 ---
+import { Font } from "astro:assets";
+import Footer from "@/components/Footer.astro";
 import "../styles/global.css";
-import type { ImageMetadata } from "astro";
+import Header from "@components/Header.astro";
+import defaultOgImage from "@/assets/seo/seo-og-1200x630.jpg";
+import layoutData from "@/data/layout.json";
 
 interface Props {
-  title?: string;
-  description?: string;
-  image?: ImageMetadata | string;
-  canonicalPath?: string;
-  type?: "website" | "article";
-  noindex?: boolean;
+	title?: string;
+	description?: string;
+	ogImage?: string;
+	ogImageAlt?: string;
+	type?: "website" | "article";
+	noindex?: boolean;
 }
 
-const {
-  title = "SITCON Camp 2026",
-  description = "SITCON Camp 2026 是由學生辦、給學生玩的資訊科技夏令營，將於 2026 年 7 月 8 日至 7 月 12 日在國立陽明交通大學舉辦。",
-  image,
-  canonicalPath = "/",
-  type = "website",
-  noindex = false,
-} = Astro.props;
-const baseUrl = import.meta.env.BASE_URL.endsWith("/")
-  ? import.meta.env.BASE_URL
-  : `${import.meta.env.BASE_URL}/`;
-const publicAsset = (path: string) => `${baseUrl}${path.replace(/^\/+/, "")}`;
-const siteUrl = Astro.site ?? new URL("https://sitcon.camp");
-const isAbsoluteUrl = (path: string) => /^https?:\/\//.test(path);
-const withBaseUrl = (path: string) => {
-  if (isAbsoluteUrl(path)) {
-    return path;
-  }
+const { title, description, ogImage, ogImageAlt, type = "website", noindex = false } = Astro.props;
+const { document: pageDocument } = layoutData;
 
-  const cleanPath = path.replace(/^\/+/, "");
-  const cleanBase = baseUrl.replace(/^\/+/, "");
+const siteURL = Astro.site ?? new URL("https://sitcon.camp");
+const canonicalURL = new URL(Astro.url.pathname, siteURL);
+const homeURL = new URL("/2026/", siteURL);
+const defaultOgImageAlt = "SITCON Camp 2026 活動主視覺";
 
-  if (!cleanPath) {
-    return baseUrl;
-  }
-
-  if (
-    cleanPath === cleanBase.replace(/\/$/, "") ||
-    cleanPath.startsWith(cleanBase)
-  ) {
-    return `/${cleanPath}`;
-  }
-
-  return `${baseUrl}${cleanPath}`;
+const seoData = {
+	title: title ?? pageDocument.siteName,
+	description: description ?? pageDocument.description,
+	canonicalURL: canonicalURL.href,
+	ogImage: new URL(ogImage ?? defaultOgImage.src, siteURL).href,
+	ogImageAlt: ogImageAlt ?? defaultOgImageAlt,
+	ogType: type,
+	robots: noindex ? "noindex, nofollow" : "index, follow, max-image-preview:large"
 };
-const absoluteUrl = (path: string) =>
-  new URL(withBaseUrl(path), siteUrl).toString();
-const canonicalUrl = absoluteUrl(canonicalPath);
-const imageUrl = image
-  ? absoluteUrl(typeof image === "string" ? image : image.src)
-  : undefined;
-const robots = noindex ? "noindex, nofollow" : "index, follow";
+
+const socialLinks = layoutData.footer.sections
+	.flatMap(section => section.links ?? [])
+	.map(link => link.href)
+	.filter(href => href.startsWith("https://"));
+
+const publisher = {
+	"@type": "Organization",
+	name: "SITCON 學生計算機年會",
+	url: "https://sitcon.org"
+};
+
 const structuredData = [
-  {
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    name: "SITCON Camp",
-    url: canonicalUrl,
-    inLanguage: "zh-Hant-TW",
-    publisher: {
-      "@type": "Organization",
-      name: "SITCON",
-      url: "https://sitcon.org/",
-    },
-  },
-  {
-    "@context": "https://schema.org",
-    "@type": "Event",
-    name: "SITCON Camp 2026",
-    description,
-    startDate: "2026-07-08",
-    endDate: "2026-07-12",
-    eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
-    eventStatus: "https://schema.org/EventScheduled",
-    inLanguage: "zh-Hant-TW",
-    url: canonicalUrl,
-    image: imageUrl ? [imageUrl] : undefined,
-    location: {
-      "@type": "Place",
-      name: "國立陽明交通大學",
-      address: {
-        "@type": "PostalAddress",
-        addressCountry: "TW",
-        addressRegion: "新竹市",
-      },
-    },
-    organizer: {
-      "@type": "Organization",
-      name: "SITCON",
-      url: "https://sitcon.org/",
-    },
-  },
+	{
+		...layoutData.eventLD,
+		image: [seoData.ogImage],
+		url: homeURL.href
+	},
+	{
+		"@context": "https://schema.org",
+		"@type": "WebSite",
+		name: pageDocument.siteName,
+		url: homeURL.href,
+		description: pageDocument.description,
+		inLanguage: pageDocument.lang,
+		publisher
+	},
+	{
+		"@context": "https://schema.org",
+		...publisher,
+		logo: new URL("/2026/favicon.svg", siteURL).href,
+		sameAs: socialLinks
+	}
 ];
 ---
 
 <!doctype html>
-<html lang="zh-Hant">
-  <head>
-    <!-- Google Tag Manager -->
-    <script is:inline>
-      (function (w, d, s, l, i) {
-        w[l] = w[l] || [];
-        w[l].push({
-          "gtm.start": new Date().getTime(),
-          event: "gtm.js",
-        });
-        var f = d.getElementsByTagName(s)[0],
-          j = d.createElement(s),
-          dl = l != "dataLayer" ? "&l=" + l : "";
-        j.async = true;
-        j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
-        f.parentNode.insertBefore(j, f);
-      })(window, document, "script", "dataLayer", "GTM-NKHHNVV");
-    </script>
-    <!-- End Google Tag Manager -->
+<html lang={pageDocument.lang}>
+	<head>
+		<!-- Google Tag Manager -->
+		<script define:vars={{ gtmId: pageDocument.gtmId }} is:inline>
+			(function (w, d, s, l, i) {
+				w[l] = w[l] || [];
+				w[l].push({
+					"gtm.start": new Date().getTime(),
+					event: "gtm.js"
+				});
+				var f = d.getElementsByTagName(s)[0],
+					j = d.createElement(s),
+					dl = l != "dataLayer" ? "&l=" + l : "";
+				j.async = true;
+				j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+				f.parentNode.insertBefore(j, f);
+			})(window, document, "script", "dataLayer", gtmId);
+		</script>
+		<!-- End Google Tag Manager -->
 
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
-    <link rel="icon" type="image/svg+xml" href={publicAsset("favicon.svg")} />
-    <link rel="icon" href={publicAsset("favicon.ico")} />
-    <link rel="canonical" href={canonicalUrl} />
-    <meta name="generator" content={Astro.generator} />
-    <meta name="description" content={description} />
-    <meta name="robots" content={robots} />
-    <meta name="theme-color" content="#9f4d36" />
-    <meta property="og:title" content={title} />
-    <meta property="og:description" content={description} />
-    <meta property="og:type" content={type} />
-    <meta property="og:url" content={canonicalUrl} />
-    <meta property="og:site_name" content="SITCON Camp" />
-    <meta property="og:locale" content="zh_TW" />
-    {imageUrl && <meta property="og:image" content={imageUrl} />}
-    <meta
-      name="twitter:card"
-      content={imageUrl ? "summary_large_image" : "summary"}
-    />
-    <meta name="twitter:title" content={title} />
-    <meta name="twitter:description" content={description} />
-    {imageUrl && <meta name="twitter:image" content={imageUrl} />}
-    <script
-      type="application/ld+json"
-      set:html={JSON.stringify(structuredData)}
-    />
-    <title>{title}</title>
-  </head>
-  <body>
-    <!-- Google Tag Manager (noscript) -->
-    <noscript
-      ><iframe
-        src="https://www.googletagmanager.com/ns.html?id=GTM-NKHHNVV"
-        height="0"
-        width="0"
-        style="display:none;visibility:hidden"></iframe></noscript
-    >
-    <!-- End Google Tag Manager (noscript) -->
-    <slot />
-  </body>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width" />
+		<Font cssVariable="--font-line-seed-tw" preload />
+
+		<!-- SEO: Basic Info -->
+		<title>{seoData.title}</title>
+		<meta name="description" content={seoData.description} />
+		<meta name="robots" content={seoData.robots} />
+		<meta name="googlebot" content={seoData.robots} />
+		<meta name="format-detection" content="telephone=no" />
+		<!-- <link rel="icon" href="/2026/favicon.svg" type="images/svg+html" /> -->
+		<link rel="canonical" href={seoData.canonicalURL} />
+		<link rel="sitemap" href="/2026/sitemap-index.xml" />
+		<meta name="theme-color" content="#80d34b" />
+
+		<!-- SEO: Open Graph -->
+		<meta property="og:type" content={seoData.ogType} />
+		<meta property="og:locale" content="zh_TW" />
+		<meta property="og:site_name" content={pageDocument.siteName} />
+		<meta property="og:url" content={seoData.canonicalURL} />
+		<meta property="og:title" content={seoData.title} />
+		<meta property="og:description" content={seoData.description} />
+		<meta property="og:image" content={seoData.ogImage} />
+		<meta property="og:image:secure_url" content={seoData.ogImage} />
+		<meta property="og:image:type" content="image/jpeg" />
+		<meta property="og:image:width" content="1200" />
+		<meta property="og:image:height" content="630" />
+		<meta property="og:image:alt" content={seoData.ogImageAlt} />
+
+		<!-- SEO: Twitter / Discord rich preview -->
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:title" content={seoData.title} />
+		<meta name="twitter:description" content={seoData.description} />
+		<meta name="twitter:image" content={seoData.ogImage} />
+		<meta name="twitter:image:alt" content={seoData.ogImageAlt} />
+
+		<!-- JSON-LD: Event / Site / Organization -->
+		<script type="application/ld+json" set:html={JSON.stringify(structuredData)} is:inline />
+	</head>
+	<body>
+		<!-- Google Tag Manager (noscript) -->
+		<noscript>
+			<iframe src={`https://www.googletagmanager.com/ns.html?id=${pageDocument.gtmId}`} height="0" width="0" style="display:none;visibility:hidden"></iframe>
+		</noscript>
+		<!-- End Google Tag Manager (noscript) -->
+		<Header />
+		<main>
+			<slot />
+		</main>
+		<Footer />
+	</body>
 </html>
-
-<style>
-  html,
-  body {
-    margin: 0;
-    width: 100%;
-    height: 100%;
-  }
-</style>
