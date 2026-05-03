@@ -176,7 +176,7 @@
 				"price": "9900",
 				"priceCurrency": "TWD",
 				"availability": "https://schema.org/InStock",
-				"validFrom": "2026-05-18",
+				"validFrom": "2026-05-03",
 				"validThrough": "2026-05-31",
 				"url": "http://i.sitcon.org/reg-camp2026"
 			},
@@ -186,7 +186,7 @@
 				"price": "9400",
 				"priceCurrency": "TWD",
 				"availability": "https://schema.org/InStock",
-				"validFrom": "2026-05-18",
+				"validFrom": "2026-05-03",
 				"validThrough": "2026-05-31",
 				"url": "http://i.sitcon.org/reg-camp2026"
 			},
@@ -196,7 +196,7 @@
 				"price": "9100",
 				"priceCurrency": "TWD",
 				"availability": "https://schema.org/InStock",
-				"validFrom": "2026-05-18",
+				"validFrom": "2026-05-03",
 				"validThrough": "2026-05-31",
 				"url": "http://i.sitcon.org/reg-camp2026"
 			},
@@ -206,7 +206,7 @@
 				"price": "8800",
 				"priceCurrency": "TWD",
 				"availability": "https://schema.org/InStock",
-				"validFrom": "2026-05-18",
+				"validFrom": "2026-05-03",
 				"validThrough": "2026-05-31",
 				"url": "http://i.sitcon.org/reg-camp2026"
 			}
