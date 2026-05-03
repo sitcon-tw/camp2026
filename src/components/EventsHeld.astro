@@ -2,14 +2,14 @@
 import type { ImageMetadata } from "astro";
 import { Image } from "astro:assets";
 
+import imgConference from "@/assets/3_年會.jpg";
+import imgHackathon from "@/assets/4_黑客松.jpg";
 import imgCamp from "@/assets/camp.jpg";
 import imgHoc from "@/assets/hoc.jpg";
-import imgSitcon from "@/assets/sitcon.jpg";
-import imgHackathon from "@/assets/pics/hackathon.webp";
 import aboutData from "@/data/about.json";
 
 type ActivityColor = "soft-blue" | "orange" | "green" | "sky-blue" | "dark-green";
-type ActivityImage = "sitcon" | "hoc" | "camp" | "hackathon";
+type ActivityImage = "hoc" | "camp" | "conference" | "hackathon";
 
 type EventsHeldContent = {
 	eyebrow: string;
@@ -32,9 +32,9 @@ type EventsHeldContent = {
 const eventsHeld = aboutData.eventsHeld as EventsHeldContent;
 
 const imageMap: Record<ActivityImage, ImageMetadata> = {
-	sitcon: imgSitcon,
 	hoc: imgHoc,
 	camp: imgCamp,
+	conference: imgConference,
 	hackathon: imgHackathon
 };
 

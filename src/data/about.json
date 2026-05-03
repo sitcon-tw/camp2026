@@ -27,30 +27,30 @@
 		],
 		"activities": [
 			{
-				"title": "讓學生站上技術舞台",
-				"kicker": "SITCON 年會",
-				"description": "透過年度資訊研討會，讓學生分享技術、經驗與對科技社群的想像，也讓更多人看見學生能主導交流。",
-				"imageKey": "sitcon",
-				"color": "green"
-			},
-			{
-				"title": "讓資訊教育向下扎根",
+				"title": "啟蒙引路",
 				"kicker": "Hour of Code",
-				"description": "把資訊教育向下扎根，設計適合兒童與初學者的活動，讓更多人從遊戲與實作認識程式與運算思維。",
+				"description": "降低資訊學習的入門門檻，讓第一次接觸程式的學生，發現自己也能跨出學習的第一步。",
 				"imageKey": "hoc",
 				"color": "orange"
 			},
 			{
-				"title": "陪伴高中生探索方向",
+				"title": "向下扎根",
 				"kicker": "SITCON Camp",
-				"description": "為高中生打造五天四夜資訊營隊，透過課程、實作與同儕交流，陪伴學員找到自己的學習方向。",
+				"description": "用五天四夜的完整時間沉浸式學習，把對資訊的好奇心轉為實作的能力，並在這裡結識一群志同道合的夥伴。",
 				"imageKey": "camp",
 				"color": "soft-blue"
 			},
 			{
-				"title": "把想法做成作品",
-				"kicker": "SITCON Hackathon",
-				"description": "把想法放進真實協作場景，在有限時間內組隊發想、實作與發表，用技術回應看見的問題。",
+				"title": "凝聚人才",
+				"kicker": "SITCON 年會",
+				"description": "匯聚全台資訊學子，透過舞台交流與經驗傳承，讓跨世代、跨領域的人才在此被看見與發聲。",
+				"imageKey": "conference",
+				"color": "green"
+			},
+			{
+				"title": "實踐創意",
+				"kicker": "黑客松",
+				"description": "將天馬行空的構想落實為具體成果，在緊湊的團隊協作中，同心協力磨練解決問題的能力。",
 				"imageKey": "hackathon",
 				"color": "sky-blue"
 			}
