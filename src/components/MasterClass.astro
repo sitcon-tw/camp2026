@@ -897,7 +897,7 @@ const masterClassDetails = masterClasses.map((masterClass, index) => ({
 		}
 	}
 
-	@media (max-width: 52rem) {
+	@media (max-width: 40rem) {
 		.master-class__sticky {
 			padding-block: clamp(4.5rem, 16vw, 6rem) clamp(3rem, 12vw, 5rem);
 		}
@@ -935,8 +935,12 @@ const masterClassDetails = masterClasses.map((masterClass, index) => ({
 		}
 
 		.master-card__media {
-			aspect-ratio: 16 / 9;
+			aspect-ratio: 4 / 3;
 			min-height: 0;
+		}
+
+		.master-card__image {
+			transform: scale(1);
 		}
 
 		.master-card__body {
