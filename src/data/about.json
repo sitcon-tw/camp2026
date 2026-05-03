@@ -68,112 +68,461 @@
 			}
 		]
 	},
+	"sitconTimeline": {
+		"config": {
+			"scrollHeight": 600
+		},
+		"items": [
+			{
+				"value": 0,
+				"prefix": "SITCON",
+				"suffix": "一切的起點"
+			},
+			{
+				"value": 500,
+				"prefix": "舉辦超過",
+				"suffix": "聚會和議程"
+			},
+			{
+				"value": 1400,
+				"prefix": "熱愛資訊的",
+				"suffix": "志工團隊"
+			},
+			{
+				"value": 14000,
+				"prefix": "總計",
+				"suffix": "年會參與者"
+			}
+		]
+	},
 	"team": {
 		"title": "團隊成員",
 		"modal": {
 			"defaultAvatarUrl": "https://i.pravatar.cc/300?img=12",
 			"avatarAlt": "avatar",
-			"namePlaceholder": "PLACEHOLDER",
-			"descriptionPlaceholder": "PLACEHOLDER",
-			"linkPlaceholder": "PLACEHOLDER",
+			"namePlaceholder": "無名氏",
+			"descriptionPlaceholder": "",
+			"linkPlaceholder": "",
 			"linkHref": "",
 			"closeLabel": "Close"
 		},
 		"groups": [
 			{
-				"name": "開發組",
-				"description": "負責網站、系統工具與活動期間的技術支援，讓營隊的線上流程與現場體驗穩定運作。",
+				"name": "總召組",
+				"description": "掌握營隊整體籌備進度，主持核心討論與決策，協調各組之間的溝通與合作。",
 				"members": [
 					{
-						"name": "王大明",
-						"description": "系統架構師，熱衷於分散式系統設計與效能調優。",
+						"name": "Windless",
+						"description": "",
+						"job": "總召",
+						"avatarPath": "/assets/about/teams/5b168d8b83a4f506cf9be7b9b86b7ffc2b7a8dee29e5f6c82f9720764fc05f4d.jpg",
+						"avatarLink": ""
+					},
+					{
+						"name": "Fearnot",
+						"description": "",
+						"job": "副召",
+						"avatarPath": "/assets/about/teams/4e2c4d83a0da00261fc8fe88cfaa70d8892fcb144feb4149eb926b6f7aef597d.jpg",
+						"avatarLink": ""
+					}
+				]
+			},
+			{
+				"name": "行政組",
+				"description": "負責維持營隊日常行政事務，包含人事管理、報名票務與對外聯繫等相關工作。",
+				"members": [
+					{
+						"name": "Ya",
+						"description": "嗨嗨這裡是 Ya，很像 E 人的大 I，佔領過行政編輯行銷隊輔剪輯的 SITCON 多棲仔 :D",
 						"job": "組長",
-						"avatarImgUrl": "https://i.pravatar.cc/150?img=3",
-						"avatarLink": ""
-					},
+						"avatarPath": "/assets/about/teams/3dc682683048afd1630ae4329b7269a2dc9fa301480a8abe6e974893eba6683d.jpg",
+						"avatarLink": "https://www.instagram.com/yu._yao/"
+					}
+				]
+			},
+			{
+				"name": "財務組",
+				"description": "負責營隊所有與金錢相關的業務，包含預算規劃、收支管理與贊助款項處理。",
+				"members": [
 					{
-						"name": "吳佳玲",
-						"description": "前端工程師，擅長動畫效果與響應式設計。",
-						"job": "副組長",
-						"avatarImgUrl": "https://i.pravatar.cc/150?img=44",
-						"avatarLink": ""
-					},
-					{
-						"name": "黃俊傑",
-						"description": "後端工程師，專注於 API 設計與微服務架構。",
-						"job": "組員",
-						"avatarImgUrl": "https://i.pravatar.cc/150?img=15",
-						"avatarLink": ""
-					},
-					{
-						"name": "鄭雅婷",
-						"description": "DevOps 工程師，負責雲端部署與監控基礎設施。",
-						"job": "精靈",
-						"avatarImgUrl": "https://i.pravatar.cc/150?img=49",
-						"avatarLink": ""
-					},
-					{
-						"name": "蔡佳霖",
-						"description": "資安工程師，專注於滲透測試與漏洞分析。",
+						"name": "Lindy",
+						"description": "",
 						"job": "組長",
-						"avatarImgUrl": "https://i.pravatar.cc/150?img=21",
+						"avatarPath": "/assets/about/teams/6c6c3bed1c257ebdba662b12111724bc96ff804c41936045954acc6b60dc81b5.jpg",
 						"avatarLink": ""
 					},
 					{
-						"name": "謝文志",
-						"description": "行動應用開發者，熟悉 iOS 與 Android 跨平台開發。",
+						"name": "Leaf",
+						"description": "",
+						"job": "出納",
+						"avatarPath": "/assets/about/teams/5d62064f724901dabffa1295d5a7e4d68d3d0477fd39e747dc72354fae834c6e.jpg",
+						"avatarLink": ""
+					}
+				]
+			},
+			{
+				"name": "課活組",
+				"description": "負責規劃與執行營隊主線課程、黑客松及各式活動，打造兼具學習與互動的營隊體驗。",
+				"members": [
+					{
+						"name": "Nathan",
+						"description": "",
+						"job": "組長",
+						"avatarPath": "/assets/about/teams/e087ca958a3115405b32e62072ff801b5dfcb4179607a1c56f20df88043e16ab.jpg",
+						"avatarLink": ""
+					},
+					{
+						"name": "Ak",
+						"description": "",
 						"job": "副組長",
-						"avatarImgUrl": "https://i.pravatar.cc/150?img=33",
+						"avatarPath": "/assets/about/teams/5c2bf4cd92eca11457ad40b4e5623fd82a4b94c7cd9916167e7c5dfe76adb2cc.jpg",
 						"avatarLink": ""
 					},
 					{
-						"name": "周怡君",
-						"description": "資料工程師，擅長 ETL 流程設計與大數據分析。",
+						"name": "艾洛",
+						"description": "",
 						"job": "組員",
-						"avatarImgUrl": "https://i.pravatar.cc/150?img=56",
+						"avatarPath": "/assets/about/teams/80c5174c3e73d626ceb418c4e80c2d75c59569539c96ffa0dfa3816d7d252dc4.jpg",
 						"avatarLink": ""
 					},
 					{
-						"name": "楊建宏",
-						"description": "嵌入式系統工程師，熱衷於硬體軟體整合開發。",
-						"job": "精靈",
-						"avatarImgUrl": "https://i.pravatar.cc/150?img=7",
+						"name": "Harry",
+						"description": "",
+						"job": "組員",
+						"avatarPath": "/assets/about/teams/1c05292e5e97b94799fee337e87a4c20bb09cf46e02fdc2656b452ee077c08b4.jpg",
 						"avatarLink": ""
 					},
 					{
-						"name": "何雅雯",
-						"description": "機器學習工程師，專注於自然語言處理與模型訓練。",
-						"job": "精靈",
-						"avatarImgUrl": "https://i.pravatar.cc/150?img=62",
+						"name": "Arnoldsky",
+						"description": "",
+						"job": "組員",
+						"avatarPath": "/assets/about/teams/c317fa381056973b6d71e411ba024c880c238c1b5383b5b4253e537994acc4b8.jpg",
 						"avatarLink": ""
 					},
 					{
-						"name": "蘇俊宏",
-						"description": "網路工程師，擅長網路拓撲規劃與流量優化。",
-						"job": "精靈",
-						"avatarImgUrl": "https://i.pravatar.cc/150?img=18",
+						"name": "Yoru",
+						"description": "哈囉，我是 Yoru，一個喜歡做各種神奇的東西的開發組組長，有興趣歡迎來找我聊聊~",
+						"job": "組員",
+						"avatarPath": "/assets/about/teams/e788f68c58bd3317f3bca684b193c6f1b1051cba2ee2011b9dd4f7765c2d8625.jpg",
+						"avatarLink": "https://yorukot.me"
+					},
+					{
+						"name": "Each",
+						"description": "",
+						"job": "組員",
+						"avatarPath": "/assets/about/teams/17e00664ef815abebb952dc4f449e1f1582d0fe0b94c6701e368d68349e151e6.jpg",
 						"avatarLink": ""
 					},
 					{
-						"name": "賴佳妮",
-						"description": "測試工程師，專精自動化測試框架與品質保證流程。",
-						"job": "精靈",
-						"avatarImgUrl": "https://i.pravatar.cc/150?img=39",
+						"name": "肯德基爺爺",
+						"description": "",
+						"job": "組員",
+						"avatarPath": "/assets/about/teams/74375aa210159f786c2823b331df07b465df1d0b0e8f15f7f07e426a42c473b5.jpg",
 						"avatarLink": ""
 					},
 					{
-						"name": "江志偉",
-						"description": "遊戲開發者，熱衷於即時渲染與物理引擎整合。",
-						"job": "精靈",
-						"avatarImgUrl": "https://i.pravatar.cc/150?img=11",
+						"name": "倫敦鐵喬",
+						"description": "",
+						"job": "組員",
+						"avatarPath": "/assets/about/teams/8769ac733cbe0cc7595fa91efc25ce28f50eaebec09d2aca894f0ab90fd1b2da.jpg",
+						"avatarLink": ""
+					}
+				]
+			},
+			{
+				"name": "庶務組",
+				"description": "負責營隊場地、物資與生活後勤的安排，確保每位學員在營期間的食宿與日常需求順暢。",
+				"members": [
+					{
+						"name": "阿公",
+						"description": "早安你好~",
+						"job": "組長",
+						"avatarPath": "/assets/about/teams/196e64709935c454b821b5de526e48cf790dbd78a0606642405a35ae592e63d2.jpg",
+						"avatarLink": "https://agong.tech"
+					},
+					{
+						"name": "伊藤蒼太",
+						"description": "",
+						"job": "組員",
+						"avatarPath": "/assets/about/teams/6d58ba9b2b02b25fdecdde9c264dc9a28e5ae28c65fd7b8cad7be0014d735cac.jpg",
 						"avatarLink": ""
 					},
 					{
-						"name": "李小華",
-						"description": "區塊鏈開發者，專注於智能合約與去中心化應用。",
-						"job": "精靈",
-						"avatarImgUrl": "https://i.pravatar.cc/150?img=64",
+						"name": "Tzufu",
+						"description": "一人做事，一人當；當當做事，當當當。",
+						"job": "組員",
+						"avatarPath": "/assets/about/teams/db13a6b8e8a12427222b5fc73a35b66d9953b852840e7505046f9440dceca605.jpg",
+						"avatarLink": "https://tzufu.me"
+					},
+					{
+						"name": "橘子",
+						"description": "希望可以拿到教師證的特教系大四\n科教所小精靈也是 SITCON 前一屆編輯組長兼行銷組員，正在各個地方遊蕩",
+						"job": "組員",
+						"avatarPath": "/assets/about/teams/7530f6a8eba83a44b8ae2d798e23608ab86546f1dba25f57ee1b39381e8eb836.jpg",
+						"avatarLink": "https://www.instagram.com/yuuu____1103?igsh=anhyM3J2a3F4bXYz"
+					}
+				]
+			},
+			{
+				"name": "紀錄組",
+				"description": "負責營隊期間的影像與文字紀錄，保存每個重要時刻，並提供各組所需的視覺素材。",
+				"members": [
+					{
+						"name": "康喔",
+						"description": "",
+						"job": "組長",
+						"avatarPath": "/assets/about/teams/08b25778f9a9ca3f2591b4e859be426dbd075608d763daf4fdd244d48eb26f13.jpg",
 						"avatarLink": ""
+					},
+					{
+						"name": "竺原",
+						"description": "",
+						"job": "組員",
+						"avatarPath": "/assets/about/teams/078d4f7476d88199377c8a84a1a260f10b860269ebc83889ced05a29bf0d72ed.jpg",
+						"avatarLink": ""
+					},
+					{
+						"name": "OnCloud",
+						"description": "",
+						"job": "組員",
+						"avatarPath": "/assets/about/teams/7dde549c1fe4594b49bb88225bcfc626ca0b641c98728e12b6580249e11d1c6d.jpg",
+						"avatarLink": ""
+					}
+				]
+			},
+			{
+				"name": "隊輔組",
+				"description": "陪伴學員度過整段營期，引導小隊互動、協助課程進行，是學員在營隊中最親近的夥伴。",
+				"members": [
+					{
+						"name": "Wolf Yuan",
+						"description": "",
+						"job": "組長",
+						"avatarPath": "/assets/about/teams/3d77e79456c983f048d74ea2739e8acbcc222d882bf294401209e00435c6b2d7.jpg",
+						"avatarLink": ""
+					},
+					{
+						"name": "77",
+						"description": "",
+						"job": "副組長",
+						"avatarPath": "/assets/about/teams/d70fd2f563f5ba351cf00d7aff6c2c0c1a31326ca100b2acff490c7c8f08d2bf.jpg",
+						"avatarLink": ""
+					},
+					{
+						"name": "萊姆",
+						"description": "",
+						"job": "組員",
+						"avatarPath": "/assets/about/teams/225720fee3b98e10bb851308b20915bfec60fe01df9d29b2b3c2359cd9000abe.jpg",
+						"avatarLink": ""
+					},
+					{
+						"name": "Yuki",
+						"description": "",
+						"job": "組員",
+						"avatarPath": "/assets/about/teams/5511c2c526031e833bf0c3751b116880b7ae272c540dd3edadf571a0c4d15d10.jpg",
+						"avatarLink": ""
+					},
+					{
+						"name": "海鷗",
+						"description": "",
+						"job": "組員",
+						"avatarPath": "/assets/about/teams/fd34ff3abf851d2b77eba6ff6cbcdda564926578ebb6d8536a036bb14ee81ac7.jpg",
+						"avatarLink": ""
+					},
+					{
+						"name": "XC",
+						"description": "",
+						"job": "組員",
+						"avatarPath": "/assets/about/teams/b4e3aa6f4e078b10f38108a46c78bed4b57266aac061291d48e316baf23d4433.jpg",
+						"avatarLink": ""
+					},
+					{
+						"name": "草蝦",
+						"description": "",
+						"job": "組員",
+						"avatarPath": "/assets/about/teams/4e29cd3337ac5d54c9d0da7ca0244dddf1da3481a169afabe0db9a246a7fb5a7.jpg",
+						"avatarLink": ""
+					},
+					{
+						"name": "Yuto",
+						"description": "",
+						"job": "組員",
+						"avatarPath": "/assets/about/teams/055bd89b3d4e4a29197dfe8171055fac6d47c921b8dc2cc553b8a389c3c488bb.jpg",
+						"avatarLink": ""
+					},
+					{
+						"name": "Frank",
+						"description": "",
+						"job": "組員",
+						"avatarPath": "/assets/about/teams/94c8e676f9a636c764c04574b6e7b83e16fdec0b738673d7b18da41eb3876e39.jpg",
+						"avatarLink": ""
+					},
+					{
+						"name": "NT",
+						"description": "",
+						"job": "組員",
+						"avatarPath": "/assets/about/teams/a006e76eee4774bee086ccf6535667012dcba0fa94196295ed01d2ac15d36c56.jpg",
+						"avatarLink": ""
+					},
+					{
+						"name": "牛排",
+						"description": "",
+						"job": "組員",
+						"avatarPath": "/assets/about/teams/036521d69838763db976324daee5b4d6c9ea2f6494bb2db12d00db5c5dae8647.jpg",
+						"avatarLink": ""
+					},
+					{
+						"name": "鯨魚",
+						"description": "",
+						"job": "組員",
+						"avatarPath": "/assets/about/teams/d67fdf1c5ec6087abb972f4f4a9742d2fca21fffd79618c2457b6e0454e9058f.jpg",
+						"avatarLink": ""
+					},
+					{
+						"name": "AsciiBase64",
+						"description": "",
+						"job": "組員",
+						"avatarPath": "/assets/about/teams/1eb1c3de29bcc6c82e8e64800a2f464531b84c525b45ec9b16ce8ce7ad3f528e.jpg",
+						"avatarLink": ""
+					},
+					{
+						"name": "CC",
+						"description": "大家好我是CC～",
+						"job": "組員",
+						"avatarPath": "/assets/about/teams/64b45b524792de6ffbbb95cf11ad13ce4a2ad631940e2502f898b358b652e75f.jpg",
+						"avatarLink": "https://www.linkedin.com/in/ching-tzu-li-874871287?utm_source=share_via&utm_content=profile&utm_medium=member_ios"
+					},
+					{
+						"name": "家誠",
+						"description": "",
+						"job": "組員",
+						"avatarPath": "/assets/about/teams/47bf7455e9fc582bc6800779beec5e68b6bbfa93cf948732125426ab0778ba10.jpg",
+						"avatarLink": ""
+					},
+					{
+						"name": "Tang Yu",
+						"description": "",
+						"job": "組員",
+						"avatarPath": "/assets/about/teams/c1b1e27dc2b353d5fc7f3bd014ede3558dd0b113e558356692e5dac40e888634.jpg",
+						"avatarLink": "https://candytangsys.github.io/blog/"
+					},
+					{
+						"name": "狐狸",
+						"description": "",
+						"job": "組員",
+						"avatarPath": "/assets/about/teams/ed9c103b295510115b3cd55045087afe2caff49770a5d2c3324ae2d4efec3218.jpg",
+						"avatarLink": ""
+					},
+					{
+						"name": "螢光",
+						"description": "",
+						"job": "組員",
+						"avatarPath": "/assets/about/teams/b45ecf4250d89f7f756d0139b2e81230f94d00c53a3555cfbcf3278e43ce6e7f.jpg",
+						"avatarLink": ""
+					},
+					{
+						"name": "芋泥",
+						"description": "",
+						"job": "組員",
+						"avatarPath": "/assets/about/teams/62269d82bb478b04b61e6b3c2083792e222168c7b4150e4a4ea42fec4a005fd6.jpg",
+						"avatarLink": ""
+					},
+					{
+						"name": "金魚",
+						"description": "",
+						"job": "組員",
+						"avatarPath": "/assets/about/teams/ed839169dec5abec505e3b79d833101bb04dca40c9051914a3806fa08361b9e2.jpg",
+						"avatarLink": ""
+					}
+				]
+			},
+			{
+				"name": "編輯組",
+				"description": "負責營隊的社群媒體經營與內容創作，從文案到圖文，讓 SITCON Camp 的故事被更多人看見。",
+				"members": [
+					{
+						"name": "Mina",
+						"description": "",
+						"job": "組長",
+						"avatarPath": "/assets/about/teams/dbfbb99d57882e065243ab549d00d63eabb2dfa8e5ba7d9e7abb1ed0daa2c3f4.jpg",
+						"avatarLink": ""
+					},
+					{
+						"name": "yuan",
+						"description": "",
+						"job": "副組長",
+						"avatarPath": "/assets/about/teams/3f23d5b780a37c12ad6a185521c8b4472fc9889a4fa70ac382d78aea03b5d1ca.jpg",
+						"avatarLink": ""
+					},
+					{
+						"name": "Nathan",
+						"description": "",
+						"job": "組員",
+						"avatarPath": "/assets/about/teams/e087ca958a3115405b32e62072ff801b5dfcb4179607a1c56f20df88043e16ab.jpg",
+						"avatarLink": ""
+					},
+					{
+						"name": "Ya",
+						"description": "嗨嗨這裡是 Ya，很像 E 人的大 I，佔領過行政編輯行銷隊輔剪輯的 SITCON 多棲仔 :D",
+						"job": "組員",
+						"avatarPath": "/assets/about/teams/3dc682683048afd1630ae4329b7269a2dc9fa301480a8abe6e974893eba6683d.jpg",
+						"avatarLink": "https://www.instagram.com/yu._yao/"
+					},
+					{
+						"name": "Wolf Yuan",
+						"description": "",
+						"job": "組員",
+						"avatarPath": "/assets/about/teams/3d77e79456c983f048d74ea2739e8acbcc222d882bf294401209e00435c6b2d7.jpg",
+						"avatarLink": ""
+					},
+					{
+						"name": "橘子",
+						"description": "希望可以拿到教師證的特教系大四\n科教所小精靈也是 SITCON 前一屆編輯組長兼行銷組員，正在各個地方遊蕩",
+						"job": "組員",
+						"avatarPath": "/assets/about/teams/7530f6a8eba83a44b8ae2d798e23608ab86546f1dba25f57ee1b39381e8eb836.jpg",
+						"avatarLink": "https://www.instagram.com/yuuu____1103?igsh=anhyM3J2a3F4bXYz"
+					},
+					{
+						"name": "阿六",
+						"description": "",
+						"job": "組員",
+						"avatarPath": "/assets/about/teams/e43859d0899c0dd1fe4d12ef5260d73c1f83c18369722947f61f5f62cd6774f7.jpg",
+						"avatarLink": ""
+					},
+					{
+						"name": "嵩嵩",
+						"description": "怎麽把鐵離子變成三個亞鐵離子？\n—\n—\n微分",
+						"job": "組員",
+						"avatarPath": "/assets/about/teams/f9d9b023468920c16358788bc763d22002d0110dfa8e47bd86dde10b88e7d2c6.jpg",
+						"avatarLink": ""
+					},
+					{
+						"name": "13",
+						"description": "",
+						"job": "組員",
+						"avatarPath": "/assets/about/teams/c748d5c9d5aae945f2a4cc8fcb7b68cad00edf3c3f98f4ea48004e45fd29af6f.jpg",
+						"avatarLink": ""
+					},
+					{
+						"name": "宸",
+						"description": "",
+						"job": "組員",
+						"avatarPath": "/assets/about/teams/9be565568f3055f7d32e0e102d196069cd60e397a380808a280d5e7f263aebde.jpg",
+						"avatarLink": ""
+					},
+					{
+						"name": "Katy",
+						"description": "",
+						"job": "組員",
+						"avatarPath": "/assets/about/teams/b53ea2f73ae90870c9c2d35dcc5786a0deda8ebe4af5a5db2b33fee945a59a07.jpg",
+						"avatarLink": ""
+					},
+					{
+						"name": "CC",
+						"description": "大家好我是CC～",
+						"job": "組員",
+						"avatarPath": "/assets/about/teams/0e7a7cf040ccd845cd72d8d5f8b29526ee76a8e5a3246166ef0902b6e8dd1fc0.jpg",
+						"avatarLink": "https://www.linkedin.com/in/ching-tzu-li-874871287?utm_source=share_via&utm_content=profile&utm_medium=member_ios"
 					}
 				]
 			},
@@ -182,24 +531,78 @@
 				"description": "負責對外溝通、品牌呈現與社群內容，讓更多學生認識 SITCON Camp 的精神與活動資訊。",
 				"members": [
 					{
-						"name": "林思穎",
-						"description": "業務開發經理，擅長建立合作夥伴關係與談判策略。",
-						"job": "業務",
-						"avatarImgUrl": "https://i.pravatar.cc/150?img=43",
+						"name": "Denny Huang",
+						"description": "",
+						"job": "小精靈",
+						"avatarPath": "/assets/about/teams/eb2a13713db05afd68dafd190254a7bf1d7258aff26b1546641e07afdd3ff2ea.jpg",
+						"avatarLink": ""
+					}
+				]
+			},
+			{
+				"name": "開發組",
+				"description": "負責網站、系統工具與活動期間的技術支援，讓營隊的線上流程與現場體驗穩定運作。",
+				"members": [
+					{
+						"name": "Yoru",
+						"description": "哈囉，我是 Yoru，一個喜歡做各種神奇的東西的開發組組長，有興趣歡迎來找我聊聊~",
+						"job": "組長",
+						"avatarPath": "/assets/about/teams/e788f68c58bd3317f3bca684b193c6f1b1051cba2ee2011b9dd4f7765c2d8625.jpg",
+						"avatarLink": "https://yorukot.me"
+					},
+					{
+						"name": "noeFly",
+						"description": "咩！我是 noeFly，請多指教！",
+						"job": "組員",
+						"avatarPath": "/assets/about/teams/ce980bf25df377bae777ce6c0512b33a0beeff8c9d410053b7db14b56f14b88c.jpg",
+						"avatarLink": "https://noefly.cc"
+					},
+					{
+						"name": "Kaiyasi",
+						"description": "",
+						"job": "組員",
+						"avatarPath": "/assets/about/teams/b7a14615a6b0e85ca067abf9f724c01a3db04141031d879c66eaddc510922b35.jpg",
 						"avatarLink": ""
 					},
 					{
-						"name": "陳宜蓁",
-						"description": "品牌行銷專員，負責社群經營與內容策略規劃。",
-						"job": "行銷",
-						"avatarImgUrl": "https://i.pravatar.cc/150?img=58",
+						"name": "tonicatowo",
+						"description": "我來自臺灣，是一名自學開發超過五年的高中生，曾經兼任嘉義高中資訊研究社 116th 的教學 。我把自己定位成業餘的 Website Designer 與 Fullstack Developer，喜歡從設計到部署一路把東西做出來 。",
+						"job": "組員",
+						"avatarPath": "/assets/about/teams/c2817b4c1049cc759eb7a453bc8f50466c22742b123d11d165ca07b2a80347c0.jpg",
+						"avatarLink": "https://tonicatowo.xyz/"
+					},
+					{
+						"name": "白龍",
+						"description": "嗨，我是白龍，我喜歡研究網路和伺服器架設等相關技術。很榮幸能加入這次 SITCON 開發組，講個小知識，這個 Team Section 是我做的喔",
+						"job": "組員",
+						"avatarPath": "/assets/about/teams/8ed5daf641164b6e5a3044e8fa2cfe06c6c42747bc20571cd48844b8767b2ac3.jpg",
+						"avatarLink": "https://whitedragon.life"
+					}
+				]
+			},
+			{
+				"name": "設計組",
+				"description": "負責營隊主視覺設計、網站視覺與相關紀念品發想，建立 SITCON Camp 獨特的視覺語言。",
+				"members": [
+					{
+						"name": "章魚",
+						"description": "",
+						"job": "組員",
+						"avatarPath": "/assets/about/teams/18abe3935bb944c1fbaa8d8bb9c170b9439be9261d3623f32f599265c0a6be7a.jpg",
 						"avatarLink": ""
 					},
 					{
-						"name": "洪冠宇",
-						"description": "企業客戶顧問，專注於解決方案銷售與客戶成功管理。",
-						"job": "業務",
-						"avatarImgUrl": "https://i.pravatar.cc/150?img=22",
+						"name": "花椰",
+						"description": "",
+						"job": "組員",
+						"avatarPath": "/assets/about/teams/14e06aaaff87425b3b8bdacd36040f7f6f830e167f5d24a25b4deb9dd2c88bec.jpg",
+						"avatarLink": ""
+					},
+					{
+						"name": "兆翌",
+						"description": "",
+						"job": "組員",
+						"avatarPath": "/assets/about/teams/ea1f127f094a2db6b6f9de0075a0dd4069cf836334eeeaf3e553a5f1865f0824.jpg",
 						"avatarLink": ""
 					}
 				]

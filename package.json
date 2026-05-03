@@ -4,7 +4,7 @@
 	"type": "module",
 	"scripts": {
 		"astro": "astro",
-		"build": "astro build && node scripts/font-subset.mjs",
+		"build": "node scripts/download-avatars.mjs && astro build && node scripts/font-subset.mjs",
 		"build:subset": "node scripts/font-subset.mjs",
 		"dev": "astro dev",
 		"preinstall": "npx only-allow pnpm",

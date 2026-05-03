@@ -1,11 +1,14 @@
 ﻿---
 import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
 import LucideX from "~icons/lucide/x";
 import aboutData from "@/data/about.json";
 
 const { team: teamContent } = aboutData;
 const teamGroups = teamContent.groups;
 const { modal } = teamContent;
+
+const avatarImages = import.meta.glob<{ default: ImageMetadata }>("../assets/about/teams/*.jpg", { eager: true });
 ---
 
 <script>
@@ -47,7 +50,8 @@ const { modal } = teamContent;
 				linkEle.textContent = "";
 				linkEle.hidden = true;
 			}
-			avatarEle.src = member.avatarImgUrl;
+
+			avatarEle.src = (el as HTMLImageElement).src;
 
 			//Instant set styling
 			const newAvatarRect = avatarEle.getBoundingClientRect();
@@ -102,7 +106,8 @@ const { modal } = teamContent;
 
 				await new Promise(resolve => setTimeout(resolve, 100));
 				el.style.boxShadow = "";
-				el.style.transform = "translate(-2px, -2px)";
+				const backRect = backavatarEle.getBoundingClientRect();
+				el.style.transform = `translate(${backRect.x - parseFloat(el.style.left)}px, ${backRect.y - parseFloat(el.style.top)}px)`;
 				el.style.width = "";
 				el.style.height = "";
 				el.style.maxWidth = "";
@@ -113,10 +118,20 @@ const { modal } = teamContent;
 				backavatarEle.style.display = "none";
 				overlay.style.zIndex = "-10";
 
+				el.style.transition = "none";
+				el.style.opacity = "0";
 				el.style.zIndex = "";
 				el.style.position = "";
 				el.style.top = "";
 				el.style.left = "";
+				el.style.transform = "";
+
+				requestAnimationFrame(() => {
+					el.style.opacity = "";
+					requestAnimationFrame(() => {
+						el.style.transition = "";
+					});
+				});
 			}
 		});
 	});
@@ -135,8 +150,8 @@ const { modal } = teamContent;
 					id="layout-avatar"
 				/>
 				<div class="flex h-full w-full min-w-0 flex-col justify-between">
-					<h1 class="mx-auto text-5xl font-bold md:mx-0 md:text-6xl" id="layout-name">{modal.namePlaceholder}</h1>
-					<p class="text-foreground my-4 text-xl font-bold" id="layout-des">{modal.descriptionPlaceholder}</p>
+					<h1 class="mx-auto text-3xl font-bold md:mx-0 md:text-6xl" id="layout-name">{modal.namePlaceholder}</h1>
+					<p class="text-foreground my-4 text-lg font-bold" id="layout-des">{modal.descriptionPlaceholder}</p>
 					<a class="text-blue mt-auto block truncate text-lg font-bold underline underline-offset-3" id="layout-link" target="_blank" rel="noopener noreferrer" hidden>
 						{modal.linkPlaceholder}
 					</a>
@@ -159,23 +174,23 @@ const { modal } = teamContent;
 					<h2 class="text-4xl font-bold text-black">{group.name}</h2>
 					{group.description && <p class="text-foreground/70 mt-3 max-w-3xl text-lg leading-[1.7] font-bold">{group.description}</p>}
 
-					<div class="my-4 grid h-fit w-full grid-cols-[repeat(auto-fill,minmax(9.375rem,1fr))] justify-items-center gap-[clamp(1rem,2vw,2rem)]">
+					<div class="my-4 grid h-fit w-full grid-cols-[repeat(auto-fill,minmax(9.375rem,1fr))] justify-items-center gap-[clamp(1rem,20vw,2rem)]">
 						{group.members.map(data => (
 							<article class="my-4 flex h-fit w-full max-w-37.5 flex-col items-center">
 								<Image
-									src={data.avatarImgUrl}
+									src={avatarImages[`../assets/about/teams/${data.avatarPath.split("/").pop()}`]?.default!}
 									alt={"avatar"}
 									width={150}
 									height={150}
-									class="border-foreground h-37.5 w-37.5 flex-none cursor-pointer rounded-xl border-4 object-cover shadow-[4px_4px_0_2px_var(--color-soft-blue)] transition-all duration-300 hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[2px_2px_0_2px_var(--color-soft-blue)]"
-									data-member-id={data.name}
-									data-member={JSON.stringify({ name: data.name, description: data.description, avatarLink: data.avatarLink, avatarImgUrl: data.avatarImgUrl })}
+									class={`bg-background border-foreground h-37.5 w-37.5 flex-none cursor-pointer rounded-xl border-4 object-cover transition-all duration-300 hover:translate-x-0.5 hover:translate-y-0.5 ${data.description || data.avatarLink ? "shadow-[4px_4px_0_2px_var(--color-sky-400)] hover:shadow-[2px_2px_0_2px_var(--color-sky-400)]" : "shadow-[4px_4px_0_2px_var(--color-soft-blue)] hover:shadow-[2px_2px_0_2px_var(--color-soft-blue)]"}`}
+									data-member-id={`${group.name}-${data.name}`}
+									data-member={JSON.stringify({ name: data.name, description: data.description, avatarLink: data.avatarLink })}
 								/>
-								<div class="hidden h-37.5 w-37.5" id={`b-${data.name}`} />
-								<div class="mt-4 flex h-fit w-full items-center justify-between gap-2">
-									<h3 class="text-xl font-bold">{data.name}</h3>
-									<div class="bg-foreground flex h-fit w-fit items-center justify-center rounded-full px-2 py-0.5">
-										<p class="text-sm text-white">#{data.job}</p>
+								<div class="hidden h-37.5 w-37.5" id={`b-${group.name}-${data.name}`} />
+								<div class="mt-4 flex h-fit w-fit min-w-37.5 items-center justify-between gap-2">
+									<h3 class="text-lg font-bold">{data.name}</h3>
+									<div class="bg-foreground flex h-fit w-fit shrink-0 items-center justify-center rounded-full px-2 py-0.5">
+										<p class="text-xs text-white">#{data.job}</p>
 									</div>
 								</div>
 							</article>
