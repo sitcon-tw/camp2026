@@ -406,13 +406,13 @@
 			},
 			{
 				"type": "single",
-				"value": "500",
-				"label": "場聚會和講座",
+				"value": "14000+",
+				"label": "實體活動參與人數",
 				"img": "aboutCamp3"
 			},
 			{
 				"type": "single",
-				"prefix": "扶持近",
+				"prefix": "培育出",
 				"value": "500",
 				"label": "名熱愛資訊的學員",
 				"img": "aboutCamp4"
@@ -424,7 +424,7 @@
 		}
 	},
 	"studentComment": {
-		"sectionTitle": "聽聽往年學員怎麼說的",
+		"sectionTitle": "聽聽往年學員現身說法",
 		"avatarAlt": "Student's pfp",
 		"comments": [
 			{
