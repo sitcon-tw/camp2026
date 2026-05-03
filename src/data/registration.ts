@@ -18,7 +18,7 @@ export const pricingRows = [
 export const noticeMarkdown = `1. 第 5 人（含）起將以原價計費。
 2. 提前一晚入住營隊 800 元/人。
 3. 若在 5/17（日）23:59 前報名即享有早鳥價，享有早鳥價者仍可享有團報優惠。
-4. 團體報名不保證全數錄取，團體報名凡錄取者（無論是否全數錄取）皆享有團報優惠價格，詳見[《報名簡章》](https://drive.google.com/file/d/1nxt-lYWAMnsK-QbwbbeIV7lTi9hcimTw/view)。
+4. 團體報名不保證全數錄取，團體報名凡錄取者（無論是否全數錄取）皆享有團報優惠價格，詳見[《報名簡章》](https://drive.google.com/file/d/1uY7zWu5NVCQ-gUIVyL_uOFRcOXear0qj/view?usp=drivesdk)。
 5. 本次夏令營預計招收學員 60 名，我們會針對報名資料做簡易審查，先報先審。
 6. 正取學員名單最晚將於 6/4（四）前公佈，屆時請關注 SITCON 相關社群媒體及 Email 信箱。
 7. 正取學員需完成報名費繳交，始完成報名程序；另設有補助名額，請詳閱[《報名費用補助辦法》](https://drive.google.com/file/d/1iITmqkfEe6PSXmqeqQMg8cnRg_cbVtgB/view?usp=sharing)。
