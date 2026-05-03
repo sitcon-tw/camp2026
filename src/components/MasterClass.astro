@@ -137,11 +137,14 @@ const masterClassDetails = masterClasses.map((masterClass, index) => ({
 	let mobileRevealObserver: IntersectionObserver | undefined;
 	let activeDetailIndex = -1;
 	let resizeFrame = 0;
+	type LayoutMode = "desktop" | "mobile";
+	let activeLayoutMode: LayoutMode | undefined;
 
 	const clamp = (value: number, min = 0, max = 1) => Math.min(Math.max(value, min), max);
 	const lerp = (from: number, to: number, progress: number) => from + (to - from) * progress;
 	const easeOutCubic = (value: number) => 1 - Math.pow(1 - value, 3);
 	const easeInOutCubic = (value: number) => (value < 0.5 ? 4 * value * value * value : 1 - Math.pow(-2 * value + 2, 3) / 2);
+	const getLayoutMode = (): LayoutMode => (desktopQuery.matches ? "desktop" : "mobile");
 
 	const setCardTransform = (card: HTMLElement, x: number, y: number, rotate: number, scale: number) => {
 		card.style.transform = `translate3d(${x}px, ${y}px, 0) rotate(${rotate}deg) scale(${scale})`;
@@ -324,7 +327,15 @@ const masterClassDetails = masterClasses.map((masterClass, index) => ({
 			return;
 		}
 
-		if (desktopQuery.matches) {
+		const layoutMode = getLayoutMode();
+
+		if (activeLayoutMode === layoutMode) {
+			return;
+		}
+
+		activeLayoutMode = layoutMode;
+
+		if (layoutMode === "desktop") {
 			setupDesktop();
 		} else {
 			revealMobile();
@@ -338,7 +349,6 @@ const masterClassDetails = masterClasses.map((masterClass, index) => ({
 
 	setup();
 	desktopQuery.addEventListener("change", requestSetup);
-	window.addEventListener("resize", requestSetup, { passive: true });
 </script>
 
 <style>
