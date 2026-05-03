@@ -9,9 +9,12 @@ import StudentComment from "@/components/StudentComment.astro";
 import RegistrationInfo from "@/components/RegistrationInfo.astro";
 import FAQ from "@/components/FAQ.astro";
 import OrganizersBrands from "@/components/OrganizerBrands.astro";
+import homeData from "@/data/home.json";
+
+const { pageMeta } = homeData;
 ---
 
-<Layout>
+<Layout title={pageMeta.title} description={pageMeta.description} ogImageAlt={pageMeta.ogImageAlt}>
 	<Hero />
 	<BrandMarquee />
 	<MasterClass />

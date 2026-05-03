@@ -68,4 +68,4 @@ for (const team of teamSection) {
 }
 
 const ABOUT_JSON = join(ROOT, "src", "data", "about.json");
-await writeFile(ABOUT_JSON, JSON.stringify(aboutData, null, "\t"), "utf-8");
+await writeFile(ABOUT_JSON, `${JSON.stringify(aboutData, null, "\t")}\n`, "utf-8");

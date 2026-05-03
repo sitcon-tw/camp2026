@@ -3,24 +3,69 @@ import { Font } from "astro:assets";
 import Footer from "@/components/Footer.astro";
 import "../styles/global.css";
 import Header from "@components/Header.astro";
-import defaultOgImage from "@/assets/seo/seo-og.jpg";
+import defaultOgImage from "@/assets/seo/seo-og-1200x630.jpg";
 import layoutData from "@/data/layout.json";
 
 interface Props {
 	title?: string;
 	description?: string;
 	ogImage?: string;
+	ogImageAlt?: string;
+	type?: "website" | "article";
+	noindex?: boolean;
 }
 
-const { title, description, ogImage } = Astro.props;
+const { title, description, ogImage, ogImageAlt, type = "website", noindex = false } = Astro.props;
 const { document: pageDocument } = layoutData;
+
+const siteURL = Astro.site ?? new URL("https://sitcon.camp");
+const canonicalURL = new URL(Astro.url.pathname, siteURL);
+const homeURL = new URL("/2026/", siteURL);
+const defaultOgImageAlt = "SITCON Camp 2026 活動主視覺";
 
 const seoData = {
 	title: title ?? pageDocument.siteName,
 	description: description ?? pageDocument.description,
-	canonicalURL: new URL(Astro.url.pathname, Astro.site),
-	ogImage: new URL(ogImage ?? defaultOgImage.src, Astro.site).href
+	canonicalURL: canonicalURL.href,
+	ogImage: new URL(ogImage ?? defaultOgImage.src, siteURL).href,
+	ogImageAlt: ogImageAlt ?? defaultOgImageAlt,
+	ogType: type,
+	robots: noindex ? "noindex, nofollow" : "index, follow, max-image-preview:large"
 };
+
+const socialLinks = layoutData.footer.sections
+	.flatMap(section => section.links ?? [])
+	.map(link => link.href)
+	.filter(href => href.startsWith("https://"));
+
+const publisher = {
+	"@type": "Organization",
+	name: "SITCON 學生計算機年會",
+	url: "https://sitcon.org"
+};
+
+const structuredData = [
+	{
+		...layoutData.eventLD,
+		image: [seoData.ogImage],
+		url: homeURL.href
+	},
+	{
+		"@context": "https://schema.org",
+		"@type": "WebSite",
+		name: pageDocument.siteName,
+		url: homeURL.href,
+		description: pageDocument.description,
+		inLanguage: pageDocument.lang,
+		publisher
+	},
+	{
+		"@context": "https://schema.org",
+		...publisher,
+		logo: new URL("/2026/favicon.svg", siteURL).href,
+		sameAs: socialLinks
+	}
+];
 ---
 
 <!doctype html>
@@ -51,30 +96,37 @@ const seoData = {
 		<!-- SEO: Basic Info -->
 		<title>{seoData.title}</title>
 		<meta name="description" content={seoData.description} />
+		<meta name="robots" content={seoData.robots} />
+		<meta name="googlebot" content={seoData.robots} />
+		<meta name="format-detection" content="telephone=no" />
 		<!-- <link rel="icon" href="/2026/favicon.svg" type="images/svg+html" /> -->
 		<link rel="canonical" href={seoData.canonicalURL} />
 		<link rel="sitemap" href="/2026/sitemap-index.xml" />
 		<meta name="theme-color" content="#80d34b" />
 
 		<!-- SEO: Open Graph -->
-		<meta property="og:type" content="website" />
-		<meta property="og:locale" content="zh_tw" />
+		<meta property="og:type" content={seoData.ogType} />
+		<meta property="og:locale" content="zh_TW" />
+		<meta property="og:site_name" content={pageDocument.siteName} />
 		<meta property="og:url" content={seoData.canonicalURL} />
 		<meta property="og:title" content={seoData.title} />
 		<meta property="og:description" content={seoData.description} />
 		<meta property="og:image" content={seoData.ogImage} />
 		<meta property="og:image:secure_url" content={seoData.ogImage} />
+		<meta property="og:image:type" content="image/jpeg" />
 		<meta property="og:image:width" content="1200" />
 		<meta property="og:image:height" content="630" />
+		<meta property="og:image:alt" content={seoData.ogImageAlt} />
 
 		<!-- SEO: Twitter / Discord rich preview -->
 		<meta name="twitter:card" content="summary_large_image" />
 		<meta name="twitter:title" content={seoData.title} />
 		<meta name="twitter:description" content={seoData.description} />
 		<meta name="twitter:image" content={seoData.ogImage} />
+		<meta name="twitter:image:alt" content={seoData.ogImageAlt} />
 
-		<!-- JSON-LD: Event -->
-		<script type="application/ld+json" set:html={JSON.stringify(layoutData.eventLD)} is:inline />
+		<!-- JSON-LD: Event / Site / Organization -->
+		<script type="application/ld+json" set:html={JSON.stringify(structuredData)} is:inline />
 	</head>
 	<body>
 		<!-- Google Tag Manager (noscript) -->
