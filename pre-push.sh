@@ -1,0 +1,15 @@
+#!/bin/sh
+
+set -eu
+
+run() {
+	echo "==> $*"
+	"$@"
+}
+
+run pnpm lint
+
+if ! run pnpm prettier:check; then
+	echo "Prettier check failed. Run \`pnpm prettier:write\`, review the changes, stage them, and commit again."
+	exit 1
+fi

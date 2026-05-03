@@ -4,7 +4,7 @@
 	"type": "module",
 	"scripts": {
 		"astro": "astro",
-		"build": "astro build && node scripts/font-subset.mjs",
+		"build": "node scripts/download-avatars.mjs && astro build && node scripts/font-subset.mjs",
 		"build:subset": "node scripts/font-subset.mjs",
 		"dev": "astro dev",
 		"preinstall": "npx only-allow pnpm",
@@ -16,14 +16,12 @@
 	},
 	"dependencies": {
 		"@astrojs/sitemap": "^3.7.2",
-		"@lucide/astro": "^1.11.0",
 		"@tailwindcss/vite": "^4.2.2",
 		"animejs": "^4.3.6",
 		"astro": "^6.1.5",
 		"astro-favicons": "^3.1.6",
 		"gsap": "^3.14.2",
 		"markdown-it": "^14.1.1",
-		"prettier-plugin-tailwindcss": "^0.7.2",
 		"sharp": "^0.34.5",
 		"tailwindcss": "^4.2.2"
 	},
