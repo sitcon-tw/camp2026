@@ -83,7 +83,7 @@ const videos = studentComment.video.map(video => {
 								data-comment-html={encodeURIComponent(c.renderedFullComment)}
 							>
 								<div class:list={["flex h-19 items-center gap-4 self-stretch rounded-t-4xl p-4", commentColorClassMap[c.color] ?? "bg-blue"]}>
-									<Image src={c.image} alt={studentComment.avatarAlt} class="aspect-square h-full w-auto rounded-full" />
+									<Image src={c.image} alt={studentComment.avatarAlt} class="aspect-square h-full w-auto rounded-full object-cover" />
 
 									<p class="text-[1.5rem] leading-[100%] font-bold text-white">{c.name}</p>
 
