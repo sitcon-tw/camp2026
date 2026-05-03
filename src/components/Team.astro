@@ -1,0 +1,203 @@
+﻿---
+import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
+import LucideX from "~icons/lucide/x";
+import aboutData from "@/data/about.json";
+
+const { team: teamContent } = aboutData;
+const teamGroups = teamContent.groups;
+const { modal } = teamContent;
+
+const avatarImages = import.meta.glob<{ default: ImageMetadata }>("../assets/team-avatars/*.jpg", { eager: true });
+---
+
+<script>
+	document.querySelectorAll<HTMLElement>("[data-member-id]").forEach(async el => {
+		el.addEventListener("mousedown", async () => {
+			//Fetching elements
+			const overlay = document.getElementById("overlay");
+			const closeBtn = document.getElementById("layout-cancel");
+			const closeSmBtn = document.getElementById("layout-cancel-sm");
+
+			const nameEle = document.getElementById("layout-name");
+			const desEle = document.getElementById("layout-des");
+			const linkEle = document.getElementById("layout-link") as HTMLAnchorElement | null;
+			const avatarEle = document.getElementById("layout-avatar") as HTMLImageElement | null;
+
+			const backavatarEle = document.getElementById(`b-${el.dataset.memberId}`);
+
+			if (!closeBtn || !closeSmBtn || !nameEle || !desEle || !linkEle || !avatarEle || !overlay || !backavatarEle) return;
+
+			//Setting content first so card height is correct before measuring layout-avatar position ( CLaude Fix )
+			const member = JSON.parse(el.dataset.member ?? "{}");
+			nameEle.textContent = member.name;
+			desEle.textContent = member.description;
+			const memberLink = typeof member.avatarLink === "string" ? member.avatarLink.trim() : "";
+			if (memberLink) {
+				linkEle.href = memberLink;
+				linkEle.textContent = memberLink;
+				linkEle.hidden = false;
+				if (linkEle.scrollWidth > linkEle.offsetWidth) {
+					let text = memberLink;
+					while (text.length > 0) {
+						text = text.slice(0, -3);
+						linkEle.textContent = text + "...";
+						if (linkEle.scrollWidth <= linkEle.offsetWidth) break;
+					}
+				}
+			} else {
+				linkEle.removeAttribute("href");
+				linkEle.textContent = "";
+				linkEle.hidden = true;
+			}
+
+			avatarEle.src = (el as HTMLImageElement).src;
+
+			//Instant set styling
+			const newAvatarRect = avatarEle.getBoundingClientRect();
+			const oldAvatarRect = el.getBoundingClientRect();
+			const avatarX = newAvatarRect.x;
+			const avatarY = newAvatarRect.y;
+			const oldAvatarX = oldAvatarRect.x;
+			const oldAvatarY = oldAvatarRect.y;
+
+			el.style.boxShadow = "0 0 0 0";
+			el.style.left = String(oldAvatarRect.x) + "px";
+			el.style.top = String(oldAvatarRect.y) + "px";
+			el.style.position = "fixed";
+			el.style.zIndex = "50";
+			const isDesktopAvatar = window.matchMedia("(min-width: 48rem)").matches;
+			el.style.maxWidth = isDesktopAvatar ? "12.5rem" : "9.375rem";
+			el.style.maxHeight = isDesktopAvatar ? "12.5rem" : "9.375rem";
+
+			backavatarEle.style.display = "block";
+			overlay.style.zIndex = "10";
+
+			el.style.transform = `translate(${avatarX - oldAvatarX}px, ${avatarY - oldAvatarY}px)`;
+			el.style.width = `${newAvatarRect.width}px`;
+			el.style.height = `${newAvatarRect.height}px`;
+
+			//Animation Start
+			await new Promise(resolve => setTimeout(resolve, 300));
+			overlay.style.opacity = "1";
+
+			//Animation Finish after work
+			await new Promise(resolve => setTimeout(resolve, 300));
+			el.style.opacity = "0";
+
+			//Closing Logic
+			closeBtn.addEventListener("click", closeAnimation, { once: true });
+			closeSmBtn.addEventListener("click", closeAnimation, { once: true });
+			overlay.addEventListener("click", closeAnimation, { once: true });
+			document.addEventListener("keydown", onEsc, { once: true });
+
+			function onEsc(e: KeyboardEvent) {
+				if (e.key === "Escape") closeAnimation();
+				else document.addEventListener("keydown", onEsc, { once: true });
+			}
+
+			async function closeAnimation() {
+				if (!overlay || !backavatarEle) return;
+
+				el.style.opacity = "";
+
+				await new Promise(resolve => setTimeout(resolve, 50));
+				overlay.style.opacity = "0";
+
+				await new Promise(resolve => setTimeout(resolve, 100));
+				el.style.boxShadow = "";
+				const backRect = backavatarEle.getBoundingClientRect();
+				el.style.transform = `translate(${backRect.x - parseFloat(el.style.left)}px, ${backRect.y - parseFloat(el.style.top)}px)`;
+				el.style.width = "";
+				el.style.height = "";
+				el.style.maxWidth = "";
+				el.style.maxHeight = "";
+
+				await new Promise(resolve => setTimeout(resolve, 250));
+
+				backavatarEle.style.display = "none";
+				overlay.style.zIndex = "-10";
+
+				el.style.transition = "none";
+				el.style.opacity = "0";
+				el.style.zIndex = "";
+				el.style.position = "";
+				el.style.top = "";
+				el.style.left = "";
+				el.style.transform = "";
+
+				requestAnimationFrame(() => {
+					el.style.opacity = "";
+					requestAnimationFrame(() => {
+						el.style.transition = "";
+					});
+				});
+			}
+		});
+	});
+</script>
+
+<div id="team" class="bg-background h-fit w-full pt-[clamp(8rem,10vw,9rem)] pb-12">
+	<div class="fixed inset-0 -z-10 flex h-full w-full flex-col items-start justify-center bg-black/30 px-8 opacity-0 transition-all duration-300 md:items-center" id="overlay">
+		<div class="bg-background relative mt-24 h-fit w-full overflow-hidden rounded-4xl p-8 md:max-w-5xl md:p-16 lg:h-98 lg:p-24">
+			<section class="row flex h-full w-full flex-col justify-start gap-4 md:flex-row md:gap-12">
+				<Image
+					src={modal.defaultAvatarUrl}
+					alt={modal.avatarAlt}
+					width={200}
+					height={200}
+					class="border-foreground mx-auto h-37.5 w-37.5 cursor-pointer rounded-xl border-4 hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[2px_2px_0_2px_var(--color-soft-blue)] md:h-50 md:w-50"
+					id="layout-avatar"
+				/>
+				<div class="flex h-full w-full min-w-0 flex-col justify-between">
+					<h1 class="mx-auto text-3xl font-bold md:mx-0 md:text-6xl" id="layout-name">{modal.namePlaceholder}</h1>
+					<p class="text-foreground my-4 text-lg font-bold" id="layout-des">{modal.descriptionPlaceholder}</p>
+					<a class="text-blue mt-auto block truncate text-lg font-bold underline underline-offset-3" id="layout-link" target="_blank" rel="noopener noreferrer" hidden>
+						{modal.linkPlaceholder}
+					</a>
+				</div>
+			</section>
+			<div class="bg-danger absolute top-0 right-0 hidden h-12 w-16 items-center justify-center rounded-bl-4xl transition-all duration-300 hover:scale-105 md:flex" id="layout-cancel">
+				<LucideX class="text-foreground h-10 w-10" />
+			</div>
+		</div>
+		<div class="text-foreground bg-danger-soft visible mt-4 flex h-16 w-full cursor-pointer items-center justify-center rounded-full font-bold md:hidden" id="layout-cancel-sm">
+			<p class="text-3xl font-bold">{modal.closeLabel}</p>
+		</div>
+	</div>
+
+	<section class="site-container">
+		<h1 class="bg-green h-fit w-fit p-3 text-5xl font-bold text-black">{teamContent.title}</h1>
+		{
+			teamGroups.map(group => (
+				<section class="my-4 mt-12 lg:mt-16">
+					<h2 class="text-4xl font-bold text-black">{group.name}</h2>
+					{group.description && <p class="text-foreground/70 mt-3 max-w-3xl text-lg leading-[1.7] font-bold">{group.description}</p>}
+
+					<div class="my-4 grid h-fit w-full grid-cols-[repeat(auto-fill,minmax(9.375rem,1fr))] justify-items-center gap-[clamp(1rem,20vw,2rem)]">
+						{group.members.map(data => (
+							<article class="my-4 flex h-fit w-full max-w-37.5 flex-col items-center">
+								<Image
+									src={avatarImages[`../assets/team-avatars/${data.avatarPath.split("/").pop()}`]?.default!}
+									alt={"avatar"}
+									width={150}
+									height={150}
+									class={`bg-background border-foreground h-37.5 w-37.5 flex-none cursor-pointer rounded-xl border-4 object-cover transition-all duration-300 hover:translate-x-0.5 hover:translate-y-0.5 ${data.description || data.avatarLink ? "shadow-[4px_4px_0_2px_var(--color-sky-400)] hover:shadow-[2px_2px_0_2px_var(--color-sky-400)]" : "shadow-[4px_4px_0_2px_var(--color-soft-blue)] hover:shadow-[2px_2px_0_2px_var(--color-soft-blue)]"}`}
+									data-member-id={`${group.name}-${data.name}`}
+									data-member={JSON.stringify({ name: data.name, description: data.description, avatarLink: data.avatarLink })}
+								/>
+								<div class="hidden h-37.5 w-37.5" id={`b-${group.name}-${data.name}`} />
+								<div class="mt-4 flex h-fit w-fit min-w-37.5 items-center justify-between gap-2">
+									<h3 class="text-lg font-bold">{data.name}</h3>
+									<div class="bg-foreground flex h-fit w-fit shrink-0 items-center justify-center rounded-full px-2 py-0.5">
+										<p class="text-xs text-white">#{data.job}</p>
+									</div>
+								</div>
+							</article>
+						))}
+					</div>
+				</section>
+			))
+		}
+	</section>
+</div>

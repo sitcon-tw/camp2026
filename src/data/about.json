@@ -1,0 +1,643 @@
+{
+	"pageMeta": {
+		"title": "關於我們 - SITCON 夏令營 2026",
+		"description": "介紹 SITCON 夏令營的活動理念、歷年營隊活動內容與今年籌備團隊，了解課程設計、學生交流與營隊籌備工作。",
+		"ogImageAlt": "SITCON Camp 2026 關於我們頁面社群分享預覽圖"
+	},
+	"eventsHeld": {
+		"eyebrow": "SITCON 活動",
+		"title": "讓學生一起探索資訊",
+		"lead": "SITCON 從學生出發，透過年會、Hour of Code、Camp 與 Hackathon，把資訊教育、技術交流與開源協作帶進不同學習階段。\n\n我們希望每個對資訊有興趣的人，都能找到入口、遇見夥伴，並在實作與分享中看見自己可以前進的方向。",
+		"stats": [
+			{
+				"value": "2012 起",
+				"label": "學生自發社群",
+				"note": "由學生籌辦、面向學生的資訊交流平台"
+			},
+			{
+				"value": "4 大活動",
+				"label": "不同階段的入口",
+				"note": "從資訊入門、營隊實作到年會交流"
+			},
+			{
+				"value": "Open Source",
+				"label": "共同學習與回饋",
+				"note": "把分享、協作與社群精神帶進學習"
+			}
+		],
+		"activities": [
+			{
+				"title": "啟蒙引路",
+				"kicker": "Hour of Code",
+				"description": "降低資訊學習的入門門檻，讓第一次接觸程式的學生，發現自己也能跨出學習的第一步。",
+				"imageKey": "hoc",
+				"color": "orange"
+			},
+			{
+				"title": "向下扎根",
+				"kicker": "SITCON Camp",
+				"description": "用五天四夜的完整時間沉浸式學習，把對資訊的好奇心轉為實作的能力，並在這裡結識一群志同道合的夥伴。",
+				"imageKey": "camp",
+				"color": "soft-blue"
+			},
+			{
+				"title": "凝聚人才",
+				"kicker": "SITCON 年會",
+				"description": "匯聚全台資訊學子，透過舞台交流與經驗傳承，讓跨世代、跨領域的人才在此被看見與發聲。",
+				"imageKey": "conference",
+				"color": "green"
+			},
+			{
+				"title": "實踐創意",
+				"kicker": "黑客松",
+				"description": "將天馬行空的構想落實為具體成果，在緊湊的團隊協作中，同心協力磨練解決問題的能力。",
+				"imageKey": "hackathon",
+				"color": "sky-blue"
+			}
+		]
+	},
+	"sitconTimeline": {
+		"config": {
+			"scrollHeight": 600
+		},
+		"items": [
+			{
+				"value": 0,
+				"prefix": "SITCON",
+				"suffix": "一切的起點"
+			},
+			{
+				"value": 500,
+				"prefix": "舉辦超過",
+				"suffix": "聚會和議程"
+			},
+			{
+				"value": 1400,
+				"prefix": "熱愛資訊的",
+				"suffix": "志工團隊"
+			},
+			{
+				"value": 14000,
+				"prefix": "總計",
+				"suffix": "年會參與者"
+			}
+		]
+	},
+	"team": {
+		"title": "團隊成員",
+		"modal": {
+			"defaultAvatarUrl": "https://i.pravatar.cc/300?img=12",
+			"avatarAlt": "avatar",
+			"namePlaceholder": "無名氏",
+			"descriptionPlaceholder": "",
+			"linkPlaceholder": "",
+			"linkHref": "",
+			"closeLabel": "Close"
+		},
+		"groups": [
+			{
+				"name": "總召組",
+				"description": "掌握營隊整體籌備進度，主持核心討論與決策，協調各組之間的溝通與合作。",
+				"members": [
+					{
+						"name": "Windless",
+						"description": "",
+						"job": "總召",
+						"avatarPath": "/assets/team-avatars/team-avatar-windless-5b168d8b.jpg",
+						"avatarLink": ""
+					},
+					{
+						"name": "Fearnot",
+						"description": "",
+						"job": "副召",
+						"avatarPath": "/assets/team-avatars/team-avatar-fearnot-4e2c4d83.jpg",
+						"avatarLink": ""
+					}
+				]
+			},
+			{
+				"name": "行政組",
+				"description": "負責維持營隊日常行政事務，包含人事管理、報名票務與對外聯繫等相關工作。",
+				"members": [
+					{
+						"name": "Ya",
+						"description": "嗨嗨這裡是 Ya，很像 E 人的大 I，佔領過行政編輯行銷隊輔剪輯的 SITCON 多棲仔 :D",
+						"job": "組長",
+						"avatarPath": "/assets/team-avatars/team-avatar-ya-3dc68268.jpg",
+						"avatarLink": "https://www.instagram.com/yu._yao/"
+					}
+				]
+			},
+			{
+				"name": "財務組",
+				"description": "負責營隊所有與金錢相關的業務，包含預算規劃、收支管理與贊助款項處理。",
+				"members": [
+					{
+						"name": "Lindy",
+						"description": "",
+						"job": "組長",
+						"avatarPath": "/assets/team-avatars/team-avatar-lindy-6c6c3bed.jpg",
+						"avatarLink": ""
+					},
+					{
+						"name": "Leaf",
+						"description": "",
+						"job": "出納",
+						"avatarPath": "/assets/team-avatars/team-avatar-leaf-5d62064f.jpg",
+						"avatarLink": ""
+					}
+				]
+			},
+			{
+				"name": "課活組",
+				"description": "負責規劃與執行營隊主線課程、黑客松及各式活動，打造兼具學習與互動的營隊體驗。",
+				"members": [
+					{
+						"name": "Nathan",
+						"description": "",
+						"job": "組長",
+						"avatarPath": "/assets/team-avatars/team-avatar-nathan-e087ca95.jpg",
+						"avatarLink": ""
+					},
+					{
+						"name": "Ak",
+						"description": "",
+						"job": "副組長",
+						"avatarPath": "/assets/team-avatars/team-avatar-ak-5c2bf4cd.jpg",
+						"avatarLink": ""
+					},
+					{
+						"name": "艾洛",
+						"description": "",
+						"job": "組員",
+						"avatarPath": "/assets/team-avatars/team-avatar-member-80c5174c.jpg",
+						"avatarLink": ""
+					},
+					{
+						"name": "Harry",
+						"description": "",
+						"job": "組員",
+						"avatarPath": "/assets/team-avatars/team-avatar-harry-1c05292e.jpg",
+						"avatarLink": ""
+					},
+					{
+						"name": "Arnoldsky",
+						"description": "",
+						"job": "組員",
+						"avatarPath": "/assets/team-avatars/team-avatar-arnoldsky-c317fa38.jpg",
+						"avatarLink": ""
+					},
+					{
+						"name": "Yoru",
+						"description": "哈囉，我是 Yoru，一個喜歡做各種神奇的東西的開發組組長，有興趣歡迎來找我聊聊~",
+						"job": "組員",
+						"avatarPath": "/assets/team-avatars/team-avatar-yoru-e788f68c.jpg",
+						"avatarLink": "https://yorukot.me"
+					},
+					{
+						"name": "Each",
+						"description": "",
+						"job": "組員",
+						"avatarPath": "/assets/team-avatars/team-avatar-each-17e00664.jpg",
+						"avatarLink": ""
+					},
+					{
+						"name": "肯德基爺爺",
+						"description": "",
+						"job": "組員",
+						"avatarPath": "/assets/team-avatars/team-avatar-member-74375aa2.jpg",
+						"avatarLink": ""
+					},
+					{
+						"name": "倫敦鐵喬",
+						"description": "",
+						"job": "組員",
+						"avatarPath": "/assets/team-avatars/team-avatar-member-8769ac73.jpg",
+						"avatarLink": ""
+					}
+				]
+			},
+			{
+				"name": "庶務組",
+				"description": "負責營隊場地、物資與生活後勤的安排，確保每位學員在營期間的食宿與日常需求順暢。",
+				"members": [
+					{
+						"name": "阿公",
+						"description": "早安你好~",
+						"job": "組長",
+						"avatarPath": "/assets/team-avatars/team-avatar-member-196e6470.jpg",
+						"avatarLink": "https://agong.tech"
+					},
+					{
+						"name": "伊藤蒼太",
+						"description": "",
+						"job": "組員",
+						"avatarPath": "/assets/team-avatars/team-avatar-member-6d58ba9b.jpg",
+						"avatarLink": ""
+					},
+					{
+						"name": "Tzufu",
+						"description": "一人做事，一人當；當當做事，當當當。",
+						"job": "組員",
+						"avatarPath": "/assets/team-avatars/team-avatar-tzufu-db13a6b8.jpg",
+						"avatarLink": "https://tzufu.me"
+					},
+					{
+						"name": "橘子",
+						"description": "希望可以拿到教師證的特教系大四\n科教所小精靈也是 SITCON 前一屆編輯組長兼行銷組員，正在各個地方遊蕩",
+						"job": "組員",
+						"avatarPath": "/assets/team-avatars/team-avatar-member-7530f6a8.jpg",
+						"avatarLink": "https://www.instagram.com/yuuu____1103?igsh=anhyM3J2a3F4bXYz"
+					}
+				]
+			},
+			{
+				"name": "紀錄組",
+				"description": "負責營隊期間的影像與文字紀錄，保存每個重要時刻，並提供各組所需的視覺素材。",
+				"members": [
+					{
+						"name": "康喔",
+						"description": "",
+						"job": "組長",
+						"avatarPath": "/assets/team-avatars/team-avatar-member-08b25778.jpg",
+						"avatarLink": ""
+					},
+					{
+						"name": "竺原",
+						"description": "",
+						"job": "組員",
+						"avatarPath": "/assets/team-avatars/team-avatar-member-078d4f74.jpg",
+						"avatarLink": ""
+					},
+					{
+						"name": "OnCloud",
+						"description": "",
+						"job": "組員",
+						"avatarPath": "/assets/team-avatars/team-avatar-oncloud-7dde549c.jpg",
+						"avatarLink": ""
+					}
+				]
+			},
+			{
+				"name": "隊輔組",
+				"description": "陪伴學員度過整段營期，引導小隊互動、協助課程進行，是學員在營隊中最親近的夥伴。",
+				"members": [
+					{
+						"name": "Wolf Yuan",
+						"description": "",
+						"job": "組長",
+						"avatarPath": "/assets/team-avatars/team-avatar-wolf-yuan-3d77e794.jpg",
+						"avatarLink": ""
+					},
+					{
+						"name": "77",
+						"description": "",
+						"job": "副組長",
+						"avatarPath": "/assets/team-avatars/team-avatar-77-d70fd2f5.jpg",
+						"avatarLink": ""
+					},
+					{
+						"name": "萊姆",
+						"description": "",
+						"job": "組員",
+						"avatarPath": "/assets/team-avatars/team-avatar-member-225720fe.jpg",
+						"avatarLink": ""
+					},
+					{
+						"name": "Yuki",
+						"description": "",
+						"job": "組員",
+						"avatarPath": "/assets/team-avatars/team-avatar-yuki-5511c2c5.jpg",
+						"avatarLink": ""
+					},
+					{
+						"name": "海鷗",
+						"description": "",
+						"job": "組員",
+						"avatarPath": "/assets/team-avatars/team-avatar-member-fd34ff3a.jpg",
+						"avatarLink": ""
+					},
+					{
+						"name": "XC",
+						"description": "",
+						"job": "組員",
+						"avatarPath": "/assets/team-avatars/team-avatar-xc-b4e3aa6f.jpg",
+						"avatarLink": ""
+					},
+					{
+						"name": "草蝦",
+						"description": "",
+						"job": "組員",
+						"avatarPath": "/assets/team-avatars/team-avatar-member-4e29cd33.jpg",
+						"avatarLink": ""
+					},
+					{
+						"name": "Yuto",
+						"description": "",
+						"job": "組員",
+						"avatarPath": "/assets/team-avatars/team-avatar-yuto-055bd89b.jpg",
+						"avatarLink": ""
+					},
+					{
+						"name": "Frank",
+						"description": "",
+						"job": "組員",
+						"avatarPath": "/assets/team-avatars/team-avatar-frank-94c8e676.jpg",
+						"avatarLink": ""
+					},
+					{
+						"name": "NT",
+						"description": "",
+						"job": "組員",
+						"avatarPath": "/assets/team-avatars/team-avatar-nt-a006e76e.jpg",
+						"avatarLink": ""
+					},
+					{
+						"name": "牛排",
+						"description": "",
+						"job": "組員",
+						"avatarPath": "/assets/team-avatars/team-avatar-member-036521d6.jpg",
+						"avatarLink": ""
+					},
+					{
+						"name": "鯨魚",
+						"description": "",
+						"job": "組員",
+						"avatarPath": "/assets/team-avatars/team-avatar-member-d67fdf1c.jpg",
+						"avatarLink": ""
+					},
+					{
+						"name": "AsciiBase64",
+						"description": "",
+						"job": "組員",
+						"avatarPath": "/assets/team-avatars/team-avatar-asciibase64-1eb1c3de.jpg",
+						"avatarLink": ""
+					},
+					{
+						"name": "CC",
+						"description": "大家好我是CC～",
+						"job": "組員",
+						"avatarPath": "/assets/team-avatars/team-avatar-cc-64b45b52.jpg",
+						"avatarLink": "https://www.linkedin.com/in/ching-tzu-li-874871287?utm_source=share_via&utm_content=profile&utm_medium=member_ios"
+					},
+					{
+						"name": "家誠",
+						"description": "",
+						"job": "組員",
+						"avatarPath": "/assets/team-avatars/team-avatar-member-47bf7455.jpg",
+						"avatarLink": ""
+					},
+					{
+						"name": "Tang Yu",
+						"description": "",
+						"job": "組員",
+						"avatarPath": "/assets/team-avatars/team-avatar-tang-yu-c1b1e27d.jpg",
+						"avatarLink": "https://candytangsys.github.io/blog/"
+					},
+					{
+						"name": "狐狸",
+						"description": "",
+						"job": "組員",
+						"avatarPath": "/assets/team-avatars/team-avatar-member-ed9c103b.jpg",
+						"avatarLink": ""
+					},
+					{
+						"name": "螢光",
+						"description": "",
+						"job": "組員",
+						"avatarPath": "/assets/team-avatars/team-avatar-member-b45ecf42.jpg",
+						"avatarLink": ""
+					},
+					{
+						"name": "芋泥",
+						"description": "",
+						"job": "組員",
+						"avatarPath": "/assets/team-avatars/team-avatar-member-62269d82.jpg",
+						"avatarLink": ""
+					},
+					{
+						"name": "金魚",
+						"description": "",
+						"job": "組員",
+						"avatarPath": "/assets/team-avatars/team-avatar-member-ed839169.jpg",
+						"avatarLink": ""
+					}
+				]
+			},
+			{
+				"name": "編輯組",
+				"description": "負責營隊的社群媒體經營與內容創作，從文案到圖文，讓 SITCON Camp 的故事被更多人看見。",
+				"members": [
+					{
+						"name": "Mina",
+						"description": "",
+						"job": "組長",
+						"avatarPath": "/assets/team-avatars/team-avatar-mina-dbfbb99d.jpg",
+						"avatarLink": ""
+					},
+					{
+						"name": "yuan",
+						"description": "",
+						"job": "副組長",
+						"avatarPath": "/assets/team-avatars/team-avatar-yuan-3f23d5b7.jpg",
+						"avatarLink": ""
+					},
+					{
+						"name": "Nathan",
+						"description": "",
+						"job": "組員",
+						"avatarPath": "/assets/team-avatars/team-avatar-nathan-e087ca95.jpg",
+						"avatarLink": ""
+					},
+					{
+						"name": "Ya",
+						"description": "嗨嗨這裡是 Ya，很像 E 人的大 I，佔領過行政編輯行銷隊輔剪輯的 SITCON 多棲仔 :D",
+						"job": "組員",
+						"avatarPath": "/assets/team-avatars/team-avatar-ya-3dc68268.jpg",
+						"avatarLink": "https://www.instagram.com/yu._yao/"
+					},
+					{
+						"name": "Wolf Yuan",
+						"description": "",
+						"job": "組員",
+						"avatarPath": "/assets/team-avatars/team-avatar-wolf-yuan-3d77e794.jpg",
+						"avatarLink": ""
+					},
+					{
+						"name": "橘子",
+						"description": "希望可以拿到教師證的特教系大四\n科教所小精靈也是 SITCON 前一屆編輯組長兼行銷組員，正在各個地方遊蕩",
+						"job": "組員",
+						"avatarPath": "/assets/team-avatars/team-avatar-member-7530f6a8.jpg",
+						"avatarLink": "https://www.instagram.com/yuuu____1103?igsh=anhyM3J2a3F4bXYz"
+					},
+					{
+						"name": "阿六",
+						"description": "",
+						"job": "組員",
+						"avatarPath": "/assets/team-avatars/team-avatar-member-e43859d0.jpg",
+						"avatarLink": ""
+					},
+					{
+						"name": "嵩嵩",
+						"description": "怎麽把鐵離子變成三個亞鐵離子？\n—\n—\n微分",
+						"job": "組員",
+						"avatarPath": "/assets/team-avatars/team-avatar-member-f9d9b023.jpg",
+						"avatarLink": ""
+					},
+					{
+						"name": "13",
+						"description": "",
+						"job": "組員",
+						"avatarPath": "/assets/team-avatars/team-avatar-13-c748d5c9.jpg",
+						"avatarLink": ""
+					},
+					{
+						"name": "宸",
+						"description": "",
+						"job": "組員",
+						"avatarPath": "/assets/team-avatars/team-avatar-member-9be56556.jpg",
+						"avatarLink": ""
+					},
+					{
+						"name": "Katy",
+						"description": "",
+						"job": "組員",
+						"avatarPath": "/assets/team-avatars/team-avatar-katy-b53ea2f7.jpg",
+						"avatarLink": ""
+					},
+					{
+						"name": "CC",
+						"description": "大家好我是CC～",
+						"job": "組員",
+						"avatarPath": "/assets/team-avatars/team-avatar-cc-0e7a7cf0.jpg",
+						"avatarLink": "https://www.linkedin.com/in/ching-tzu-li-874871287?utm_source=share_via&utm_content=profile&utm_medium=member_ios"
+					}
+				]
+			},
+			{
+				"name": "行銷組",
+				"description": "負責對外溝通、品牌呈現與社群內容，讓更多學生認識 SITCON Camp 的精神與活動資訊。",
+				"members": [
+					{
+						"name": "Denny Huang",
+						"description": "",
+						"job": "小精靈",
+						"avatarPath": "/assets/team-avatars/team-avatar-denny-huang-eb2a1371.jpg",
+						"avatarLink": ""
+					}
+				]
+			},
+			{
+				"name": "開發組",
+				"description": "負責網站、系統工具與活動期間的技術支援，讓營隊的線上流程與現場體驗穩定運作。",
+				"members": [
+					{
+						"name": "Yoru",
+						"description": "哈囉，我是 Yoru，一個喜歡做各種神奇的東西的開發組組長，有興趣歡迎來找我聊聊~",
+						"job": "組長",
+						"avatarPath": "/assets/team-avatars/team-avatar-yoru-e788f68c.jpg",
+						"avatarLink": "https://yorukot.me"
+					},
+					{
+						"name": "noeFly",
+						"description": "咩！我是 noeFly，請多指教！",
+						"job": "組員",
+						"avatarPath": "/assets/team-avatars/team-avatar-noefly-ce980bf2.jpg",
+						"avatarLink": "https://noefly.cc"
+					},
+					{
+						"name": "Kaiyasi",
+						"description": "",
+						"job": "組員",
+						"avatarPath": "/assets/team-avatars/team-avatar-kaiyasi-b7a14615.jpg",
+						"avatarLink": ""
+					},
+					{
+						"name": "tonicatowo",
+						"description": "我來自臺灣，是一名自學開發超過五年的高中生，曾經兼任嘉義高中資訊研究社 116th 的教學 。我把自己定位成業餘的 Website Designer 與 Fullstack Developer，喜歡從設計到部署一路把東西做出來 。",
+						"job": "組員",
+						"avatarPath": "/assets/team-avatars/team-avatar-tonicatowo-c2817b4c.jpg",
+						"avatarLink": "https://tonicatowo.xyz/"
+					},
+					{
+						"name": "白龍",
+						"description": "嗨，我是白龍，我喜歡研究網路和伺服器架設等相關技術。很榮幸能加入這次 SITCON 開發組，講個小知識，這個 Team Section 是我做的喔",
+						"job": "組員",
+						"avatarPath": "/assets/team-avatars/team-avatar-member-8ed5daf6.jpg",
+						"avatarLink": "https://whitedragon.life"
+					}
+				]
+			},
+			{
+				"name": "設計組",
+				"description": "負責營隊主視覺設計、網站視覺與相關紀念品發想，建立 SITCON Camp 獨特的視覺語言。",
+				"members": [
+					{
+						"name": "章魚",
+						"description": "",
+						"job": "組員",
+						"avatarPath": "/assets/team-avatars/team-avatar-member-18abe393.jpg",
+						"avatarLink": ""
+					},
+					{
+						"name": "花椰",
+						"description": "",
+						"job": "組員",
+						"avatarPath": "/assets/team-avatars/team-avatar-member-14e06aaa.jpg",
+						"avatarLink": ""
+					},
+					{
+						"name": "兆翌",
+						"description": "",
+						"job": "組員",
+						"avatarPath": "/assets/team-avatars/team-avatar-member-ea1f127f.jpg",
+						"avatarLink": ""
+					}
+				]
+			}
+		]
+	},
+	"organizerBrands": {
+		"sections": [
+			{
+				"tag": "主辦",
+				"items": [
+					{
+						"name": "SITCON",
+						"role": "主辦單位",
+						"description": "SITCON 是由學生自發組成的資訊社群，長期推動資訊教育、技術交流與開源精神。",
+						"iconPath": "/brand/sitcon-logo.svg"
+					},
+					{
+						"name": "開放文化基金會",
+						"role": "主辦單位",
+						"description": "開放文化基金會致力於推動開放文化、開放原始碼及自由軟體運動。",
+						"iconPath": "/sponsors/ocf.webp"
+					}
+				]
+			},
+			{
+				"tag": "協辦",
+				"items": [
+					{
+						"name": "陽明交通大學資訊工程系",
+						"role": "協辦單位",
+						"description": "陽明交通大學資訊工程系協助本次營隊辦理。",
+						"iconPath": "/sponsors/nycu-cs.png"
+					}
+				]
+			},
+			{
+				"tag": "特別感謝",
+				"items": [
+					{
+						"name": "Google for Developers",
+						"role": "特別感謝",
+						"description": "Google for Developers 支持開發者社群與技術學習。",
+						"iconPath": "/sponsors/google-for-developer.svg"
+					}
+				]
+			}
+		]
+	}
+}

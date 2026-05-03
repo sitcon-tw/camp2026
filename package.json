@@ -1,35 +1,45 @@
 {
-  "name": "camp2026",
-  "type": "module",
-  "version": "0.0.1",
-  "engines": {
-    "node": ">=22.12.0"
-  },
-  "scripts": {
-    "dev": "astro dev",
-    "build": "astro build",
-    "lint": "astro check",
-    "prettier:write": "prettier --write .",
-    "preview": "astro preview",
-    "astro": "astro"
-  },
-  "dependencies": {
-    "@astrojs/partytown": "^2.1.6",
-    "@lucide/astro": "^1.8.0",
-    "@tailwindcss/vite": "^4.2.2",
-    "astro": "^6.1.5",
-    "astro-favicons": "^3.1.6",
-    "gsap": "^3.14.2",
-    "hls.js": "^1.6.15",
-    "lenis": "^1.3.21",
-    "prettier-plugin-tailwindcss": "^0.7.2",
-    "sharp": "^0.34.5",
-    "tailwindcss": "^4.2.2"
-  },
-  "devDependencies": {
-    "@astrojs/check": "^0.9.8",
-    "prettier": "3.8.2",
-    "prettier-plugin-astro": "0.14.1",
-    "typescript": "^5.9.3"
-  }
+	"name": "camp2026",
+	"version": "0.0.1",
+	"type": "module",
+	"scripts": {
+		"astro": "astro",
+		"build": "node scripts/download-avatars.mjs && astro build && node scripts/font-subset.mjs",
+		"build:subset": "node scripts/font-subset.mjs",
+		"dev": "astro dev",
+		"preinstall": "npx only-allow pnpm",
+		"lint": "astro check",
+		"prepare": "sh -c 'command -v git >/dev/null 2>&1 && [ -d .git ] && git config core.hooksPath .githooks || exit 0'",
+		"prettier:check": "prettier --check .",
+		"prettier:write": "prettier --write .",
+		"preview": "astro preview"
+	},
+	"dependencies": {
+		"@astrojs/sitemap": "^3.7.2",
+		"@tailwindcss/vite": "^4.2.2",
+		"animejs": "^4.3.6",
+		"astro": "^6.1.5",
+		"astro-favicons": "^3.1.6",
+		"gsap": "^3.14.2",
+		"markdown-it": "^14.1.1",
+		"sharp": "^0.34.5",
+		"tailwindcss": "^4.2.2"
+	},
+	"devDependencies": {
+		"@astrojs/check": "^0.9.8",
+		"@iconify-json/ic": "^1.2.4",
+		"@iconify-json/lucide": "^1.2.104",
+		"@iconify/json": "^2.2.467",
+		"prettier": "3.8.2",
+		"prettier-plugin-astro": "0.14.1",
+		"prettier-plugin-organize-imports": "^4.3.0",
+		"prettier-plugin-packagejson": "^3.0.2",
+		"prettier-plugin-tailwindcss": "^0.7.2",
+		"subset-font": "^2.5.0",
+		"typescript": "^5.9.3",
+		"unplugin-icons": "^23.0.1"
+	},
+	"engines": {
+		"node": ">=22.12.0"
+	}
 }

@@ -1,5 +1,13 @@
 {
-  "extends": "astro/tsconfigs/strict",
-  "include": [".astro/types.d.ts", "**/*"],
-  "exclude": ["dist", "public/video/intro-hls/**/*.ts"]
+	"extends": "astro/tsconfigs/strict",
+	"include": [".astro/types.d.ts", "**/*"],
+	"exclude": ["dist", "public/video/intro-hls/**/*.ts"],
+	"compilerOptions": {
+		"baseUrl": ".",
+		"types": ["unplugin-icons/types/astro"],
+		"paths": {
+			"@/*": ["src/*"],
+			"@components/*": ["src/components/*"]
+		}
+	}
 }
