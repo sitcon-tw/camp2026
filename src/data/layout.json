@@ -78,15 +78,15 @@
 				"variant": "purple",
 				"type": "archive",
 				"links": [
-					{ "label": "2025", "href": "https://sitcon.org/2025" },
-					{ "label": "2024", "href": "https://sitcon.org/2024" },
-					{ "label": "2023", "href": "https://sitcon.org/2023" },
-					{ "label": "2022", "href": "https://sitcon.org/2022" },
-					{ "label": "2021", "href": "https://sitcon.org/2021" },
-					{ "label": "2020", "href": "https://sitcon.org/2020" },
-					{ "label": "2019", "href": "https://sitcon.org/2019" },
-					{ "label": "2018", "href": "https://sitcon.org/2018" },
-					{ "label": "2017", "href": "https://sitcon.org/2017" }
+					{ "label": "2025", "href": "https://sitcon.camp/2025/" },
+					{ "label": "2024", "href": "https://sitcon.camp/2024/" },
+					{ "label": "2023", "href": "https://sitcon.camp/2023/" },
+					{ "label": "2021", "href": "https://sitcon.camp/2021/" },
+					{ "label": "2019", "href": "https://sitcon.camp/2019/" },
+					{ "label": "2017", "href": "https://sitcon.camp/2017/" },
+					{ "label": "2016", "href": "https://sitcon.camp/2016/" },
+					{ "label": "2015", "href": "https://sitcon.camp/2015/" },
+					{ "label": "2014", "href": "https://sitcon.camp/2014/" }
 				]
 			},
 			{
