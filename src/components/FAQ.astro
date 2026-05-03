@@ -5,7 +5,6 @@ import MarkdownIt from "markdown-it";
 
 const { faq } = homeData;
 const md = new MarkdownIt({ linkify: true });
-const renderInline = (src: string) => md.render(src).replace(/^<p>|<\/p>\n?$/g, "");
 ---
 
 <main class="bg-background flex flex-col items-center pt-32 pb-16 sm:pt-36 sm:pb-20 lg:pt-40 lg:pb-32">
@@ -26,9 +25,9 @@ const renderInline = (src: string) => md.render(src).replace(/^<p>|<\/p>\n?$/g, 
 							<ChevronDown class="faq-icon h-4 w-4 shrink-0 transition-transform duration-300 sm:h-5 sm:w-5 md:h-6 md:w-6" />
 						</summary>
 						<div class="faq-body overflow-hidden" style="height: 0">
-							<div class="bg-foreground text-background mt-1.5 rounded-xl px-4 py-3 text-lg leading-[160%] font-normal sm:mt-2 sm:rounded-2xl sm:px-5 sm:py-4 md:px-7 md:py-5">
-								<span class="text-background font-extrabold">{faq.answerPrefix}</span>
-								<span class="faq-answer" set:html={renderInline(answer)} />
+							<div class="bg-foreground text-background mt-1.5 flex gap-1.5 rounded-xl px-4 py-3 text-lg leading-[160%] font-normal sm:mt-2 sm:rounded-2xl sm:px-5 sm:py-4 md:px-7 md:py-5">
+								<span class="text-background shrink-0 font-extrabold">{faq.answerPrefix}</span>
+								<div class="faq-answer min-w-0" set:html={md.render(answer)} />
 							</div>
 						</div>
 					</details>
@@ -75,6 +74,32 @@ const renderInline = (src: string) => md.render(src).replace(/^<p>|<\/p>\n?$/g, 
 </script>
 
 <style>
+	.faq-answer :global(:first-child) {
+		margin-top: 0;
+	}
+
+	.faq-answer :global(:last-child) {
+		margin-bottom: 0;
+	}
+
+	.faq-answer :global(p) {
+		margin-block: 0.5rem;
+	}
+
+	.faq-answer :global(ul),
+	.faq-answer :global(ol) {
+		margin-block: 0.5rem;
+		padding-inline-start: 1.4rem;
+	}
+
+	.faq-answer :global(ul) {
+		list-style: disc;
+	}
+
+	.faq-answer :global(ol) {
+		list-style: decimal;
+	}
+
 	.faq-answer :global(a) {
 		@apply underline underline-offset-2 hover:opacity-80;
 	}
