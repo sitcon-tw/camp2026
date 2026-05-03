@@ -1,8 +1,8 @@
 {
 	"pageMeta": {
 		"title": "關於我們 - SITCON 夏令營 2026",
-		"description": "說明 SITCON 夏令營的活動理念與歷年營隊內容，回顧過往課程、學生交流與資訊學習體驗。",
-		"ogImage": "/2026/src/assets/ogImg/og-img-about.jpg"
+		"description": "介紹 SITCON 夏令營的活動理念、歷年營隊活動內容與今年籌備團隊，了解課程設計、學生交流與營隊籌備工作。",
+		"ogImage": "/2026/src/assets/ogImg/og.png"
 	},
 	"eventsHeld": {
 		"eyebrow": "Past Events",
