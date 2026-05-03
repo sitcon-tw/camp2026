@@ -131,7 +131,7 @@ const masterClassDetails = masterClasses.map((masterClass, index) => ({
 	const deck = section?.querySelector<HTMLElement>("[data-master-deck]");
 	const cards = section ? Array.from(section.querySelectorAll<HTMLElement>("[data-master-card]")) : [];
 	const details = section ? Array.from(section.querySelectorAll<HTMLElement>("[data-master-detail]")) : [];
-	const desktopQuery = window.matchMedia("(min-width: 72.001rem) and (min-height: 44.001rem)");
+	const desktopQuery = window.matchMedia("(min-width: 72.001rem) and (min-height: 48.001rem)");
 
 	let observer: ReturnType<typeof onScroll> | undefined;
 	let mobileRevealObserver: IntersectionObserver | undefined;
@@ -694,7 +694,7 @@ const masterClassDetails = masterClasses.map((masterClass, index) => ({
 		letter-spacing: 0;
 	}
 
-	@media (max-width: 72rem), (max-height: 44rem) {
+	@media (max-width: 72rem), (max-height: 48rem) {
 		.master-class {
 			min-height: auto;
 		}
@@ -746,7 +746,7 @@ const masterClassDetails = masterClasses.map((masterClass, index) => ({
 		}
 	}
 
-	@media (min-width: 72.001rem) and (min-height: 44.001rem) and (max-height: 48rem) {
+	@media (min-width: 72.001rem) and (min-height: 48.001rem) and (max-height: 52rem) {
 		.master-class__sticky {
 			padding-block: clamp(6.1rem, 12svh, 6.4rem) clamp(1rem, 2svh, 1.5rem);
 		}
