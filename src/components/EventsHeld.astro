@@ -1,11 +1,6 @@
 ---
 import type { ImageMetadata } from "astro";
 import { Image } from "astro:assets";
-import Coffee from "~icons/lucide/coffee";
-import CodeXml from "~icons/lucide/code-xml";
-import Network from "~icons/lucide/network";
-import Rocket from "~icons/lucide/rocket";
-import Sparkles from "~icons/lucide/sparkles";
 
 import imgCamp from "@/assets/pics/camp.webp";
 import imgEdu from "@/assets/pics/edu.webp";
@@ -14,7 +9,6 @@ import imgHackathon from "@/assets/pics/hackathon.webp";
 import aboutData from "@/data/about.json";
 
 type ActivityColor = "soft-blue" | "orange" | "green" | "sky-blue" | "dark-green";
-type ActivityIcon = "code" | "coffee" | "network" | "rocket" | "sparkles";
 type ActivityImage = "camp" | "edu" | "groups" | "hackathon";
 
 type EventsHeldContent = {
@@ -31,7 +25,6 @@ type EventsHeldContent = {
 		kicker: string;
 		description: string;
 		imageKey: ActivityImage;
-		iconKey: ActivityIcon;
 		color: ActivityColor;
 	}[];
 };
@@ -45,42 +38,29 @@ const imageMap: Record<ActivityImage, ImageMetadata> = {
 	hackathon: imgHackathon
 };
 
-const iconMap = {
-	code: CodeXml,
-	coffee: Coffee,
-	network: Network,
-	rocket: Rocket,
-	sparkles: Sparkles
-};
-
-const colorClassMap: Record<ActivityColor, { bar: string; icon: string; ring: string; dot: string }> = {
+const colorClassMap: Record<ActivityColor, { bar: string; ring: string; dot: string }> = {
 	"soft-blue": {
 		bar: "bg-soft-blue",
-		icon: "bg-soft-blue text-foreground",
 		ring: "ring-soft-blue",
 		dot: "bg-soft-blue"
 	},
 	orange: {
 		bar: "bg-orange",
-		icon: "bg-orange text-foreground",
 		ring: "ring-orange",
 		dot: "bg-orange"
 	},
 	green: {
 		bar: "bg-green",
-		icon: "bg-green text-foreground",
 		ring: "ring-green",
 		dot: "bg-green"
 	},
 	"sky-blue": {
 		bar: "bg-sky-blue",
-		icon: "bg-sky-blue text-foreground",
 		ring: "ring-sky-blue",
 		dot: "bg-sky-blue"
 	},
 	"dark-green": {
 		bar: "bg-dark-green",
-		icon: "bg-dark-green text-background",
 		ring: "ring-dark-green",
 		dot: "bg-dark-green"
 	}
@@ -112,10 +92,9 @@ const colorClassMap: Record<ActivityColor, { bar: string; icon: string; ring: st
 			</div>
 		</div>
 
-		<div class="mt-[clamp(2rem,5vw,4rem)] grid gap-5 md:grid-cols-2 xl:grid-cols-5">
+		<div class="mt-[clamp(2rem,5vw,4rem)] grid gap-5 md:grid-cols-2 xl:grid-cols-4">
 			{
 				eventsHeld.activities.map((activity, i) => {
-					const Icon = iconMap[activity.iconKey];
 					const color = colorClassMap[activity.color];
 
 					return (
@@ -135,9 +114,6 @@ const colorClassMap: Record<ActivityColor, { bar: string; icon: string; ring: st
 									decoding="async"
 								/>
 								<div class="from-foreground via-foreground/10 absolute inset-0 bg-linear-to-t to-transparent" />
-								<div class:list={["absolute top-4 left-4 grid h-12 w-12 place-items-center rounded-full", color.icon]}>
-									<Icon class="h-6 w-6" aria-hidden="true" />
-								</div>
 							</div>
 							<div class="flex flex-1 flex-col p-5">
 								<p class="text-background/55 mb-2 text-sm leading-none font-extrabold tracking-normal">{activity.kicker}</p>

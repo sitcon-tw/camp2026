@@ -7,7 +7,6 @@ type Org = {
 	role?: string;
 	description?: string;
 	iconPath: string;
-	url?: string;
 };
 
 const isOrg = (v: unknown): v is Org => {
@@ -48,25 +47,9 @@ const sections = await Promise.all(
 					<div class="flex flex-wrap items-center justify-center gap-4 gap-y-6 sm:gap-6 md:justify-start lg:gap-8">
 						{items.map(org => {
 							const logoClass = org.name === "Google for Developers" ? "h-12 w-auto object-contain md:h-16 lg:h-20" : "h-20 w-auto object-contain md:h-28 lg:h-32";
-							const logo = org.meta ? (
-								<Image src={org.meta} alt={org.name} class={logoClass} />
-							) : (
-								<img src={org.iconPath} alt={org.name} class={logoClass} />
-							);
+							const logo = org.meta ? <Image src={org.meta} alt={org.name} class={logoClass} /> : <img src={org.iconPath} alt={org.name} class={logoClass} />;
 
-							return org.url ? (
-								<a
-									href={org.url}
-									target="_blank"
-									rel="noopener noreferrer"
-									class="org-card group focus-visible:ring-primary-blue/50 focus-visible:ring-2 focus-visible:outline-none"
-									aria-label={`前往 ${org.name}`}
-								>
-									{logo}
-								</a>
-							) : (
-								<div class="org-card group">{logo}</div>
-							);
+							return <div class="org-card group">{logo}</div>;
 						})}
 					</div>
 				</section>

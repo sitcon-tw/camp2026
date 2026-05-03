@@ -74,7 +74,7 @@ const getMemberImage = (member: Member) => {
 							const image = getMemberImage(member);
 
 							return (
-								<div class="member-card relative h-95 w-70 shrink-0 cursor-pointer rounded-[2.5rem] text-left" data-member-id={member._memberId}>
+								<div class="member-card relative h-95 w-70 shrink-0 rounded-[2.5rem] text-left" data-member-id={member._memberId}>
 									<div class="relative h-full w-full overflow-hidden rounded-[2.5rem] border-r-6 border-b-6" style={`border-color: var(--color-${member.accent})`}>
 										<Image src={image} alt={member.name} class="h-full w-full object-cover" loading="eager" decoding="async" width={280} height={380} format="webp" />
 
@@ -116,14 +116,13 @@ const getMemberImage = (member: Member) => {
 		const sourceItems = groups[0] ? Array.from(groups[0].children).map(item => item.cloneNode(true)) : [];
 		const marqueeDuration = 50_000;
 		let groupWidth = 0;
-		let isHovered = false;
 		let isFocused = false;
 		let isPointerDown = false;
 		let lastFrameTime = 0;
 		let didSetInitialScroll = false;
 
 		function shouldPauseMarquee() {
-			return isHovered || isFocused || isPointerDown;
+			return isFocused || isPointerDown;
 		}
 
 		function normalizeMasterScroll() {
@@ -182,11 +181,7 @@ const getMemberImage = (member: Member) => {
 		fillMasterMarquee();
 		window.addEventListener("resize", fillMasterMarquee);
 		viewport.addEventListener("scroll", normalizeMasterScroll, { passive: true });
-		viewport.addEventListener("pointerenter", () => {
-			isHovered = true;
-		});
 		viewport.addEventListener("pointerleave", () => {
-			isHovered = false;
 			isPointerDown = false;
 			lastFrameTime = 0;
 		});

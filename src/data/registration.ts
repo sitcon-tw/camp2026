@@ -3,7 +3,7 @@ export const eventInfo = {
 	venueName: "國立陽明交通大學",
 	venueDetail: "光復校區 · 新竹市東區大學路 1001 號",
 	dateLabel: "營期",
-	dateRange: "2026/07/08 – 07/12",
+	dateRange: "07/08 – 07/12",
 	dateNote: "共五天四夜"
 };
 

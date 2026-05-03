@@ -117,7 +117,10 @@ const comments = studentComment.comments.map(c => ({
 
 	<dialog id="student-comment-dialog" class="bg-foreground text-background m-auto w-[calc(100%-2rem)] max-w-2xl rounded-4xl p-0 backdrop:bg-black/50">
 		<div id="student-comment-dialog-header" class="bg-blue flex items-center justify-between rounded-t-4xl p-5">
-			<h3 id="student-comment-dialog-name" class="text-2xl leading-[100%] font-bold text-white"></h3>
+			<div class="flex min-w-0 items-center gap-4">
+				<img id="student-comment-dialog-avatar" class="size-12 shrink-0 rounded-full object-cover" alt="" loading="lazy" decoding="async" />
+				<h3 id="student-comment-dialog-name" class="truncate text-2xl leading-[100%] font-bold text-white"></h3>
+			</div>
 
 			<button type="button" class="grid size-10 place-items-center rounded-full text-3xl leading-none text-white hover:bg-white/15" data-student-comment-close aria-label="關閉完整學員回饋">×</button>
 		</div>
@@ -211,6 +214,8 @@ const comments = studentComment.comments.map(c => ({
 	const studentCommentDialogHeader = document.getElementById("student-comment-dialog-header") as HTMLDivElement | null;
 
 	const studentCommentDialogName = document.getElementById("student-comment-dialog-name") as HTMLHeadingElement | null;
+
+	const studentCommentDialogAvatar = document.getElementById("student-comment-dialog-avatar") as HTMLImageElement | null;
 
 	const studentCommentDialogText = document.getElementById("student-comment-dialog-text") as HTMLDivElement | null;
 
@@ -327,6 +332,12 @@ const comments = studentComment.comments.map(c => ({
 
 		if (studentCommentDialogName) {
 			studentCommentDialogName.textContent = card.dataset.studentName ?? "";
+		}
+
+		if (studentCommentDialogAvatar) {
+			const avatar = card.querySelector("img");
+			studentCommentDialogAvatar.src = avatar?.currentSrc || avatar?.src || "";
+			studentCommentDialogAvatar.alt = avatar?.alt ?? "";
 		}
 
 		if (studentCommentDialogText) {
