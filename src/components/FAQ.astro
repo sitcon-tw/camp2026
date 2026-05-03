@@ -5,17 +5,17 @@ import ChevronDown from "~icons/lucide/chevron-down";
 const { faq } = homeData;
 ---
 
-<main class="bg-background flex flex-col items-center pt-[clamp(8rem,10vw,10rem)] pb-[clamp(4rem,8.47vw,8rem)]">
+<main class="bg-background flex flex-col items-center pt-32 pb-16 sm:pt-36 sm:pb-20 lg:pt-40 lg:pb-32">
 	<div class="site-container w-full">
-		<h1 class="text-center text-[clamp(2.25rem,4.44vw,4rem)] leading-[150%] font-extrabold text-black">
+		<h1 class="text-center text-5xl leading-[150%] font-extrabold text-black lg:text-[4rem]">
 			{faq.title}
 		</h1>
 
-		<div class="mx-auto mt-[clamp(2.5rem,8.47vw,8rem)] flex w-full max-w-3xl flex-col gap-3 sm:gap-4 lg:gap-5">
+		<div class="mx-auto mt-10 flex w-full max-w-3xl flex-col gap-3 sm:mt-16 sm:gap-4 lg:mt-32 lg:gap-5">
 			{
 				faq.items.map(({ question, answer }) => (
 					<details class="faq-item w-full">
-						<summary class="faq-summary bg-soft-blue text-background flex min-h-14 cursor-pointer items-center justify-between gap-3 rounded-xl px-4 py-3 text-[clamp(1.125rem,1.587vw,1.5rem)] leading-[150%] font-extrabold transition-all duration-200 hover:brightness-95 active:scale-[0.99] sm:min-h-[4.25rem] sm:rounded-2xl sm:px-4 sm:py-4 md:px-6 lg:min-h-20 [&::-webkit-details-marker]:hidden">
+						<summary class="faq-summary bg-soft-blue text-background flex min-h-16 cursor-pointer items-center justify-between gap-3 rounded-xl px-4 py-3 text-xl leading-[150%] font-extrabold transition-all duration-200 hover:brightness-95 active:scale-[0.99] sm:min-h-[4.25rem] sm:rounded-2xl sm:px-4 sm:py-4 md:px-6 lg:min-h-20 lg:text-2xl [&::-webkit-details-marker]:hidden">
 							<span>
 								<span class="text-background/70">{faq.questionPrefix}</span>
 								{question}
@@ -23,7 +23,7 @@ const { faq } = homeData;
 							<ChevronDown class="faq-icon h-4 w-4 shrink-0 transition-transform duration-300 sm:h-5 sm:w-5 md:h-6 md:w-6" />
 						</summary>
 						<div class="faq-body overflow-hidden" style="height: 0">
-							<div class="bg-foreground text-background mt-1.5 rounded-xl px-4 py-3 text-[clamp(1rem,1.2vw,1.125rem)] leading-[160%] font-normal sm:mt-2 sm:rounded-2xl sm:px-5 sm:py-4 md:px-7 md:py-5">
+							<div class="bg-foreground text-background mt-1.5 rounded-xl px-4 py-3 text-lg leading-[160%] font-normal sm:mt-2 sm:rounded-2xl sm:px-5 sm:py-4 md:px-7 md:py-5">
 								<span class="text-background font-extrabold">{faq.answerPrefix}</span>
 								{answer}
 							</div>

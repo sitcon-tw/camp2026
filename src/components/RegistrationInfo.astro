@@ -30,79 +30,76 @@ const renderedNotice = mdRenderer.render(registration.noticeMarkdown);
 	<svg id="reg-transition" viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" class="block w-full" aria-hidden="true"></svg>
 </div>
 
-<section
-	id="registration-info"
-	class="bg-foreground pt-(--gap) pb-(--gap) text-white"
-	style="--row-h: clamp(4rem, 5.4vw, 5.125rem); --radius: clamp(1.75rem, 4.2vw, 4rem); --gap: clamp(1.5rem, 4.2vw, 4rem); --label-size: clamp(1.25rem, 2.1vw, 2rem); --heading-size: clamp(2rem, 3.25vw, 2.5rem)"
->
-	<div class="site-container">
+<section id="registration-info" class="bg-foreground py-6 text-white sm:py-10 lg:py-16">
+		<div class="site-container">
 		<div class="bg-green flex w-fit items-center justify-center gap-2.5 p-2.5">
-			<span class="text-foreground leading-none font-bold" style="font-size: var(--heading-size)">{registration.sectionTitle}</span>
+			<span class="text-foreground text-3xl leading-none font-bold sm:text-4xl lg:text-[2.5rem]">{registration.sectionTitle}</span>
 		</div>
 
-		<div class="bg-soft-blue text-background relative grid w-full overflow-hidden lg:grid-cols-[minmax(0,1fr)_minmax(18rem,0.48fr)]" style="margin-top: var(--gap); border-radius: var(--radius) 0">
-			<MapPinIcon class="text-background/15 pointer-events-none absolute -right-8 -bottom-14 h-auto w-[clamp(10rem,24vw,18rem)] rotate-[-10deg]" aria-hidden="true" />
+		<div
+			class="bg-soft-blue text-background relative mt-6 grid w-full overflow-hidden rounded-[1.75rem_0] sm:mt-10 sm:rounded-[2.5rem_0] lg:mt-16 lg:grid-cols-[minmax(0,1fr)_minmax(18rem,0.48fr)] lg:rounded-[4rem_0]"
+		>
+			<MapPinIcon class="text-background/15 pointer-events-none absolute -right-8 -bottom-14 h-auto w-40 rotate-[-10deg] sm:w-56 lg:w-72" aria-hidden="true" />
 
-			<div class="relative z-10 flex flex-col gap-4 p-[clamp(1.25rem,4vw,3.5rem)]">
-				<span class="text-[clamp(0.875rem,1.35vw,1.125rem)] leading-none font-bold opacity-70">{eventInfo.venueLabel}</span>
+			<div class="relative z-10 flex flex-col gap-4 p-5 sm:p-8 lg:p-14">
+				<span class="text-lg leading-none font-bold opacity-70">{eventInfo.venueLabel}</span>
 				<div class="flex flex-col gap-4 sm:flex-row sm:items-center">
-					<span class="bg-background text-soft-blue flex size-[clamp(3.25rem,6vw,5rem)] shrink-0 items-center justify-center rounded-full">
+					<span class="bg-background text-soft-blue flex size-13 shrink-0 items-center justify-center rounded-full sm:size-16 lg:size-20">
 						<MapPinIcon class="h-[52%] w-[52%]" aria-hidden="true" />
 					</span>
 					<div class="flex min-w-0 flex-col gap-2">
-						<h3 class="text-[clamp(1.75rem,4vw,3.5rem)] leading-[120%] font-extrabold">{eventInfo.venueName}</h3>
-						<p class="text-background/80 text-[clamp(1rem,1.7vw,1.35rem)] leading-[150%] font-bold">{eventInfo.venueDetail}</p>
+						<h3 class="text-4xl leading-[120%] font-extrabold sm:text-5xl lg:text-[3.5rem]">{eventInfo.venueName}</h3>
+						<p class="text-background/80 text-lg leading-[150%] font-bold lg:text-[1.35rem]">{eventInfo.venueDetail}</p>
 					</div>
 				</div>
 			</div>
 
-			<div class="bg-background text-foreground border-foreground/25 relative z-10 flex flex-col justify-center border-t-4 p-[clamp(1.25rem,3vw,2.25rem)] lg:border-t-0 lg:border-l-4">
+			<div class="bg-background text-foreground border-foreground/25 relative z-10 flex flex-col justify-center border-t-4 p-5 sm:p-7 lg:border-t-0 lg:border-l-4 lg:p-9">
 				<div class="flex items-center gap-3">
-					<span class="bg-green flex size-[clamp(2.75rem,4.5vw,3.75rem)] shrink-0 items-center justify-center rounded-full">
+					<span class="bg-green flex size-12 shrink-0 items-center justify-center rounded-full sm:size-14 lg:size-[3.75rem]">
 						<CalendarDaysIcon class="text-foreground h-[54%] w-[54%]" aria-hidden="true" />
 					</span>
-					<span class="text-foreground/60 text-[clamp(0.875rem,1.35vw,1.125rem)] leading-none font-bold">{eventInfo.dateLabel}</span>
+					<span class="text-foreground/60 text-lg leading-none font-bold">{eventInfo.dateLabel}</span>
 				</div>
-				<strong class="mt-5 text-[clamp(1.5rem,3vw,2.5rem)] leading-[120%] font-extrabold">{eventInfo.dateRange}</strong>
-				<span class="text-foreground/70 mt-2 text-[clamp(1rem,1.5vw,1.25rem)] leading-[150%] font-bold">{eventInfo.dateNote}</span>
+				<strong class="mt-5 text-3xl leading-[120%] font-extrabold sm:text-4xl lg:text-[2.5rem]">{eventInfo.dateRange}</strong>
+				<span class="text-foreground/70 mt-2 text-lg leading-[150%] font-bold lg:text-xl">{eventInfo.dateNote}</span>
 			</div>
 		</div>
 
 		<DateLine variant="c" />
 
-		<div class="flex w-full flex-col items-start lg:flex-row" style="margin-top: var(--gap)">
+		<div class="mt-6 flex w-full flex-col items-start sm:mt-10 lg:mt-16 lg:flex-row">
 			<div class="flex w-full flex-col items-start lg:flex-691">
 				{
 					registration.pricingRows.map(({ label, color, price, roundedStart, roundedEnd }) => (
 						<div
-							class="bg-background grid w-full grid-cols-2 items-center border-y border-black px-[9.262%]"
-							style={`height: var(--row-h); ${roundedStart ? "border-top-left-radius: var(--radius);" : ""}${roundedEnd ? "border-bottom-right-radius: var(--radius);" : ""}`}
+							class:list={[
+								"bg-background grid h-[4.5rem] w-full grid-cols-2 items-center border-y border-black px-[9.262%] sm:h-20 lg:h-[5.125rem]",
+								roundedStart && "rounded-tl-[1.75rem] sm:rounded-tl-[2.5rem] lg:rounded-tl-[4rem]",
+								roundedEnd && "rounded-br-[1.75rem] sm:rounded-br-[2.5rem] lg:rounded-br-[4rem]"
+							]}
 						>
-							<span class:list={["text-center leading-[150%] font-extrabold", pricingColorClassMap[color] ?? "text-orange"]} style="font-size: var(--label-size)">
-								{label}
-							</span>
-							<span class="text-center leading-[150%] font-extrabold text-black" style="font-size: var(--label-size)">
-								{price}
-							</span>
+							<span class:list={["text-center text-2xl leading-[150%] font-extrabold sm:text-[1.75rem] lg:text-[2rem]", pricingColorClassMap[color] ?? "text-orange"]}>{label}</span>
+							<span class="text-center text-2xl leading-[150%] font-extrabold text-black sm:text-[1.75rem] lg:text-[2rem]">{price}</span>
 						</div>
 					))
 				}
 			</div>
 
-			<div class="relative mt-(--gap) aspect-565/410 w-full overflow-hidden lg:mt-0 lg:flex-565">
+			<div class="relative mt-6 aspect-565/410 w-full overflow-hidden sm:mt-10 lg:mt-0 lg:flex-565">
 				<Image src={registrationPhoto} alt={registration.photoAlt} class="absolute top-[6.585%] left-[7.434%] aspect-239/159 w-[85.133%] object-cover" loading="lazy" decoding="async" />
 				<div class="absolute right-[4%] bottom-[4.878%] left-[4%] flex justify-center gap-2 sm:right-[8%] sm:left-[8%] sm:gap-3">
 					<a
 						href={registration.ctaBrochure.href}
 						target="_blank"
 						rel="noreferrer"
-						class="bg-background text-foreground flex h-[clamp(3.5rem,15vw,4.5rem)] w-[min(44vw,13rem)] items-center justify-center rounded-2xl px-3 text-[clamp(1.125rem,5.3vw,2.125rem)] leading-[150%] font-extrabold whitespace-nowrap shadow-[clamp(0.25rem,0.53vw,0.5rem)_clamp(0.25rem,0.53vw,0.5rem)_0_0_var(--color-orange)] sm:w-auto sm:px-4"
+						class="bg-background text-foreground flex h-14 w-[44vw] max-w-[13rem] items-center justify-center rounded-2xl px-3 text-xl leading-[150%] font-extrabold whitespace-nowrap shadow-[0.25rem_0.25rem_0_0_var(--color-orange)] sm:h-16 sm:w-auto sm:px-4 sm:text-2xl lg:h-[4.5rem] lg:text-[2.125rem] lg:shadow-[0.5rem_0.5rem_0_0_var(--color-orange)]"
 					>
 						{registration.ctaBrochure.label}
 					</a>
 					<a
 						href={registration.cta.href}
-						class="bg-green flex h-[clamp(3.5rem,15vw,4.5rem)] w-[min(44vw,13rem)] items-center justify-center rounded-2xl px-3 text-[clamp(1.125rem,5.3vw,2.125rem)] leading-[150%] font-extrabold whitespace-nowrap text-white shadow-[clamp(0.25rem,0.53vw,0.5rem)_clamp(0.25rem,0.53vw,0.5rem)_0_0_var(--color-orange)] sm:w-auto sm:px-4"
+						class="bg-green flex h-14 w-[44vw] max-w-[13rem] items-center justify-center rounded-2xl px-3 text-xl leading-[150%] font-extrabold whitespace-nowrap text-white shadow-[0.25rem_0.25rem_0_0_var(--color-orange)] sm:h-16 sm:w-auto sm:px-4 sm:text-2xl lg:h-[4.5rem] lg:text-[2.125rem] lg:shadow-[0.5rem_0.5rem_0_0_var(--color-orange)]"
 					>
 						{registration.cta.label}
 					</a>
@@ -110,11 +107,11 @@ const renderedNotice = mdRenderer.render(registration.noticeMarkdown);
 			</div>
 		</div>
 
-		<div class="bg-orange flex w-fit items-center justify-center gap-2.5 p-2.5" style="margin-top: var(--gap)">
-			<span class="text-foreground leading-none font-bold" style="font-size: var(--heading-size)">{registration.noticeTitle}</span>
+		<div class="bg-orange mt-6 flex w-fit items-center justify-center gap-2.5 p-2.5 sm:mt-10 lg:mt-16">
+			<span class="text-foreground text-3xl leading-none font-bold sm:text-4xl lg:text-[2.5rem]">{registration.noticeTitle}</span>
 		</div>
 
-		<div class="mt-6 text-[clamp(1rem,1.25vw,1.125rem)] leading-[170%] font-bold text-white [&_a]:underline [&_ol]:list-decimal [&_ol]:space-y-1 [&_ol]:pl-6" set:html={renderedNotice} />
+		<div class="mt-6 text-lg leading-[170%] font-bold text-white [&_a]:underline [&_ol]:list-decimal [&_ol]:space-y-1 [&_ol]:pl-6" set:html={renderedNotice} />
 	</div>
 </section>
 
