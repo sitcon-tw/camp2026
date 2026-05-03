@@ -1,12 +1,12 @@
 {
 	"items": [
 		{
-			"date": "05/17\n23:59",
+			"date": "05/17 23:59",
 			"label": "早鳥截止",
 			"iconKey": "sparkles"
 		},
 		{
-			"date": "05/31\n23:59",
+			"date": "05/31 23:59",
 			"label": "一般報名截止",
 			"iconKey": "rocket"
 		},

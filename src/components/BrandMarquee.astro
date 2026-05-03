@@ -1,9 +1,9 @@
 ---
 import type { ImageMetadata } from "astro";
-import SitconBrand from "@/assets/brand/sitcon-logo.svg";
-import GoogleForDevelopersBrand from "@/assets/sponsors/google-for-developer.svg";
-import NycuCsBrand from "@/assets/sponsors/nycu-cs.png";
-import OcfBrand from "@/assets/sponsors/ocf.webp";
+import SitconBrand from "@/assets/organizer-brand/sitcon.svg";
+import GoogleForDevelopersBrand from "@/assets/organizer-brand/google-for-developer.svg";
+import NycuCsBrand from "@/assets/organizer-brand/nycu-cs.svg";
+import OcfBrand from "@/assets/organizer-brand/ocf.svg";
 import homeData from "@/data/home.json";
 
 const { brandMarquee } = homeData;
@@ -30,7 +30,7 @@ const marqueeItems = Array.from({ length: brandMarquee.repeatItems }, (_, index)
 				[0, 1].map(groupIndex => (
 					<div class="brand-marquee__group" data-marquee-group={groupIndex}>
 						{marqueeItems.map(brand => (
-							<img class="brand-marquee__logo" data-brand-key={brand.imageKey} src={brand.src} width={brand.width} height={brand.height} alt={brand.alt} loading="lazy" decoding="async" />
+							<img class="brand-marquee__logo" src={brand.src} width={brand.width} height={brand.height} alt={brand.alt} loading="lazy" decoding="async" />
 						))}
 					</div>
 				))
@@ -49,7 +49,7 @@ const marqueeItems = Array.from({ length: brandMarquee.repeatItems }, (_, index)
 
 	.brand-marquee__viewport {
 		overflow: hidden;
-		padding-block: clamp(0.85rem, 1.5vw, 1.25rem);
+		padding-block: clamp(0.45rem, 0.9vw, 0.75rem);
 	}
 
 	.brand-marquee__track {
@@ -70,13 +70,8 @@ const marqueeItems = Array.from({ length: brandMarquee.repeatItems }, (_, index)
 		display: block;
 		flex: 0 0 auto;
 		width: auto;
-		height: clamp(7rem, 12vw, 10rem);
+		height: clamp(4rem, 7vw, 5.75rem);
 		object-fit: contain;
-	}
-
-	.brand-marquee__logo[data-brand-key="googleForDevelopers"] {
-		width: clamp(10rem, 22vw, 14rem);
-		height: auto;
 	}
 
 	@keyframes brand-marquee-scroll {
@@ -92,12 +87,7 @@ const marqueeItems = Array.from({ length: brandMarquee.repeatItems }, (_, index)
 		}
 
 		.brand-marquee__logo {
-			height: clamp(5.2rem, 24vw, 7rem);
-		}
-
-		.brand-marquee__logo[data-brand-key="googleForDevelopers"] {
-			width: clamp(9rem, 52vw, 12rem);
-			height: auto;
+			height: clamp(3.25rem, 15vw, 4.75rem);
 		}
 	}
 

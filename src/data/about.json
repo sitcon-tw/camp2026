@@ -606,13 +606,13 @@
 						"name": "SITCON",
 						"role": "主辦單位",
 						"description": "SITCON 是由學生自發組成的資訊社群，長期推動資訊教育、技術交流與開源精神。",
-						"iconPath": "/brand/sitcon-logo.svg"
+						"iconPath": "/organizer-brand/sitcon.svg"
 					},
 					{
 						"name": "開放文化基金會",
 						"role": "主辦單位",
 						"description": "開放文化基金會致力於推動開放文化、開放原始碼及自由軟體運動。",
-						"iconPath": "/sponsors/ocf.webp"
+						"iconPath": "/organizer-brand/ocf.svg"
 					}
 				]
 			},
@@ -623,7 +623,7 @@
 						"name": "陽明交通大學資訊工程系",
 						"role": "協辦單位",
 						"description": "陽明交通大學資訊工程系協助本次營隊辦理。",
-						"iconPath": "/sponsors/nycu-cs.png"
+						"iconPath": "/organizer-brand/nycu-cs.svg"
 					}
 				]
 			},
@@ -634,7 +634,7 @@
 						"name": "Google for Developers",
 						"role": "特別感謝",
 						"description": "Google for Developers 支持開發者社群與技術學習。",
-						"iconPath": "/sponsors/google-for-developer.svg"
+						"iconPath": "/organizer-brand/google-for-developer.svg"
 					}
 				]
 			}
