@@ -79,18 +79,18 @@ const cards = registration.infoCards.map(card => ({
 				<Image src={registrationPhoto} alt={registration.photoAlt} class="absolute top-[6.585%] left-[7.434%] aspect-239/159 w-[85.133%] object-cover" loading="lazy" decoding="async" />
 				<div class="absolute right-[8%] bottom-[4.878%] left-[8%] flex justify-center gap-3">
 					<a
-						href={registration.cta.href}
-						class="bg-green flex h-[clamp(2.75rem,17.561%,4.5rem)] items-center justify-center rounded-2xl px-4 text-[clamp(1rem,2.25vw,2.125rem)] leading-[150%] font-extrabold text-white shadow-[clamp(0.25rem,0.53vw,0.5rem)_clamp(0.25rem,0.53vw,0.5rem)_0_0_var(--color-orange)]"
-					>
-						{registration.cta.label}
-					</a>
-					<a
 						href={registration.ctaBrochure.href}
 						target="_blank"
 						rel="noreferrer"
 						class="bg-background text-foreground flex h-[clamp(2.75rem,17.561%,4.5rem)] items-center justify-center rounded-2xl px-4 text-[clamp(1rem,2.25vw,2.125rem)] leading-[150%] font-extrabold shadow-[clamp(0.25rem,0.53vw,0.5rem)_clamp(0.25rem,0.53vw,0.5rem)_0_0_var(--color-orange)]"
 					>
 						{registration.ctaBrochure.label}
+					</a>
+					<a
+						href={registration.cta.href}
+						class="bg-green flex h-[clamp(2.75rem,17.561%,4.5rem)] items-center justify-center rounded-2xl px-4 text-[clamp(1rem,2.25vw,2.125rem)] leading-[150%] font-extrabold text-white shadow-[clamp(0.25rem,0.53vw,0.5rem)_clamp(0.25rem,0.53vw,0.5rem)_0_0_var(--color-orange)]"
+					>
+						{registration.cta.label}
 					</a>
 				</div>
 			</div>
