@@ -62,6 +62,12 @@ export default defineConfig({
 		sitemap({
 			lastmod: new Date()
 		}),
-		favicons()
+		favicons({
+			name: 'SITCON Camp 2026',
+			short_name: 'Camp 2026',
+			output: {
+				assetsPrefix: '/2026/'
+			}
+		})
 	]
 });
