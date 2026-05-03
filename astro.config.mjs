@@ -63,14 +63,14 @@ export default defineConfig({
 			lastmod: new Date()
 		}),
 		favicons({
-      name: "SITCON Camp 2026",
-      short_name: "SITCON Camp",
-      output: {
-        images: true,
-        files: true,
-        html: true,
-        assetsPrefix: base,
-      },
+			name: "SITCON Camp 2026",
+			short_name: "SITCON Camp",
+			output: {
+				images: true,
+				files: true,
+				html: true,
+				assetsPrefix: base
+			}
 		})
 	]
 });
