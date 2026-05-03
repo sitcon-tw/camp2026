@@ -63,10 +63,10 @@ export default defineConfig({
 			lastmod: new Date()
 		}),
 		favicons({
-			name: 'SITCON Camp 2026',
-			short_name: 'Camp 2026',
+			name: "SITCON Camp 2026",
+			short_name: "Camp 2026",
 			output: {
-				assetsPrefix: '/2026/'
+				assetsPrefix: "/2026/"
 			}
 		})
 	]
