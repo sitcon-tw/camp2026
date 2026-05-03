@@ -1,8 +1,10 @@
 ---
 import homeData from "@/data/home.json";
 import ChevronDown from "~icons/lucide/chevron-down";
+import MarkdownIt from "markdown-it";
 
 const { faq } = homeData;
+const md = new MarkdownIt({ linkify: true });
 ---
 
 <main class="bg-background flex flex-col items-center pt-32 pb-16 sm:pt-36 sm:pb-20 lg:pt-40 lg:pb-32">
@@ -25,7 +27,7 @@ const { faq } = homeData;
 						<div class="faq-body overflow-hidden" style="height: 0">
 							<div class="bg-foreground text-background mt-1.5 rounded-xl px-4 py-3 text-lg leading-[160%] font-normal sm:mt-2 sm:rounded-2xl sm:px-5 sm:py-4 md:px-7 md:py-5">
 								<span class="text-background font-extrabold">{faq.answerPrefix}</span>
-								{answer}
+								<span class="faq-answer" set:html={md.renderInline(answer)} />
 							</div>
 						</div>
 					</details>
@@ -70,3 +72,9 @@ const { faq } = homeData;
 		});
 	});
 </script>
+
+<style>
+	.faq-answer :global(a) {
+		@apply underline underline-offset-2 hover:opacity-80;
+	}
+</style>
