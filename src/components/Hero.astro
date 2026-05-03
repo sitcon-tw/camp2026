@@ -6,11 +6,11 @@ const { hero } = homeData;
 const heroIntro = hero.intro;
 const topics = heroIntro.topics;
 const heroWallImages = Object.entries(
-	import.meta.glob<{ default: ImageMetadata }>("../assets/hero/wall/*.webp", {
+	import.meta.glob<{ default: ImageMetadata }>("../assets/hero-wall/*.webp", {
 		eager: true
 	})
 )
-	.sort(([firstPath], [secondPath]) => firstPath.localeCompare(secondPath))
+	.sort(([firstPath], [secondPath]) => firstPath.localeCompare(secondPath, undefined, { numeric: true }))
 	.map(([, image]) => image.default);
 const heroPhotoWallColumns = hero.photoWallColumns;
 ---

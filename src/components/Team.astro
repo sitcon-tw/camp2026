@@ -8,7 +8,7 @@ const { team: teamContent } = aboutData;
 const teamGroups = teamContent.groups;
 const { modal } = teamContent;
 
-const avatarImages = import.meta.glob<{ default: ImageMetadata }>("../assets/about/teams/*.jpg", { eager: true });
+const avatarImages = import.meta.glob<{ default: ImageMetadata }>("../assets/team-avatars/*.jpg", { eager: true });
 ---
 
 <script>
@@ -178,7 +178,7 @@ const avatarImages = import.meta.glob<{ default: ImageMetadata }>("../assets/abo
 						{group.members.map(data => (
 							<article class="my-4 flex h-fit w-full max-w-37.5 flex-col items-center">
 								<Image
-									src={avatarImages[`../assets/about/teams/${data.avatarPath.split("/").pop()}`]?.default!}
+									src={avatarImages[`../assets/team-avatars/${data.avatarPath.split("/").pop()}`]?.default!}
 									alt={"avatar"}
 									width={150}
 									height={150}

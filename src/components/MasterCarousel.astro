@@ -5,7 +5,7 @@ import homeData from "@/data/home.json";
 
 const imageMap = Object.fromEntries(
 	Object.entries(
-		import.meta.glob<{ default: ImageMetadata }>("../assets/strong-speakers/*.{avif,jpeg,jpg,png,webp}", {
+		import.meta.glob<{ default: ImageMetadata }>("../assets/feature-members/*.{avif,jpeg,jpg,png,webp}", {
 			eager: true
 		})
 	).map(([path, image]) => {

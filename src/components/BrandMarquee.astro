@@ -1,15 +1,16 @@
 ---
-import SitconBrand from "@/assets/brand/SITCON.svg";
+import type { ImageMetadata } from "astro";
+import SitconBrand from "@/assets/brand/sitcon-logo.svg";
 import GoogleForDevelopersBrand from "@/assets/sponsors/google-for-developer.svg";
-import NctuCsBrand from "@/assets/sponsors/nctucs.png";
-import OcfBrand from "@/assets/sponsors/ocf.DsnHfLaA_27BfWa.webp";
+import NycuCsBrand from "@/assets/sponsors/nycu-cs.png";
+import OcfBrand from "@/assets/sponsors/ocf.webp";
 import homeData from "@/data/home.json";
 
 const { brandMarquee } = homeData;
 const brandAssets: Record<string, ImageMetadata> = {
 	sitcon: SitconBrand,
 	ocf: OcfBrand,
-	nctucs: NctuCsBrand,
+	nycuCs: NycuCsBrand,
 	googleForDevelopers: GoogleForDevelopersBrand
 };
 const brands = brandMarquee.brands.map(brand => ({

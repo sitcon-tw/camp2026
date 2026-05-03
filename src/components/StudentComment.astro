@@ -1,4 +1,5 @@
 ---
+import type { ImageMetadata } from "astro";
 import { Image } from "astro:assets";
 import MaterialSymbolsPlayCircleOutlineRounded from "~icons/material-symbols/play-circle-outline-rounded";
 import MarkdownIt from "markdown-it";
@@ -16,9 +17,11 @@ const commentColorClassMap: Record<string, string> = {
 	"soft-blue": "bg-soft-blue"
 };
 
-const studentImages = Object.values(import.meta.glob<{ default: ImageMetadata }>("../assets/comment/student/*.{jpg,png}", { eager: true })).map(mod => mod.default);
+const studentImages = new Map(
+	Object.entries(import.meta.glob<{ default: ImageMetadata }>("../assets/student-comments/*.{jpg,png,webp}", { eager: true })).map(([path, mod]) => [path.split("/").pop() ?? path, mod.default])
+);
 const videoCoverImages = new Map(
-	Object.entries(import.meta.glob<{ default: ImageMetadata }>("../assets/comment/video/*.{jpg,png,webp}", { eager: true })).map(([path, mod]) => [path.split("/").pop() ?? path, mod.default])
+	Object.entries(import.meta.glob<{ default: ImageMetadata }>("../assets/video-covers/*.{jpg,png,webp}", { eager: true })).map(([path, mod]) => [path.split("/").pop() ?? path, mod.default])
 );
 
 const mdRenderer = new MarkdownIt({
@@ -27,10 +30,19 @@ const mdRenderer = new MarkdownIt({
 	breaks: true
 });
 
-const comments = studentComment.comments.map(c => ({
-	...c,
-	renderedFullComment: mdRenderer.render(c.fullComment ?? "")
-}));
+const comments = studentComment.comments.map(c => {
+	const image = studentImages.get(c.image);
+
+	if (!image) {
+		throw new Error(`Missing student comment image: ${c.image}`);
+	}
+
+	return {
+		...c,
+		image,
+		renderedFullComment: mdRenderer.render(c.fullComment ?? "")
+	};
+});
 
 const videos = studentComment.video.map(video => {
 	const cover = videoCoverImages.get(video.cover);
@@ -60,7 +72,7 @@ const videos = studentComment.video.map(video => {
 			<div class="relative z-10">
 				<div class="grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-4 md:gap-x-8 md:gap-y-10 lg:grid-cols-3 lg:gap-x-16">
 					{
-						comments.map((c, i) => (
+						comments.map(c => (
 							<button
 								type="button"
 								class="bg-foreground flex cursor-pointer flex-col items-start rounded-4xl transition-transform hover:-translate-y-1"
@@ -71,7 +83,7 @@ const videos = studentComment.video.map(video => {
 								data-comment-html={encodeURIComponent(c.renderedFullComment)}
 							>
 								<div class:list={["flex h-19 items-center gap-4 self-stretch rounded-t-4xl p-4", commentColorClassMap[c.color] ?? "bg-blue"]}>
-									<Image src={studentImages[i]} alt={studentComment.avatarAlt} class="aspect-square h-full w-auto rounded-full" />
+									<Image src={c.image} alt={studentComment.avatarAlt} class="aspect-square h-full w-auto rounded-full" />
 
 									<p class="text-[1.5rem] leading-[100%] font-bold text-white">{c.name}</p>
 
