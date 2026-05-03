@@ -17,6 +17,9 @@ const commentColorClassMap: Record<string, string> = {
 };
 
 const studentImages = Object.values(import.meta.glob<{ default: ImageMetadata }>("../assets/comment/student/*.{jpg,png}", { eager: true })).map(mod => mod.default);
+const videoCoverImages = new Map(
+	Object.entries(import.meta.glob<{ default: ImageMetadata }>("../assets/comment/video/*.{jpg,png,webp}", { eager: true })).map(([path, mod]) => [path.split("/").pop() ?? path, mod.default])
+);
 
 const mdRenderer = new MarkdownIt({
 	html: false,
@@ -28,6 +31,16 @@ const comments = studentComment.comments.map(c => ({
 	...c,
 	renderedFullComment: mdRenderer.render(c.fullComment ?? "")
 }));
+
+const videos = studentComment.video.map(video => {
+	const cover = videoCoverImages.get(video.cover);
+
+	if (!cover) {
+		throw new Error(`Missing student comment video cover: ${video.cover}`);
+	}
+
+	return { ...video, cover };
+});
 ---
 
 <div class="bg-background relative overflow-hidden">
@@ -79,19 +92,20 @@ const comments = studentComment.comments.map(c => ({
 			{
 				[0, 1].map(groupIndex => (
 					<div class="marquee-group flex shrink-0 gap-4 pr-4" data-marquee-group aria-hidden={groupIndex === 1 ? "true" : undefined}>
-						{studentComment.video.map(v => (
+						{videos.map(v => (
 							<button
 								type="button"
-								class="video-card bg-foreground relative aspect-video w-[min(82vw,28rem)] cursor-pointer rounded-4xl bg-cover bg-center"
-								style={`background-image: url('${v.cover}')`}
+								class="video-card bg-foreground relative aspect-video w-[min(82vw,28rem)] cursor-pointer overflow-hidden rounded-4xl"
 								data-url={v.url}
 								aria-label={`播放 ${v.label} 影片`}
 							>
-								<div class="from-foreground flex h-full w-full items-center justify-center rounded-4xl bg-linear-to-t from-0% to-transparent to-30%">
+								<Image src={v.cover} alt="" class="absolute inset-0 h-full w-full object-cover" loading="lazy" decoding="async" />
+
+								<div class="from-foreground relative z-10 flex h-full w-full items-center justify-center rounded-4xl bg-linear-to-t from-0% to-transparent to-30%">
 									<MaterialSymbolsPlayCircleOutlineRounded class="text-background text-2xl" />
 								</div>
 
-								<p class="text-background absolute bottom-3 left-0 w-full text-center text-3xl font-bold">{v.label}</p>
+								<p class="text-background absolute bottom-3 left-0 z-10 w-full text-center text-3xl font-bold">{v.label}</p>
 							</button>
 						))}
 					</div>

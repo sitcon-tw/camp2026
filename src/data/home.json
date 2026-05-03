@@ -366,22 +366,22 @@
 		"video": [
 			{
 				"label": "SITCON Camp 2019",
-				"cover": "/2026/src/assets/comment/video/video-2019.jpg",
+				"cover": "video-2019.jpg",
 				"url": "https://www.youtube-nocookie.com/embed/oAtiOrpj6DQ?controls=0"
 			},
 			{
 				"label": "SITCON Camp 2023 專訪",
-				"cover": "/2026/src/assets/comment/video/video-2023.jpg",
+				"cover": "video-2023.jpg",
 				"url": "https://www.youtube-nocookie.com/embed/22tBfn5gaAc?controls=0"
 			},
 			{
 				"label": "SITCON Camp 2024",
-				"cover": "/2026/src/assets/comment/video/video-2024.jpg",
+				"cover": "video-2024.jpg",
 				"url": "https://www.youtube-nocookie.com/embed/oAtiOrpj6DQ?controls=0"
 			},
 			{
 				"label": "SITCON Camp 2025",
-				"cover": "/2026/src/assets/comment/video/video-2025.jpg",
+				"cover": "video-2025.jpg",
 				"url": "https://www.youtube-nocookie.com/embed/CansA62TYXY?controls=0"
 			}
 		]
