@@ -21,7 +21,7 @@ const { document: pageDocument } = layoutData;
 const siteURL = Astro.site ?? new URL("https://sitcon.camp");
 const canonicalURL = new URL(Astro.url.pathname, siteURL);
 const homeURL = new URL("/2026/", siteURL);
-const defaultOgImageAlt = "SITCON Camp 2026 活動主視覺";
+const defaultOgImageAlt = "SITCON 夏令營 2026 活動主視覺";
 
 const seoData = {
 	title: title ?? pageDocument.siteName,

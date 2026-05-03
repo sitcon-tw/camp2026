@@ -2,7 +2,7 @@
 	"pageMeta": {
 		"title": "SITCON 夏令營 2026｜五天四夜資訊營隊",
 		"description": "SITCON 夏令營 2026 是五天四夜資訊營隊，帶領高中生透過課程、實作與同儕交流探索軟體工程、AI 與資訊安全。",
-		"ogImageAlt": "SITCON Camp 2026 官網社群分享預覽圖"
+		"ogImageAlt": "SITCON 夏令營 2026 官網社群分享預覽圖"
 	},
 	"hero": {
 		"title": "SITCON Camp 2026",
@@ -284,21 +284,21 @@
 			{
 				"id": "harry",
 				"name": "Harry",
-				"role": "特殊選才錄取台大資工系",
+				"role": "特殊選才錄取台大資工",
 				"imgKey": "feature-member-harry",
 				"bio": "特殊選才錄取台大資工"
 			},
 			{
 				"id": "ak",
 				"name": "Ak",
-				"role": "特殊選才錄取陽明交大資工系",
+				"role": "特殊選才錄取陽明交大資工",
 				"imgKey": "feature-member-ak",
 				"bio": "特殊選才錄取陽明交大資工"
 			},
 			{
 				"id": "wolf",
 				"name": "Wolf",
-				"role": "特殊選才錄取成大資工系",
+				"role": "特殊選才錄取成大資工",
 				"imgKey": "feature-member-wolf",
 				"bio": "特殊選才錄取成大資工"
 			},
@@ -368,21 +368,21 @@
 			{
 				"id": "fearnot",
 				"name": "Fearnot",
-				"role": "特殊選才錄取中央資工系",
+				"role": "特殊選才錄取中央資工",
 				"imgKey": "feature-member-fearnot",
 				"bio": "特殊選才錄取中央資工"
 			},
 			{
 				"id": "kaiyasi",
 				"name": "Kaiyasi",
-				"role": "特殊選才錄取中興應數系",
+				"role": "特殊選才錄取中興應數",
 				"imgKey": "feature-member-kaiyasi",
 				"bio": "特殊選才錄取中興應數"
 			},
 			{
 				"id": "each",
 				"name": "Each",
-				"role": "特殊選才錄取中興應數系",
+				"role": "特殊選才錄取中興應數",
 				"imgKey": "feature-member-each",
 				"bio": "特殊選才錄取中興應數"
 			}
