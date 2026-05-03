@@ -119,12 +119,10 @@ const renderedNotice = mdRenderer.render(registration.noticeMarkdown);
 </section>
 
 <!-- 底部過渡：對角線斜切，上=foreground 下=background -->
-<div class="overflow-hidden">
-	<svg viewBox="0 0 1440 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" class="block w-full" aria-hidden="true">
-		<!-- 上方三角形：foreground -->
-		<polygon points="0,0 1440,0 0,80" fill="var(--color-foreground)"></polygon>
-		<!-- 下方三角形：background -->
-		<polygon points="1440,0 1440,80 0,80" fill="var(--color-background)"></polygon>
+<div class="bg-background overflow-hidden">
+	<svg viewBox="0 0 1440 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" class="bg-background -mt-px block w-full" aria-hidden="true">
+		<!-- 多蓋 1px，避免斜切邊緣出現次像素縫隙 -->
+		<polygon points="0,-1 1440,-1 0,81" fill="var(--color-foreground)"></polygon>
 	</svg>
 </div>
 
