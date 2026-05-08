@@ -194,7 +194,7 @@ const getMasterImage = (masterClass: MasterClassItem) => {
 														<p class="course-slide__achievement">{speaker.achievement}</p>
 														<ul class="course-slide__profile" aria-label={`${speaker.instructor} 講師履歷亮點`}>
 															{speaker.profile.map(item => (
-																<li>{item}</li>
+																<li class="text-wrap">{item}</li>
 															))}
 														</ul>
 													</div>
@@ -630,8 +630,8 @@ const getMasterImage = (masterClass: MasterClassItem) => {
 		font-weight: 800;
 		line-height: 1.35;
 		letter-spacing: 0;
-		text-wrap: pretty;
-		word-break: keep-all;
+		text-wrap: auto;
+		word-break: auto-phrase;
 	}
 
 	.topic-card__profile {
