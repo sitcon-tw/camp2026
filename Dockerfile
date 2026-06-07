@@ -14,8 +14,8 @@ FROM node:22-alpine
 
 RUN npm install -g serve
 
-COPY --from=builder /app/dist/ /app/dist/
+COPY --from=builder /app/dist/ /app/serve/2026/
 
 EXPOSE 4321
 
-CMD ["serve", "-s", "/app/dist", "-l", "4321"]
+CMD ["serve", "-s", "/app/serve", "-l", "4321"]
