@@ -13,7 +13,8 @@
 		"prepare": "sh -c 'command -v git >/dev/null 2>&1 && [ -d .git ] && git config core.hooksPath .githooks || exit 0'",
 		"prettier:check": "prettier --check .",
 		"prettier:write": "prettier --write .",
-		"preview": "astro preview"
+		"preview": "astro preview",
+		"start": "astro preview --host 0.0.0.0 --port 4321"
 	},
 	"dependencies": {
 		"@astrojs/sitemap": "^3.7.2",
