@@ -5,7 +5,7 @@ RUN corepack enable && corepack prepare pnpm@latest --activate
 WORKDIR /app
 
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
-RUN SHARP_IGNORE_GLOBAL_LIBVIPS=1 pnpm install --frozen-lockfile
+RUN SHARP_IGNORE_GLOBAL_LIBVIPS=1 pnpm install --frozen-lockfile --node-linker=hoisted
 
 COPY . .
 RUN SHARP_IGNORE_GLOBAL_LIBVIPS=1 pnpm build
