@@ -111,6 +111,9 @@ export default defineConfig({
 	],
 
 	vite: {
+		preview: {
+			allowedHosts: ["fake.sitcon.party"]
+		},
 		plugins: [
 			tailwindcss(),
 			Icons({
