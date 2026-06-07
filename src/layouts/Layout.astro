@@ -25,7 +25,7 @@ const seoData = {
 	title: title ?? pageDocument.defaultTitle,
 	description: description ?? pageDocument.description,
 	canonicalURL: canonicalURL.href,
-	ogImage: new URL(ogImage ?? "/2026/og.jpg", siteURL).href,
+	ogImage: new URL(ogImage ?? "/og.jpg", siteURL).href,
 	ogImageAlt: pageDocument.ogImageAlt,
 	ogType: type,
 	robots: noindex ? "noindex, nofollow" : "index, follow, max-image-preview:large"
@@ -47,15 +47,15 @@ const seoData = {
 		<meta name="googlebot" content={seoData.robots} />
 		<meta name="format-detection" content="telephone=no" />
 		<link rel="canonical" href={seoData.canonicalURL} />
-		<link rel="sitemap" href="/2026/sitemap-index.xml" />
+		<link rel="sitemap" href="/sitemap-index.xml" />
 		<meta name="theme-color" content="#80d34b" />
-		<link rel="apple-touch-icon" sizes="180x180" href="/2026/apple-touch-icon.png" />
-		<link rel="icon" type="image/x-icon" href="/2026/favicon.ico" />
-		<link rel="icon" type="image/png" sizes="16x16" href="/2026/favicon-16x16.png" />
-		<link rel="icon" type="image/png" sizes="32x32" href="/2026/favicon-32x32.png" />
-		<link rel="icon" type="image/png" sizes="48x48" href="/2026/favicon-48x48.png" />
-		<link rel="icon" type="image/svg+xml" href="/2026/favicon.svg" />
-		<link rel="mask-icon" href="/2026/safari-pinned-tab.svg" color="#80d34b" />
+		<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+		<link rel="icon" type="image/x-icon" href="/favicon.ico" />
+		<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+		<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+		<link rel="icon" type="image/png" sizes="48x48" href="/favicon-48x48.png" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#80d34b" />
 
 		<!-- SEO: Open Graph -->
 		<meta property="og:type" content={seoData.ogType} />

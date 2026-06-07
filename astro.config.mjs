@@ -8,7 +8,7 @@ import sitemap from "@astrojs/sitemap";
 
 import favicons from "astro-favicons";
 
-const base = "/2026";
+const base = "/";
 const basePath = base.replace(/^\/+|\/+$/g, "");
 const faviconAssetNames = new Set([
 	"apple-touch-icon-precomposed.png",
@@ -140,7 +140,7 @@ export default defineConfig({
 				images: true,
 				files: false,
 				html: false,
-				assetsPrefix: base
+				assetsPrefix: basePath
 			}
 		})
 	]

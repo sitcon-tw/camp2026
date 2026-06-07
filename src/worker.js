@@ -1,4 +1,4 @@
-const BASE_PATH = "/2026";
+const BASE_PATH = "";
 
 export default {
 	async fetch(request, env) {

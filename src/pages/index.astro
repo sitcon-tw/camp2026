@@ -14,8 +14,8 @@ import layoutData from "@/data/layout.json";
 import { markdownToPlainText } from "@/utils/markdown";
 
 const siteURL = Astro.site ?? new URL("https://sitcon.camp");
-const homeURL = new URL("/2026/", siteURL);
-const ogImage = new URL("/2026/og.jpg", siteURL);
+const homeURL = new URL("/", siteURL);
+const ogImage = new URL("/og.jpg", siteURL);
 const publisher = {
 	"@type": "Organization",
 	name: layoutData.organization.name,
@@ -45,7 +45,7 @@ const websiteSchema = {
 const organizationSchema = {
 	"@context": "https://schema.org",
 	...publisher,
-	logo: new URL("/2026/favicon.svg", siteURL).href,
+	logo: new URL("/favicon.svg", siteURL).href,
 	sameAs: layoutData.organization.sameAs
 };
 

@@ -216,7 +216,7 @@
 		"deckAriaLabel": "Master Class 課程卡片",
 		"scheduleLink": {
 			"label": "查看完整課表",
-			"href": "/2026/schedule/"
+			"href": "/schedule/"
 		}
 	},
 	"masterClasses": [
@@ -426,7 +426,7 @@
 		],
 		"learnMore": {
 			"label": "了解更多",
-			"href": "/2026/about/"
+			"href": "/about/"
 		}
 	},
 	"studentComment": {

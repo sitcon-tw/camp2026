@@ -261,7 +261,7 @@ const { header } = layoutData;
 			if (!href.includes("#")) {
 				const nav = normalizePath(new URL(href, location.origin).pathname);
 
-				active = nav === "/2026" ? current === nav : current === nav || current.startsWith(`${nav}/`);
+				active = nav === "/" ? current === nav : current === nav || current.startsWith(`${nav}/`);
 			}
 
 			link.classList.toggle("site-header__link--active", link.classList.contains("site-header__link") && active);

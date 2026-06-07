@@ -10,7 +10,7 @@
 	"header": {
 		"ariaLabel": "SITCON Camp 2026",
 		"brand": {
-			"href": "/2026/",
+			"href": "/",
 			"ariaLabel": "SITCON Camp 2026 首頁",
 			"logoAlt": "SITCON Camp 2026"
 		},
@@ -18,24 +18,24 @@
 		"navItems": [
 			{
 				"label": "報名資訊",
-				"href": "/2026/#registration-info"
+				"href": "/#registration-info"
 			},
 			{
 				"label": "主線課程",
-				"href": "/2026/#master-class"
+				"href": "/#master-class"
 			},
 			{
 				"label": "活動日程",
-				"href": "/2026/schedule/"
+				"href": "/schedule/"
 			},
 			{
 				"label": "關於我們",
-				"href": "/2026/about/"
+				"href": "/about/"
 			}
 		],
 		"cta": {
 			"label": "立即報名",
-			"href": "/2026/#registration-info"
+			"href": "/#registration-info"
 		},
 		"mobileMenu": {
 			"openLabel": "開啟主要導覽",

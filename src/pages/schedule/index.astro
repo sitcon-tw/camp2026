@@ -5,8 +5,8 @@ import layoutData from "@/data/layout.json";
 import Layout from "@/layouts/Layout.astro";
 
 const siteURL = Astro.site ?? new URL("https://sitcon.camp");
-const homeURL = new URL("/2026/", siteURL);
-const scheduleURL = new URL("/2026/schedule/", siteURL);
+const homeURL = new URL("/", siteURL);
+const scheduleURL = new URL("/schedule/", siteURL);
 
 const schedulePageSchema = {
 	"@context": "https://schema.org",

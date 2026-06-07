@@ -31,11 +31,11 @@ const photos: ImageMetadata[] = [wall01, wall07, wall18, wall28];
 				<p class="text-foreground/80 max-w-2xl text-lg leading-[1.7] font-bold sm:text-xl lg:text-[1.45rem]">我們在營隊地圖裡找不到這個座標。你可以回到首頁，或沿著線索重新搜尋正確的路徑。</p>
 
 				<nav class="grid gap-3 sm:flex sm:flex-wrap" aria-label="頁面導覽">
-					<a class="not-found-button bg-soft-blue text-foreground" href="/2026/">
+					<a class="not-found-button bg-soft-blue text-foreground" href="/">
 						<Home class="h-5 w-5 sm:h-6 sm:w-6" />
 						<span>回到首頁</span>
 					</a>
-					<a class="not-found-button bg-foreground text-background" href="/2026/about/">
+					<a class="not-found-button bg-foreground text-background" href="/about/">
 						<ArrowLeft class="h-5 w-5 sm:h-6 sm:w-6" />
 						<span>看看營隊</span>
 					</a>
@@ -78,7 +78,7 @@ const photos: ImageMetadata[] = [wall01, wall07, wall18, wall28];
 					</button>
 					<p class="not-found-egg text-orange flex items-center gap-2 text-base leading-snug font-extrabold" data-trace-egg hidden>
 						<Sparkles class="h-5 w-5 sm:h-6 sm:w-6" />
-						<span data-trace-egg-label>報到處：/2026/check-in</span>
+						<span data-trace-egg-label>報到處：/check-in</span>
 					</p>
 				</div>
 			</div>
@@ -145,7 +145,7 @@ const photos: ImageMetadata[] = [wall01, wall07, wall18, wall28];
 		}
 
 		if (traceEggLabel) {
-			traceEggLabel.textContent = isSourceEgg ? "通行證已蓋章" : "報到處：/2026/check-in";
+			traceEggLabel.textContent = isSourceEgg ? "通行證已蓋章" : "報到處：/check-in";
 		}
 
 		if (traceEgg) {

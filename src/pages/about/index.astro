@@ -9,8 +9,8 @@ import layoutData from "@/data/layout.json";
 
 const { pageMeta } = pageData;
 const siteURL = Astro.site ?? new URL("https://sitcon.camp");
-const homeURL = new URL("/2026/", siteURL);
-const aboutURL = new URL("/2026/about/", siteURL);
+const homeURL = new URL("/", siteURL);
+const aboutURL = new URL("/about/", siteURL);
 
 const aboutPageSchema = {
 	"@context": "https://schema.org",
