@@ -15,6 +15,19 @@ interface Props {
 	additionalStructuredData?: object | object[];
 }
 
+// Extend Window type to include difyChatbotConfig used by the embedded script
+declare global {
+	interface Window {
+		difyChatbotConfig?: {
+			token: string;
+			baseUrl: string;
+			inputs?: Record<string, unknown>;
+			systemVariables?: Record<string, unknown>;
+			userVariables?: Record<string, unknown>;
+		};
+	}
+}
+
 const { title, description, ogImage, type = "website", noindex = false, additionalStructuredData } = Astro.props;
 const { document: pageDocument } = layoutData;
 
@@ -82,16 +95,27 @@ const seoData = {
 		{!noindex && additionalStructuredData && <script type="application/ld+json" set:html={JSON.stringify(additionalStructuredData)} is:inline />}
 
 		<!-- Dify Chatbot -->
-		<script is:inline>
+		<script>
 			window.difyChatbotConfig = {
 				token: "pVAlJyiZRpkJ4BWb",
 				baseUrl: "https://dify.nightfury.tw",
-				inputs: {},
-				systemVariables: {},
-				userVariables: {}
+				inputs: {
+					// You can define the inputs from the Start node here
+					// key is the variable name
+					// e.g.
+					// name: "NAME"
+				},
+				systemVariables: {
+					// user_id: 'YOU CAN DEFINE USER ID HERE',
+					// conversation_id: 'YOU CAN DEFINE CONVERSATION ID HERE, IT MUST BE A VALID UUID',
+				},
+				userVariables: {
+					// avatar_url: 'YOU CAN DEFINE USER AVATAR URL HERE',
+					// name: 'YOU CAN DEFINE USER NAME HERE',
+				}
 			};
 		</script>
-		<script src="https://dify.nightfury.tw/embed.min.js" id="pVAlJyiZRpkJ4BWb" defer is:inline></script>
+		<script src="https://dify.nightfury.tw/embed.min.js" id="pVAlJyiZRpkJ4BWb" defer></script>
 		<style>
 			#dify-chatbot-bubble-button {
 				background-color: #1c64f2 !important;
