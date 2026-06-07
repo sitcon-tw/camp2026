@@ -12,7 +12,7 @@ RUN SHARP_IGNORE_GLOBAL_LIBVIPS=1 pnpm build
 
 FROM node:22-alpine
 
-RUN corepack enable && corepack prepare pnpm@latest --activate && pnpm add -g serve
+RUN npm install -g serve
 
 COPY --from=builder /app/dist/ /app/dist/
 
