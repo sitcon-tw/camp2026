@@ -17,7 +17,7 @@
 		"navAriaLabel": "主要導覽",
 		"navItems": [
 			{
-				"label": "報名資訊",
+				"label": "AI 問答",
 				"href": "/#registration-info"
 			},
 			{
@@ -34,7 +34,7 @@
 			}
 		],
 		"cta": {
-			"label": "立即報名",
+			"label": "我有問題",
 			"href": "/#registration-info"
 		},
 		"mobileMenu": {
