@@ -468,6 +468,7 @@ const getMasterImage = (masterClass: MasterClassItem) => {
 		--master-controls-offset: clamp(0.75rem, 2vw, 1.25rem);
 		--master-controls-reserved: 0.9rem;
 		position: relative;
+		overflow-x: clip;	
 		padding-block: 0 clamp(4.5rem, 9vw, 8rem);
 		scroll-margin-block-start: calc(5.5rem + env(safe-area-inset-top, 0px));
 		background: var(--color-background);
