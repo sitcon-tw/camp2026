@@ -1,5 +1,4 @@
 export const SCHEDULE_SPREADSHEET_ID = "1gYc0nbbDmxtDiHXurV8bIAZZq30Ev0ADc4Ew44YzZ3g";
-export const SCHEDULE_CACHE_TTL_MS = 2 * 60 * 1000;
 
 export const SCHEDULE_SHEET_NAMES = {
 	meta: "Meta",
