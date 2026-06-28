@@ -3,6 +3,9 @@ import { existsSync } from "node:fs";
 import { mkdir, readdir, readFile, unlink, writeFile } from "node:fs/promises";
 import { basename, extname, join } from "node:path";
 
+import { collectScheduleText, parseScheduleSheetValues } from "../src/lib/schedule.ts";
+import { fetchScheduleSheetValues } from "./schedule-sheet.mjs";
+
 const subsetFont = (await import("subset-font")).default;
 
 // Config
@@ -114,6 +117,14 @@ async function collectChars() {
 		);
 	}
 	await Promise.all(SOURCE_DIRS.map(scan));
+
+	try {
+		const schedule = parseScheduleSheetValues(await fetchScheduleSheetValues());
+		for (const c of collectScheduleText(schedule)) chars.add(c);
+		console.log("  Included live schedule sheet text");
+	} catch (error) {
+		console.warn(`  ⚠ Could not include live schedule sheet text: ${error instanceof Error ? error.message : String(error)}`);
+	}
 
 	// Sort so the chars string is stable across runs — parallel scans otherwise produce
 	// different insertion order in the Set, which breaks both the cache key and any
