@@ -10,13 +10,7 @@ const scheduleShell = {
 };
 const scheduleSkeletonSlotCount = 6;
 const initialScheduleSlotCount = scheduleSkeletonSlotCount;
-const scheduleSkeletonDays = [
-	"schedule-day--sky",
-	"schedule-day--green",
-	"schedule-day--orange",
-	"schedule-day--blue",
-	"schedule-day--dark"
-];
+const scheduleSkeletonDays = ["schedule-day--sky", "schedule-day--green", "schedule-day--orange", "schedule-day--blue", "schedule-day--dark"];
 const scheduleSkeletonBlocks = Array.from({ length: scheduleSkeletonSlotCount }, (_, index) => ({
 	row: index + 2,
 	wide: index === 1 || index === 4
@@ -69,11 +63,7 @@ const scheduleClientConfigJson = JSON.stringify({
 			<div class="schedule-board schedule-board--scroll" data-schedule-board style={`--schedule-slot-count:${initialScheduleSlotCount};`} aria-label="五天活動日程輪廓">
 				<div class="schedule-time-rail" data-schedule-time-rail aria-hidden="true">
 					<div class="schedule-time-rail__spacer"></div>
-					{
-						Array.from({ length: scheduleSkeletonSlotCount }).map(() => (
-							<div class="schedule-time-rail__period schedule-skeleton schedule-skeleton--time">&nbsp;</div>
-						))
-					}
+					{Array.from({ length: scheduleSkeletonSlotCount }).map(() => <div class="schedule-time-rail__period schedule-skeleton schedule-skeleton--time">&nbsp;</div>)}
 				</div>
 
 				<div class="schedule-days-track" data-schedule-days-track aria-hidden="true">
@@ -82,9 +72,9 @@ const scheduleClientConfigJson = JSON.stringify({
 							<section class={`schedule-day schedule-day--skeleton ${dayClass}`}>
 								<header class="schedule-day__header">
 									<div class="schedule-day__header-copy">
-										<span class="schedule-skeleton schedule-skeleton--day-meta"></span>
-										<span class="schedule-skeleton schedule-skeleton--day-date"></span>
-										<span class="schedule-skeleton schedule-skeleton--day-title"></span>
+										<span class="schedule-skeleton schedule-skeleton--day-meta" />
+										<span class="schedule-skeleton schedule-skeleton--day-date" />
+										<span class="schedule-skeleton schedule-skeleton--day-title" />
 									</div>
 								</header>
 
@@ -95,9 +85,9 @@ const scheduleClientConfigJson = JSON.stringify({
 											<div class="schedule-block__events">
 												<div class="schedule-event schedule-event--static schedule-event--skeleton">
 													<div class="schedule-event__body">
-														<span class="schedule-skeleton schedule-skeleton--badge"></span>
-														<span class={`schedule-skeleton schedule-skeleton--event-name${block.wide ? " schedule-skeleton--event-name-wide" : ""}`}></span>
-														<span class="schedule-skeleton schedule-skeleton--event-summary"></span>
+														<span class="schedule-skeleton schedule-skeleton--badge" />
+														<span class={`schedule-skeleton schedule-skeleton--event-name${block.wide ? " schedule-skeleton--event-name-wide" : ""}`} />
+														<span class="schedule-skeleton schedule-skeleton--event-summary" />
 													</div>
 												</div>
 											</div>
@@ -1388,13 +1378,12 @@ const scheduleClientConfigJson = JSON.stringify({
 	.schedule-skeleton {
 		display: block;
 		color: transparent;
-		background:
-			linear-gradient(
-				100deg,
-				color-mix(in srgb, var(--color-background) 76%, var(--day-accent, var(--color-soft-blue))) 0%,
-				color-mix(in srgb, var(--color-background) 42%, var(--day-accent, var(--color-soft-blue))) 42%,
-				color-mix(in srgb, var(--color-background) 76%, var(--day-accent, var(--color-soft-blue))) 84%
-			);
+		background: linear-gradient(
+			100deg,
+			color-mix(in srgb, var(--color-background) 76%, var(--day-accent, var(--color-soft-blue))) 0%,
+			color-mix(in srgb, var(--color-background) 42%, var(--day-accent, var(--color-soft-blue))) 42%,
+			color-mix(in srgb, var(--color-background) 76%, var(--day-accent, var(--color-soft-blue))) 84%
+		);
 		background-size: 220% 100%;
 		border-radius: 999rem;
 		animation: schedule-skeleton-shimmer 1.35s ease-in-out infinite;
