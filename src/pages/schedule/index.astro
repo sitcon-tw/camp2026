@@ -1,18 +1,19 @@
 ---
 import SchedulePreview from "@/components/SchedulePreview.astro";
-import { scheduleMeta } from "@/data/schedule";
 import layoutData from "@/data/layout.json";
 import Layout from "@/layouts/Layout.astro";
 
 const siteURL = Astro.site ?? new URL("https://sitcon.camp");
 const homeURL = new URL("/2026/", siteURL);
 const scheduleURL = new URL("/2026/schedule/", siteURL);
+const schedulePageTitle = "活動日程";
+const schedulePageDescription = "查看 SITCON Camp 2026 營期活動日程與課程安排。";
 
 const schedulePageSchema = {
 	"@context": "https://schema.org",
 	"@type": "WebPage",
-	name: scheduleMeta.title,
-	description: scheduleMeta.description,
+	name: schedulePageTitle,
+	description: schedulePageDescription,
 	url: scheduleURL.href,
 	inLanguage: layoutData.document.lang,
 	isPartOf: {
@@ -44,6 +45,6 @@ const breadcrumbSchema = {
 const structuredData = [schedulePageSchema, breadcrumbSchema];
 ---
 
-<Layout title={`${scheduleMeta.title}｜SITCON 夏令營 2026`} description={scheduleMeta.description} additionalStructuredData={structuredData}>
+<Layout title={`${schedulePageTitle}｜SITCON 夏令營 2026`} description={schedulePageDescription} additionalStructuredData={structuredData}>
 	<SchedulePreview />
 </Layout>
