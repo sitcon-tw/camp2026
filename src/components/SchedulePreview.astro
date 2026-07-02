@@ -2,14 +2,14 @@
 import type { ImageMetadata } from "astro";
 import Info from "~icons/lucide/info";
 import X from "~icons/lucide/x";
-import { SCHEDULE_SHEET_RANGES, SCHEDULE_SPREADSHEET_ID } from "@/lib/schedule";
+import { scheduleData } from "@/data/schedule.generated";
 
 const scheduleShell = {
-	title: "活動日程",
-	description: "正在載入最新活動日程。"
+	title: scheduleData.meta.title,
+	description: scheduleData.meta.description
 };
 const scheduleSkeletonSlotCount = 6;
-const initialScheduleSlotCount = scheduleSkeletonSlotCount;
+const initialScheduleSlotCount = scheduleData.slots.length;
 const scheduleSkeletonDays = ["schedule-day--sky", "schedule-day--green", "schedule-day--orange", "schedule-day--blue", "schedule-day--dark"];
 const scheduleSkeletonBlocks = Array.from({ length: scheduleSkeletonSlotCount }, (_, index) => ({
 	row: index + 2,
@@ -40,8 +40,7 @@ const imageMetadataToManifestEntry = (image: ImageMetadata) => ({
 const scheduleImageManifest = Object.fromEntries(Array.from(scheduleImages.entries()).map(([key, image]) => [key, imageMetadataToManifestEntry(image)]));
 const speakerAvatarManifest = Object.fromEntries(Array.from(speakerAvatars.entries()).map(([key, image]) => [key, imageMetadataToManifestEntry(image)]));
 const scheduleClientConfigJson = JSON.stringify({
-	spreadsheetId: SCHEDULE_SPREADSHEET_ID,
-	ranges: SCHEDULE_SHEET_RANGES,
+	data: scheduleData,
 	images: scheduleImageManifest,
 	avatars: speakerAvatarManifest
 }).replace(/</g, "\\u003c");
@@ -56,7 +55,7 @@ const scheduleClientConfigJson = JSON.stringify({
 				<p class="schedule-hero__lead">{scheduleShell.description}</p>
 			</header>
 
-			<div class="schedule-status schedule-status--loading" data-schedule-status role="status">正在載入最新活動日程。</div>
+			<div class="schedule-status schedule-status--loading" data-schedule-status role="status" hidden></div>
 
 			<div class="schedule-notes" data-schedule-notes hidden></div>
 
@@ -116,17 +115,7 @@ const scheduleClientConfigJson = JSON.stringify({
 </template>
 
 <script>
-	import {
-		googleVisualizationResponseToValues,
-		parseScheduleSheetValues,
-		type GoogleVisualizationResponse,
-		type ScheduleCategory,
-		type ScheduleData,
-		type ScheduleDay,
-		type ScheduleEvent,
-		type ScheduleSheetValues,
-		type ScheduleSpeaker
-	} from "@/lib/schedule";
+	import { type ScheduleCategory, type ScheduleData, type ScheduleDay, type ScheduleEvent, type ScheduleSpeaker } from "@/lib/schedule";
 	import { renderMarkdown } from "@/utils/markdown";
 
 	interface ImageManifestEntry {
@@ -136,8 +125,7 @@ const scheduleClientConfigJson = JSON.stringify({
 	}
 
 	interface ScheduleClientConfig {
-		spreadsheetId: string;
-		ranges: Record<string, string>;
+		data: ScheduleData;
 		images: Record<string, ImageManifestEntry>;
 		avatars: Record<string, ImageManifestEntry>;
 	}
@@ -292,6 +280,7 @@ const scheduleClientConfigJson = JSON.stringify({
 				<div class="schedule-event__content">
 					${renderBadge(category, "schedule-event__badge")}
 					<span class="schedule-event__name">${escapeHtml(event.name)}</span>
+					<span class="schedule-event__summary">${escapeHtml(event.summary)}</span>
 				</div>
 			</div>
 		`;
@@ -402,71 +391,12 @@ const scheduleClientConfigJson = JSON.stringify({
 		`;
 	};
 
-	const fetchSheetValues = (config: ScheduleClientConfig, sheetName: string, range: string, signal: AbortSignal): Promise<string[][]> =>
-		new Promise((resolve, reject) => {
-			if (signal.aborted) {
-				reject(new DOMException("Aborted", "AbortError"));
-				return;
-			}
-
-			const callbackName = `__scheduleSheetCallback${Date.now()}${Math.random().toString(36).slice(2)}`;
-			const script = document.createElement("script");
-			const url = new URL(`https://docs.google.com/spreadsheets/d/${config.spreadsheetId}/gviz/tq`);
-			const timeout = window.setTimeout(() => {
-				cleanup();
-				reject(new Error(`${sheetName}: Google Sheets request timed out`));
-			}, 15000);
-			const cleanup = () => {
-				window.clearTimeout(timeout);
-				delete (window as unknown as Record<string, unknown>)[callbackName];
-				script.remove();
-			};
-
-			(window as unknown as Record<string, (response: GoogleVisualizationResponse) => void>)[callbackName] = response => {
-				try {
-					const values = googleVisualizationResponseToValues(response);
-					cleanup();
-					resolve(values);
-				} catch (error) {
-					cleanup();
-					reject(error);
-				}
-			};
-
-			script.onerror = () => {
-				cleanup();
-				reject(new Error(`${sheetName}: failed to load Google Sheets script`));
-			};
-			signal.addEventListener(
-				"abort",
-				() => {
-					cleanup();
-					reject(new DOMException("Aborted", "AbortError"));
-				},
-				{ once: true }
-			);
-
-			url.searchParams.set("tqx", `out:json;responseHandler:${callbackName}`);
-			url.searchParams.set("headers", "1");
-			url.searchParams.set("sheet", sheetName);
-			url.searchParams.set("range", range);
-			script.src = url.href;
-			document.head.append(script);
-		});
-
-	const fetchScheduleValues = async (config: ScheduleClientConfig, signal: AbortSignal): Promise<ScheduleSheetValues> => {
-		const entries = await Promise.all(Object.entries(config.ranges).map(async ([sheetName, range]) => [sheetName, await fetchSheetValues(config, sheetName, range, signal)]));
-		return Object.fromEntries(entries);
-	};
-
 	document.addEventListener("astro:page-load", () => {
 		const ac = new AbortController();
 		const { signal } = ac;
 		document.addEventListener("astro:before-swap", () => ac.abort(), { once: true });
 
 		const config = readConfig();
-		const imageKeys = new Set(Object.keys(config.images));
-		const avatarKeys = new Set(Object.keys(config.avatars));
 		const infoIconHtml = getTemplateHtml("#schedule-info-icon-template");
 		const closeIconHtml = getTemplateHtml("#schedule-close-icon-template");
 		const title = document.querySelector<HTMLElement>("[data-schedule-page-content] #schedule-title");
@@ -646,20 +576,15 @@ const scheduleClientConfigJson = JSON.stringify({
 			{ signal }
 		);
 
-		setStatus("loading", "正在載入最新活動日程。");
+		try {
+			renderSchedule(config.data);
+			clearStatus();
+		} catch (error) {
+			if (signal.aborted) return;
 
-		fetchScheduleValues(config, signal)
-			.then(values => {
-				const data = parseScheduleSheetValues(values, { imageKeys, avatarKeys });
-				renderSchedule(data);
-				clearStatus();
-			})
-			.catch(error => {
-				if (signal.aborted) return;
-
-				setStatus("error", "課表暫時無法載入，請稍後再試。");
-				console.error(error);
-			});
+			setStatus("error", "課表暫時無法載入，請稍後再試。");
+			console.error(error);
+		}
 	});
 </script>
 

@@ -170,6 +170,30 @@ const parsePositiveInteger = (value: string): number | null => {
 	return Number.isSafeInteger(parsed) && parsed > 0 ? parsed : null;
 };
 
+const parseOrderCell = (sheetName: ScheduleSheetName, rowIndex: number, value: string, fallback: number, issues: string[]): number => {
+	if (!value.trim()) return fallback;
+
+	const parsed = parsePositiveInteger(value);
+	if (parsed === null) {
+		issues.push(`${sheetName}: row ${rowIndex + 2} has invalid order "${value}"`);
+		return fallback;
+	}
+
+	return parsed;
+};
+
+const parseBooleanCell = (sheetName: ScheduleSheetName, rowIndex: number, columnName: string, value: string, fallback: boolean, issues: string[]): boolean => {
+	if (!value.trim()) return fallback;
+
+	const parsed = parseBoolean(value);
+	if (parsed === null) {
+		issues.push(`${sheetName}: row ${rowIndex + 2} has invalid ${columnName} "${value}"`);
+		return fallback;
+	}
+
+	return parsed;
+};
+
 const getRequiredHeaders = (sheetName: ScheduleSheetName): string[] => [...SCHEDULE_REQUIRED_HEADERS[sheetName]];
 
 const normalizeRows = (rows: ScheduleCellValue[][] | undefined): string[][] => {
@@ -265,7 +289,7 @@ export const parseScheduleSheetValues = (values: ScheduleSheetValues, options: S
 	if (note) meta.note = note;
 
 	const slots = slotRows
-		.map(([order, slot], index) => ({ order: parsePositiveInteger(order) ?? index + 1, slot }))
+		.map(([order, slot], index) => ({ order: parseOrderCell(SCHEDULE_SHEET_NAMES.slots, index, order, index + 1, issues), slot }))
 		.sort((left, right) => left.order - right.order)
 		.map(row => row.slot)
 		.filter(Boolean);
@@ -280,7 +304,7 @@ export const parseScheduleSheetValues = (values: ScheduleSheetValues, options: S
 
 	const categories = categoryRows
 		.map(([order, id, label, theme], index) => ({
-			order: parsePositiveInteger(order) ?? index + 1,
+			order: parseOrderCell(SCHEDULE_SHEET_NAMES.categories, index, order, index + 1, issues),
 			category: {
 				id,
 				label,
@@ -290,14 +314,13 @@ export const parseScheduleSheetValues = (values: ScheduleSheetValues, options: S
 		.sort((left, right) => left.order - right.order)
 		.map(row => row.category);
 
-	const events = eventRows.map(([id, name, summary, categoryId, isInteractive, description, imageKey, imageAlt, speakerIds]) => {
-		const parsedInteractive = parseBoolean(isInteractive);
+	const events = eventRows.map(([id, name, summary, categoryId, isInteractive, description, imageKey, imageAlt, speakerIds], index) => {
 		const event: ScheduleEvent = {
 			id,
 			name,
 			summary,
 			categoryId,
-			isInteractive: parsedInteractive ?? false
+			isInteractive: parseBooleanCell(SCHEDULE_SHEET_NAMES.events, index, "is_interactive", isInteractive, false, issues)
 		};
 		if (description) event.description = splitLines(description);
 		if (imageKey) event.image = { key: imageKey, alt: imageAlt || undefined };
@@ -306,8 +329,15 @@ export const parseScheduleSheetValues = (values: ScheduleSheetValues, options: S
 		return event;
 	});
 
+	const dayIdSet = new Set(dayRows.map(([, id]) => id).filter(Boolean));
 	const blocksByDay = new Map<string, ScheduleBlock[]>();
 	blockRows.forEach(([dayId, startSlot, spanValue, eventId], index) => {
+		if (!dayId) {
+			issues.push(`${SCHEDULE_SHEET_NAMES.blocks}: row ${index + 2} day_id is required`);
+		} else if (!dayIdSet.has(dayId)) {
+			issues.push(`${SCHEDULE_SHEET_NAMES.blocks}: row ${index + 2} references missing day "${dayId}"`);
+		}
+
 		const span = parsePositiveInteger(spanValue);
 		if (span === null) {
 			issues.push(`${SCHEDULE_SHEET_NAMES.blocks}: row ${index + 2} has invalid span "${spanValue}"`);
@@ -319,7 +349,7 @@ export const parseScheduleSheetValues = (values: ScheduleSheetValues, options: S
 
 	const days = dayRows
 		.map(([order, id, title, date, subtitle, type], index) => ({
-			order: parsePositiveInteger(order) ?? index + 1,
+			order: parseOrderCell(SCHEDULE_SHEET_NAMES.days, index, order, index + 1, issues),
 			day: {
 				id,
 				title: splitFilledLines(title),

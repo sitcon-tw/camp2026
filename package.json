@@ -5,7 +5,7 @@
 	"scripts": {
 		"astro": "astro",
 		"avatars:update": "node scripts/download-avatars.mjs",
-		"build": "astro build && node scripts/font-subset.mjs",
+		"build": "pnpm schedule:generate && astro build && node scripts/font-subset.mjs",
 		"build:subset": "node scripts/font-subset.mjs",
 		"dev": "astro dev",
 		"preinstall": "npx only-allow pnpm",
@@ -14,6 +14,7 @@
 		"prettier:check": "prettier --check .",
 		"prettier:write": "prettier --write .",
 		"preview": "astro preview",
+		"schedule:generate": "node scripts/generate-schedule.mjs",
 		"schedule:validate": "node scripts/validate-schedule.mjs"
 	},
 	"dependencies": {
@@ -43,6 +44,6 @@
 		"unplugin-icons": "^23.0.1"
 	},
 	"engines": {
-		"node": ">=22.12.0"
+		"node": ">=22.18.0"
 	}
 }
