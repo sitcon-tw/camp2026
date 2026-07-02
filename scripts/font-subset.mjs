@@ -3,7 +3,7 @@ import { existsSync } from "node:fs";
 import { mkdir, readdir, readFile, unlink, writeFile } from "node:fs/promises";
 import { basename, extname, join } from "node:path";
 
-import { scheduleData } from "../src/data/schedule.generated.ts";
+import { scheduleData } from "../src/data/generated/schedule.ts";
 import { collectScheduleText } from "../src/lib/schedule.ts";
 
 const subsetFont = (await import("subset-font")).default;

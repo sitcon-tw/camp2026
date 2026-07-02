@@ -19,6 +19,9 @@ dist/
 # generated types
 .astro/
 
+# generated schedule data
+src/data/generated/
+
 # build script caches (font-subset, etc.)
 .cache/
 
