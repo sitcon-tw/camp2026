@@ -218,10 +218,9 @@ const scheduleClientConfigJson = JSON.stringify({
 	};
 
 	const getEventResourceLinks = (event: ScheduleEvent) =>
-		[
-			event.slidesUrl ? { label: "簡報", url: event.slidesUrl, kind: "slides" } : null,
-			event.notesUrl ? { label: "共筆", url: event.notesUrl, kind: "notes" } : null
-		].filter((link): link is { label: string; url: string; kind: string } => Boolean(link));
+		[event.slidesUrl ? { label: "簡報", url: event.slidesUrl, kind: "slides" } : null, event.notesUrl ? { label: "共筆", url: event.notesUrl, kind: "notes" } : null].filter(
+			(link): link is { label: string; url: string; kind: string } => Boolean(link)
+		);
 
 	const renderEventResourceLinks = (event: ScheduleEvent, className: string): string => {
 		const links = getEventResourceLinks(event);
@@ -1777,7 +1776,6 @@ const scheduleClientConfigJson = JSON.stringify({
 			font-size: clamp(1.18rem, 6.2vw, 1.36rem);
 			-webkit-line-clamp: 3;
 		}
-
 	}
 
 	@media (prefers-reduced-motion: reduce) {
