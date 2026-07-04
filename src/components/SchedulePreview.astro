@@ -86,7 +86,6 @@ const scheduleClientConfigJson = JSON.stringify({
 													<div class="schedule-event__body">
 														<span class="schedule-skeleton schedule-skeleton--badge" />
 														<span class={`schedule-skeleton schedule-skeleton--event-name${block.wide ? " schedule-skeleton--event-name-wide" : ""}`} />
-														<span class="schedule-skeleton schedule-skeleton--event-summary" />
 													</div>
 												</div>
 											</div>
@@ -306,7 +305,6 @@ const scheduleClientConfigJson = JSON.stringify({
 				<div class="schedule-event__content">
 					${renderBadge(category, "schedule-event__badge")}
 					<span class="schedule-event__name">${escapeHtml(event.name)}</span>
-					<span class="schedule-event__summary">${escapeHtml(event.summary)}</span>
 				</div>
 			</div>
 		`;
@@ -1070,21 +1068,6 @@ const scheduleClientConfigJson = JSON.stringify({
 		-webkit-line-clamp: 3;
 	}
 
-	.schedule-event__summary {
-		display: -webkit-box;
-		color: color-mix(in srgb, var(--color-foreground) 64%, transparent);
-		font-size: clamp(0.72rem, 0.72vw, 0.84rem);
-		font-weight: 700;
-		line-height: 1.35;
-		overflow: hidden;
-		-webkit-box-orient: vertical;
-		-webkit-line-clamp: 1;
-	}
-
-	.schedule-event--spanning .schedule-event__summary {
-		-webkit-line-clamp: 3;
-	}
-
 	.schedule-badge--green {
 		color: var(--color-foreground);
 		background: color-mix(in srgb, var(--color-green) 70%, white);
@@ -1467,12 +1450,6 @@ const scheduleClientConfigJson = JSON.stringify({
 		width: 88%;
 	}
 
-	.schedule-skeleton--event-summary {
-		width: 54%;
-		height: 0.72rem;
-		opacity: 0.72;
-	}
-
 	@keyframes schedule-skeleton-shimmer {
 		0% {
 			background-position: 120% 0;
@@ -1679,11 +1656,6 @@ const scheduleClientConfigJson = JSON.stringify({
 			-webkit-line-clamp: 4;
 		}
 
-		.schedule-board:not(.schedule-board--scroll) .schedule-event--featured .schedule-event__summary {
-			max-width: 18ch;
-			-webkit-line-clamp: 4;
-		}
-
 		.schedule-board:not(.schedule-board--scroll) .schedule-event__badge {
 			padding: 0.42rem 0.82rem;
 			font-size: 0.84rem;
@@ -1693,12 +1665,6 @@ const scheduleClientConfigJson = JSON.stringify({
 			font-size: clamp(1.32rem, 5.6vw, 1.56rem);
 			line-height: 1.18;
 			-webkit-line-clamp: 3;
-		}
-
-		.schedule-board:not(.schedule-board--scroll) .schedule-event__summary {
-			font-size: 1rem;
-			line-height: 1.5;
-			-webkit-line-clamp: 2;
 		}
 
 		.schedule-board--scroll {
@@ -1812,10 +1778,6 @@ const scheduleClientConfigJson = JSON.stringify({
 			-webkit-line-clamp: 3;
 		}
 
-		.schedule-board:not(.schedule-board--scroll) .schedule-event__summary {
-			font-size: 0.94rem;
-			-webkit-line-clamp: 2;
-		}
 	}
 
 	@media (prefers-reduced-motion: reduce) {
