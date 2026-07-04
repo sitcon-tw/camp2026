@@ -38,7 +38,7 @@ try {
 	]);
 
 	const schedule = parseScheduleSheetValues(values, { imageKeys, avatarKeys });
-	console.log(`✓ Schedule sheet is valid: ${schedule.days.length} days, ${schedule.events.length} events, ${schedule.categories.length} categories`);
+	console.log(`✓ Schedule sheet is valid: ${schedule.sessions.length} sessions, ${schedule.speakers.length} speakers, ${schedule.session_types.length} session types`);
 } catch (error) {
 	console.error("✗ Schedule sheet validation failed");
 

@@ -52,4 +52,4 @@ await mkdir(dirname(OUTPUT_FILE), { recursive: true });
 const prettierOptions = (await resolveConfig(OUTPUT_FILE)) ?? {};
 await writeFile(OUTPUT_FILE, await format(source, { ...prettierOptions, filepath: OUTPUT_FILE }));
 
-console.log(`✓ Generated ${OUTPUT_FILE}: ${schedule.days.length} days, ${schedule.events.length} events, ${schedule.categories.length} categories`);
+console.log(`✓ Generated ${OUTPUT_FILE}: ${schedule.sessions.length} sessions, ${schedule.speakers.length} speakers, ${schedule.session_types.length} session types`);

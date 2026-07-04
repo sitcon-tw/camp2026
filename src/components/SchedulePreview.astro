@@ -3,13 +3,16 @@ import type { ImageMetadata } from "astro";
 import Info from "~icons/lucide/info";
 import X from "~icons/lucide/x";
 import { scheduleData } from "@/data/generated/schedule";
+import { scheduleDataToPreviewData } from "@/lib/schedule";
+
+const schedulePreviewData = scheduleDataToPreviewData(scheduleData);
 
 const scheduleShell = {
-	title: scheduleData.meta.title,
-	description: scheduleData.meta.description
+	title: schedulePreviewData.meta.title,
+	description: schedulePreviewData.meta.description
 };
 const scheduleSkeletonSlotCount = 6;
-const initialScheduleSlotCount = scheduleData.slots.length;
+const initialScheduleSlotCount = schedulePreviewData.slots.length;
 const scheduleSkeletonDays = ["schedule-day--sky", "schedule-day--green", "schedule-day--orange", "schedule-day--blue", "schedule-day--dark"];
 const scheduleSkeletonBlocks = Array.from({ length: scheduleSkeletonSlotCount }, (_, index) => ({
 	row: index + 2,
@@ -40,7 +43,7 @@ const imageMetadataToManifestEntry = (image: ImageMetadata) => ({
 const scheduleImageManifest = Object.fromEntries(Array.from(scheduleImages.entries()).map(([key, image]) => [key, imageMetadataToManifestEntry(image)]));
 const speakerAvatarManifest = Object.fromEntries(Array.from(speakerAvatars.entries()).map(([key, image]) => [key, imageMetadataToManifestEntry(image)]));
 const scheduleClientConfigJson = JSON.stringify({
-	data: scheduleData,
+	data: schedulePreviewData,
 	images: scheduleImageManifest,
 	avatars: speakerAvatarManifest
 }).replace(/</g, "\\u003c");
@@ -114,7 +117,13 @@ const scheduleClientConfigJson = JSON.stringify({
 </template>
 
 <script>
-	import { type ScheduleCategory, type ScheduleData, type ScheduleDay, type ScheduleEvent, type ScheduleSpeaker } from "@/lib/schedule";
+	import {
+		type ScheduleDay,
+		type ScheduleEvent,
+		type SchedulePreviewCategory as ScheduleCategory,
+		type SchedulePreviewData as ScheduleData,
+		type SchedulePreviewSpeaker as ScheduleSpeaker
+	} from "@/lib/schedule";
 	import { renderMarkdown } from "@/utils/markdown";
 
 	interface ImageManifestEntry {
