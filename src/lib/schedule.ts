@@ -15,7 +15,7 @@ export const SCHEDULE_SHEET_RANGES = {
 	[SCHEDULE_SHEET_NAMES.slots]: "A1:B",
 	[SCHEDULE_SHEET_NAMES.days]: "A1:F",
 	[SCHEDULE_SHEET_NAMES.blocks]: "A1:D",
-	[SCHEDULE_SHEET_NAMES.events]: "A1:I",
+	[SCHEDULE_SHEET_NAMES.events]: "A1:K",
 	[SCHEDULE_SHEET_NAMES.categories]: "A1:D",
 	[SCHEDULE_SHEET_NAMES.speakers]: "A1:E"
 } as const;
@@ -25,7 +25,7 @@ export const SCHEDULE_REQUIRED_HEADERS = {
 	[SCHEDULE_SHEET_NAMES.slots]: ["order", "slot"],
 	[SCHEDULE_SHEET_NAMES.days]: ["order", "id", "title", "date", "subtitle", "type"],
 	[SCHEDULE_SHEET_NAMES.blocks]: ["day_id", "start_slot", "span", "event_id"],
-	[SCHEDULE_SHEET_NAMES.events]: ["id", "name", "summary", "category_id", "is_interactive", "description", "image_key", "image_alt", "speaker_ids"],
+	[SCHEDULE_SHEET_NAMES.events]: ["id", "name", "summary", "category_id", "is_interactive", "description", "image_key", "image_alt", "speaker_ids", "slides_url", "notes_url"],
 	[SCHEDULE_SHEET_NAMES.categories]: ["order", "id", "label", "theme"],
 	[SCHEDULE_SHEET_NAMES.speakers]: ["id", "name", "description", "avatar_key", "avatar_alt"]
 } as const;
@@ -88,6 +88,8 @@ export interface ScheduleEvent {
 		alt?: string;
 	};
 	speakers?: ScheduleSpeaker["id"][];
+	slidesUrl?: string;
+	notesUrl?: string;
 }
 
 export interface ScheduleData {
@@ -168,6 +170,15 @@ const parsePositiveInteger = (value: string): number | null => {
 	if (!/^\d+$/.test(value.trim())) return null;
 	const parsed = Number(value);
 	return Number.isSafeInteger(parsed) && parsed > 0 ? parsed : null;
+};
+
+const isHttpUrl = (value: string): boolean => {
+	try {
+		const url = new URL(value);
+		return url.protocol === "http:" || url.protocol === "https:";
+	} catch {
+		return false;
+	}
 };
 
 const parseOrderCell = (sheetName: ScheduleSheetName, rowIndex: number, value: string, fallback: number, issues: string[]): number => {
@@ -314,7 +325,7 @@ export const parseScheduleSheetValues = (values: ScheduleSheetValues, options: S
 		.sort((left, right) => left.order - right.order)
 		.map(row => row.category);
 
-	const events = eventRows.map(([id, name, summary, categoryId, isInteractive, description, imageKey, imageAlt, speakerIds], index) => {
+	const events = eventRows.map(([id, name, summary, categoryId, isInteractive, description, imageKey, imageAlt, speakerIds, slidesUrl, notesUrl], index) => {
 		const event: ScheduleEvent = {
 			id,
 			name,
@@ -326,6 +337,8 @@ export const parseScheduleSheetValues = (values: ScheduleSheetValues, options: S
 		if (imageKey) event.image = { key: imageKey, alt: imageAlt || undefined };
 		const speakers = splitIds(speakerIds);
 		if (speakers.length > 0) event.speakers = speakers;
+		if (slidesUrl) event.slidesUrl = slidesUrl;
+		if (notesUrl) event.notesUrl = notesUrl;
 		return event;
 	});
 
@@ -434,6 +447,8 @@ export const validateScheduleData = (data: unknown, options: ScheduleValidationO
 		if (!event.categoryId) issues.push(`Events: "${event.id}" category_id is required`);
 		if (event.categoryId && !categoryIds.has(event.categoryId)) issues.push(`Events: "${event.id}" references missing category "${event.categoryId}"`);
 		if (typeof event.isInteractive !== "boolean") issues.push(`Events: "${event.id}" has invalid is_interactive value`);
+		if (event.slidesUrl && !isHttpUrl(event.slidesUrl)) issues.push(`Events: "${event.id}" has invalid slides_url value`);
+		if (event.notesUrl && !isHttpUrl(event.notesUrl)) issues.push(`Events: "${event.id}" has invalid notes_url value`);
 		event.speakers?.forEach(speakerId => {
 			if (!speakerIds.has(speakerId)) issues.push(`Events: "${event.id}" references missing speaker "${speakerId}"`);
 		});
@@ -487,7 +502,8 @@ export const collectScheduleText = (data: ScheduleData): string => {
 	const parts = [data.meta.title, data.meta.description, data.meta.note ?? "", ...data.slots];
 	for (const day of data.days) parts.push(day.id, ...day.title, day.date, day.subtitle, day.type);
 	for (const category of data.categories) parts.push(category.id, category.label, category.theme);
-	for (const event of data.events) parts.push(event.id, event.name, event.summary, event.categoryId, ...(event.description ?? []), event.image?.alt ?? "", ...(event.speakers ?? []));
+	for (const event of data.events)
+		parts.push(event.id, event.name, event.summary, event.categoryId, ...(event.description ?? []), event.image?.alt ?? "", ...(event.speakers ?? []), event.slidesUrl ?? "", event.notesUrl ?? "");
 	for (const speaker of data.speakers) parts.push(speaker.id, speaker.name ?? "", speaker.description ?? "", speaker.avatar?.alt ?? "");
 	return parts.join("\n");
 };

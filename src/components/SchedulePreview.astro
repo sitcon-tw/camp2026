@@ -215,7 +215,32 @@ const scheduleClientConfigJson = JSON.stringify({
 
 	const hasEventDetails = (event: ScheduleEvent, speakersById: Map<string, ScheduleSpeaker>): boolean => {
 		const descriptionLines = event.description ?? [];
-		return Boolean(event.image?.key || descriptionLines.some(line => line.trim()) || getEventSpeakers(event, speakersById).length > 0);
+		return Boolean(event.image?.key || descriptionLines.some(line => line.trim()) || getEventSpeakers(event, speakersById).length > 0 || event.slidesUrl || event.notesUrl);
+	};
+
+	const getEventResourceLinks = (event: ScheduleEvent) =>
+		[
+			event.slidesUrl ? { label: "簡報", url: event.slidesUrl, kind: "slides" } : null,
+			event.notesUrl ? { label: "共筆", url: event.notesUrl, kind: "notes" } : null
+		].filter((link): link is { label: string; url: string; kind: string } => Boolean(link));
+
+	const renderEventResourceLinks = (event: ScheduleEvent, className: string): string => {
+		const links = getEventResourceLinks(event);
+		if (links.length === 0) return "";
+
+		return `
+			<div class="${className}" aria-label="${escapeHtml(event.name)}相關連結">
+				${links
+					.map(
+						link => `
+							<a class="schedule-resource-pill schedule-resource-pill--${escapeHtml(link.kind)}" href="${escapeHtml(link.url)}" target="_blank" rel="noopener noreferrer">
+								${escapeHtml(link.label)}
+							</a>
+						`
+					)
+					.join("")}
+			</div>
+		`;
 	};
 
 	const getBlockRangeLabel = (startSlot: string, span: number, slots: string[]): string => {
@@ -275,6 +300,7 @@ const scheduleClientConfigJson = JSON.stringify({
 
 		const category = getCategory(event, categoriesById);
 		const eventClasses = ["schedule-event", block.isInteractive ? "" : "schedule-event--static", block.span > 1 ? "schedule-event--spanning" : ""].filter(Boolean).join(" ");
+		const resourceLinks = renderEventResourceLinks(event, "schedule-event__links");
 		const body = `
 			<div class="schedule-event__body">
 				<div class="schedule-event__content">
@@ -284,6 +310,22 @@ const scheduleClientConfigJson = JSON.stringify({
 				</div>
 			</div>
 		`;
+
+		if (resourceLinks) {
+			if (!block.isInteractive) {
+				return `<div class="${eventClasses} schedule-event--with-links">${body}${resourceLinks}</div>`;
+			}
+
+			return `
+				<div class="${eventClasses} schedule-event--with-links">
+					<button type="button" class="schedule-event__trigger" data-schedule-event-trigger="${escapeHtml(event.id)}" aria-label="查看${escapeHtml(event.name)}介紹">
+						${body}
+						${infoIconHtml}
+					</button>
+					${resourceLinks}
+				</div>
+			`;
+		}
 
 		if (!block.isInteractive) {
 			return `<div class="${eventClasses}">${body}</div>`;
@@ -368,6 +410,7 @@ const scheduleClientConfigJson = JSON.stringify({
 		const imageAlt = event.image?.alt ?? "";
 		const speakers = getEventSpeakers(event, speakersById);
 		const description = descriptionLines.some(line => line.trim()) ? `<div class="schedule-dialog__description">${renderMarkdown(descriptionLinesToMarkdown(descriptionLines))}</div>` : "";
+		const resourceLinks = renderEventResourceLinks(event, "schedule-dialog__links");
 		const speakersHtml =
 			speakers.length > 0 ? `<section class="schedule-dialog__speakers" aria-label="${escapeHtml(event.name)}講者">${speakers.map(speaker => renderSpeaker(speaker, config)).join("")}</section>` : "";
 
@@ -382,6 +425,7 @@ const scheduleClientConfigJson = JSON.stringify({
 					<div class="schedule-dialog__content">
 						${renderBadge(category, "schedule-dialog__badge")}
 						<h2 id="schedule-dialog-title-${escapeHtml(event.id)}" class="schedule-dialog__title" tabindex="-1">${escapeHtml(event.name)}</h2>
+						${resourceLinks}
 						${description}
 						${speakersHtml}
 					</div>
@@ -899,6 +943,68 @@ const scheduleClientConfigJson = JSON.stringify({
 		gap: clamp(0.18rem, 0.32vw, 0.32rem);
 	}
 
+	.schedule-event--with-links {
+		grid-template-rows: minmax(0, 1fr) auto;
+	}
+
+	.schedule-event__trigger {
+		position: relative;
+		display: grid;
+		grid-template-rows: minmax(0, 1fr);
+		width: 100%;
+		min-width: 0;
+		min-height: 0;
+		padding: 0;
+		color: inherit;
+		font: inherit;
+		text-align: left;
+		cursor: pointer;
+		background: transparent;
+		border: 0;
+	}
+
+	.schedule-event__links,
+	.schedule-dialog__links {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.36rem;
+	}
+
+	.schedule-event__links {
+		padding: 0 clamp(0.5rem, 0.72vw, 0.7rem) clamp(0.5rem, 0.72vw, 0.7rem);
+	}
+
+	.schedule-resource-pill {
+		display: inline-flex;
+		align-items: center;
+		width: fit-content;
+		padding: 0.28rem 0.62rem;
+		color: var(--color-background);
+		font-size: clamp(0.66rem, 0.7vw, 0.76rem);
+		font-weight: 800;
+		line-height: 1;
+		text-decoration: none;
+		background: var(--color-foreground);
+		border: 2px solid color-mix(in srgb, var(--color-foreground) 82%, var(--day-accent));
+		border-radius: 999rem;
+		transition:
+			color 160ms ease,
+			background 160ms ease,
+			transform 160ms ease;
+	}
+
+	.schedule-dialog__links .schedule-resource-pill {
+		color: var(--color-foreground);
+		background: var(--color-background);
+		border-color: rgb(249 245 239 / 25%);
+	}
+
+	.schedule-resource-pill:hover {
+		color: var(--color-foreground);
+		background: var(--day-accent, var(--color-orange));
+		transform: translateY(-0.08rem);
+	}
+
 	.schedule-event__info-icon {
 		position: absolute;
 		inset-inline-end: 0.42rem;
@@ -915,14 +1021,16 @@ const scheduleClientConfigJson = JSON.stringify({
 	}
 
 	.schedule-event:not(.schedule-event--static):hover,
-	.schedule-event:focus-visible {
+	.schedule-event:focus-visible,
+	.schedule-event:has(.schedule-event__trigger:focus-visible) {
 		background: color-mix(in srgb, var(--color-white) 78%, var(--day-accent));
 		transform: translate(-0.08rem, -0.08rem);
 		box-shadow: 0.28rem 0.28rem 0 0 var(--day-accent);
 	}
 
 	.schedule-event:not(.schedule-event--static):hover .schedule-event__info-icon,
-	.schedule-event:focus-visible .schedule-event__info-icon {
+	.schedule-event:focus-visible .schedule-event__info-icon,
+	.schedule-event:has(.schedule-event__trigger:focus-visible) .schedule-event__info-icon {
 		color: var(--color-foreground);
 		opacity: 0.94;
 		transform: scale(1.05);
@@ -933,6 +1041,8 @@ const scheduleClientConfigJson = JSON.stringify({
 	}
 
 	.schedule-event:focus-visible,
+	.schedule-event__trigger:focus-visible,
+	.schedule-resource-pill:focus-visible,
 	.schedule-dialog__close:focus-visible {
 		outline: 0.2rem solid var(--color-soft-blue);
 		outline-offset: 0.18rem;
