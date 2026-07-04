@@ -3,9 +3,6 @@ import { existsSync } from "node:fs";
 import { mkdir, readdir, readFile, unlink, writeFile } from "node:fs/promises";
 import { basename, extname, join } from "node:path";
 
-import { scheduleData } from "../src/data/generated/schedule.ts";
-import { collectScheduleText } from "../src/lib/schedule.ts";
-
 const subsetFont = (await import("subset-font")).default;
 
 // Config
@@ -15,6 +12,7 @@ const CACHE_DIR = "./.cache/font-subset";
 const SOURCE_DIRS = ["./src/data", "./src/pages", "./src/components", "./src/layouts"];
 const SOURCE_EXTS = new Set([".astro", ".md", ".mdx", ".json", ".ts", ".tsx", ".js", ".jsx", ".mjs"]);
 const EXTRA_CHARS_FILE = "./extra-chars.txt";
+const GENERATED_SCHEDULE_FILE = "./src/data/generated/schedule.ts";
 const PATCH_EXTS = new Set([".html", ".css", ".js"]);
 // Match url(...) in CSS @font-face. Quote-agnostic, base-path-agnostic.
 const FONT_URL_RE = /url\((["']?)([^"')]*?)_astro\/fonts\/([^"')]+\.woff2)\1\)/g;
@@ -30,6 +28,36 @@ function extractStringLiterals(code) {
 	const out = [];
 	for (const m of code.matchAll(STRING_LITERAL_RE)) out.push(m[1] ?? m[2] ?? m[3] ?? "");
 	return out.join("\n");
+}
+
+function collectTextValues(value, out = []) {
+	if (typeof value === "string") {
+		out.push(value);
+	} else if (Array.isArray(value)) {
+		value.forEach(entry => collectTextValues(entry, out));
+	} else if (value && typeof value === "object") {
+		Object.values(value).forEach(entry => collectTextValues(entry, out));
+	}
+
+	return out;
+}
+
+async function collectGeneratedScheduleText() {
+	if (!existsSync(GENERATED_SCHEDULE_FILE)) return "";
+
+	const source = await readFile(GENERATED_SCHEDULE_FILE, "utf-8");
+	const match = source.match(/export\s+const\s+scheduleData\s*=\s*([\s\S]*?)\s+satisfies\s+ScheduleData\s*;/);
+	if (!match) {
+		console.warn(`  ⚠ Could not parse ${GENERATED_SCHEDULE_FILE}; skipping generated schedule text`);
+		return "";
+	}
+
+	try {
+		return collectTextValues(JSON.parse(match[1])).join("\n");
+	} catch (error) {
+		console.warn(`  ⚠ Could not parse ${GENERATED_SCHEDULE_FILE}: ${error instanceof Error ? error.message : String(error)}`);
+		return "";
+	}
 }
 
 // Extract text from source files
@@ -118,7 +146,7 @@ async function collectChars() {
 	}
 	await Promise.all(SOURCE_DIRS.map(scan));
 
-	for (const c of collectScheduleText(scheduleData)) chars.add(c);
+	for (const c of await collectGeneratedScheduleText()) chars.add(c);
 	console.log("  Included generated schedule text");
 
 	// Sort so the chars string is stable across runs — parallel scans otherwise produce
