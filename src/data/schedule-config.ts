@@ -64,22 +64,22 @@ export const dayAccentClassMap: Record<ScheduleDayType, string> = {
 	closing: "schedule-day--dark"
 };
 
-export const sessionTypeBadgeClassMap: Record<string, string> = {
+export type ScheduleEventCategory = "啟程" | "主線課程" | "活動" | "生活" | "其他" | "總結";
+
+export const scheduleCategoryColorClassMap: Record<ScheduleEventCategory, string> = {
 	啟程: "schedule-badge--green",
 	主線課程: "schedule-badge--blue",
 	活動: "schedule-badge--orange",
 	生活: "schedule-badge--sky",
 	其他: "schedule-badge--lavender",
-	總結: "schedule-badge--dark",
-	opening: "schedule-badge--green",
-	main: "schedule-badge--blue",
-	activity: "schedule-badge--orange",
-	life: "schedule-badge--sky",
-	other: "schedule-badge--lavender",
-	closing: "schedule-badge--dark"
+	總結: "schedule-badge--dark"
 };
 
-export const fallbackSessionTypeBadgeClass = "schedule-badge--lavender";
+export const sessionTypeBadgeClassMap: Record<string, string> = {
+	...scheduleCategoryColorClassMap
+};
+
+export const fallbackSessionTypeBadgeClass = scheduleCategoryColorClassMap.其他;
 
 export const scheduleImageAliases: Record<string, ScheduleImageConfig> = {
 	opening: { key: "start-and-opening", alt: "SITCON Camp 開幕現場" },
