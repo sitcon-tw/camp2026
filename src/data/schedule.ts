@@ -77,8 +77,7 @@ export const scheduleSpeakers: ScheduleSpeaker[] = [
 	{
 		id: "tedlu",
 		name: "呂顥天",
-		description:
-			"陽明交大生科準大一，曾做過嵌入式系統 AI、神經科學等，在業界做了幾年的 genAI 與 AIoT 產品設計與開發後，決定回到熟悉的 AI 領域研究。活躍於各數位治理、開源社群。",
+		description: "陽明交大生科準大一，曾做過嵌入式系統 AI、神經科學等，在業界做了幾年的 genAI 與 AIoT 產品設計與開發後，決定回到熟悉的 AI 領域研究。活躍於各數位治理、開源社群。",
 		avatar: {
 			key: "tedlu",
 			alt: "呂顥天"
