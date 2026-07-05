@@ -40,6 +40,7 @@ export interface ScheduleDay {
 export interface ScheduleEvent {
 	id: string;
 	name: string;
+	lectureTitle?: string;
 	summary: string;
 	category: ScheduleEventCategory;
 	isInteractive?: boolean;
@@ -71,6 +72,15 @@ export const scheduleSpeakers: ScheduleSpeaker[] = [
 		avatar: {
 			key: "jayin",
 			alt: "李杰穎"
+		}
+	},
+	{
+		id: "tedlu",
+		name: "呂顥天",
+		description: "陽明交大生科準大一，曾做過嵌入式系統 AI、神經科學等，在業界做了幾年的 genAI 與 AIoT 產品設計與開發後，決定回到熟悉的 AI 領域研究。活躍於各數位治理、開源社群。",
+		avatar: {
+			key: "tedlu",
+			alt: "呂顥天"
 		}
 	}
 ];
@@ -177,9 +187,15 @@ export const scheduleEvents: ScheduleEvent[] = [
 	{
 		id: "ml-broad",
 		name: "人工智慧廣度課程",
-		summary: "從更廣的視角認識人工智慧，建立對領域全貌的整體理解。",
+		lectureTitle: "從可解釋性到 AI 時代的主體性",
+		summary: "從 AI safety 與 mech interp 的前沿出發，思考在被人工智慧環繞的未來如何重建人類的主體性。",
+		description: [
+			"本課程將帶領學員跳脫「如何使用 AI」的框架，進入 AI safety 與 mech interp 的前沿領域。我們將探討為什麼科學家需要像神經科學家一樣，去解剖 AI 的運作機制？當 AI 表現得越來越完美，人類是否正陷入逐漸去賦權（gradual disempowerment）的風險中？",
+			"講師將分享自己如何在這個領域探索，並引導學員思考：在被人工智慧環繞的未來，我們如何透過培養「品味」與思維架構，重新建構屬於人類的主體性（human agency）。"
+		],
 		category: "其他",
-		isInteractive: true
+		isInteractive: true,
+		speakers: ["tedlu"]
 	},
 	{
 		id: "security-main",
