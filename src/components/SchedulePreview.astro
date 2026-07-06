@@ -470,17 +470,17 @@ const interactiveScheduleEvents = Array.from(scheduleEventsById.values()).filter
 		interactiveScheduleEvents.map(event => (
 			<div class="schedule-dialog" data-schedule-dialog={event.id} role="dialog" aria-modal="true" aria-labelledby={`schedule-dialog-title-${event.id}`} hidden>
 				{(() => {
-	const descriptionLines = event.description ?? [];
-	const image = getScheduleImage(event);
-	const imageAlt = event.image?.alt ?? "";
-	const speakers = getEventSpeakers(event);
-	const resourceLinks = [
-		{ label: "課程簡報", url: event.slideUrl },
-		{ label: "課程共筆", url: event.coWriteUrl },
-		{ label: "錄影連結", url: event.recordUrl }
-	].filter((resource): resource is { label: string; url: string } => Boolean(resource.url));
+					const descriptionLines = event.description ?? [];
+					const image = getScheduleImage(event);
+					const imageAlt = event.image?.alt ?? "";
+					const speakers = getEventSpeakers(event);
+					const resourceLinks = [
+						{ label: "課程簡報", url: event.slideUrl },
+						{ label: "課程共筆", url: event.coWriteUrl },
+						{ label: "錄影連結", url: event.recordUrl }
+					].filter((resource): resource is { label: string; url: string } => Boolean(resource.url));
 
-	return (
+					return (
 						<div class:list={["schedule-dialog__panel", { "schedule-dialog__panel--no-image": !image }]}>
 							{image && (
 								<div class="schedule-dialog__image-wrap">
