@@ -1190,6 +1190,29 @@ const interactiveScheduleEvents = Array.from(scheduleEventsById.values()).filter
 		margin-block: 0.75rem;
 	}
 
+	.schedule-dialog__description :global(h1),
+	.schedule-dialog__description :global(h2),
+	.schedule-dialog__description :global(h3) {
+		margin-block: 1.35em 0.55em;
+		color: var(--color-background);
+		font-weight: 800;
+		letter-spacing: 0;
+		line-height: 1.25;
+		text-wrap: balance;
+	}
+
+	.schedule-dialog__description :global(h1) {
+		font-size: clamp(1.65rem, 3vw, 2.2rem);
+	}
+
+	.schedule-dialog__description :global(h2) {
+		font-size: clamp(1.28rem, 2.2vw, 1.62rem);
+	}
+
+	.schedule-dialog__description :global(h3) {
+		font-size: clamp(1.12rem, 1.8vw, 1.35rem);
+	}
+
 	.schedule-dialog__description :global(ul),
 	.schedule-dialog__description :global(ol) {
 		display: grid;
