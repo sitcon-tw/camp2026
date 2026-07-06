@@ -5,7 +5,7 @@
 	"scripts": {
 		"astro": "astro",
 		"avatars:update": "node scripts/download-avatars.mjs",
-		"build": "astro build && node scripts/font-subset.mjs",
+		"build": "pnpm schedule:update && astro build && node scripts/font-subset.mjs",
 		"build:subset": "node scripts/font-subset.mjs",
 		"dev": "astro dev",
 		"preinstall": "npx only-allow pnpm",
@@ -13,7 +13,8 @@
 		"prepare": "sh -c 'command -v git >/dev/null 2>&1 && [ -d .git ] && git config core.hooksPath .githooks || exit 0'",
 		"prettier:check": "prettier --check .",
 		"prettier:write": "prettier --write .",
-		"preview": "astro preview"
+		"preview": "astro preview",
+		"schedule:update": "node scripts/generate-schedule.mjs"
 	},
 	"dependencies": {
 		"@astrojs/sitemap": "^3.7.2",

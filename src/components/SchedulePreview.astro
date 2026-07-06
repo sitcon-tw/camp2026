@@ -3,10 +3,12 @@ import type { ImageMetadata } from "astro";
 import { Image } from "astro:assets";
 import Info from "~icons/lucide/info";
 import X from "~icons/lucide/x";
-import type { ScheduleBlock, ScheduleDay, ScheduleDayType, ScheduleEvent, ScheduleEventCategory, ScheduleSpeaker } from "@/data/schedule";
-import { scheduleDays, scheduleEvents, scheduleMeta, scheduleSlots, scheduleSpeakers } from "@/data/schedule";
+import { dayAccentClassMap, fallbackSessionTypeBadgeClass, scheduleDayConfigs, scheduleImageAliases, scheduleMeta, sessionTypeBadgeClassMap } from "@/data/schedule-config";
+import scheduleJson from "@/data/generated/schedule.json";
+import type { ScheduleData, ScheduleSession, ScheduleSpeaker } from "@/types/schedule";
 import { renderMarkdown } from "@/utils/markdown";
 
+const scheduleData = scheduleJson as ScheduleData;
 const scheduleImageModules = import.meta.glob<{ default: ImageMetadata }>("../assets/schedule/*.{jpg,jpeg,png,webp}", { eager: true });
 const scheduleImages = new Map(
 	Object.entries(scheduleImageModules).map(([path, mod]) => {
@@ -24,30 +26,106 @@ const speakerAvatars = new Map(
 	})
 );
 
-const eventsById = new Map(scheduleEvents.map(event => [event.id, event]));
-const speakersById = new Map(scheduleSpeakers.map(speaker => [speaker.id, speaker]));
-const scheduleSlotIndexMap = new Map(scheduleSlots.map((slot, index) => [slot, index]));
-const scheduleSlotCount = scheduleSlots.length;
+interface ScheduleEvent {
+	id: string;
+	name: string;
+	lectureTitle?: string;
+	category: string;
+	type: string;
+	description: string[];
+	speakers: string[];
+	image?: {
+		key: string;
+		alt: string;
+	};
+}
 
-const dayAccentClassMap: Record<ScheduleDayType, string> = {
-	opening: "schedule-day--sky",
-	software: "schedule-day--green",
-	"artificial-intelligence": "schedule-day--orange",
-	security: "schedule-day--blue",
-	closing: "schedule-day--dark"
+interface ScheduleBlock {
+	startSlot: string;
+	endSlot: string;
+	event: ScheduleEvent;
+	label: string;
+	rowStart: number;
+	span: number;
+	isInteractive: boolean;
+}
+
+interface ScheduleDay {
+	id: string;
+	title: string[];
+	date: string;
+	subtitle: string;
+	type: (typeof scheduleDayConfigs)[keyof typeof scheduleDayConfigs]["type"];
+	blocks: ScheduleBlock[];
+}
+
+const normalizeAssetKey = (value: string): string =>
+	value
+		.trim()
+		.toLowerCase()
+		.replace(/[_\s]+/g, "-")
+		.replace(/\.(jpe?g|png|webp)$/i, "")
+		.replace(/-day\d+(?:-[a-z0-9]+)?$/i, "")
+		.replace(/-$/, "");
+
+const parseScheduleDate = (value: string): Date => {
+	const date = new Date(value);
+
+	if (Number.isNaN(date.getTime())) {
+		throw new Error(`Invalid schedule date: ${value}`);
+	}
+
+	return date;
 };
 
-const categoryClassMap: Record<ScheduleEventCategory, string> = {
-	啟程: "schedule-badge--green",
-	主線課程: "schedule-badge--blue",
-	活動: "schedule-badge--orange",
-	生活: "schedule-badge--sky",
-	其他: "schedule-badge--lavender",
-	總結: "schedule-badge--dark"
+const formatHourSlot = (value: string): string => {
+	const timeMatch = value.match(/T(\d{2}):\d{2}/);
+
+	if (!timeMatch) {
+		throw new Error(`Invalid schedule ISO time: ${value}`);
+	}
+
+	return `${Number(timeMatch[1])}:00`;
+};
+const getSlotTime = (slot: string): number => Number(slot.split(":")[0]);
+
+const sessionTypesById = new Map(scheduleData.session_types.map(type => [type.id, type]));
+const speakersById = new Map(scheduleData.speakers.map(speaker => [speaker.id, speaker]));
+
+const getSessionTypeName = (session: ScheduleSession): string => {
+	const sessionType = sessionTypesById.get(session.type);
+	return sessionType?.zh.name || sessionType?.en.name || session.type || "其他";
+};
+
+const getOptionalString = (value: unknown): string | undefined => (typeof value === "string" && value.trim() ? value : undefined);
+
+const getSessionLectureTitle = (session: ScheduleSession): string | undefined =>
+	getOptionalString(session.lectureTitle) ??
+	getOptionalString(session.lecture_title) ??
+	getOptionalString((session.zh as Record<string, unknown>).lectureTitle) ??
+	getOptionalString((session.zh as Record<string, unknown>).lecture_title) ??
+	getOptionalString((session.en as Record<string, unknown>).lectureTitle) ??
+	getOptionalString((session.en as Record<string, unknown>).lecture_title);
+
+const getBadgeClass = (event: ScheduleEvent): string => sessionTypeBadgeClassMap[event.category] ?? sessionTypeBadgeClassMap[event.type] ?? fallbackSessionTypeBadgeClass;
+
+const resolveScheduleImage = (event: Pick<ScheduleEvent, "id" | "name">): ScheduleEvent["image"] | undefined => {
+	const alias = scheduleImageAliases[event.id];
+
+	if (scheduleImages.has(event.id)) {
+		return { key: event.id, alt: event.name };
+	}
+
+	const normalizedKey = normalizeAssetKey(event.id);
+	if (scheduleImages.has(normalizedKey)) {
+		return { key: normalizedKey, alt: event.name };
+	}
+
+	return alias;
 };
 
 const getEvent = (eventId: string): ScheduleEvent => {
-	const event = eventsById.get(eventId);
+	const event = scheduleEventsById.get(eventId);
 
 	if (!event) {
 		throw new Error(`Missing schedule event: ${eventId}`);
@@ -73,7 +151,7 @@ const getScheduleImage = (event: ScheduleEvent): ImageMetadata | undefined => {
 };
 
 const getSpeakerAvatar = (speaker: ScheduleSpeaker): ImageMetadata | undefined => {
-	const avatarKey = speaker.avatar?.key;
+	const avatarKey = speaker.avatar ? normalizeAssetKey(speaker.avatar.split("/").pop() ?? speaker.avatar) : speaker.id;
 
 	if (!avatarKey) {
 		return undefined;
@@ -82,7 +160,9 @@ const getSpeakerAvatar = (speaker: ScheduleSpeaker): ImageMetadata | undefined =
 	return speakerAvatars.get(avatarKey);
 };
 
-const hasSpeakerContent = (speaker: ScheduleSpeaker): boolean => Boolean(speaker.name?.trim() || speaker.description?.trim() || speaker.avatar?.key?.trim());
+const getSpeakerName = (speaker: ScheduleSpeaker): string => speaker.zh.name || speaker.en.name;
+const getSpeakerDescription = (speaker: ScheduleSpeaker): string => speaker.zh.bio || speaker.en.bio;
+const hasSpeakerContent = (speaker: ScheduleSpeaker): boolean => Boolean(getSpeakerName(speaker).trim() || getSpeakerDescription(speaker).trim() || speaker.avatar?.trim());
 
 const getEventSpeakers = (event: ScheduleEvent): ScheduleSpeaker[] =>
 	(event.speakers ?? [])
@@ -111,7 +191,7 @@ const descriptionLinesToMarkdown = (lines: string[]): string =>
 		return markdown ? `${markdown}${separator}${line}` : line;
 	}, "");
 
-const getBlockSpan = (block: ScheduleBlock): number => {
+const getBlockSpan = (block: Pick<ScheduleBlock, "startSlot" | "span">): number => {
 	const startIndex = scheduleSlotIndexMap.get(block.startSlot);
 
 	if (startIndex === undefined) {
@@ -122,7 +202,7 @@ const getBlockSpan = (block: ScheduleBlock): number => {
 	return Math.max(1, Math.min(block.span ?? 1, remainingPeriods));
 };
 
-const getBlockRangeLabel = (block: ScheduleBlock): string => {
+const getBlockRangeLabel = (block: Pick<ScheduleBlock, "startSlot" | "endSlot" | "span">): string => {
 	const startIndex = scheduleSlotIndexMap.get(block.startSlot);
 
 	if (startIndex === undefined) {
@@ -130,7 +210,7 @@ const getBlockRangeLabel = (block: ScheduleBlock): string => {
 	}
 
 	const span = getBlockSpan(block);
-	const endSlot = scheduleSlots[startIndex + span - 1];
+	const endSlot = block.endSlot || scheduleSlots[startIndex + span - 1];
 
 	return block.startSlot === endSlot ? block.startSlot : `${block.startSlot} - ${endSlot}`;
 };
@@ -156,12 +236,9 @@ const getRenderableBlocks = (day: ScheduleDay) => {
 			occupiedSlots[slotIndex] = true;
 		}
 
-		const event = getEvent(block.eventId);
-
 		return {
 			...block,
-			event,
-			isInteractive: event.isInteractive === true && hasEventDetails(event),
+			isInteractive: hasEventDetails(block.event),
 			label: getBlockRangeLabel(block),
 			rowStart: startIndex + 2,
 			span
@@ -175,7 +252,6 @@ const getRenderableBlocks = (day: ScheduleDay) => {
 					{
 						startSlot: slot,
 						span: 1,
-						eventId: "",
 						event: null,
 						isInteractive: false,
 						label: slot,
@@ -187,7 +263,74 @@ const getRenderableBlocks = (day: ScheduleDay) => {
 	return [...blocks, ...emptyBlocks].sort((left, right) => left.rowStart - right.rowStart);
 };
 
-const interactiveScheduleEvents = scheduleEvents.filter(event => event.isInteractive === true && hasEventDetails(event));
+const scheduleEventsById = new Map(
+	scheduleData.sessions.map(session => {
+		const name = session.zh.title || session.en.title || session.id;
+		const event: ScheduleEvent = {
+			id: session.id,
+			name,
+			lectureTitle: getSessionLectureTitle(session),
+			category: getSessionTypeName(session),
+			type: session.type,
+			description: (session.zh.description || session.en.description).split(/\r?\n/),
+			speakers: session.speakers,
+			image: resolveScheduleImage({ id: session.id, name })
+		};
+
+		return [event.id, event];
+	})
+);
+
+const sessionsWithDates = scheduleData.sessions.map(session => ({
+	session,
+	startDate: parseScheduleDate(session.start),
+	endDate: parseScheduleDate(session.end),
+	startSlot: formatHourSlot(session.start),
+	endSlot: formatHourSlot(session.end)
+}));
+const minStartHour = Math.min(...sessionsWithDates.map(({ startSlot }) => getSlotTime(startSlot)));
+const maxEndHour = Math.max(...sessionsWithDates.map(({ endSlot }) => getSlotTime(endSlot)));
+const scheduleSlots = Array.from({ length: Math.max(0, maxEndHour - minStartHour) }, (_, index) => `${minStartHour + index}:00`);
+const scheduleSlotIndexMap = new Map(scheduleSlots.map((slot, index) => [slot, index]));
+const scheduleSlotCount = scheduleSlots.length;
+const scheduleDays = Object.entries(
+	sessionsWithDates.reduce<Record<string, typeof sessionsWithDates>>((days, entry) => {
+		const daySessions = days[entry.session.room] ?? [];
+		daySessions.push(entry);
+		days[entry.session.room] = daySessions;
+		return days;
+	}, {})
+)
+	.sort(([leftRoom], [rightRoom]) => leftRoom.localeCompare(rightRoom, "en", { numeric: true }))
+	.map(([room, entries]) => {
+		const dayConfig = scheduleDayConfigs[room] ?? {
+			title: [room],
+			date: "",
+			subtitle: room,
+			type: "opening" as const
+		};
+
+		return {
+			id: room,
+			...dayConfig,
+			blocks: entries
+				.sort((left, right) => left.startDate.getTime() - right.startDate.getTime())
+				.map(({ session, startSlot, endSlot }) => {
+					const span = Math.max(1, getSlotTime(endSlot) - getSlotTime(startSlot));
+
+					return {
+						startSlot,
+						endSlot,
+						event: getEvent(session.id),
+						label: startSlot,
+						rowStart: 1,
+						span,
+						isInteractive: false
+					};
+				})
+		};
+	});
+const interactiveScheduleEvents = Array.from(scheduleEventsById.values()).filter(hasEventDetails);
 ---
 
 <section class="schedule-page" aria-labelledby="schedule-title">
@@ -260,7 +403,7 @@ const interactiveScheduleEvents = scheduleEvents.filter(event => event.isInterac
 															>
 																<div class="schedule-event__body">
 																	<div class="schedule-event__content">
-																		<span class:list={["schedule-event__badge", categoryClassMap[event.category]]}>{event.category}</span>
+																		<span class:list={["schedule-event__badge", getBadgeClass(event)]}>{event.category}</span>
 																		<span class="schedule-event__name">{event.name}</span>
 																	</div>
 																</div>
@@ -270,7 +413,7 @@ const interactiveScheduleEvents = scheduleEvents.filter(event => event.isInterac
 															<div class:list={["schedule-event", "schedule-event--static", { "schedule-event--spanning": block.span > 1 }]}>
 																<div class="schedule-event__body">
 																	<div class="schedule-event__content">
-																		<span class:list={["schedule-event__badge", categoryClassMap[event.category]]}>{event.category}</span>
+																		<span class:list={["schedule-event__badge", getBadgeClass(event)]}>{event.category}</span>
 																		<span class="schedule-event__name">{event.name}</span>
 																	</div>
 																</div>
@@ -318,7 +461,7 @@ const interactiveScheduleEvents = scheduleEvents.filter(event => event.isInterac
 								</div>
 							)}
 							<div class="schedule-dialog__content">
-								<span class:list={["schedule-dialog__badge", categoryClassMap[event.category]]}>{event.category}</span>
+								<span class:list={["schedule-dialog__badge", getBadgeClass(event)]}>{event.category}</span>
 								<h2 id={`schedule-dialog-title-${event.id}`} class:list={["schedule-dialog__title", { "schedule-dialog__title--sub": event.lectureTitle?.trim() }]} tabindex="-1">
 									{event.name}
 								</h2>
@@ -328,20 +471,20 @@ const interactiveScheduleEvents = scheduleEvents.filter(event => event.isInterac
 									<section class="schedule-dialog__speakers" aria-label={`${event.name}講者`}>
 										{speakers.map(speaker => {
 											const avatar = getSpeakerAvatar(speaker);
-											const avatarAlt = speaker.avatar?.alt ?? speaker.name ?? "";
-											const speakerDescription = speaker.description?.trim();
+											const speakerName = getSpeakerName(speaker).trim();
+											const speakerDescription = getSpeakerDescription(speaker).trim();
 
 											return (
 												<article class="schedule-speaker">
 													{avatar ? (
-														<Image class="schedule-speaker__avatar" src={avatar} alt={avatarAlt} loading="lazy" decoding="async" format="webp" width={72} height={72} />
+														<Image class="schedule-speaker__avatar" src={avatar} alt={speakerName} loading="lazy" decoding="async" format="webp" width={72} height={72} />
 													) : (
 														<div class="schedule-speaker__avatar schedule-speaker__avatar--placeholder" aria-hidden="true">
-															{speaker.name?.trim().charAt(0) ?? ""}
+															{speakerName.charAt(0)}
 														</div>
 													)}
 													<div class="schedule-speaker__content">
-														{speaker.name?.trim() && <h3 class="schedule-speaker__name">{speaker.name}</h3>}
+														{speakerName && <h3 class="schedule-speaker__name">{speakerName}</h3>}
 														<p class:list={["schedule-speaker__description", { "schedule-speaker__description--pending": !speakerDescription }]}>{speakerDescription || "講者介紹即將公開"}</p>
 													</div>
 												</article>
@@ -1072,6 +1215,29 @@ const interactiveScheduleEvents = scheduleEvents.filter(event => event.isInterac
 
 	.schedule-dialog__description :global(p) {
 		margin-block: 0.75rem;
+	}
+
+	.schedule-dialog__description :global(h1),
+	.schedule-dialog__description :global(h2),
+	.schedule-dialog__description :global(h3) {
+		margin-block: 1.35em 0.55em;
+		color: var(--color-background);
+		font-weight: 800;
+		letter-spacing: 0;
+		line-height: 1.25;
+		text-wrap: balance;
+	}
+
+	.schedule-dialog__description :global(h1) {
+		font-size: clamp(1.65rem, 3vw, 2.2rem);
+	}
+
+	.schedule-dialog__description :global(h2) {
+		font-size: clamp(1.28rem, 2.2vw, 1.62rem);
+	}
+
+	.schedule-dialog__description :global(h3) {
+		font-size: clamp(1.12rem, 1.8vw, 1.35rem);
 	}
 
 	.schedule-dialog__description :global(ul),

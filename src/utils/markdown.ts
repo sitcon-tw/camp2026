@@ -1,6 +1,6 @@
 import MarkdownIt from "markdown-it";
 
-const md = new MarkdownIt({ linkify: true });
+const md = new MarkdownIt({ html: true, linkify: true });
 
 type MarkdownToken = ReturnType<MarkdownIt["parse"]>[number];
 
