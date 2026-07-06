@@ -1,6 +1,7 @@
 ---
 import type { ImageMetadata } from "astro";
 import { Image } from "astro:assets";
+import ExternalLink from "~icons/lucide/external-link";
 import Info from "~icons/lucide/info";
 import X from "~icons/lucide/x";
 import { dayAccentClassMap, fallbackSessionTypeBadgeClass, scheduleDayConfigs, scheduleImageAliases, scheduleMeta, sessionTypeBadgeClassMap } from "@/data/schedule-config";
@@ -34,6 +35,9 @@ interface ScheduleEvent {
 	type: string;
 	description: string[];
 	speakers: string[];
+	slideUrl?: string;
+	coWriteUrl?: string;
+	recordUrl?: string;
 	image?: {
 		key: string;
 		alt: string;
@@ -107,6 +111,30 @@ const getSessionLectureTitle = (session: ScheduleSession): string | undefined =>
 	getOptionalString((session.en as Record<string, unknown>).lectureTitle) ??
 	getOptionalString((session.en as Record<string, unknown>).lecture_title);
 
+const getSessionCoWriteUrl = (session: ScheduleSession): string | undefined =>
+	getOptionalString(session.co_write) ??
+	getOptionalString(session.coWrite) ??
+	getOptionalString((session.zh as Record<string, unknown>).co_write) ??
+	getOptionalString((session.zh as Record<string, unknown>).coWrite) ??
+	getOptionalString((session.en as Record<string, unknown>).co_write) ??
+	getOptionalString((session.en as Record<string, unknown>).coWrite);
+
+const getSessionSlideUrl = (session: ScheduleSession): string | undefined =>
+	getOptionalString(session.slide) ??
+	getOptionalString(session.slides) ??
+	getOptionalString((session.zh as Record<string, unknown>).slide) ??
+	getOptionalString((session.zh as Record<string, unknown>).slides) ??
+	getOptionalString((session.en as Record<string, unknown>).slide) ??
+	getOptionalString((session.en as Record<string, unknown>).slides);
+
+const getSessionRecordUrl = (session: ScheduleSession): string | undefined =>
+	getOptionalString(session.record) ??
+	getOptionalString(session.recording) ??
+	getOptionalString((session.zh as Record<string, unknown>).record) ??
+	getOptionalString((session.zh as Record<string, unknown>).recording) ??
+	getOptionalString((session.en as Record<string, unknown>).record) ??
+	getOptionalString((session.en as Record<string, unknown>).recording);
+
 const getBadgeClass = (event: ScheduleEvent): string => sessionTypeBadgeClassMap[event.category] ?? sessionTypeBadgeClassMap[event.type] ?? fallbackSessionTypeBadgeClass;
 
 const resolveScheduleImage = (event: Pick<ScheduleEvent, "id" | "name">): ScheduleEvent["image"] | undefined => {
@@ -179,7 +207,7 @@ const getEventSpeakers = (event: ScheduleEvent): ScheduleSpeaker[] =>
 
 const hasEventDetails = (event: ScheduleEvent): boolean => {
 	const descriptionLines = event.description ?? [];
-	return Boolean(event.image?.key || descriptionLines.some(line => line.trim()) || getEventSpeakers(event).length > 0);
+	return Boolean(event.image?.key || event.slideUrl || event.coWriteUrl || event.recordUrl || descriptionLines.some(line => line.trim()) || getEventSpeakers(event).length > 0);
 };
 
 const descriptionLinesToMarkdown = (lines: string[]): string =>
@@ -274,6 +302,9 @@ const scheduleEventsById = new Map(
 			type: session.type,
 			description: (session.zh.description || session.en.description).split(/\r?\n/),
 			speakers: session.speakers,
+			slideUrl: getSessionSlideUrl(session),
+			coWriteUrl: getSessionCoWriteUrl(session),
+			recordUrl: getSessionRecordUrl(session),
 			image: resolveScheduleImage({ id: session.id, name })
 		};
 
@@ -439,12 +470,17 @@ const interactiveScheduleEvents = Array.from(scheduleEventsById.values()).filter
 		interactiveScheduleEvents.map(event => (
 			<div class="schedule-dialog" data-schedule-dialog={event.id} role="dialog" aria-modal="true" aria-labelledby={`schedule-dialog-title-${event.id}`} hidden>
 				{(() => {
-					const descriptionLines = event.description ?? [];
-					const image = getScheduleImage(event);
-					const imageAlt = event.image?.alt ?? "";
-					const speakers = getEventSpeakers(event);
+	const descriptionLines = event.description ?? [];
+	const image = getScheduleImage(event);
+	const imageAlt = event.image?.alt ?? "";
+	const speakers = getEventSpeakers(event);
+	const resourceLinks = [
+		{ label: "課程簡報", url: event.slideUrl },
+		{ label: "課程共筆", url: event.coWriteUrl },
+		{ label: "錄影連結", url: event.recordUrl }
+	].filter((resource): resource is { label: string; url: string } => Boolean(resource.url));
 
-					return (
+	return (
 						<div class:list={["schedule-dialog__panel", { "schedule-dialog__panel--no-image": !image }]}>
 							{image && (
 								<div class="schedule-dialog__image-wrap">
@@ -466,6 +502,16 @@ const interactiveScheduleEvents = Array.from(scheduleEventsById.values()).filter
 									{event.name}
 								</h2>
 								{event.lectureTitle?.trim() && <p class="schedule-dialog__lecture-title">{event.lectureTitle}</p>}
+								{resourceLinks.length > 0 && (
+									<div class="schedule-dialog__resource-badges" aria-label={`${event.name}課程資源`}>
+										{resourceLinks.map(resource => (
+											<a class="schedule-dialog__resource-badge" href={resource.url} target="_blank" rel="noopener noreferrer">
+												{resource.label}
+												<ExternalLink class="schedule-dialog__resource-badge-icon" width={16} height={16} stroke-width={3} aria-hidden="true" />
+											</a>
+										))}
+									</div>
+								)}
 								{descriptionLines.some(line => line.trim()) && <div class="schedule-dialog__description" set:html={renderMarkdown(descriptionLinesToMarkdown(descriptionLines))} />}
 								{speakers.length > 0 && (
 									<section class="schedule-dialog__speakers" aria-label={`${event.name}講者`}>
@@ -1195,6 +1241,57 @@ const interactiveScheduleEvents = Array.from(scheduleEventsById.values()).filter
 		font-weight: 800;
 		line-height: 1.08;
 		text-wrap: balance;
+	}
+
+	.schedule-dialog__resource-badges {
+		display: flex;
+		flex-wrap: nowrap;
+		gap: 0.55rem;
+		align-items: center;
+		max-width: 100%;
+		overflow-x: auto;
+		scrollbar-width: thin;
+	}
+
+	.schedule-dialog__resource-badge {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.38rem;
+		width: fit-content;
+		min-height: 2.4rem;
+		padding: 0.58rem 0.9rem;
+		color: var(--color-foreground);
+		background: color-mix(in srgb, var(--color-green) 74%, white);
+		border: 2px solid color-mix(in srgb, var(--color-background) 18%, transparent);
+		border-radius: 999rem;
+		font-size: 0.95rem;
+		font-weight: 800;
+		line-height: 1;
+		text-decoration: none;
+		white-space: nowrap;
+		box-shadow: 0.14rem 0.14rem 0 0 var(--color-orange);
+		transition:
+			background 160ms ease,
+			box-shadow 160ms ease,
+			transform 160ms ease;
+	}
+
+	.schedule-dialog__resource-badge:hover,
+	.schedule-dialog__resource-badge:focus-visible {
+		background: var(--color-green);
+		transform: translate(-0.06rem, -0.06rem);
+		box-shadow: 0.24rem 0.24rem 0 0 var(--color-orange);
+	}
+
+	.schedule-dialog__resource-badge:focus-visible {
+		outline: 0.2rem solid var(--color-soft-blue);
+		outline-offset: 0.18rem;
+	}
+
+	.schedule-dialog__resource-badge-icon {
+		flex: none;
+		width: 1rem;
+		height: 1rem;
 	}
 
 	.schedule-dialog__description {

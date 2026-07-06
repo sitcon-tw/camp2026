@@ -22,6 +22,9 @@ export interface ScheduleSession {
 	speakers: string[];
 	tags: string[];
 	broadcast?: string[];
+	slide?: string;
+	co_write?: string;
+	record?: string;
 	[key: string]: unknown;
 }
 
