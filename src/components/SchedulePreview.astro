@@ -178,8 +178,16 @@ const getScheduleImage = (event: ScheduleEvent): ImageMetadata | undefined => {
 	return image;
 };
 
-const getSpeakerAvatar = (speaker: ScheduleSpeaker): ImageMetadata | undefined => {
-	const avatarKey = speaker.avatar ? normalizeAssetKey(speaker.avatar.split("/").pop() ?? speaker.avatar) : speaker.id;
+const isFixedAvatarUrl = (value: string): boolean => /^https?:\/\//i.test(value) || value.startsWith("/");
+
+const getSpeakerAvatar = (speaker: ScheduleSpeaker): ImageMetadata | string | undefined => {
+	const avatarValue = speaker.avatar?.trim();
+
+	if (avatarValue && isFixedAvatarUrl(avatarValue)) {
+		return avatarValue;
+	}
+
+	const avatarKey = avatarValue ? normalizeAssetKey(avatarValue.split("/").pop() ?? avatarValue) : speaker.id;
 
 	if (!avatarKey) {
 		return undefined;
@@ -522,7 +530,9 @@ const interactiveScheduleEvents = Array.from(scheduleEventsById.values()).filter
 
 											return (
 												<article class="schedule-speaker">
-													{avatar ? (
+													{typeof avatar === "string" ? (
+														<img class="schedule-speaker__avatar" src={avatar} alt={speakerName} loading="lazy" decoding="async" width={72} height={72} />
+													) : avatar ? (
 														<Image class="schedule-speaker__avatar" src={avatar} alt={speakerName} loading="lazy" decoding="async" format="webp" width={72} height={72} />
 													) : (
 														<div class="schedule-speaker__avatar schedule-speaker__avatar--placeholder" aria-hidden="true">
