@@ -29,6 +29,7 @@ const speakerAvatars = new Map(
 interface ScheduleEvent {
 	id: string;
 	name: string;
+	lectureTitle?: string;
 	category: string;
 	type: string;
 	description: string[];
@@ -95,6 +96,16 @@ const getSessionTypeName = (session: ScheduleSession): string => {
 	const sessionType = sessionTypesById.get(session.type);
 	return sessionType?.zh.name || sessionType?.en.name || session.type || "其他";
 };
+
+const getOptionalString = (value: unknown): string | undefined => (typeof value === "string" && value.trim() ? value : undefined);
+
+const getSessionLectureTitle = (session: ScheduleSession): string | undefined =>
+	getOptionalString(session.lectureTitle) ??
+	getOptionalString(session.lecture_title) ??
+	getOptionalString((session.zh as Record<string, unknown>).lectureTitle) ??
+	getOptionalString((session.zh as Record<string, unknown>).lecture_title) ??
+	getOptionalString((session.en as Record<string, unknown>).lectureTitle) ??
+	getOptionalString((session.en as Record<string, unknown>).lecture_title);
 
 const getBadgeClass = (event: ScheduleEvent): string => sessionTypeBadgeClassMap[event.category] ?? sessionTypeBadgeClassMap[event.type] ?? fallbackSessionTypeBadgeClass;
 
@@ -258,6 +269,7 @@ const scheduleEventsById = new Map(
 		const event: ScheduleEvent = {
 			id: session.id,
 			name,
+			lectureTitle: getSessionLectureTitle(session),
 			category: getSessionTypeName(session),
 			type: session.type,
 			description: (session.zh.description || session.en.description).split(/\r?\n/),
@@ -450,9 +462,10 @@ const interactiveScheduleEvents = Array.from(scheduleEventsById.values()).filter
 							)}
 							<div class="schedule-dialog__content">
 								<span class:list={["schedule-dialog__badge", getBadgeClass(event)]}>{event.category}</span>
-								<h2 id={`schedule-dialog-title-${event.id}`} class="schedule-dialog__title" tabindex="-1">
+								<h2 id={`schedule-dialog-title-${event.id}`} class:list={["schedule-dialog__title", { "schedule-dialog__title--sub": event.lectureTitle?.trim() }]} tabindex="-1">
 									{event.name}
 								</h2>
+								{event.lectureTitle?.trim() && <p class="schedule-dialog__lecture-title">{event.lectureTitle}</p>}
 								{descriptionLines.some(line => line.trim()) && <div class="schedule-dialog__description" set:html={renderMarkdown(descriptionLinesToMarkdown(descriptionLines))} />}
 								{speakers.length > 0 && (
 									<section class="schedule-dialog__speakers" aria-label={`${event.name}講者`}>
@@ -1166,6 +1179,20 @@ const interactiveScheduleEvents = Array.from(scheduleEventsById.values()).filter
 		font-size: clamp(2rem, 4vw, 3.6rem);
 		font-weight: 800;
 		letter-spacing: 0;
+		line-height: 1.08;
+		text-wrap: balance;
+	}
+
+	.schedule-dialog__title--sub {
+		font-size: clamp(1.15rem, 2vw, 1.6rem);
+		line-height: 1.3;
+	}
+
+	.schedule-dialog__lecture-title {
+		margin: 0;
+		color: color-mix(in srgb, var(--color-background) 88%, transparent);
+		font-size: clamp(2rem, 4vw, 3.6rem);
+		font-weight: 800;
 		line-height: 1.08;
 		text-wrap: balance;
 	}
