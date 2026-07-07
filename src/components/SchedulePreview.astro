@@ -1255,15 +1255,14 @@ const interactiveScheduleEvents = Array.from(scheduleEventsById.values()).filter
 
 	.schedule-dialog__resource-badges {
 		display: flex;
-		flex-wrap: nowrap;
+		flex-wrap: wrap;
 		gap: 0.55rem;
 		align-items: center;
 		max-width: 100%;
 		margin-block: -0.18rem;
 		padding-inline: 0.18rem 0.4rem;
 		padding-block: 0.18rem 0.32rem;
-		overflow-x: auto;
-		scrollbar-width: thin;
+		overflow: visible;
 	}
 
 	.schedule-dialog__resource-badge {
@@ -1279,7 +1278,7 @@ const interactiveScheduleEvents = Array.from(scheduleEventsById.values()).filter
 		border-radius: 999rem;
 		font-size: 0.95rem;
 		font-weight: 800;
-		line-height: 1;
+		line-height: 1.25;
 		text-decoration: none;
 		white-space: nowrap;
 		box-shadow: 0.14rem 0.14rem 0 0 var(--color-orange);
