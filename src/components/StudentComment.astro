@@ -109,7 +109,7 @@ const videos = studentComment.video.map(video => {
 		<div class="marquee-track flex w-max" data-video-marquee-track>
 			{
 				[0, 1, 2].map(groupIndex => (
-					<div class="marquee-group flex shrink-0 gap-4 pr-4" data-marquee-group aria-hidden={groupIndex > 0 ? "true" : undefined} inert={groupIndex > 0 ? true : undefined}>
+					<div class="marquee-group flex shrink-0 gap-4 pr-4" data-marquee-group aria-hidden={groupIndex > 0 ? "true" : undefined}>
 						{videos.map(v => (
 							<button
 								type="button"
@@ -356,7 +356,7 @@ const videos = studentComment.video.map(video => {
 
 				groupWidth = groups[0]?.scrollWidth ?? 0;
 				if (!didSetInitialScroll && groupWidth) {
-					viewport.scrollLeft = groupWidth;
+					viewport.scrollLeft = groupWidth * 0.5;
 					didSetInitialScroll = true;
 				} else {
 					normalizeVideoScroll();
