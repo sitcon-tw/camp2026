@@ -287,21 +287,21 @@
 			{
 				"id": "harry",
 				"name": "Harry",
-				"role": "台大資工",
+				"role": "台大資工系",
 				"imgKey": "feature-member-harry",
 				"bio": "領域課程設計"
 			},
 			{
 				"id": "ak",
 				"name": "Ak",
-				"role": "陽明交大資工",
+				"role": "陽明交大資工系",
 				"imgKey": "feature-member-ak",
 				"bio": "領域課程設計"
 			},
 			{
 				"id": "wolf",
 				"name": "Wolf",
-				"role": "成大資工",
+				"role": "成大資工系",
 				"imgKey": "feature-member-wolf",
 				"bio": "小隊陪伴引導"
 			},
@@ -357,7 +357,7 @@
 			{
 				"id": "lime",
 				"name": "萊姆",
-				"role": "臺科大資工",
+				"role": "臺科大資工系",
 				"imgKey": "feature-member-lime",
 				"bio": "小隊學習陪伴"
 			},
@@ -378,21 +378,21 @@
 			{
 				"id": "fearnot",
 				"name": "Fearnot",
-				"role": "中央資工",
+				"role": "中央資工系",
 				"imgKey": "feature-member-fearnot",
 				"bio": "營隊統籌協調"
 			},
 			{
 				"id": "kaiyasi",
 				"name": "Kaiyasi",
-				"role": "中興應數",
+				"role": "中興應數系",
 				"imgKey": "feature-member-kaiyasi",
 				"bio": "網站及系統開發"
 			},
 			{
 				"id": "each",
 				"name": "Each",
-				"role": "中興應數",
+				"role": "中興應數系",
 				"imgKey": "feature-member-each",
 				"bio": "課程活動設計"
 			}
