@@ -188,7 +188,7 @@
 		]
 	},
 	"brandMarquee": {
-		"ariaLabel": "主辦、協辦與特別感謝單位：SITCON、開放文化基金會、陽明交通大學資訊工程系、Google for Developers、Cloudflare",
+		"ariaLabel": "主辦、協辦與特別感謝單位：SITCON、開放文化基金會、陽明交通大學資訊工程系、Google for Developers、Cloudflare、數位發展部",
 		"repeatItems": 8,
 		"brands": [
 			{
@@ -210,6 +210,10 @@
 			{
 				"imageKey": "cloudflare",
 				"alt": "Cloudflare"
+			},
+			{
+				"imageKey": "moda",
+				"alt": "數位發展部"
 			}
 		]
 	},

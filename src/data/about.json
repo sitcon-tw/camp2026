@@ -649,6 +649,12 @@
 						"iconPath": "/organizer-brand/cloudflare.svg"
 					},
 					{
+						"name": "數位發展部",
+						"role": "特別感謝",
+						"description": "數位發展部支持本次營隊辦理。",
+						"iconPath": "/organizer-brand/moda.svg"
+					},
+					{
 						"name": "NCSE Network",
 						"role": "特別感謝",
 						"description": "NCSE Network 支持本次營隊辦理。",
