@@ -60,5 +60,6 @@
 	{ "group": "開發組", "name": "白龍", "role": "組員", "id": "8ed5daf641164b6e5a3044e8fa2cfe06c6c42747bc20571cd48844b8767b2ac3" },
 	{ "group": "設計組", "name": "章魚", "role": "組員", "id": "18abe3935bb944c1fbaa8d8bb9c170b9439be9261d3623f32f599265c0a6be7a" },
 	{ "group": "設計組", "name": "花椰", "role": "組員", "id": "14e06aaaff87425b3b8bdacd36040f7f6f830e167f5d24a25b4deb9dd2c88bec" },
-	{ "group": "設計組", "name": "兆翌", "role": "組員", "id": "ea1f127f094a2db6b6f9de0075a0dd4069cf836334eeeaf3e553a5f1865f0824" }
+	{ "group": "設計組", "name": "兆翌", "role": "組員", "id": "ea1f127f094a2db6b6f9de0075a0dd4069cf836334eeeaf3e553a5f1865f0824" },
+	{ "group": "設計組", "name": "橘子", "role": "組員", "id": "7530f6a8eba83a44b8ae2d798e23608ab86546f1dba25f57ee1b39381e8eb836" }
 ]
