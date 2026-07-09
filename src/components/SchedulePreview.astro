@@ -587,6 +587,22 @@ const interactiveScheduleEvents = Array.from(scheduleEventsById.values()).filter
 			'[tabindex]:not([tabindex="-1"])'
 		].join(",");
 
+		const updateScheduleScrollHint = (track: HTMLElement) => {
+			const board = track.closest<HTMLElement>(".schedule-board--scroll");
+			if (!board) return;
+
+			const remainingScroll = track.scrollWidth - track.clientWidth - track.scrollLeft;
+			board.classList.toggle("schedule-board--scroll-start", track.scrollLeft <= 2);
+			board.classList.toggle("schedule-board--scroll-end", remainingScroll <= 2);
+		};
+
+		const scheduleTracks = Array.from(document.querySelectorAll<HTMLElement>("[data-schedule-days-track]"));
+		scheduleTracks.forEach(track => {
+			updateScheduleScrollHint(track);
+			track.addEventListener("scroll", () => updateScheduleScrollHint(track), { signal, passive: true });
+		});
+		window.addEventListener("resize", () => scheduleTracks.forEach(updateScheduleScrollHint), { signal });
+
 		const getFocusableElements = (dialog: HTMLElement) => Array.from(dialog.querySelectorAll<HTMLElement>(focusableSelector)).filter(element => !element.closest("[hidden]"));
 
 		const setPageContentInert = (isInert: boolean) => {
@@ -785,6 +801,7 @@ const interactiveScheduleEvents = Array.from(scheduleEventsById.values()).filter
 	}
 
 	.schedule-board {
+		position: relative;
 		display: grid;
 		grid-template-columns: clamp(3.25rem, 5vw, 4.25rem) minmax(0, 1fr);
 		gap: clamp(0.75rem, 1.2vw, 1rem);
@@ -1695,11 +1712,46 @@ const interactiveScheduleEvents = Array.from(scheduleEventsById.values()).filter
 		}
 
 		.schedule-board--scroll {
-			grid-template-columns: 3.2rem minmax(0, 1fr);
-			gap: 0.55rem;
+			grid-template-columns: var(--schedule-scroll-rail-width) minmax(0, 1fr);
+			gap: var(--schedule-scroll-track-gap);
 			overflow: hidden;
 			contain: inline-size layout paint;
+			--schedule-scroll-rail-width: 3.2rem;
+			--schedule-scroll-track-gap: 0.55rem;
+			--schedule-scroll-peek: clamp(1.65rem, 8vw, 2.45rem);
+			--schedule-scroll-fade: clamp(1.15rem, 7vw, 2rem);
 			--schedule-slot-row: 5.35rem;
+		}
+
+		.schedule-board--scroll::before,
+		.schedule-board--scroll::after {
+			content: "";
+			position: absolute;
+			inset-block: 0 0.8rem;
+			z-index: 2;
+			width: var(--schedule-scroll-fade);
+			pointer-events: none;
+			transition: opacity 160ms ease;
+		}
+
+		.schedule-board--scroll::before {
+			inset-inline-start: calc(var(--schedule-scroll-rail-width) + var(--schedule-scroll-track-gap));
+			opacity: 0.22;
+			background: linear-gradient(90deg, color-mix(in srgb, var(--color-background) 50%, transparent) 0%, transparent 90%);
+		}
+
+		.schedule-board--scroll::after {
+			inset-inline-end: 0;
+			opacity: 0.3;
+			background: linear-gradient(90deg, transparent 10%, color-mix(in srgb, var(--color-background) 56%, transparent) 100%);
+		}
+
+		.schedule-board--scroll.schedule-board--scroll-start::before {
+			opacity: 0;
+		}
+
+		.schedule-board--scroll.schedule-board--scroll-end::after {
+			opacity: 0;
 		}
 
 		.schedule-board--scroll .schedule-days-track {
@@ -1718,7 +1770,7 @@ const interactiveScheduleEvents = Array.from(scheduleEventsById.values()).filter
 		}
 
 		.schedule-board--scroll .schedule-day {
-			flex: 0 0 clamp(14rem, 76vw, 19rem);
+			flex: 0 0 calc(100% - var(--schedule-scroll-peek));
 			min-width: 0;
 			scroll-snap-align: start;
 		}
