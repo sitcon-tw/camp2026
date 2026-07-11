@@ -281,6 +281,20 @@
 						"job": "組員",
 						"avatarPath": "/assets/team-avatars/team-avatar-oncloud-7dde549c.webp",
 						"avatarLink": ""
+					},
+					{
+						"name": "77",
+						"description": "",
+						"job": "組員",
+						"avatarPath": "/assets/team-avatars/team-avatar-77-d70fd2f5.webp",
+						"avatarLink": ""
+					},
+					{
+						"name": "Ya",
+						"description": "嗨嗨這裡是 Ya，很像 E 人的大 I，佔領過行政編輯行銷隊輔剪輯的 SITCON 多棲仔 :D",
+						"job": "組員",
+						"avatarPath": "/assets/team-avatars/team-avatar-ya-3dc68268.webp",
+						"avatarLink": "https://www.instagram.com/yu._yao/"
 					}
 				]
 			},
@@ -391,6 +405,13 @@
 						"description": "",
 						"job": "組員",
 						"avatarPath": "/assets/team-avatars/team-avatar-member-47bf7455.webp",
+						"avatarLink": ""
+					},
+					{
+						"name": "家答",
+						"description": "",
+						"job": "組員",
+						"avatarPath": "/assets/team-avatars/team-avatar-member-07b36648.webp",
 						"avatarLink": ""
 					},
 					{
