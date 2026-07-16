@@ -64,7 +64,7 @@ export const dayAccentClassMap: Record<ScheduleDayType, string> = {
 	closing: "schedule-day--dark"
 };
 
-export type ScheduleEventCategory = "啟程" | "主線課程" | "活動" | "生活" | "其他" | "總結";
+export type ScheduleEventCategory = "啟程" | "主線課程" | "活動" | "生活" | "其他" | "總結" | "颱風限定";
 
 export const scheduleCategoryColorClassMap: Record<ScheduleEventCategory, string> = {
 	啟程: "schedule-badge--green",
@@ -72,7 +72,8 @@ export const scheduleCategoryColorClassMap: Record<ScheduleEventCategory, string
 	活動: "schedule-badge--orange",
 	生活: "schedule-badge--sky",
 	其他: "schedule-badge--lavender",
-	總結: "schedule-badge--dark"
+	總結: "schedule-badge--dark",
+	颱風限定: "schedule-badge--red"
 };
 
 export const sessionTypeBadgeClassMap: Record<string, string> = {
